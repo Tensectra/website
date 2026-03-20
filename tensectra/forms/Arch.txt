@@ -1,0 +1,353 @@
+﻿
+╔══════════════════════════════════════════════════════════════════════════════════════════════════╗
+║           C360 BACKEND ARCHITECTURE  — TensectraKit  (.NET 8 Clean Architecture)                 ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART 1 — HIGH-LEVEL ARCHITECTURE DIAGRAM  (TEXTUAL, BOXES & ARROWS)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ┌─────────────────────────────────────────────────────────────────────────────────────────┐
+  │                          EXTERNAL CALLERS                                               │
+  │  ┌──────────────────────┐     ┌──────────────────────┐     ┌────────────────────────┐   │
+  │  │  HTTP/REST Client    │     │  gRPC Client         │     │  Kafka Message Broker  │   │
+  │  │  (Browser / Mobile / │     │  (Internal Service   │     │  (Event Streams /      │   │
+  │  │   Postman / etc.)    │     │   or 3rd party)      │     │   Approval / Sync)     │   │
+  │  └──────────┬───────────┘     └──────────┬───────────┘     └──────────┬─────────────┘   │
+  └─────────────│──────────────────────────  │  ────────────────────────-─│──────────────── ┘
+                │  HTTP/HTTPS                │  gRPC (protobuf)           │  Kafka Events
+                ▼                             ▼                           ▼
+  ┌─────────────────────────────────────────────────────────────────────────────────────────┐
+  │                  PRESENTATION LAYER  — TensectraKit.Api  (.NET 8 Web API)               │
+  │                                                                                         │
+  │   ┌────────────────────────────────────────────────────────────┐                        │
+  │   │  ASP.NET Core Middleware Pipeline (Program.cs)             │                        │
+  │   │  ┌──────────────────┐  ┌──────────────────┐                │                        │
+  │   │  │ Serilog Logging  │  │ Prometheus Metrics│               │                        │
+  │   │  └──────────────────┘  └──────────────────┘                │                        │
+  │   │  ┌──────────────────────────────────────┐                  │                        │
+  │   │  │  EncryptResponseDataMiddleware        │◄── intercepts   │                        │
+  │   │  │  (encrypts ALL outgoing responses)   │    response body │                        │
+  │   │  └──────────────────────────────────────┘                  │                        │
+  │   └────────────────────────────────────────────────────────────┘                        │
+  │                              │                                                          │
+  │                              ▼                                                          │
+  │   ┌────────────────────────────────────────────────────────────┐                        │
+  │   │  ACTION FILTERS  (per-endpoint pipeline)                   │                        │
+  │   │  ┌─────────────────┐  ┌───────────────── ─┐                │                        │
+  │   │  │ LanguageFilter  │  │ CountryFilter     │                │                        │
+  │   │  │ (reads          │  │ (reads CountryCode│                │                        │
+  │   │  │  LanguageCode   │  │  header, sets     │                │                        │
+  │   │  │  header)        │  │  CountryService)  │                │                        │
+  │   │  └─────────────────┘  └───────────────── ─┘                │                        │
+  │   │  ┌───────────────────────────────────────── ┐              │                        │
+  │   │  │  DecryptRequestDataFilter<T>             │              │                        │
+  │   │  │  (validates & AES-decrypts Base64        │              │                        │
+  │   │  │   encrypted request body → command)      │              │                        │
+  │   │  └──────────────────────────────────────── ─┘              │                        │
+  │   │  ┌─────────────────────────────────── ──────┐              │                        │
+  │   │  │  ApiExceptionFilterAttribute             │              │                        │
+  │   │  │  (global exception handler →             │              │                        │
+  │   │  │   maps to PayloadResponse error codes)   │              │                        │
+  │   │  └───────────────────────────────────────── ┘              │                        │
+  │   └────────────────────────────────────────────────────────────┘                        │
+  │                              │                                                          │
+  │                              ▼                                                          │
+  │   ┌────────────────────────────────────────────────────────────┐                        │
+  │   │  CONTROLLERS                                               │                        │
+  │   │  ┌──────────────────────────────────────────────────────┐  │                        │
+  │   │  │  ApiControllerBase  (abstract)                       │  │                        │
+  │   │  │   └── ISender Mediator (lazy resolved via DI)        │  │                        │
+  │   │  │         │                                            │  │                        │
+  │   │  │  UsersController  : ApiControllerBase                │  │                        │
+  │   │  │   POST /api/v1/SSOUser/OnboardSS0User                │  │                        │
+  │   │  │   → Mediator.Send(CreateUserCommand)                 │  │                        │
+  │   │  └──────────────────────────────────────────────────────┘  │                        │
+  │   └────────────────────────────────────────────────────────────┘                        │
+  │                                                                                         │
+  │   ┌────────────────────────────────────────────────────────────┐                        │
+  │   │  GRPC ENTRY POINT  (TensectraKit.Persistence)              │                        │
+  │   │  ┌──────────────────────────────────────────────────────┐  │                        │
+  │   │  │  CreateUsersService : CreateUsers.CreateUsersBase    │  │                        │
+  │   │  │  (proto-generated)                                   │  │                        │
+  │   │  │   gRPC CreateUser(CreateUserRequest) →               │  │                        │
+  │   │  │   IMediator.Send(CreateUserCommand) →                │  │                        │
+  │   │  │   maps result → gPayloadResponse (protobuf)          │  │                        │
+  │   │  └──────────────────────────────────────────────────────┘  │                        │
+  │   └────────────────────────────────────────────────────────────┘                        │
+  └─────────────────────────────────────────────────────────────────────────────────────────┘
+                              │  MediatR.Send(Command)
+                              ▼
+  ┌─────────────────────────────────────────────────────────────────────────────────────────┐
+  │                   APPLICATION LAYER  — TensectraKit.Application                         │
+  │                                                                                         │
+  │   ┌──────────────────────────────────────────────────────────────────┐                  │
+  │   │  MediatR Pipeline                                                │                  │
+  │   │                                                                  │                  │
+  │   │   Command / Query                                                │                  │
+  │   │   (e.g. CreateUserCommand : CreateUserDto, IRequest<...>)        │                  │
+  │   │          │                                                       │                  │
+  │   │          ▼                                                       │                  │
+  │   │   ValidationBehavior<TRequest,TResponse>   ← IPipelineBehavior   │                  │
+  │   │   (FluentValidation runs ALL validators                          │                  │
+  │   │    for the command before handler is called)                     │                  │
+  │   │          │                                                       │                  │
+  │   │          ▼ (if valid)                                            │                  │
+  │   │   CreateUserCommandHandler : IRequestHandler<...>                │                  │
+  │   │          │ reads CountryCode from ICountryService                │                  │
+  │   │          │ calls IUsersStrategyFactory.CreateUserServiceAsync()  │                  │
+  │   └──────────│───────────────────────────────────────────────────────┘                  │
+  │              │                                                                          │
+  │              ▼                                                                          │
+  │   ┌──────────────────────────────────────────────────────────────────┐                  │
+  │   │  FACTORY PATTERN  (Country-Based Strategy)                       │                  │
+  │   │                                                                  │                  │
+  │   │   IUsersStrategyFactory                                          │                  │
+  │   │          │                                                       │                  │
+  │   │          ▼                                                       │                  │
+  │   │   UsersStrategyFactory (reads CountryCodeSettings from config)   │                  │
+  │   │          │                                                       │                  │
+  │   │          ├─── CountryCode == "01" (Nigeria) ─────────────────►   │                  │
+  │   │          │         NigeriaUsersStrategyServiceFactory            │                  │
+  │   │          │         (wraps IUserService for Nigeria rules)        │                  │
+  │   │          │                                                       │                  │
+  │   │          └─── CountryCode == "02" (Ghana) ───────────────────►   │                  │
+  │   │                    GhanaUsersStrategyServiceFactory              │                  │
+  │   │                    (wraps IUserService for Ghana rules)          │                  │
+  │   │                                                                  │                  │
+  │   │   UsersStrategyService  (abstract base)                          │                  │
+  │   │   └── abstract CreateUserAsync(CreateUserDto) : PayloadResponse  │                  │
+  │   └──────────────────────────────────────────────────────────────────┘                  │
+  │              │                                                                          │
+  │              ▼                                                                          │
+  │   ┌──────────────────────────────────────────────────────────────────┐                  │
+  │   │  SERVICE LAYER  (e.g. UserService : IUserService)                │                  │
+  │   │                                                                  │                  │
+  │   │  Dependencies injected:                                          │                  │
+  │   │   ├── IRepositoryWrapper  (DB access)                            │                  │
+  │   │   ├── ICacheProvider      (Redis read/write)                     │                  │
+  │   │   ├── ICacheOptionsProvider<CacheEnum>  (TTL config per key)     │                  │
+  │   │   ├── IMessageProvider    (localised response messages)          │                  │
+  │   │   ├── IMapper  (AutoMapper)                                      │                  │
+  │   │   ├── IMessageProducers   (Kafka publish)                        │                  │
+  │   │   └── IQueue              (Coravel background queue)             │                  │
+  │   │                                                                  │                  │
+  │   │  Flow:                                                           │                  │
+  │   │   1. Hash password with ClipsHashAndSalt                         │                  │
+  │   │   2. Check Redis cache (get user by ID/username/email/phone)     │                  │
+  │   │   3. Call RepositoryWrapper.UserRepository.CreateAsync()         │                  │
+  │   │   4. Enqueue AuditLogInvocable via IQueue (Coravel)              │                  │
+  │   │   5. Publish Kafka event via IMessageProducers (if needed)       │                  │
+  │   │   6. Return PayloadResponse<UsersDto>                            │                  │
+  │   └──────────────────────────────────────────────────────────────────┘                  │
+  │                                                                                         │
+  │   ┌──────────────────────────────────────────────────────────────────┐                  │
+  │   │  KAFKA CONSUMER  (Saga Pattern)                                  │                  │
+  │   │                                                                  │                  │
+  │   │   Consumer : ConsumerBase  (KafkaLibrary)                        │                  │
+  │   │   └── Invoke() registers topic subscriptions                     │                  │
+  │   │                                                                  │                  │
+  │   │   APPROVAL SAGA  (GenericApprovalConsumer<TEntity>)              │                  │
+  │   │   ──────────────────────────────────────────────────             │                  │
+  │   │   Topic: PostAvailmentApprovalCompleted                          │                  │
+  │   │          │                                                       │                  │
+  │   │          ▼                                                       │                  │
+  │   │   PostAvailmentApprovalConsumer                                  │                  │
+  │   │          │ 1. IsForThisEntity(entityType) guard                  │                  │
+  │   │          │ 2. GetEntityAsync(id) from DB via IRepositoryWrapper  │                  │
+  │   │          │ 3. Update ApprovalStatus, ApprovalComment, ApprovalDate│                 │
+  │   │          │ 4. ApplyEntitySpecificApprovalLogic() (abstract)      │                  │
+  │   │          │ 5. SaveEntityAsync()                                  │                  │
+  │   │          │ 6. QueueAuditAsync() → enqueues AuditLogInvocable     │                  │
+  │   │          ▼                                                       │                  │
+  │   │   (Idempotent, retried via KafkaLibrary offset management)       │                  │
+  │   │                                                                  │                  │
+  │   │   USER SYNC SAGA  (GenericUserSyncConsumer<TEntity>)             │                  │
+  │   │   ──────────────────────────────────────────────────             │                  │
+  │   │   Topic: UserProfileUpdated                                      │                  │
+  │   │          │                                                       │                  │
+  │   │          ▼                                                       │                  │
+  │   │   1. FindAffectedEntitiesAsync(userId) (abstract)                │                  │
+  │   │   2. ShouldUpdateEntityAsync() guard (abstract)                  │                  │
+  │   │   3. ApplyUserChangesToEntityAsync() (abstract)                  │                  │
+  │   │   4. Save + QueueAudit for each changed entity                   │                  │
+  │   │                                                                  │                  │
+  │   │   CUSTOMER SYNC SAGA  (GenericCustomerSyncConsumer<TEntity>)     │                  │
+  │   │   ─────────────────────────────────────────────────────────      │                  │
+  │   │   Topic: CustomerUpdated                                         │                  │
+  │   │          │ 1. FindAffectedEntitiesAsync(customerId)              │                  │
+  │   │          │ 2. ShouldUpdateEntityAsync()                          │                  │
+  │   │          │ 3. ApplyCustomerChangesToEntityAsync()                │                  │
+  │   │          │ 4. Save + QueueAudit + PublishCompletionEventAsync()  │                  │
+  │   │          ▼                                                       │                  │
+  │   │   (Completion event published back to Kafka = saga reply)        │                  │
+  │   └──────────────────────────────────────────────────────────────────┘                  │
+  │                                                                                         │
+  │   ┌──────────────────────────────────────────────────────────────────┐                  │
+  │   │  CORAVEL INVOCABLE  (Background Job Queue)                       │                  │
+  │   │                                                                  │                  │
+  │   │   BaseInvocable<T> : IInvocable, IInvocableWithPayload<T>        │                  │
+  │   │   └── Invoke(action) with RetryAsync(maxRetries=3)               │                  │
+  │   │                                                                  │                  │
+  │   │   AuditLogInvocable : BaseInvocable<Users>                       │                  │
+  │   │   └── On trigger: IRepositoryWrapper.UserRepository.CreateAsync()│                  │
+  │   │       (persists audit record in background, off critical path)   │                  │
+  │   └──────────────────────────────────────────────────────────────────┘                  │
+  └─────────────────────────────────────────────────────────────────────────────────────────┘
+                              │  IRepositoryWrapper
+                              ▼
+  ┌─────────────────────────────────────────────────────────────────────────────────────────┐
+  │                  INFRASTRUCTURE LAYER  — TensectraKit.Infrastructure                    │
+  │                                                                                         │
+  │   ┌──────────────────────────────────────────────────────────────────┐                  │
+  │   │  REPOSITORY WRAPPER PATTERN                                      │                  │
+  │   │                                                                  │                  │
+  │   │   IRepositoryWrapper  (Domain contract)                          │                  │
+  │   │          │                                                       │                  │
+  │   │          ▼                                                       │                  │
+  │   │   RepositoryWrapper  (Infrastructure implementation)             │                  │
+  │   │   └── lazy-initialises IUserRepository (and future repos)        │                  │
+  │   │       (single unit-of-work entry point for all repos)            │                  │
+  │   └──────────────────────────────────────────────────────────────────┘                  │
+  │              │                                                                          │
+  │              ▼                                                                          │
+  │   ┌──────────────────────────────────────────────────────────────────┐                  │
+  │   │  REPOSITORY BASE PATTERN                                         │                  │
+  │   │                                                                  │                  │
+  │   │   IRepositoryBase<TModel>  (Domain interface)                    │                  │
+  │   │   └── CRUD: CreateAsync, Update, Delete, FindAsync               │                  │
+  │   │   └── Query: FindByCondition, FindAll, GetDataSet                │                  │
+  │   │   └── Include: GetDataSetWithIncludes(params includes[])         │                  │
+  │   │   └── QueryJoin: joins with IQueryable builder                   │                  │
+  │   │   └── ⭐ BULK:  BulkInsertAsync / BulkUpdateAsync / BulkDeleteAsync│                │
+  │   │                  (ready for EFCore.BulkExtensions or similar)    │                  │
+  │   │                                                                  │                  │
+  │   │   RepositoryBase<TModel>  (abstract implementation)              │                  │
+  │   │   └── Soft-delete aware: Delete() sets IsDeleted=true via        │                  │
+  │   │       reflection before falling back to hard remove              │                  │
+  │   │   └── CreateRangeAsync() for batch inserts                       │                  │
+  │   │   └── QueryJoin() exposes raw IQueryable for complex JOINs       │                  │
+  │   │                                                                  │                  │
+  │   │   UserRepository : RepositoryBase<Users>                         │                  │
+  │   │   (entity-specific queries inherit all base methods)             │                  │
+  │   └──────────────────────────────────────────────────────────────────┘                  │
+  │              │                                                                          │
+  │              ▼                                                                          │
+  │   ┌──────────────────────────────────────────────────────────────────┐                  │
+  │   │  MULTI-DATABASE PROVIDER  (config-driven, no code change needed) │                  │
+  │   │                                                                  │                  │
+  │   │   appsettings.json → DatabaseSettings:DatabaseProviderName       │                  │
+  │   │                                                                  │                  │
+  │   │   DbModel  (abstract base DbContext)                             │                  │
+  │   │   └── DbSet<Users> Users_test_tbl                                │                  │
+  │   │                                                                  │                  │
+  │   │   ┌──────────────────┐  ┌──────────────────┐  ┌──────────────┐  │                  │
+  │   │   │ SqlServerDbContext│  │ OracleDbContext   │  │PostgresDbCtx │  │                  │
+  │   │   │  : DbModel        │  │  : DbModel        │  │  : DbModel   │  │                  │
+  │   │   │                  │  │                  │  │              │  │                  │
+  │   │   │ - Soft-delete    │  │ - BOOLEAN enum   │  │ - Npgsql     │  │                  │
+  │   │   │   global filter  │  │   → NUMBER(2)    │  │   provider   │  │                  │
+  │   │   │ - Audit auto-    │  │   column mapping │  │              │  │                  │
+  │   │   │   fill on Save   │  │ - Expression-    │  │              │  │                  │
+  │   │   │   (CreatedAt,    │  │   based soft-    │  │              │  │                  │
+  │   │   │    UpdatedBy)    │  │   delete filter  │  │              │  │                  │
+  │   │   └──────────────────┘  └──────────────────┘  └──────────────┘  │                  │
+  │   │                                                                  │                  │
+  │   │   Factory contexts (SqlServerDbContextFactory, OracleDbContext-  │                  │
+  │   │   Factory, PostgresDbContextFactory) used for EF migrations only │                  │
+  │   └──────────────────────────────────────────────────────────────────┘                  │
+  │                                                                                         │
+  │   ┌──────────────────────────────────────────────────────────────────┐                  │
+  │   │  DB SEEDER  (startup, runs once if table is empty)               │                  │
+  │   │  DbSeeder.SeedAsync()                                            │                  │
+  │   │   └── Loads users.json → hashes passwords via ClipsHashAndSalt   │                  │
+  │   │   └── Handles Oracle identity workaround                         │                  │
+  │   │   └── AddRangeAsync + SaveChangesAsync                           │                  │
+  │   └──────────────────────────────────────────────────────────────────┘                  │
+  └─────────────────────────────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+  ┌─────────────────────────────────────────────────────────────────────────────────────────┐
+  │                  DOMAIN LAYER  — TensectraKit.Domain  (no dependencies)                 │
+  │                                                                                         │
+  │   ┌──────────────────────────────────────────────────────────────────┐                  │
+  │   │  ENTITIES (DAL models)                                           │                  │
+  │   │                                                                  │                  │
+  │   │   Entity<TPrimaryKey>  (abstract base)                           │                  │
+  │   │   └── Id (PK, auto-generated)                                    │                  │
+  │   │   └── Implements IAuditable: CreatedAt, UpdatedAt,               │                  │
+  │   │                               CreatedBy, UpdatedBy               │                  │
+  │   │                                                                  │                  │
+  │   │   Users : Entity<int>, ISoftDelete, IApproval                    │                  │
+  │   │   └── UserName, PhoneNo, FirstName, LastName, Dob, Email         │                  │
+  │   │   └── PasswordHash, PasswordSalt  (never raw password)           │                  │
+  │   │   └── ISoftDelete → IsDeleted (BOOLEAN enum)                     │                  │
+  │   │   └── IApproval  → ApprovedStatus, ApprovalComment, ApprovalDate │                  │
+  │   └──────────────────────────────────────────────────────────────────┘                  │
+  │                                                                                         │
+  │   ┌──────────────────────────────────────────────────────────────────┐                  │
+  │   │  INTERFACES (contracts, no implementations)                      │                  │
+  │   │   ├── IRepositoryBase<TModel>  — all DB ops + bulk ops           │                  │
+  │   │   ├── IUserRepository          — user-specific queries           │                  │
+  │   │   ├── IRepositoryWrapper       — aggregates all repos            │                  │
+  │   │   └── IUnitOfWork              — transaction boundary            │                  │
+  │   └──────────────────────────────────────────────────────────────────┘                  │
+  │                                                                                         │
+  │   ┌──────────────────────────────────────────────────────────────────┐                  │
+  │   │  DTOs & ENUMS                                                    │                  │
+  │   │   ├── CreateUserDto, UsersDto  (data transfer shapes)            │                  │
+  │   │   ├── ApprovalStatus enum  (Pending / Approved / Rejected)       │                  │
+  │   │   └── BOOLEAN enum  (FALSE=0 / TRUE=1, Oracle-safe)              │                  │
+  │   └──────────────────────────────────────────────────────────────────┘                  │
+  └─────────────────────────────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+  ┌─────────────────────────────────────────────────────────────────────────────────────────┐
+  │              PERSISTENCE LAYER  — TensectraKit.Persistence (gRPC contract layer)        │
+  │                                                                                         │
+  │   ┌──────────────────────────────────────────────────────────────────┐                  │
+  │   │  GRPC / PROTO SERVICE                                            │                  │
+  │   │                                                                  │                  │
+  │   │   Users.proto  (protobuf contract)                               │                  │
+  │   │   └── CreateUserRequest  message                                 │                  │
+  │   │   └── gPayloadResponse   message  (IsSuccessful + gResponse)     │                  │
+  │   │   └── UsersDto           message  (proto version of domain DTO)  │                  │
+  │   │                                                                  │                  │
+  │   │   CreateUsersService : CreateUsers.CreateUsersBase               │                  │
+  │   │   └── Receives CreateUserRequest (gRPC protobuf)                 │                  │
+  │   │   └── Maps → CreateUserCommand via gRPCMappingProfile (AutoMapper│                  │
+  │   │   └── IMediator.Send(command) — re-uses Application pipeline     │                  │
+  │   │   └── Maps result → gPayloadResponse (Any.Pack for nested data)  │                  │
+  │   │                                                                  │                  │
+  │   │   gRPCMappingProfile : Profile  (AutoMapper)                     │                  │
+  │   │   └── CreateMap<CreateUserRequest, CreateUserCommand>            │                  │
+  │   └──────────────────────────────────────────────────────────────────┘                  │
+  └─────────────────────────────────────────────────────────────────────────────────────────┘
+
+ ┌────────────────────────────────────────────────────────────────────────────────────────────┐
+ │                  CROSS-CUTTING CONCERNS  (apply across all layers)                         │
+ │                                                                                            │
+ │  ┌───────────────────┐  ┌───────────────────┐  ┌───────────────────────────────────── ─┐   │
+ │  │  REDIS CACHE      │  │  KAFKA MESSAGING  │  │  ENCRYPTION  (AES symmetric)          │   │
+ │  │  (RedisCacheLib)  │  │  (KafkaLibrary)   │  │  GeneralUtil.Encryptor/Decryptor      │   │
+ │  │  ICacheProvider   │  │  IMessageProducers│  │  EncryptionKey from SystemSettings    │   │
+ │  │  ICacheOptions-   │  │  ConsumerBase     │  │  ┌──────────────────────────────────┐ │   │
+ │  │  Provider<Enum>   │  │  (KafkaConfig)    │  │  │ Request:  DecryptRequestDataFilter││   │
+ │  └───────────────────┘  └───────────────────┘  │  │ Response: EncryptResponseMiddleware│ │ │
+ │                                                │  └──────────────────────────────────┘│    │
+ │  ┌───────────────────┐  ┌───────────────────┐  └──────────────────────────────────────┘    │
+ │  │  LOGGING          │  │  VALIDATION       │                                              │
+ │  │  Serilog          │  │  FluentValidation │  ┌──────────────────────────────────────┐    │
+ │  │  → Console        │  │  + ValidationBe-  │  │  SWAGGER / OPENAPI                   │    │
+ │  │  → Elasticsearch  │  │  havior (MediatR  │  │  SwaggerHeaderFilter                 │    │
+ │  │  → Seq            │  │  pipeline)        │  │  CountryCode + LanguageCode headers  │    │
+ │  │  → File (ext.)    │  │                   │  │  exposed as SecurityDefinitions      │    │
+ │  └───────────────────┘  └───────────────────┘  └──────────────────────────────────────┘    │
+ │                                                                                            │
+ │  ┌───────────────────┐  ┌───────────────────┐                                              │
+ │  │  CORAVEL QUEUE    │  │  AUTOMAPPER        │                                             │
+ │  │  Background tasks │  │  MappingProfile    │                                             │
+ │  │  AuditLogInvocable│  │  gRPCMappingProfile│                                             │
+ │  │  RetryAsync x3    │  │                   │                                              │
+ │  └───────────────────┘  └───────────────────┘                                              │
+ └────────────────────────────────────────────────────────────────────────────────────────────┘

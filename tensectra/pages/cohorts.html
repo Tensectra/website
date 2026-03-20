@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cohorts | Tensectra — 6 Weeks to a Live Deployed Product</title>
+  <meta name="description" content="Not a certificate. Not a completion badge. A real URL, a real GitHub repo, and an architecture you can explain in any interview.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="icon" type="image/png" href="../images/tensectra-logo.png">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="../" class="navbar-logo">
+        <img src="../images/tensectra-logo.png" alt="Tensectra">
+        <span>TENSECTRA</span>
+      </a>
+      
+      <ul class="navbar-nav">
+        <li><a href="../">Home</a></li>
+        <li><a href="courses">Courses</a></li>
+        <li><a href="pro">Pro</a></li>
+        <li><a href="cohorts" class="active">Cohorts</a></li>
+        <li><a href="consultancy">Consultancy</a></li>
+        <li><a href="infrastructure">Infrastructure</a></li>
+        <li><a href="about">About</a></li>
+      </ul>
+      
+      <div class="navbar-cta">
+        <a href="#apply" class="btn btn-primary btn-sm">Apply Now</a>
+      </div>
+      
+      <button class="mobile-menu-btn" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" style="min-height: 60vh; padding-top: 120px;">
+    <div class="binary-rain"></div>
+    <div class="glow-cyan" style="top: 20%; right: 10%;"></div>
+    
+    <div class="container">
+      <div class="hero-content">
+        <h1>The 6-Week Cohort That Ends With a <span class="text-cyan">Live Deployed Product.</span></h1>
+        <p class="hero-subtitle">
+          Not a certificate. Not a completion badge. A real URL, a real GitHub repo, and an architecture you can explain in any interview.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Course Selector -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="tabs course-selector">
+        <button class="tab-btn active" data-course="backend">Backend Engineer</button>
+        <button class="tab-btn" data-course="frontend">Frontend Engineer</button>
+        <button class="tab-btn" data-course="mobile">Mobile Builder</button>
+      </div>
+      
+      <!-- Backend Course Content -->
+      <div id="course-backend" class="course-content active">
+        <div class="grid-2" style="align-items: center; margin-bottom: var(--space-2xl);">
+          <div>
+            <h2 style="margin-bottom: var(--space-md);">Become an AI-Powered Backend Engineer</h2>
+            <p style="color: var(--text-primary); font-size: 1.1rem; margin-bottom: var(--space-md);">
+              Build SaaSKit — your deployed .NET 8 SaaS backend with multi-tenant architecture, event-driven messaging, and production-grade patterns.
+            </p>
+            <div class="course-stack" style="margin-bottom: var(--space-md);">
+              <span class="stack-pill">.NET 8</span>
+              <span class="stack-pill">PostgreSQL</span>
+              <span class="stack-pill">Redis</span>
+              <span class="stack-pill">Kafka</span>
+              <span class="stack-pill">Railway</span>
+            </div>
+            <p class="course-ai-line">"AI writes the boilerplate. You design the architecture."</p>
+          </div>
+          <div class="card" style="background: linear-gradient(135deg, rgba(0, 204, 255, 0.1), rgba(59, 91, 255, 0.1)); display: flex; align-items: center; justify-content: center; min-height: 300px;">
+            <div style="text-align: center;">
+              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="1">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+              <p style="color: var(--text-muted); margin-top: var(--space-md);">SaaSKit Dashboard Preview</p>
+              <div style="margin-top: var(--space-sm); font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-cyan);">
+                GET /api/v1/tenants<br>
+                POST /api/v1/auth/login<br>
+                GET /api/v1/users/me
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 6-Week Timeline -->
+        <h3 style="margin-bottom: var(--space-lg);">The 6-Week Arc</h3>
+        <div class="timeline" style="margin-bottom: var(--space-2xl);">
+          <div class="timeline-line"></div>
+          
+          <div class="timeline-item active">
+            <div class="timeline-dot"></div>
+            <div class="timeline-week">WEEK 1 — Learn Boldly</div>
+            <div class="timeline-title">Clean Architecture Fundamentals</div>
+            <div class="timeline-desc">Set up your .NET 8 project structure with proper separation of concerns. Understand why each layer exists.</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-week">WEEK 2 — Learn Boldly</div>
+            <div class="timeline-title">Domain-Driven Design</div>
+            <div class="timeline-desc">Model your domain with entities, value objects, and aggregates. Build the core business logic.</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-week">WEEK 3 — Build Fearlessly</div>
+            <div class="timeline-title">CQRS & Event Sourcing</div>
+            <div class="timeline-desc">Separate read and write operations. Implement event-driven patterns with Kafka.</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-week">WEEK 4 — Build Fearlessly</div>
+            <div class="timeline-title">Multi-Tenancy & Security</div>
+            <div class="timeline-desc">Implement tenant isolation, JWT authentication, and authorization policies.</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-week">WEEK 5 — Scale Intelligently</div>
+            <div class="timeline-title">Caching & Performance</div>
+            <div class="timeline-desc">Add Redis caching, optimize database queries, and prepare for production load.</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-week">WEEK 6 — Scale Intelligently</div>
+            <div class="timeline-title">Deploy & Present</div>
+            <div class="timeline-desc">Deploy to Railway. Present your architecture to the cohort. Get feedback from peers and instructors.</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Frontend Course Content -->
+      <div id="course-frontend" class="course-content">
+        <div class="grid-2" style="align-items: center; margin-bottom: var(--space-2xl);">
+          <div>
+            <h2 style="margin-bottom: var(--space-md);">Become an AI-Powered Frontend Engineer</h2>
+            <p style="color: var(--text-primary); font-size: 1.1rem; margin-bottom: var(--space-md);">
+              Build TechPulse — live Next.js SaaS connecting to your backend with server components, proper state management, and scalable UI architecture.
+            </p>
+            <div class="course-stack" style="margin-bottom: var(--space-md);">
+              <span class="stack-pill">Next.js 14</span>
+              <span class="stack-pill">TypeScript</span>
+              <span class="stack-pill">Tailwind</span>
+              <span class="stack-pill">Vercel</span>
+            </div>
+            <p class="course-ai-line">"AI generates the components. You own the system."</p>
+          </div>
+          <div class="card" style="background: linear-gradient(135deg, rgba(59, 91, 255, 0.1), rgba(123, 47, 255, 0.1)); display: flex; align-items: center; justify-content: center; min-height: 300px;">
+            <div style="text-align: center;">
+              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="1">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+              <p style="color: var(--text-muted); margin-top: var(--space-md);">TechPulse Dashboard Preview</p>
+              <div style="margin-top: var(--space-sm); font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-blue);">
+                /dashboard<br>
+                /settings/team<br>
+                /api/webhooks
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <h3 style="margin-bottom: var(--space-lg);">The 6-Week Arc</h3>
+        <div class="timeline" style="margin-bottom: var(--space-2xl);">
+          <div class="timeline-line"></div>
+          
+          <div class="timeline-item active">
+            <div class="timeline-dot"></div>
+            <div class="timeline-week">WEEK 1 — Learn Boldly</div>
+            <div class="timeline-title">Next.js 14 & App Router</div>
+            <div class="timeline-desc">Master server components, client components, and the new App Router paradigm.</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-week">WEEK 2 — Learn Boldly</div>
+            <div class="timeline-title">TypeScript & Component Architecture</div>
+            <div class="timeline-desc">Build type-safe components with proper prop interfaces and reusable patterns.</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-week">WEEK 3 — Build Fearlessly</div>
+            <div class="timeline-title">State Management & Data Fetching</div>
+            <div class="timeline-desc">Implement global state, server state, and cache strategies with TanStack Query.</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-week">WEEK 4 — Build Fearlessly</div>
+            <div class="timeline-title">Authentication & Authorization</div>
+            <div class="timeline-desc">Secure your app with NextAuth, protected routes, and role-based access.</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-week">WEEK 5 — Scale Intelligently</div>
+            <div class="timeline-title">Performance & Optimization</div>
+            <div class="timeline-desc">Optimize bundle size, implement code splitting, and add performance monitoring.</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-week">WEEK 6 — Scale Intelligently</div>
+            <div class="timeline-title">Deploy & Present</div>
+            <div class="timeline-desc">Deploy to Vercel. Present your frontend architecture and performance metrics.</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Mobile Course Content -->
+      <div id="course-mobile" class="course-content">
+        <div class="grid-2" style="align-items: center; margin-bottom: var(--space-2xl);">
+          <div>
+            <h2 style="margin-bottom: var(--space-md);">Become an AI-Powered Mobile Builder</h2>
+            <p style="color: var(--text-primary); font-size: 1.1rem; margin-bottom: var(--space-md);">
+              Build PulseApp — React Native app shipping to real devices with proper navigation, state management, and offline-first architecture.
+            </p>
+            <div class="course-stack" style="margin-bottom: var(--space-md);">
+              <span class="stack-pill">React Native</span>
+              <span class="stack-pill">Expo</span>
+              <span class="stack-pill">EAS Build</span>
+            </div>
+            <p class="course-ai-line">"AI builds the screens. You architect the navigation."</p>
+          </div>
+          <div class="card" style="background: linear-gradient(135deg, rgba(123, 47, 255, 0.1), rgba(0, 204, 255, 0.1)); display: flex; align-items: center; justify-content: center; min-height: 300px;">
+            <div style="text-align: center;">
+              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--accent-purple)" stroke-width="1">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                <line x1="12" y1="18" x2="12" y2="18"></line>
+              </svg>
+              <p style="color: var(--text-muted); margin-top: var(--space-md);">PulseApp Mobile Preview</p>
+              <div style="margin-top: var(--space-sm); font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-purple);">
+                /home<br>
+                /profile/settings<br>
+                /notifications
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <h3 style="margin-bottom: var(--space-lg);">The 6-Week Arc</h3>
+        <div class="timeline" style="margin-bottom: var(--space-2xl);">
+          <div class="timeline-line"></div>
+          
+          <div class="timeline-item active">
+            <div class="timeline-dot"></div>
+            <div class="timeline-week">WEEK 1 — Learn Boldly</div>
+            <div class="timeline-title">React Native & Expo Fundamentals</div>
+            <div class="timeline-desc">Set up your development environment and understand the React Native architecture.</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-week">WEEK 2 — Learn Boldly</div>
+            <div class="timeline-title">Navigation & Routing</div>
+            <div class="timeline-desc">Implement stack, tab, and drawer navigation with React Navigation v6.</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-week">WEEK 3 — Build Fearlessly</div>
+            <div class="timeline-title">State Management & APIs</div>
+            <div class="timeline-desc">Connect to your backend, manage global state, and handle API errors gracefully.</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-week">WEEK 4 — Build Fearlessly</div>
+            <div class="timeline-title">Offline-First & Storage</div>
+            <div class="timeline-desc">Implement local storage, sync strategies, and offline queue management.</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-week">WEEK 5 — Scale Intelligently</div>
+            <div class="timeline-title">Push Notifications & Deep Links</div>
+            <div class="timeline-desc">Add push notifications, handle deep links, and prepare for app store submission.</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-week">WEEK 6 — Scale Intelligently</div>
+            <div class="timeline-title">Build & Present</div>
+            <div class="timeline-desc">Build with EAS, deploy to TestFlight/Play Console. Present your mobile architecture.</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Prompt Maturity Ladder -->
+      <h3 style="margin-bottom: var(--space-lg);">The Prompt Maturity Ladder</h3>
+      <p style="color: var(--text-muted); margin-bottom: var(--space-lg);">
+        Every week, you level up your ability to work with AI. This is the differentiator — no other course shows this.
+      </p>
+      
+      <div class="ladder" style="margin-bottom: var(--space-2xl);">
+        <div class="ladder-item">
+          <div class="ladder-level">L1</div>
+          <div class="ladder-name">Basic Generation</div>
+          <div class="ladder-desc">"Write me a login endpoint" — You get code, but no architecture.</div>
+        </div>
+        <div class="ladder-item">
+          <div class="ladder-level">L2</div>
+          <div class="ladder-name">Constraint-Based</div>
+          <div class="ladder-desc">"Use CQRS pattern with separate read/write models" — You get structured code.</div>
+        </div>
+        <div class="ladder-item">
+          <div class="ladder-level">L3</div>
+          <div class="ladder-name">Refactor Prompting</div>
+          <div class="ladder-desc">"Extract this business logic into a domain service" — You improve existing code.</div>
+        </div>
+        <div class="ladder-item">
+          <div class="ladder-level">L4</div>
+          <div class="ladder-name">Architecture Audit</div>
+          <div class="ladder-desc">"Review this against Clean Architecture principles" — You validate patterns.</div>
+        </div>
+        <div class="ladder-item">
+          <div class="ladder-level">L5</div>
+          <div class="ladder-name">Performance Optimisation</div>
+          <div class="ladder-desc">"Identify N+1 queries and suggest caching strategy" — You optimize at scale.</div>
+        </div>
+      </div>
+      
+      <!-- Who This Is For -->
+      <h3 style="margin-bottom: var(--space-lg);">Who This Is For</h3>
+      <div class="grid-3" style="margin-bottom: var(--space-lg);">
+        <div class="persona-card">
+          <p>"You write .NET code but cannot explain the architecture."</p>
+        </div>
+        <div class="persona-card">
+          <p>"You know CRUD but have never built auth, caching, or events."</p>
+        </div>
+        <div class="persona-card">
+          <p>"You are self-taught and your codebase feels fragile."</p>
+        </div>
+      </div>
+      <div class="persona-card negative" style="max-width: 600px;">
+        <p>"This is not for complete beginners. You need to have written code before."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="apply" class="section" style="background: var(--bg-card);">
+    <div class="container">
+      <div class="tabs">
+        <button class="tab-btn active" data-pricing="live">Live Cohort</button>
+        <button class="tab-btn" data-pricing="self">Self-Paced</button>
+      </div>
+      
+      <!-- Live Cohort Pricing -->
+      <div id="pricing-live" class="pricing-content active">
+        <div class="grid-2" style="align-items: start;">
+          <div class="card tier-card">
+            <div class="tier-header">
+              <span class="badge" style="position: static; display: inline-block; margin-bottom: var(--space-sm);">Founding Member</span>
+              <h3 class="tier-name">Live Cohort</h3>
+              <div class="tier-price">$299</div>
+              <p class="tier-price-note">One-time payment</p>
+            </div>
+            
+            <div style="background: rgba(0, 204, 255, 0.05); padding: var(--space-md); border-radius: var(--radius-md); margin-bottom: var(--space-lg);">
+              <p style="color: var(--accent-cyan); font-weight: 600; margin-bottom: var(--space-xs);">Next Cohort: June 2026</p>
+              <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">Seats remaining: <span style="color: var(--text-white); font-weight: 600;">12</span></p>
+            </div>
+            
+            <ul class="tier-features">
+              <li>All ebooks and playbooks</li>
+              <li>6 weekly live sessions (2 hours each)</li>
+              <li>Private cohort Slack channel</li>
+              <li>Week 6 presentation to cohort</li>
+              <li>Certificate of completion</li>
+              <li>Alumni community access</li>
+            </ul>
+            
+            <a href="../forms/cohort-application" class="btn btn-primary" style="width: 100%;">Apply for Cohort →</a>
+            <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-top: var(--space-sm);">
+              Application reviewed within 48 hours
+            </p>
+          </div>
+          
+          <div>
+            <h4 style="margin-bottom: var(--space-md);">What Happens After You Apply</h4>
+            <div class="timeline">
+              <div class="timeline-line"></div>
+              
+              <div class="timeline-item active">
+                <div class="timeline-dot"></div>
+                <div class="timeline-title">Submit Application</div>
+                <div class="timeline-desc">Fill out the 5-minute application form.</div>
+              </div>
+              
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-title">Review (48 hours)</div>
+                <div class="timeline-desc">We review your experience and goals.</div>
+              </div>
+              
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-title">Acceptance & Payment</div>
+                <div class="timeline-desc">If accepted, you will receive a payment link.</div>
+              </div>
+              
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-title">Cohort Begins</div>
+                <div class="timeline-desc">Join the private channel and start building.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Self-Paced Pricing -->
+      <div id="pricing-self" class="pricing-content">
+        <div class="grid-2" style="align-items: start;">
+          <div class="card tier-card">
+            <div class="tier-header">
+              <h3 class="tier-name">Self-Paced</h3>
+              <div class="tier-price">$149</div>
+              <p class="tier-price-note">One-time payment</p>
+            </div>
+            
+            <div style="background: rgba(59, 91, 255, 0.05); padding: var(--space-md); border-radius: var(--radius-md); margin-bottom: var(--space-lg);">
+              <p style="color: var(--accent-blue); font-weight: 600; margin: 0;">Always Available — Start Anytime</p>
+            </div>
+            
+            <ul class="tier-features">
+              <li>All ebooks and playbooks</li>
+              <li>Recorded session videos</li>
+              <li>Community access (async)</li>
+              <li>Course materials for 1 year</li>
+            </ul>
+            
+            <ul class="tier-features" style="opacity: 0.5;">
+              <li style="text-decoration: line-through;">Live sessions</li>
+              <li style="text-decoration: line-through;">Private cohort channel</li>
+              <li style="text-decoration: line-through;">Week 6 presentation</li>
+            </ul>
+            
+            <a href="#" class="btn btn-secondary" style="width: 100%;" onclick="showNotification('Self-paced checkout coming soon!', 'info')">Purchase Self-Paced →</a>
+          </div>
+          
+          <div class="card" style="background: rgba(0, 204, 255, 0.05);">
+            <h4 style="margin-bottom: var(--space-md); color: var(--accent-cyan);">Upgrade Later</h4>
+            <p style="color: var(--text-muted);">
+              Completed the self-paced course and want more? You can upgrade to Pro for ongoing access to all courses and updates.
+            </p>
+            <a href="pro" class="btn btn-outline btn-sm" style="margin-top: var(--space-md);">Learn About Pro →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section">
+    <div class="container container-narrow">
+      <div class="section-header">
+        <h2>Frequently Asked Questions</h2>
+      </div>
+      
+      <div class="accordion">
+        <div class="accordion-item">
+          <button class="accordion-header">
+            I already use ChatGPT and Copilot to write my code. Is this course still for me?
+            <span class="accordion-icon">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              Yes — and it is probably more for you than you think. Using AI to generate code is not the problem. The problem is not knowing the architecture well enough to validate what it produces. Every week of this course has two components: the architecture chapter that explains the pattern and why it exists, and the Prompt Playbook that shows you how to get AI to generate that pattern correctly — and what to look for when it gets it wrong. If you are already comfortable with AI coding, this course is the upgrade layer: the architectural knowledge that makes your prompts more precise and your code reviews more confident.
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <button class="accordion-header">
+            Is coding still worth learning when AI can write code?
+            <span class="accordion-icon">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              The developers most at risk from AI are the ones who only write code without understanding the system around it. AI raises the floor — anyone can generate a working CRUD endpoint. What it cannot do is design the architecture, make the trade-offs, or validate that what it generated will still work when the system has 50 endpoints, three databases, and a team of six people changing it simultaneously. That is what this course teaches. The developers who will be most valuable in five years are not the ones who wrote every line themselves. They are the ones who understood the systems well enough to direct, audit, and own what AI produces. Tensectra teaches you to be that developer.
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <button class="accordion-header">
+            Do I need to know .NET already?
+            <span class="accordion-icon">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              You should have written code before — in any language. The course is not for complete beginners. If you understand variables, functions, and basic object-oriented concepts, you can follow along. We teach .NET 8 patterns from the ground up, but we move fast. The focus is on architecture, not syntax.
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <button class="accordion-header">
+            What if I miss a live session?
+            <span class="accordion-icon">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              All live sessions are recorded and available within 24 hours. You will have access to the recordings for the duration of the cohort plus 30 days after. Pro members keep access indefinitely.
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <button class="accordion-header">
+            Is this just another tutorial?
+            <span class="accordion-icon">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              No. Tutorials show you how to build a demo. This course ends with a live deployed product on a real domain, with a real database, serving real requests. You will have a GitHub repo you can show in interviews and a deployed URL you can share.
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <button class="accordion-header">
+            How is this different from Udemy?
+            <span class="accordion-icon">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              Udemy courses are pre-recorded and self-paced. Tensectra cohorts are live, with real instructors, real deadlines, and real accountability. You will present your project in Week 6 to the cohort. That pressure produces results that self-paced courses rarely match.
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <button class="accordion-header">
+            What happens after Week 6?
+            <span class="accordion-icon">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              You keep your deployed project, your GitHub repo, and your course materials. You get a certificate of completion. You are invited to the alumni community. And you are eligible for founding member pricing on Tensectra Pro if you want ongoing access to all courses and updates.
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <button class="accordion-header">
+            Can I pay in instalments?
+            <span class="accordion-icon">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              Yes. We offer 2-payment plans for cohort enrolment — 50% to secure your spot, 50% before Week 3. Contact us at hello@tensectra.com to arrange this.
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <button class="accordion-header">
+            Is there a refund policy?
+            <span class="accordion-icon">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              Yes. If you complete Week 1 and decide the course is not for you, we offer a full refund minus a $50 administrative fee. No refunds after Week 2 begins.
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <button class="accordion-header">
+            What is Tensectra Pro?
+            <span class="accordion-icon">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              Pro is our membership program that gives you access to every course we release, updated ebooks and playbooks for every framework version, a monthly ecosystem digest, and a private Pro community with monthly live Q&A. It's $15/month or $120/year.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <img src="../images/tensectra-logo.png" alt="" class="footer-watermark">
+    
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>Products</h4>
+          <ul class="footer-links">
+            <li><a href="courses">Courses</a></li>
+            <li><a href="pro">Pro Membership</a></li>
+            <li><a href="infrastructure">ERP Kit</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul class="footer-links">
+            <li><a href="consultancy">Consultancy</a></li>
+            <li><a href="consultancy">Corporate Training</a></li>
+            <li><a href="consultancy">Retainer</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="about">About</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="../forms/contact">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul class="footer-links">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+          
+          <div class="footer-social">
+            <a href="#" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+            </a>
+            <a href="#" aria-label="YouTube">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+              </svg>
+            </a>
+            <a href="#" aria-label="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p class="footer-tagline">Learn Boldly. Build Fearlessly. Scale Intelligently.</p>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: var(--space-sm);">
+          © 2026 Tensectra. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Source Code Download Button -->
+  <div class="source-download">
+    <button class="source-download-btn" id="source-download-btn" title="Download Source Code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg>
+      <span>Source Code</span>
+    </button>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // Course selector tabs
+    document.querySelectorAll('.course-selector .tab-btn').forEach(tab => {
+      tab.addEventListener('click', function() {
+        const course = this.getAttribute('data-course');
+        
+        document.querySelectorAll('.course-selector .tab-btn').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.course-content').forEach(c => c.classList.remove('active'));
+        
+        this.classList.add('active');
+        document.getElementById('course-' + course).classList.add('active');
+      });
+    });
+    
+    // Pricing tabs
+    document.querySelectorAll('[data-pricing]').forEach(tab => {
+      tab.addEventListener('click', function() {
+        const pricing = this.getAttribute('data-pricing');
+        
+        document.querySelectorAll('[data-pricing]').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.pricing-content').forEach(c => c.classList.remove('active'));
+        
+        this.classList.add('active');
+        document.getElementById('pricing-' + pricing).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

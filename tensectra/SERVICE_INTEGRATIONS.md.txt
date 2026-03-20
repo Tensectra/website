@@ -1,0 +1,406 @@
+# TENSECTRA WEBSITE — SERVICE INTEGRATION MODELS
+## Complete Infrastructure Cost: $0/Month
+
+---
+
+## 1. CODE HOSTING: GitHub
+**Service:** GitHub (Free Tier)
+**Cost:** $0
+**Integration Model:**
+- Public repository for open-source visibility
+- Private repository option available
+- GitHub Actions for CI/CD (free 2,000 minutes/month)
+- Branch protection rules for main branch
+- README.md with project documentation
+- LICENSE file (MIT recommended)
+
+**Setup Steps:**
+1. Create GitHub account at github.com
+2. Initialize new repository "tensectra-website"
+3. Push all website files to repository
+4. Enable GitHub Pages in repository settings
+5. Configure custom domain (optional)
+
+---
+
+## 2. WEB HOSTING: Netlify
+**Service:** Netlify (Starter Tier)
+**Cost:** $0
+**Integration Model:**
+- Connect GitHub repository for auto-deployment
+- Continuous deployment on every push to main
+- Custom domain support with free SSL
+- Branch previews for testing
+- Form handling (100 submissions/month free)
+- Edge CDN for global performance
+
+**Setup Steps:**
+1. Sign up at netlify.com using GitHub account
+2. Click "Add new site" → "Import an existing project"
+3. Select GitHub repository
+4. Configure build settings (none needed for static HTML)
+5. Set publish directory to root (./)
+6. Deploy site
+
+**Alternative:** GitHub Pages (also free)
+- Enable in repository Settings → Pages
+- Select source branch (main)
+- Site deploys to username.github.io/repo-name
+
+---
+
+## 3. CONTACT FORMS: Netlify Forms
+**Service:** Netlify Forms (Starter Tier)
+**Cost:** $0 (100 submissions/month)
+**Integration Model:**
+- Native form handling without backend
+- Spam filtering with Akismet
+- File upload support (10MB limit)
+- Email notifications on submission
+- Export submissions as CSV
+- Webhook integrations available
+
+**Implementation:**
+```html
+<form name="contact" netlify>
+  <input type="text" name="name" required>
+  <input type="email" name="email" required>
+  <textarea name="message" required></textarea>
+  <button type="submit">Send</button>
+</form>
+```
+
+**Forms Needed:**
+1. Cohort Application Form
+2. Consultancy Enquiry Form (3 tiers)
+3. Infrastructure Kit Waitlist
+4. Pro Membership Signup
+5. General Contact Form
+
+---
+
+## 4. TEAM EMAIL: Zoho Mail
+**Service:** Zoho Mail (Free Tier)
+**Cost:** $0 (up to 5 users)
+**Integration Model:**
+- Custom domain email (hello@tensectra.com)
+- 5GB storage per user
+- Webmail, IMAP, POP access
+- Mobile apps available
+- Email forwarding rules
+
+**Setup Steps:**
+1. Register at zoho.com/mail
+2. Verify domain ownership (DNS records)
+3. Add MX records to domain DNS
+4. Create email accounts:
+   - hello@tensectra.com (general inquiries)
+   - support@tensectra.com (customer support)
+   - ayodele@tensectra.com (founder)
+
+---
+
+## 5. DIGITAL PRODUCT SALES: Gumroad
+**Service:** Gumroad (Free Tier)
+**Cost:** $0 + 10% transaction fee
+**Integration Model:**
+- Sell digital products (ebooks, playbooks)
+- Payment processing included
+- Automatic delivery via email
+- Affiliate program available
+- Analytics dashboard
+- Embed buy buttons on website
+
+**Products to Sell:**
+1. Architecture Playbooks ($29-49)
+2. Ebook bundles ($79-99)
+3. Reference Card Library ($19)
+
+**Embed Code:**
+```html
+<script src="https://gumroad.com/js/gumroad.js"></script>
+<a class="gumroad-button" href="https://tensectra.gumroad.com/l/product">Buy Now</a>
+```
+
+---
+
+## 6. PAYMENT COLLECTION: Stripe Payment Links
+**Service:** Stripe (Standard Account)
+**Cost:** $0 monthly + 2.9% + 30¢ per transaction
+**Integration Model:**
+- No-code payment links for courses
+- Custom branding on checkout
+- Subscription support (for Pro membership)
+- Invoice generation
+- Multi-currency support
+- PCI compliance handled
+
+**Payment Links Needed:**
+1. Backend Engineer Cohort - $299
+2. Frontend Engineer Cohort - $299
+3. Mobile Builder Cohort - $299
+4. Self-Paced Course Access - $149
+5. Pro Membership Monthly - $15
+6. Pro Membership Annual - $120
+7. Corporate Cohort Tier 1 - $2,500-4,000
+8. Corporate Workshop Tier 2 - $1,500-2,000/day
+9. Architecture Consultation Tier 3 - $500-800/day
+10. Retainer Monthly - $300-500
+
+**Implementation:**
+- Create payment links in Stripe Dashboard
+- Copy link and use as button href
+- No code integration required
+
+---
+
+## 7. CUSTOMER RELATIONSHIP MANAGEMENT: HubSpot Free
+**Service:** HubSpot CRM (Free Tier)
+**Cost:** $0
+**Integration Model:**
+- Contact management
+- Deal pipeline tracking
+- Email tracking and templates
+- Meeting scheduling
+- Live chat widget
+- Form builder (alternative to Netlify)
+
+**Setup Steps:**
+1. Sign up at hubspot.com
+2. Install tracking code on website
+3. Create contact properties for:
+   - Course interest
+   - Experience level
+   - Company size
+4. Set up deal stages for sales pipeline
+5. Configure email templates for follow-ups
+
+---
+
+## 8. DOMAIN REGISTRATION: Namecheap
+**Service:** Namecheap
+**Cost:** $10-12/year
+**Integration Model:**
+- Domain: tensectra.com
+- Free WHOIS privacy
+- Free DNS management
+- Email forwarding available
+- SSL certificate (can use Netlify's free SSL)
+
+**DNS Records Needed:**
+```
+A Record: @ → Netlify IP
+CNAME: www → tensectra.netlify.app
+MX Records: → Zoho Mail servers
+TXT: SPF record for email authentication
+```
+
+---
+
+## 9. SCHEDULING: Calendly (Free Tier)
+**Service:** Calendly
+**Cost:** $0 (1 event type)
+**Integration Model:**
+- Discovery call booking
+- 30-minute meeting slots
+- Calendar integration (Google/Outlook)
+- Automatic timezone detection
+- Email reminders
+
+**Setup Steps:**
+1. Create account at calendly.com
+2. Connect calendar
+3. Create "Discovery Call" event type (30 min)
+4. Set availability windows
+5. Copy embed code or link
+
+**Alternative:** HubSpot Meetings (included in free CRM)
+
+---
+
+## 10. EMAIL MARKETING: Mailchimp (Free Tier)
+**Service:** Mailchimp
+**Cost:** $0 (500 contacts, 1,000 sends/month)
+**Integration Model:**
+- Newsletter for Pro members
+- Course announcements
+- Automated welcome sequences
+- Subscriber segmentation
+- Signup forms embed
+
+**Lists to Create:**
+1. General Newsletter
+2. Pro Members
+3. Course Alumni
+4. Infrastructure Kit Waitlist
+
+**Integration:**
+- Embed signup forms on website
+- Connect to Netlify forms via Zapier (optional)
+
+---
+
+## 11. ANALYTICS: Google Analytics 4
+**Service:** Google Analytics 4
+**Cost:** $0
+**Integration Model:**
+- Website traffic tracking
+- User behavior analysis
+- Conversion tracking
+- Event tracking for:
+   - Form submissions
+   - Button clicks
+   - Page scroll depth
+   - Course interest
+
+**Setup Steps:**
+1. Create GA4 property at analytics.google.com
+2. Copy measurement ID (G-XXXXXXXXXX)
+3. Add gtag.js to website head
+4. Configure custom events
+
+---
+
+## 12. COMMUNITY: Discord (Free)
+**Service:** Discord
+**Cost:** $0
+**Integration Model:**
+- Cohort private channels
+- Pro member community
+- Office hours voice channels
+- Resource sharing
+- Bot integrations for automation
+
+**Channels Structure:**
+```
+Tensectra Server
+├── Welcome
+├── Announcements
+├── General Chat
+├── Cohort-1-Backend
+├── Cohort-2-Frontend
+├── Pro-Members
+├── Job-Board
+└── Showcase
+```
+
+---
+
+## INTEGRATION WORKFLOW SUMMARY
+
+### User Journey 1: Course Enrolment
+1. User visits tensectra.com/courses
+2. Selects course and clicks "Enrol"
+3. Fills Netlify application form
+4. Form submission triggers:
+   - Email notification to team
+   - HubSpot contact creation (via Zapier)
+   - Manual review within 48 hours
+5. Acceptance email with Stripe payment link
+6. Payment confirmation triggers:
+   - Discord channel invite
+   - Course materials access
+   - Welcome email sequence
+
+### User Journey 2: Pro Membership
+1. User visits tensectra.com/pro
+2. Selects monthly or annual plan
+3. Stripe Payment Link checkout
+4. Subscription confirmation triggers:
+   - HubSpot deal creation
+   - Discord Pro channel access
+   - Monthly digest subscription
+   - Welcome onboarding email
+
+### User Journey 3: Corporate Consultancy
+1. User visits tensectra.com/consultancy
+2. Clicks "Enquire for Tier X"
+3. Fills Netlify enquiry form
+4. Form submission triggers:
+   - Email to sales team
+   - HubSpot deal pipeline entry
+   - Calendly booking link sent
+5. Discovery call scheduled
+6. Proposal sent via HubSpot
+7. Contract signed (HelloSign/DocuSign)
+8. Invoice paid via Stripe
+
+---
+
+## MONTHLY COST BREAKDOWN
+
+| Service | Tier | Monthly Cost |
+|---------|------|--------------|
+| GitHub | Free | $0 |
+| Netlify | Starter | $0 |
+| Netlify Forms | Starter (100 subs) | $0 |
+| Zoho Mail | Free (5 users) | $0 |
+| Gumroad | Free (10% fee) | $0 |
+| Stripe | Standard | $0 |
+| HubSpot CRM | Free | $0 |
+| Calendly | Basic | $0 |
+| Mailchimp | Free (500 contacts) | $0 |
+| Google Analytics | Free | $0 |
+| Discord | Free | $0 |
+| Namecheap Domain | .com | ~$1/month |
+| **TOTAL** | | **$0/month** |
+
+*Note: Domain is $10-12/year paid annually*
+
+---
+
+## SCALING CONSIDERATIONS
+
+### When to Upgrade (Revenue Milestones)
+
+**$1,000/month revenue:**
+- Upgrade Netlify to Pro ($19/month) for more form submissions
+- Consider ConvertKit instead of Mailchimp for better automation
+
+**$5,000/month revenue:**
+- Upgrade HubSpot to Starter ($45/month) for advanced automation
+- Add Zapier for workflow automation ($19.99/month)
+
+**$10,000/month revenue:**
+- Custom backend for course platform
+- Dedicated hosting (VPS ~$20/month)
+- Advanced analytics (Mixpanel/Amplitude)
+
+---
+
+## SECURITY CONSIDERATIONS
+
+1. **Forms:** Netlify provides built-in spam protection
+2. **Payments:** Stripe handles all PCI compliance
+3. **Email:** Zoho provides SPF/DKIM authentication
+4. **Domain:** Enable WHOIS privacy on Namecheap
+5. **SSL:** Netlify provides free SSL certificates
+6. **Backup:** GitHub repository serves as code backup
+
+---
+
+## IMPLEMENTATION CHECKLIST
+
+- [ ] Register domain on Namecheap
+- [ ] Create GitHub repository
+- [ ] Set up Netlify site
+- [ ] Configure Zoho Mail
+- [ ] Create Stripe account
+- [ ] Set up Gumroad store
+- [ ] Configure HubSpot CRM
+- [ ] Create Calendly account
+- [ ] Set up Mailchimp lists
+- [ ] Create Google Analytics property
+- [ ] Set up Discord server
+- [ ] Test all form submissions
+- [ ] Test payment flows
+- [ ] Configure email forwarding
+- [ ] Set up DNS records
+- [ ] Deploy website
+- [ ] Test complete user journeys
+
+---
+
+*Document Version: 1.0*
+*Last Updated: March 2026*
+*Maintained by: Tensectra Engineering Team*

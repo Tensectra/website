@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Waitlist | Tensectra</title>
+  <meta name="description" content="Join the waitlist for upcoming Tensectra courses and products.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="icon" type="image/png" href="../images/tensectra-logo.png">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="../" class="navbar-logo">
+        <img src="../images/tensectra-logo.png" alt="Tensectra">
+        <span>TENSECTRA</span>
+      </a>
+      
+      <ul class="navbar-nav">
+        <li><a href="../">Home</a></li>
+        <li><a href="../pages/courses">Courses</a></li>
+        <li><a href="../pages/pro">Pro</a></li>
+        <li><a href="../pages/cohorts">Cohorts</a></li>
+        <li><a href="../pages/consultancy">Consultancy</a></li>
+        <li><a href="../pages/infrastructure">Infrastructure</a></li>
+        <li><a href="../pages/about">About</a></li>
+      </ul>
+      
+      <button class="mobile-menu-btn" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Form Section -->
+  <section class="section" style="padding-top: 120px; min-height: 100vh;">
+    <div class="container">
+      <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+        <h1 style="margin-bottom: var(--space-md);">Join the Waitlist</h1>
+        <p style="color: var(--text-muted); margin-bottom: var(--space-lg);">
+          Be the first to know when new courses and products launch. Waitlist members get early access and special pricing.
+        </p>
+        
+        <div class="card" style="text-align: left;">
+          <form name="waitlist" netlify>
+            <div class="form-group">
+              <label class="form-label">Full Name *</label>
+              <input type="text" name="name" class="form-input" placeholder="Your full name" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">Email Address *</label>
+              <input type="email" name="email" class="form-input" placeholder="you@example.com" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">What are you interested in? *</label>
+              <select name="interest" class="form-select" required>
+                <option value="">Select an option</option>
+                <option value="product-design">Product Design Course</option>
+                <option value="ai-workflow">AI Workflow & CRM Automation</option>
+                <option value="erp-kit">ERP Infrastructure Kit</option>
+                <option value="new-courses">All New Courses</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">Your Current Role</label>
+              <input type="text" name="role" class="form-input" placeholder="e.g., Developer, Designer, Founder">
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Join Waitlist →</button>
+          </form>
+        </div>
+        
+        <div style="margin-top: var(--space-xl);">
+          <a href="../pages/courses" class="btn btn-outline">← Back to Courses</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <img src="../images/tensectra-logo.png" alt="" class="footer-watermark">
+    
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>Products</h4>
+          <ul class="footer-links">
+            <li><a href="../pages/courses">Courses</a></li>
+            <li><a href="../pages/pro">Pro Membership</a></li>
+            <li><a href="../pages/infrastructure">ERP Kit</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul class="footer-links">
+            <li><a href="../pages/consultancy">Consultancy</a></li>
+            <li><a href="../pages/consultancy">Corporate Training</a></li>
+            <li><a href="../pages/consultancy">Retainer</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="../pages/about">About</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="contact">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul class="footer-links">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p class="footer-tagline">Learn Boldly. Build Fearlessly. Scale Intelligently.</p>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: var(--space-sm);">
+          © 2026 Tensectra. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

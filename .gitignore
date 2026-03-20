@@ -1,0 +1,94 @@
+# -------------------------------------------------------
+#  Visual Studio / VS Code IDE artefacts
+# -------------------------------------------------------
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.sln
+*.slnx
+*.slnx.user
+VSWorkspaceState.json
+slnx.sqlite
+CopilotIndices/
+.vscode/
+*.rsuser
+
+# -------------------------------------------------------
+#  .NET build outputs
+# -------------------------------------------------------
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+*.log
+
+# Published output
+[Pp]ublish/
+PublishProfiles/
+publish/
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# EF Core migrations snapshot (optional – remove if you DO commit migrations)
+# **/Migrations/
+
+# -------------------------------------------------------
+#  Sensitive / environment config
+# -------------------------------------------------------
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.json
+!appsettings.json
+*.env
+.env
+.env.*
+secrets.json
+**/secrets/**
+
+# -------------------------------------------------------
+#  Website build / tooling
+# -------------------------------------------------------
+node_modules/
+npm-debug.log*
+yarn-error.log
+dist/
+.parcel-cache/
+.cache/
+
+# -------------------------------------------------------
+#  OS-generated junk
+# -------------------------------------------------------
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+*~
+
+# -------------------------------------------------------
+#  Misc
+# -------------------------------------------------------
+*.bak
+*.tmp
+*.orig
+*.swp
+*.zip
+*.tar.gz

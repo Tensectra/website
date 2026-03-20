@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Courses | Tensectra — Every Course</title>
+  <meta name="description" content="Live cohorts, self-paced access, and Pro membership that keeps everything updated. Become an AI-powered engineer in 6 weeks.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="icon" type="image/png" href="../images/tensectra-logo.png">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="../" class="navbar-logo">
+        <img src="../images/tensectra-logo.png" alt="Tensectra">
+        <span>TENSECTRA</span>
+      </a>
+      
+      <ul class="navbar-nav">
+        <li><a href="../">Home</a></li>
+        <li><a href="courses" class="active">Courses</a></li>
+        <li><a href="pro">Pro</a></li>
+        <li><a href="cohorts">Cohorts</a></li>
+        <li><a href="consultancy">Consultancy</a></li>
+        <li><a href="infrastructure">Infrastructure</a></li>
+        <li><a href="about">About</a></li>
+      </ul>
+      
+      <div class="navbar-cta">
+        <a href="courses" class="btn btn-primary btn-sm">Get Started</a>
+      </div>
+      
+      <button class="mobile-menu-btn" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" style="min-height: 50vh; padding-top: 120px;">
+    <div class="glow-cyan" style="top: 10%; right: 20%;"></div>
+    
+    <div class="container">
+      <div class="hero-content" style="text-align: center; margin: 0 auto;">
+        <h1>Every Course.</h1>
+        <p class="hero-subtitle" style="margin: 0 auto;">
+          Live cohorts, self-paced access, and Pro membership that keeps everything updated.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter Bar -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="live-cohort">Live Cohort</button>
+        <button class="filter-btn" data-filter="self-paced">Self-Paced</button>
+        <button class="filter-btn" data-filter="coming-soon">Coming Soon</button>
+      </div>
+      
+      <!-- Confirmed Courses -->
+      <div class="grid-3">
+        <!-- Backend Engineer -->
+        <div class="card course-card course-accent-cyan" data-category="live-cohort">
+          <div class="course-header">
+            <h3>Become an AI-Powered Backend Engineer in 6 Weeks</h3>
+            <p class="course-project">Build SaaSKit — your deployed .NET 8 SaaS backend with multi-tenant architecture, event-driven messaging, and production-grade patterns.</p>
+          </div>
+          <div class="course-stack">
+            <span class="stack-pill">.NET 8</span>
+            <span class="stack-pill">PostgreSQL</span>
+            <span class="stack-pill">Redis</span>
+            <span class="stack-pill">Kafka</span>
+            <span class="stack-pill">Railway</span>
+          </div>
+          <p class="course-ai-line">"AI writes the boilerplate. You design the architecture."</p>
+          <div class="course-actions">
+            <a href="cohorts" class="btn btn-primary btn-sm">View Curriculum</a>
+            <a href="../forms/cohort-application" class="btn btn-secondary btn-sm">Join Cohort</a>
+          </div>
+        </div>
+        
+        <!-- Frontend Engineer -->
+        <div class="card course-card course-accent-blue" data-category="live-cohort">
+          <div class="course-header">
+            <h3>Become an AI-Powered Frontend Engineer in 6 Weeks</h3>
+            <p class="course-project">Build TechPulse — live Next.js SaaS connecting to your backend with server components, proper state management, and scalable UI architecture.</p>
+          </div>
+          <div class="course-stack">
+            <span class="stack-pill">Next.js 14</span>
+            <span class="stack-pill">TypeScript</span>
+            <span class="stack-pill">Tailwind</span>
+            <span class="stack-pill">Vercel</span>
+          </div>
+          <p class="course-ai-line">"AI generates the components. You own the system."</p>
+          <div class="course-actions">
+            <a href="cohorts" class="btn btn-primary btn-sm">View Curriculum</a>
+            <a href="../forms/cohort-application" class="btn btn-secondary btn-sm">Join Cohort</a>
+          </div>
+        </div>
+        
+        <!-- Mobile Builder -->
+        <div class="card course-card course-accent-purple" data-category="live-cohort">
+          <div class="course-header">
+            <h3>Become an AI-Powered Mobile Builder in 6 Weeks</h3>
+            <p class="course-project">Build PulseApp — React Native app shipping to real devices with proper navigation, state management, and offline-first architecture.</p>
+          </div>
+          <div class="course-stack">
+            <span class="stack-pill">React Native</span>
+            <span class="stack-pill">Expo</span>
+            <span class="stack-pill">EAS Build</span>
+          </div>
+          <p class="course-ai-line">"AI builds the screens. You architect the navigation."</p>
+          <div class="course-actions">
+            <a href="cohorts" class="btn btn-primary btn-sm">View Curriculum</a>
+            <a href="../forms/cohort-application" class="btn btn-secondary btn-sm">Join Cohort</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Pro Membership Banner -->
+      <div class="pro-banner">
+        <div>
+          <h4 style="color: var(--text-white); margin-bottom: var(--space-xs);">Pro members get every new course included automatically.</h4>
+          <p style="color: var(--text-muted); margin: 0;">No separate purchase. Always updated. Always included.</p>
+        </div>
+        <a href="pro" class="btn btn-primary">Start Pro →</a>
+      </div>
+      
+      <!-- Coming Soon Courses -->
+      <div class="grid-3">
+        <!-- Product Design -->
+        <div class="card course-card course-accent-pink coming-soon" data-category="coming-soon">
+          <span class="badge">Coming Soon</span>
+          <div class="course-header">
+            <h3>Become an AI-Powered Product Designer in 6 Weeks</h3>
+            <p class="course-project">Convert user stories into enterprise Figma designs. Build a complete ERP module UI — dashboard, approval workflow, data table — with a documented component library and design system.</p>
+          </div>
+          <div class="course-stack">
+            <span class="stack-pill">Figma</span>
+            <span class="stack-pill">FigJam</span>
+            <span class="stack-pill">AI Tools</span>
+          </div>
+          <a href="../forms/waitlist" class="btn btn-outline btn-sm">Join Waitlist</a>
+        </div>
+        
+        <!-- AI Workflow -->
+        <div class="card course-card course-accent-amber coming-soon" data-category="coming-soon">
+          <span class="badge">Coming Soon</span>
+          <div class="course-header">
+            <h3>Build a One-Person Business Using AI</h3>
+            <p class="course-project">Automate office processes, connect tools, build lead pipelines, and run a solo operation that scales without headcount.</p>
+          </div>
+          <div class="course-stack">
+            <span class="stack-pill">n8n</span>
+            <span class="stack-pill">Make</span>
+            <span class="stack-pill">Zapier</span>
+            <span class="stack-pill">AI</span>
+          </div>
+          <a href="../forms/waitlist" class="btn btn-outline btn-sm">Join Waitlist</a>
+        </div>
+        
+        <!-- Placeholder -->
+        <div class="card" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-style: dashed; min-height: 300px;" data-category="coming-soon">
+          <p style="color: var(--text-muted); margin-bottom: var(--space-md);">More courses arriving quarterly for Pro members.</p>
+          <form style="width: 100%; max-width: 280px;" netlify name="course-notify">
+            <input type="email" name="email" placeholder="Enter your email" class="form-input" style="margin-bottom: var(--space-sm);" required>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Notify Me</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section" style="background: var(--bg-card);">
+    <div class="container container-narrow">
+      <div class="section-header">
+        <h2>Frequently Asked Questions</h2>
+      </div>
+      
+      <div class="accordion">
+        <div class="accordion-item">
+          <button class="accordion-header">
+            Is coding still worth learning when AI can write code?
+            <span class="accordion-icon">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              The developers most at risk from AI are the ones who only write code without understanding the system around it. AI raises the floor — anyone can generate a working CRUD endpoint. What it cannot do is design the architecture, make the trade-offs, or validate that what it generated will still work when the system has 50 endpoints, three databases, and a team of six people changing it simultaneously. That is what this course teaches. The developers who will be most valuable in five years are not the ones who wrote every line themselves. They are the ones who understood the systems well enough to direct, audit, and own what AI produces. Tensectra teaches you to be that developer.
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <button class="accordion-header">
+            Do I need to know .NET already?
+            <span class="accordion-icon">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              You should have written code before — in any language. The course is not for complete beginners. If you understand variables, functions, and basic object-oriented concepts, you can follow along. We teach .NET 8 patterns from the ground up, but we move fast. The focus is on architecture, not syntax.
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <button class="accordion-header">
+            What if I miss a live session?
+            <span class="accordion-icon">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              All live sessions are recorded and available within 24 hours. You will have access to the recordings for the duration of the cohort plus 30 days after. Pro members keep access indefinitely.
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <button class="accordion-header">
+            Is this just another tutorial?
+            <span class="accordion-icon">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              No. Tutorials show you how to build a demo. This course ends with a live deployed product on a real domain, with a real database, serving real requests. You will have a GitHub repo you can show in interviews and a deployed URL you can share.
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <button class="accordion-header">
+            How is this different from Udemy?
+            <span class="accordion-icon">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              Udemy courses are pre-recorded and self-paced. Tensectra cohorts are live, with real instructors, real deadlines, and real accountability. You will present your project in Week 6 to the cohort. That pressure produces results that self-paced courses rarely match.
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <button class="accordion-header">
+            What happens after Week 6?
+            <span class="accordion-icon">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              You keep your deployed project, your GitHub repo, and your course materials. You get a certificate of completion. You are invited to the alumni community. And you are eligible for founding member pricing on Tensectra Pro if you want ongoing access to all courses and updates.
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <button class="accordion-header">
+            Can I pay in instalments?
+            <span class="accordion-icon">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              Yes. We offer 2-payment plans for cohort enrolment — 50% to secure your spot, 50% before Week 3. Contact us at hello@tensectra.com to arrange this.
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <button class="accordion-header">
+            Is there a refund policy?
+            <span class="accordion-icon">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              Yes. If you complete Week 1 and decide the course is not for you, we offer a full refund minus a $50 administrative fee. No refunds after Week 2 begins.
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <button class="accordion-header">
+            What is Tensectra Pro?
+            <span class="accordion-icon">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              Pro is our membership program that gives you access to every course we release, updated ebooks and playbooks for every framework version, a monthly ecosystem digest, and a private Pro community with monthly live Q&A. It's $15/month or $120/year.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section">
+    <div class="container" style="text-align: center;">
+      <h2 style="margin-bottom: var(--space-md);">Ready to Build?</h2>
+      <p style="color: var(--text-muted); margin-bottom: var(--space-lg); max-width: 500px; margin-left: auto; margin-right: auto;">
+        Join the next cohort and ship a live deployed product in 6 weeks.
+      </p>
+      <a href="cohorts" class="btn btn-primary btn-lg">Apply for Cohort →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <img src="../images/tensectra-logo.png" alt="" class="footer-watermark">
+    
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>Products</h4>
+          <ul class="footer-links">
+            <li><a href="courses">Courses</a></li>
+            <li><a href="pro">Pro Membership</a></li>
+            <li><a href="infrastructure">ERP Kit</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul class="footer-links">
+            <li><a href="consultancy">Consultancy</a></li>
+            <li><a href="consultancy">Corporate Training</a></li>
+            <li><a href="consultancy">Retainer</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="about">About</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="../forms/contact">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul class="footer-links">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+          
+          <div class="footer-social">
+            <a href="#" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+            </a>
+            <a href="#" aria-label="YouTube">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+              </svg>
+            </a>
+            <a href="#" aria-label="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p class="footer-tagline">Learn Boldly. Build Fearlessly. Scale Intelligently.</p>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: var(--space-sm);">
+          © 2026 Tensectra. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Source Code Download Button -->
+  <div class="source-download">
+    <button class="source-download-btn" id="source-download-btn" title="Download Source Code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg>
+      <span>Source Code</span>
+    </button>
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
