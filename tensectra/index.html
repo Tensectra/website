@@ -60,28 +60,93 @@
   <!-- Hero Section -->
   <section class="hero">
     <div class="binary-rain"></div>
-    <div class="glow-cyan" style="top: 20%; right: 10%;"></div>
-    <div class="glow-purple" style="bottom: 10%; right: 20%;"></div>
-    
+    <div class="glow-purple" style="bottom: 10%; left: 5%;"></div>
+
     <div class="container">
-      <div class="hero-content">
-        <h1>
-          <span class="line-1">Build Enterprise Systems 10x Faster</span>
-          <span class="line-2">With AI-Powered Architecture.</span>
-        </h1>
-        <p class="hero-subtitle">
-          Real enterprise patterns, taught through 6-week cohorts. AI handles the heavy lifting. You own the architecture.
-        </p>
-        <p class="hero-ai-message">
-          "AI writes the code. You design the architecture. This course teaches you the difference — and makes you dangerous with both."
-        </p>
-        <div class="hero-cta">
-          <a href="pages/courses" class="btn btn-primary btn-lg" data-track="explore_courses">Explore Courses</a>
-          <a href="pages/consultancy" class="btn btn-secondary btn-lg" data-track="work_with_us">Work With Us</a>
+      <div class="hero-grid">
+
+        <!-- Left: Text Content -->
+        <div class="hero-content">
+          <h1>
+            <span class="line-1">Build Enterprise Systems 10x Faster</span>
+            <span class="line-2">With AI-Powered Architecture.</span>
+          </h1>
+          <p class="hero-subtitle">
+            Real enterprise patterns, taught through 6-week cohorts. AI handles the heavy lifting. You own the architecture.
+          </p>
+          <p class="hero-ai-message">
+            "AI writes the code. You design the architecture. This course teaches you the difference — and makes you dangerous with both."
+          </p>
+          <div class="hero-cta">
+            <a href="pages/courses" class="btn btn-primary btn-lg hero-btn-1" data-track="explore_courses">Explore Courses</a>
+            <a href="pages/consultancy" class="btn btn-secondary btn-lg hero-btn-2" data-track="work_with_us">Work With Us</a>
+          </div>
+          <p class="hero-stats">
+            Join <span>400+</span> developers and companies in the Tensectra ecosystem.
+          </p>
         </div>
-        <p class="hero-stats">
-          Join <span>400+</span> developers and companies in the Tensectra ecosystem.
-        </p>
+
+        <!-- Right: Architecture Visual Card -->
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-card">
+            <!-- Window chrome -->
+            <div class="hero-card-header">
+              <div class="hero-card-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="hero-card-title">TensectraKit.Architecture</span>
+              <span class="hero-card-live"><span class="live-dot"></span>Live</span>
+            </div>
+            <!-- Architecture diagram -->
+            <div class="hero-card-body">
+              <div class="arch-row">
+                <div class="arch-node">HTTP/REST</div>
+                <div class="arch-node">gRPC</div>
+                <div class="arch-node">Kafka</div>
+              </div>
+              <div class="arch-connector">
+                <div class="arch-connector-line"></div>
+              </div>
+              <div class="arch-row">
+                <div class="arch-node arch-node-main">
+                  <span class="arch-pulse"></span>.NET 8 API · Clean Arch
+                </div>
+              </div>
+              <div class="arch-connector">
+                <div class="arch-connector-line"></div>
+                <div class="arch-connector-label">CQRS · MediatR</div>
+              </div>
+              <div class="arch-row">
+                <div class="arch-node arch-node-data">PostgreSQL</div>
+                <div class="arch-node arch-node-data">Redis</div>
+                <div class="arch-node arch-node-data">Kafka</div>
+              </div>
+            </div>
+            <!-- Stats footer -->
+            <div class="hero-card-footer">
+              <div class="arch-stat">
+                <span class="arch-stat-val">99.9%</span>
+                <span class="arch-stat-lbl">Uptime</span>
+              </div>
+              <div class="arch-stat-divider"></div>
+              <div class="arch-stat">
+                <span class="arch-stat-val">&lt;50ms</span>
+                <span class="arch-stat-lbl">Latency</span>
+              </div>
+              <div class="arch-stat-divider"></div>
+              <div class="arch-stat">
+                <span class="arch-stat-val">Multi</span>
+                <span class="arch-stat-lbl">Tenant</span>
+              </div>
+            </div>
+          </div>
+          <!-- Floating tech tags -->
+          <div class="hero-tag hero-tag-1">AI-Powered</div>
+          <div class="hero-tag hero-tag-2">CQRS</div>
+          <div class="hero-tag hero-tag-3">Clean Arch</div>
+          <div class="hero-tag hero-tag-4">Multi-tenant</div>
+        </div>
+
       </div>
     </div>
   </section>
