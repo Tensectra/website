@@ -23,10 +23,10 @@ PART 1 — HIGH-LEVEL ARCHITECTURE DIAGRAM  (TEXTUAL, BOXES & ARROWS)
   │   ┌────────────────────────────────────────────────────────────┐                        │
   │   │  ASP.NET Core Middleware Pipeline (Program.cs)             │                        │
   │   │  ┌──────────────────┐  ┌──────────────────┐                │                        │
-  │   │  │ Serilog Logging  │  │ Prometheus Metrics│               │                        │
+  │   │  │ Serilog Logging  │  │Prometheus Metrics│                │                        │
   │   │  └──────────────────┘  └──────────────────┘                │                        │
   │   │  ┌──────────────────────────────────────┐                  │                        │
-  │   │  │  EncryptResponseDataMiddleware        │◄── intercepts   │                        │
+  │   │  │  EncryptResponseDataMiddleware       │◄── intercepts    │                        │
   │   │  │  (encrypts ALL outgoing responses)   │    response body │                        │
   │   │  └──────────────────────────────────────┘                  │                        │
   │   └────────────────────────────────────────────────────────────┘                        │
@@ -241,17 +241,17 @@ PART 1 — HIGH-LEVEL ARCHITECTURE DIAGRAM  (TEXTUAL, BOXES & ARROWS)
   │   │   DbModel  (abstract base DbContext)                             │                  │
   │   │   └── DbSet<Users> Users_test_tbl                                │                  │
   │   │                                                                  │                  │
-  │   │   ┌──────────────────┐  ┌──────────────────┐  ┌──────────────┐  │                  │
-  │   │   │ SqlServerDbContext│  │ OracleDbContext   │  │PostgresDbCtx │  │                  │
-  │   │   │  : DbModel        │  │  : DbModel        │  │  : DbModel   │  │                  │
-  │   │   │                  │  │                  │  │              │  │                  │
-  │   │   │ - Soft-delete    │  │ - BOOLEAN enum   │  │ - Npgsql     │  │                  │
-  │   │   │   global filter  │  │   → NUMBER(2)    │  │   provider   │  │                  │
-  │   │   │ - Audit auto-    │  │   column mapping │  │              │  │                  │
-  │   │   │   fill on Save   │  │ - Expression-    │  │              │  │                  │
-  │   │   │   (CreatedAt,    │  │   based soft-    │  │              │  │                  │
-  │   │   │    UpdatedBy)    │  │   delete filter  │  │              │  │                  │
-  │   │   └──────────────────┘  └──────────────────┘  └──────────────┘  │                  │
+  │   │   ┌──────────────────┐  ┌──────────────────┐  ┌──────────────┐   │                  │
+  │   │   │SqlServerDbContext│  │ OracleDbContext  │  │PostgresDbCtx │   │                  │
+  │   │   │  : DbModel       │  │  : DbModel       │  │  : DbModel   │   │                  │
+  │   │   │                  │  │                  │  │              │   │                  │
+  │   │   │ - Soft-delete    │  │ - BOOLEAN enum   │  │ - Npgsql     │   │                  │
+  │   │   │   global filter  │  │   → NUMBER(2)    │  │   provider   │   │                  │
+  │   │   │ - Audit auto-    │  │   column mapping │  │              │   │                  │
+  │   │   │   fill on Save   │  │ - Expression-    │  │              │   │                  │
+  │   │   │   (CreatedAt,    │  │   based soft-    │  │              │   │                  │
+  │   │   │    UpdatedBy)    │  │   delete filter  │  │              │   │                  │
+  │   │   └──────────────────┘  └──────────────────┘  └──────────────┘   │                  │
   │   │                                                                  │                  │
   │   │   Factory contexts (SqlServerDbContextFactory, OracleDbContext-  │                  │
   │   │   Factory, PostgresDbContextFactory) used for EF migrations only │                  │
@@ -327,15 +327,15 @@ PART 1 — HIGH-LEVEL ARCHITECTURE DIAGRAM  (TEXTUAL, BOXES & ARROWS)
  ┌────────────────────────────────────────────────────────────────────────────────────────────┐
  │                  CROSS-CUTTING CONCERNS  (apply across all layers)                         │
  │                                                                                            │
- │  ┌───────────────────┐  ┌───────────────────┐  ┌───────────────────────────────────── ─┐   │
+ │  ┌───────────────────┐  ┌───────────────────┐  ┌─────────────────────────────────────-─┐   │
  │  │  REDIS CACHE      │  │  KAFKA MESSAGING  │  │  ENCRYPTION  (AES symmetric)          │   │
  │  │  (RedisCacheLib)  │  │  (KafkaLibrary)   │  │  GeneralUtil.Encryptor/Decryptor      │   │
  │  │  ICacheProvider   │  │  IMessageProducers│  │  EncryptionKey from SystemSettings    │   │
  │  │  ICacheOptions-   │  │  ConsumerBase     │  │  ┌──────────────────────────────────┐ │   │
- │  │  Provider<Enum>   │  │  (KafkaConfig)    │  │  │ Request:  DecryptRequestDataFilter││   │
- │  └───────────────────┘  └───────────────────┘  │  │ Response: EncryptResponseMiddleware│ │ │
- │                                                │  └──────────────────────────────────┘│    │
- │  ┌───────────────────┐  ┌───────────────────┐  └──────────────────────────────────────┘    │
+ │  │  Provider<Enum>   │  │  (KafkaConfig)    │  │  │Request: DecryptRequestDataFilter │ │   │
+ │  └───────────────────┘  └───────────────────┘  │  │Response:EncryptResponseMiddleware│ │   │
+ │                                                │  └──────────────────────────────────┘ │   │
+ │  ┌───────────────────┐  ┌───────────────────┐  └──────────────────────────────────────-┘   │
  │  │  LOGGING          │  │  VALIDATION       │                                              │
  │  │  Serilog          │  │  FluentValidation │  ┌──────────────────────────────────────┐    │
  │  │  → Console        │  │  + ValidationBe-  │  │  SWAGGER / OPENAPI                   │    │
@@ -351,3 +351,107 @@ PART 1 — HIGH-LEVEL ARCHITECTURE DIAGRAM  (TEXTUAL, BOXES & ARROWS)
  │  │  RetryAsync x3    │  │                   │                                              │
  │  └───────────────────┘  └───────────────────┘                                              │
  └────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FULL END-TO-END SCENARIO: "A user registers on the Nigerian banking app"
+─────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1.  Mobile app encrypts the registration form (name, phone, email, password)
+      using AES and sends it as Base64 in the HTTP body to:
+      POST /api/v1/SSOUser/OnboardSS0User
+      Headers: CountryCode=01, LanguageCode=en
+
+  2.  EncryptResponseDataMiddleware intercepts — wraps the pipeline, waiting.
+
+  3.  CountryFilter reads "01" → sets Nigeria in ICountryService.
+      LanguageFilter reads "en" → sets English in ILanguageService.
+
+  4.  DecryptRequestDataFilter<CreateUserCommand> decrypts the Base64 body →
+      produces a CreateUserCommand C# object.
+
+  5.  UsersController.CreateSSOUser() receives the decrypted command.
+      Calls: await Mediator.Send(command)
+
+  6.  MediatR pipeline — ValidationBehavior runs CreateUserCommandValidator.
+      UserName, PhoneNo, FirstName, Dob, Password, Email are all checked.
+      Any empty field → ValidationException → ApiExceptionFilter → structured 400 error.
+
+  7.  CreateUserCommandHandler runs. Reads CountryCode="01" from ICountryService.
+      Calls IUsersStrategyFactory.CreateUserServiceAsync("01").
+
+  8.  UsersStrategyFactory maps "01" → NigeriaUsersStrategyServiceFactory.
+      Calls NigeriaUsersStrategyServiceFactory.CreateUserAsync(request).
+
+  9.  UserService.CreateUserAsync():
+       a. Hash password → PasswordHash + PasswordSalt via ClipsHashAndSalt.
+       b. Check Redis: is this user already cached? (Avoid duplicate lookups.)
+       c. Build new Users entity with hashed credentials.
+       d. RepositoryWrapper.UserRepository.CreateAsync(user)
+          → RepositoryBase.CreateAsync → EF Core DbContext.Set<Users>().AddAsync()
+       e. RepositoryWrapper.UserRepository.SaveAsync()
+          → SqlServerDbContext.SaveChangesAsync()
+          → Auto-fills CreatedAt / UpdatedAt (Audit intercept in SaveChanges)
+       f. Enqueue AuditLogInvocable via IQueue (Coravel, non-blocking).
+       g. Optionally publish Kafka event (UserCreated topic).
+       h. Return PayloadResponse<UsersDto>{ IsSuccessful=true, Data=<userDto> }
+
+  10. Response bubbles up to the controller → Ok(response).
+
+  11. EncryptResponseDataMiddleware intercepts the outgoing JSON response body.
+      Encrypts entire JSON → { "responseData": "<base64-ciphertext>" }
+      Sends encrypted wrapper to the mobile app.
+
+  12. Mobile app decrypts → shows "Registration successful" to the user.
+
+  13. In the background: AuditLogInvocable fires → saves audit record to DB.
+      If it fails, it retries up to 3 times automatically (BaseInvocable.RetryAsync).
+
+  14. Later — if a manager approves this user in the approval service,
+      a Kafka message arrives on "PostAvailmentApprovalCompleted".
+      Consumer.Invoke() catches it → creates a scoped DI container →
+      PostAvailmentApprovalConsumer.HandleAsync() runs →
+      Updates the Users.ApprovedStatus to Approved → SaveAsync() → QueueAudit().
+
+ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TECHNOLOGIES & LIBRARIES SUMMARY
+─────────────────────────────────────────────────────────────────────────────────────────────────
+
+  .NET 8 Web API          → The runtime and framework
+  Entity Framework Core   → ORM (turns C# objects into SQL queries)
+  SqlServer / Oracle / PostgreSQL → Multi-database providers, config-switched
+  AutoMapper              → Converts one object type to another (DTO ↔ Entity ↔ Proto)
+  MediatR                 → In-process messaging (Commands/Queries → Handlers)
+  FluentValidation        → Validation rules as C# classes (not attributes)
+  Serilog                 → Structured logging → Console, Elasticsearch, Seq
+  Redis (RedisCacheLib)   → Distributed cache with typed options per cache key
+  KafkaLibrary            → Event streaming, consumer base, producer interface
+  Coravel                 → Lightweight background job queue with retry
+  gRPC / Protobuf         → High-speed binary RPC between internal services
+  Prometheus              → Metrics collection endpoint for monitoring
+  Swashbuckle (Swagger)   → Auto-generated API documentation + test UI
+  ClipsHashAndSalt        → Password hashing and salting library
+  AES Encryption (custom) → Application-level request/response encryption
+  Docker (Dockerfile)     → Container support for deployment
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PATTERNS IMPLEMENTED (WHAT YOUR STUDENTS SHOULD KNOW)
+─────────────────────────────────────────────────────────────────────────────────────────────────
+
+  ✔  Clean Architecture  — Dependency inward; Domain at the centre
+  ✔  CQRS (Commands/Queries via MediatR)  — Read and Write separated by intent
+  ✔  Repository Pattern  — DB access hidden behind interfaces
+  ✔  Wrapper / Aggregator Pattern  — Single entry point (RepositoryWrapper) for all repos
+  ✔  Factory / Strategy Pattern  — Country-based runtime service selection
+  ✔  Saga Pattern (Kafka)  — Distributed workflow coordination via event messages
+  ✔  Pipeline Behaviour Pattern  — Cross-cutting concerns (validation) in MediatR pipeline
+  ✔  Soft Delete Pattern  — Records are flagged, never physically removed
+  ✔  Audit Trail Pattern  — CreatedAt/UpdatedBy auto-filled on every write
+  ✔  Encryption at Boundary  — AES encrypt/decrypt at API entry and exit points
+  ✔  Background Invocable with Retry  — Audit jobs run off the critical path
+  ✔  Multi-provider Database Pattern  — Same code, swappable DB engine from config
+  ✔  Dual Entry Point (REST + gRPC)  — Same Application layer serves both callers
+  ✔  DB Seeding  — Deterministic initial data on first run

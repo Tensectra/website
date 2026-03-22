@@ -5,12 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Consultancy | Tensectra — Your Team Builds Faster When They Build Right</title>
   <meta name="description" content="Three engagement tiers for companies who need more than a tutorial — and cannot afford to rebuild from scratch six months later.">
+  <meta name="keywords" content="corporate software training, architecture workshop, tech team cohort, enterprise architecture consultancy, .NET team training, software engineering Africa">
+  <meta name="author" content="Tensectra">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://tensectra.com/pages/consultancy">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#00CCFF">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Tensectra">
+  <meta property="og:url" content="https://tensectra.com/pages/consultancy">
+  <meta property="og:title" content="Consultancy | Tensectra — Your Team Builds Faster When They Build Right">
+  <meta property="og:description" content="Three engagement tiers for companies who need more than a tutorial — and cannot afford to rebuild from scratch six months later.">
+  <meta property="og:image" content="https://tensectra.com/images/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@tensectra">
+  <meta name="twitter:title" content="Consultancy | Tensectra — Your Team Builds Faster When They Build Right">
+  <meta name="twitter:description" content="Three engagement tiers for companies who need more than a tutorial — and cannot afford to rebuild from scratch six months later.">
+  <meta name="twitter:image" content="https://tensectra.com/images/og-image.png">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/main.css?v=2">
   <link rel="icon" type="image/png" href="../images/tensectra-logo.png">
 </head>
 <body>
@@ -18,7 +39,7 @@
   <nav class="navbar">
     <div class="container navbar-container">
       <a href="../" class="navbar-logo">
-        <img src="../images/tensectra-logo.png" alt="Tensectra">
+        <img src="../images/logo2.png" alt="Tensectra">
         <span>TENSECTRA</span>
       </a>
       
@@ -96,17 +117,21 @@
             </div>
             
             <p style="color: var(--text-primary);">
-              Same curriculum as public cohort, run internally. Ends with a live presentation to your CTO or engineering lead.
+              Most dev teams learn in isolation &mdash; developers attend a conference, return inspired, then get absorbed straight back into sprint cycles. Nothing changes. This engagement breaks that pattern.
+            </p>
+            <p style="color: var(--text-muted); margin-top: var(--space-sm); font-size: 0.9rem; line-height: 1.75;">
+              Six weeks. Your team. Your codebase. Production patterns &mdash; implemented and understood, not just discussed. By Week 6, your developers present a working service to your CTO or engineering lead, built on the same architecture powering live banking systems across Africa. The team walks away transformed, not just trained.
             </p>
           </div>
           
           <div>
             <h4 style="margin-bottom: var(--space-md); font-size: 1rem;">What's Included</h4>
             <ul class="tier-features">
-              <li>All ebooks and playbooks</li>
-              <li>Private Slack channel</li>
-              <li>Weekly live sessions</li>
-              <li>Week 6 internal showcase</li>
+              <li><strong style="color: var(--accent-cyan);">TensectraKit Starter for every developer</strong> &mdash; production scaffold, $299 value per seat</li>
+              <li>Full ebooks, playbooks, and architecture reference cards</li>
+              <li>Weekly live sessions built around your team&rsquo;s actual patterns</li>
+              <li>Private Slack channel (24-hour response throughout)</li>
+              <li>Week 6 internal showcase to your CTO / engineering lead</li>
             </ul>
             
             <div class="tier-ideal">
@@ -118,8 +143,21 @@
               Payment terms: 50% upfront, 50% after Week 3
             </p>
             
-            <a href="../forms/consultancy-enquiry?tier=1" class="btn btn-primary" style="width: 100%;">Enquire for Tier 1 →</a>
+            <a href="../forms/consultancy-enquiry?tier=1" class="btn btn-primary" style="width: 100%;">Enquire for Tier 1 &rarr;</a>
           </div>
+        </div>
+        <div class="tier-kit-banner">
+          <div class="tier-kit-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+          </div>
+          <div class="tier-kit-banner-body">
+            <span class="tier-kit-banner-badge">INCLUDED WITH THIS TIER &mdash; $299 VALUE PER SEAT</span>
+            <p class="tier-kit-banner-text">Every developer on the cohort receives <strong>TensectraKit Starter</strong> &mdash; the production .NET 8 scaffold they train on and keep forever. 5 layers, 14 enterprise patterns, 3 database providers. They leave the cohort with a tool they can ship with immediately.</p>
+          </div>
+          <button onclick="openDiagramModal()" class="tier-kit-preview-btn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            Preview Architecture
+          </button>
         </div>
       </div>
       
@@ -157,23 +195,44 @@
             </div>
             
             <p style="color: var(--text-primary);">
-              Not a demo project — we work on your actual codebase. Prerequisite: a discovery call reviewing your stack.
+              Two to three days can permanently change the trajectory of a system. We don&rsquo;t demonstrate patterns on toy projects &mdash; we implement them on your repo, with your team building and asking questions in real time.
+            </p>
+            <p style="color: var(--text-muted); margin-top: var(--space-sm); font-size: 0.9rem; line-height: 1.75;">
+              Day 1: architecture audit, pattern gaps identified and prioritised. Day 2: live implementation &mdash; production-quality code, real commits to your repo. Final day: your team continues independently while we review and close. You leave with improvements in your codebase &mdash; not a slide deck. A short discovery call is required to verify your stack before we begin.
             </p>
           </div>
           
           <div>
             <h4 style="margin-bottom: var(--space-md); font-size: 1rem;">Deliverable</h4>
-            <p style="color: var(--text-muted); margin-bottom: var(--space-lg);">
-              Your team has implemented a specific architectural improvement by the end of the workshop.
+            <p style="color: var(--text-muted); margin-bottom: var(--space-md);">
+              By the final day, your team has implemented a production-quality architectural improvement &mdash; committed to your repo, reviewed, and tested. Not a proof-of-concept. Real patterns. Real code your team owns.
             </p>
+            <ul class="tier-features" style="margin-bottom: var(--space-lg);">
+              <li>Pre-workshop stack audit and preparation session</li>
+              <li>Live coding sessions directly on your codebase</li>
+              <li>Post-workshop Q&amp;A and code review session</li>
+            </ul>
             
             <div class="tier-ideal">
               <p class="tier-ideal-label">IDEAL FOR</p>
               <p class="tier-ideal-text">Teams starting a new service or standardising patterns across an existing system.</p>
             </div>
             
-            <a href="../forms/consultancy-enquiry?tier=2" class="btn btn-secondary" style="width: 100%;">Enquire for Tier 2 →</a>
+            <a href="../forms/consultancy-enquiry?tier=2" class="btn btn-secondary" style="width: 100%;">Enquire for Tier 2 &rarr;</a>
           </div>
+        </div>
+        <div class="tier-kit-banner" style="border-left-color: var(--accent-blue); background: rgba(59,91,255,0.04); border-color: rgba(59,91,255,0.14);">
+          <div class="tier-kit-icon" style="background: rgba(59,91,255,0.1);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+          </div>
+          <div class="tier-kit-banner-body">
+            <span class="tier-kit-banner-badge" style="color: var(--accent-blue);">INCLUDED WITH THIS TIER &mdash; $299 VALUE</span>
+            <p class="tier-kit-banner-text">The <strong>TensectraKit Starter</strong> is the reference blueprint for every pattern we implement in your codebase during the workshop &mdash; delivered at no extra cost. Your team sees the production-grade version before we apply it to your system.</p>
+          </div>
+          <button onclick="openDiagramModal()" class="tier-kit-preview-btn" style="color: var(--accent-blue); background: rgba(59,91,255,0.08); border-color: rgba(59,91,255,0.2);">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            Preview Architecture
+          </button>
         </div>
       </div>
       
@@ -213,16 +272,20 @@
             </div>
             
             <p style="color: var(--text-primary);">
-              Your team's own version of the production patterns. The foundational decisions you will live with for years.
+              A CTO making architecture decisions without a reference implementation is guessing. This engagement ends that.
+            </p>
+            <p style="color: var(--text-muted); margin-top: var(--space-sm); font-size: 0.9rem; line-height: 1.75;">
+              We review your system end-to-end, map your technical risks, and deliver a precise blueprint &mdash; an ARCHITECTURE.md your team can open on any sprint and know exactly what to build towards. Every decision is grounded in patterns running in production financial systems today. Not textbook theory. Foundational choices you will still be proud of in five years.
             </p>
           </div>
           
           <div>
             <h4 style="margin-bottom: var(--space-md); font-size: 1rem;">What's Included</h4>
             <ul class="tier-features">
-              <li>Architecture Reference Card per team</li>
-              <li>ARCHITECTURE.md committed to your repo</li>
-              <li>Team training on the reference card</li>
+              <li><strong style="color: var(--accent-purple);">TensectraKit Starter</strong> &mdash; the living reference for every pattern in your blueprint</li>
+              <li>Architecture Reference Card (per developer, print-ready)</li>
+              <li>ARCHITECTURE.md committed to your repo, explained in team session</li>
+              <li>Decision log documenting every architectural choice and its trade-offs</li>
             </ul>
             
             <div class="tier-ideal">
@@ -230,8 +293,21 @@
               <p class="tier-ideal-text">CTOs making foundational decisions they will live with for years.</p>
             </div>
             
-            <a href="../forms/consultancy-enquiry?tier=3" class="btn btn-primary" style="width: 100%; background: var(--gradient-primary);">Enquire for Tier 3 →</a>
+            <a href="../forms/consultancy-enquiry?tier=3" class="btn btn-primary" style="width: 100%; background: var(--gradient-primary);">Enquire for Tier 3 &rarr;</a>
           </div>
+        </div>
+        <div class="tier-kit-banner" style="border-left-color: var(--accent-purple); background: rgba(123,47,255,0.04); border-color: rgba(123,47,255,0.14);">
+          <div class="tier-kit-icon" style="background: rgba(123,47,255,0.1);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-purple)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+          </div>
+          <div class="tier-kit-banner-body">
+            <span class="tier-kit-banner-badge" style="color: var(--accent-purple);">INCLUDED WITH THIS TIER &mdash; $299 VALUE</span>
+            <p class="tier-kit-banner-text">The <strong>TensectraKit Starter</strong> is your living reference implementation &mdash; a working codebase that demonstrates every pattern in your blueprint. Your team always knows what &ldquo;correct&rdquo; looks like. No guesswork. No ambiguity on the next sprint.</p>
+          </div>
+          <button onclick="openDiagramModal()" class="tier-kit-preview-btn" style="color: var(--accent-purple); background: rgba(123,47,255,0.08); border-color: rgba(123,47,255,0.2);">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            Preview Architecture
+          </button>
         </div>
       </div>
       
@@ -263,6 +339,37 @@
               <div class="price-period">Recurring revenue anchor for B2B</div>
             </div>
             <a href="../forms/consultancy-enquiry?tier=retainer" class="btn btn-secondary" style="width: 100%;">Ask About Retainer →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Prompt Playbook Banner -->
+  <section class="section" style="background: linear-gradient(135deg, rgba(0,204,255,0.04) 0%, rgba(123,47,255,0.07) 100%); border-top: 1px solid rgba(0,204,255,0.12); border-bottom: 1px solid rgba(123,47,255,0.12);">
+    <div class="container">
+      <div style="max-width: 860px; margin: 0 auto; text-align: center;">
+        <span class="ladder-badge" style="background: rgba(123,47,255,0.15); border-color: rgba(123,47,255,0.3); color: var(--accent-purple);">PROMPT PLAYBOOK &mdash; INCLUDED WITH EVERY ENGAGEMENT</span>
+        <h2 style="margin: var(--space-md) 0;">AI handles the heavy lifting.<br><span class="text-cyan">You own the architecture.</span></h2>
+        <p style="color: var(--text-muted); font-size: 1.1rem; font-style: italic; max-width: 680px; margin: 0 auto var(--space-xl);">&ldquo;AI writes the code. You design the architecture. This course teaches you the difference &mdash; and makes you dangerous with both.&rdquo;</p>
+        <div class="grid-3" style="text-align: left; gap: var(--space-lg);">
+          <div class="card" style="display: flex; gap: var(--space-md); align-items: flex-start;">
+            <div style="width: 40px; height: 40px; background: rgba(0,204,255,0.1); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+            </div>
+            <div><strong style="color: var(--text-white); display: block; margin-bottom: 4px;">Prompt Playbook for Teams</strong><p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">Your team receives 50+ battle-tested prompts for Copilot &amp; Cursor &mdash; generate handlers, validators, sagas, and tests that match your production architecture exactly.</p></div>
+          </div>
+          <div class="card" style="display: flex; gap: var(--space-md); align-items: flex-start;">
+            <div style="width: 40px; height: 40px; background: rgba(123,47,255,0.1); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-purple)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </div>
+            <div><strong style="color: var(--text-white); display: block; margin-bottom: 4px;">Architecture-First Culture</strong><p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">We teach your team to use AI as an implementation tool, not a decision-maker. Every engineer leaves knowing why every pattern exists &mdash; not just how to generate it.</p></div>
+          </div>
+          <div class="card" style="display: flex; gap: var(--space-md); align-items: flex-start;">
+            <div style="width: 40px; height: 40px; background: rgba(59,91,255,0.1); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </div>
+            <div><strong style="color: var(--text-white); display: block; margin-bottom: 4px;">Team-Wide Velocity</strong><p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">Every developer on the engagement receives TensectraKit plus the Prompt Playbook. The whole team ships faster &mdash; and keeps shipping faster after we leave.</p></div>
           </div>
         </div>
       </div>
@@ -401,6 +508,142 @@
     </button>
   </div>
 
-  <script src="../js/main.js"></script>
+  <!-- Architecture Diagram Modal -->
+  <div id="arch-diagram-modal" class="arch-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="cons-diag-title">
+    <div class="arch-modal arch-diag-modal">
+      <div class="arch-modal-header">
+        <div>
+          <span class="ladder-badge">PART 1 &mdash; HIGH-LEVEL DIAGRAM</span>
+          <h3 class="arch-modal-title" id="cons-diag-title">C360 Backend Architecture &mdash; TensectraKit (.NET 8)</h3>
+          <p class="arch-modal-meta">The production scaffold included with every Tensectra consultancy engagement</p>
+        </div>
+        <button class="arch-modal-close" onclick="closeDiagramModal()" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="arch-modal-body arch-diag-body">
+        <pre id="arch-diagram-pre" class="arch-diagram-pre"></pre>
+      </div>
+      <div class="arch-modal-footer">
+        <p class="arch-modal-footer-text">This scaffold is included with every Tensectra consultancy tier. Your team trains on it, extends it, and ships with it.</p>
+        <a href="#discovery" onclick="closeDiagramModal()" class="btn btn-primary">Book a Discovery Call &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/main.js?v=2"></script>
+  <script>
+    const ARCH_DIAGRAM_RAW = `\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557
+\u2551           C360 BACKEND ARCHITECTURE  \u2014 TensectraKit  (.NET 8 Clean Architecture)                 \u2551
+\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d
+
+\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501
+PART 1 \u2014 HIGH-LEVEL ARCHITECTURE DIAGRAM  (TEXTUAL, BOXES & ARROWS)
+\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501
+
+  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
+  \u2502                          EXTERNAL CALLERS                                               \u2502
+  \u2502  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510     \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510     \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510   \u2502
+  \u2502  \u2502  HTTP/REST Client    \u2502     \u2502  gRPC Client         \u2502     \u2502  Kafka Message Broker  \u2502   \u2502
+  \u2502  \u2502  (Browser / Mobile / \u2502     \u2502  (Internal Service   \u2502     \u2502  (Event Streams /      \u2502   \u2502
+  \u2502  \u2502   Postman / etc.)    \u2502     \u2502   or 3rd party)      \u2502     \u2502   Approval / Sync)     \u2502   \u2502
+  \u2502  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518     \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518     \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518   \u2502
+  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2502\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500  \u2502  \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500-\u2500\u2502\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 \u2518
+                \u2502  HTTP/HTTPS                \u2502  gRPC (protobuf)           \u2502  Kafka Events
+                \u25bc                             \u25bc                           \u25bc
+  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
+  \u2502                  PRESENTATION LAYER  \u2014 TensectraKit.Api  (.NET 8 Web API)               \u2502
+  \u2502   EncryptResponseDataMiddleware \u2022 DecryptRequestDataFilter \u2022 CountryFilter              \u2502
+  \u2502   LanguageFilter \u2022 ApiExceptionFilterAttribute \u2022 Controllers \u2022 gRPC Entry Point          \u2502
+  \u2502   Serilog Logging \u2022 Prometheus Metrics \u2022 Swagger / OpenAPI                               \u2502
+  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518
+                              \u2502  MediatR.Send(Command)
+                              \u25bc
+  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
+  \u2502                   APPLICATION LAYER  \u2014 TensectraKit.Application                         \u2502
+  \u2502   CQRS (MediatR) \u2022 ValidationBehavior (FluentValidation) \u2022 Country Strategy Factory     \u2502
+  \u2502   NigeriaUsersStrategyFactory \u2022 GhanaUsersStrategyFactory                               \u2502
+  \u2502   Approval Saga \u2022 User Sync Saga \u2022 Customer Sync Saga (Kafka, idempotent)               \u2502
+  \u2502   Coravel Queue \u2022 AuditLogInvocable \u2022 3\u00d7 Retry \u2022 AutoMapper \u2022 IMessageProducers          \u2502
+  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518
+                              \u2502  IRepositoryWrapper
+                              \u25bc
+  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
+  \u2502                  INFRASTRUCTURE LAYER  \u2014 TensectraKit.Infrastructure                    \u2502
+  \u2502   RepositoryWrapper (lazy-init) \u2022 RepositoryBase<T> (CRUD + Bulk + QueryJoin)            \u2502
+  \u2502   Soft-delete via reflection \u2022 Audit auto-fill on SaveChanges                           \u2502
+  \u2502   SqlServerDbContext \u2022 OracleDbContext (BOOLEAN\u2192NUMBER(2)) \u2022 PostgresDbContext           \u2502
+  \u2502   BulkInsertAsync / BulkUpdateAsync / BulkDeleteAsync \u2b50                                  \u2502
+  \u2502   DbSeeder \u2014 hashes passwords, handles Oracle identity, seeds on first run                \u2502
+  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518
+                              \u2502
+                              \u25bc
+  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
+  \u2502                  DOMAIN LAYER  \u2014 TensectraKit.Domain  (no external dependencies)          \u2502
+  \u2502   Entity<TPrimaryKey> \u2022 IAuditable \u2022 ISoftDelete \u2022 IApproval                             \u2502
+  \u2502   IRepositoryBase<T> \u2022 IRepositoryWrapper \u2022 IUnitOfWork \u2022 IUserRepository                \u2502
+  \u2502   DTOs: CreateUserDto, UsersDto                                                          \u2502
+  \u2502   Enums: ApprovalStatus (Pending/Approved/Rejected) \u2022 BOOLEAN (Oracle-safe)              \u2502
+  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518
+                              \u2502
+                              \u25bc
+  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
+  \u2502              PERSISTENCE LAYER  \u2014 TensectraKit.Persistence (gRPC contract layer)         \u2502
+  \u2502   Users.proto \u2022 CreateUserRequest \u2022 gPayloadResponse \u2022 UsersDto (proto messages)         \u2502
+  \u2502   CreateUsersService : CreateUsers.CreateUsersBase                                       \u2502
+  \u2502   gRPCMappingProfile : Profile  \u2192 CreateMap<CreateUserRequest, CreateUserCommand>        \u2502
+  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518
+
+ \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
+ \u2502                  CROSS-CUTTING CONCERNS  (apply across all layers)                         \u2502
+ \u2502   Redis Cache (ICacheProvider) \u2022 Kafka Messaging (KafkaLibrary)                           \u2502
+ \u2502   AES Encryption (request + response boundary) \u2022 Serilog \u2192 Console / ES / Seq            \u2502
+ \u2502   FluentValidation + ValidationBehavior \u2022 Swagger SecurityDefinitions                     \u2502
+ \u2502   Coravel Queue (RetryAsync \u00d73) \u2022 AutoMapper (DTO \u21d4 Entity \u21d4 Proto)                        \u2502
+ \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518
+
+ PATTERNS INCLUDED: Clean Architecture \u2022 CQRS \u2022 Repository + Wrapper \u2022 Factory/Strategy
+                    Saga (Kafka) \u2022 Pipeline Behaviour \u2022 Soft Delete \u2022 Audit Trail
+                    Encryption at Boundary \u2022 Background + 3\u00d7 Retry \u2022 Multi-DB Provider
+                    Dual Entry (REST + gRPC) \u2022 DB Seeding  \u2014  14 PATTERNS TOTAL`;
+
+    function colorizeArchDiagram(raw) {
+      const escaped = raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const sectionMap = {
+        'EXTERNAL CALLERS':       'diag-external',
+        'PRESENTATION LAYER':     'diag-pres',
+        'APPLICATION LAYER':      'diag-app',
+        'INFRASTRUCTURE LAYER':   'diag-infra',
+        'DOMAIN LAYER':           'diag-domain',
+        'PERSISTENCE LAYER':      'diag-persist',
+        'CROSS-CUTTING CONCERNS': 'diag-cross',
+        'PATTERNS INCLUDED':      'diag-cross'
+      };
+      let section = 'diag-title';
+      return escaped.split('\n').map(line => {
+        for (const [marker, cls] of Object.entries(sectionMap)) {
+          if (line.includes(marker)) { section = cls; break; }
+        }
+        return `<span class="${section}">${line}</span>`;
+      }).join('\n');
+    }
+
+    function openDiagramModal() {
+      const pre = document.getElementById('arch-diagram-pre');
+      if (!pre.innerHTML) pre.innerHTML = colorizeArchDiagram(ARCH_DIAGRAM_RAW);
+      document.getElementById('arch-diagram-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDiagramModal() {
+      document.getElementById('arch-diagram-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('arch-diagram-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeDiagramModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeDiagramModal();
+    });
+  </script>
 </body>
 </html>

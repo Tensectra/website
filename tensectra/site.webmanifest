@@ -1,0 +1,16 @@
+{
+  "name": "Tensectra",
+  "short_name": "Tensectra",
+  "description": "Build Enterprise Systems 10x Faster With AI-Powered Architecture",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050A14",
+  "theme_color": "#00CCFF",
+  "icons": [
+    {
+      "src": "/images/tensectra-logo.png",
+      "sizes": "any",
+      "type": "image/png"
+    }
+  ]
+}

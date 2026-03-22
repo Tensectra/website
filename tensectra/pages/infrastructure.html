@@ -5,12 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Infrastructure Kit | Tensectra — Build ERP 10x Faster</title>
   <meta name="description" content="Enterprise-grade .NET 8 scaffold. Install the core. Add modules. Ship production systems without starting from scratch.">
+  <meta name="keywords" content=".NET 8 scaffold, Clean Architecture template, enterprise ERP kit, multi-tenant .NET, Kafka .NET, EF Core scaffold, NuGet dotnet template, TensectraKit, CQRS scaffold">
+  <meta name="author" content="Tensectra">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://tensectra.com/pages/infrastructure">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#00CCFF">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Tensectra">
+  <meta property="og:url" content="https://tensectra.com/pages/infrastructure">
+  <meta property="og:title" content="Infrastructure Kit | Tensectra — .NET 8 Enterprise Scaffold, Ready to Ship">
+  <meta property="og:description" content="Enterprise-grade .NET 8 scaffold. 5 layers. 14 patterns. 3 database providers. Install the core. Add modules. Ship production systems without starting from scratch.">
+  <meta property="og:image" content="https://tensectra.com/images/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@tensectra">
+  <meta name="twitter:title" content="Infrastructure Kit | Tensectra — .NET 8 Enterprise Scaffold, Ready to Ship">
+  <meta name="twitter:description" content="Enterprise-grade .NET 8 scaffold. 5 layers. 14 patterns. 3 database providers. Install the core. Add modules. Ship.">
+  <meta name="twitter:image" content="https://tensectra.com/images/og-image.png">
+  <!-- JSON-LD: Product -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "TensectraKit Starter",
+    "description": "Enterprise-grade .NET 8 scaffold with 5 layers, 14 production patterns, and 3 database providers. Production-proven in financial SaaS serving banks across Africa.",
+    "brand": { "@type": "Brand", "name": "Tensectra" },
+    "url": "https://tensectra.com/pages/infrastructure",
+    "offers": {
+      "@type": "Offer",
+      "price": "299",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "seller": { "@type": "Organization", "name": "Tensectra" }
+    }
+  }
+  </script>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/main.css?v=2">
   <link rel="icon" type="image/png" href="../images/tensectra-logo.png">
 </head>
 <body>
@@ -18,7 +57,7 @@
   <nav class="navbar">
     <div class="container navbar-container">
       <a href="../" class="navbar-logo">
-        <img src="../images/tensectra-logo.png" alt="Tensectra">
+        <img src="../images/logo2.png" alt="Tensectra">
         <span>TENSECTRA</span>
       </a>
       
@@ -33,7 +72,7 @@
       </ul>
       
       <div class="navbar-cta">
-        <a href="#waitlist" class="btn btn-primary btn-sm">Join Waitlist</a>
+        <a href="#pricing" class="btn btn-primary btn-sm">Get the Scaffold</a>
       </div>
       
       <button class="mobile-menu-btn" aria-label="Toggle menu">
@@ -52,13 +91,47 @@
     
     <div class="container">
       <div class="hero-content" style="text-align: center; margin: 0 auto;">
-        <span class="badge" style="display: inline-block; margin-bottom: var(--space-md); position: static;">Coming Soon</span>
-        <h1>Enterprise .NET 8 Infrastructure — <span class="text-cyan">Instantly.</span></h1>
+        <h1>Enterprise .NET 8 Infrastructure — <span class="text-cyan">Ready to Ship.</span></h1>
         <p class="hero-subtitle" style="margin: var(--space-md) auto 0; max-width: 700px;">
           The scaffold we use to build financial SaaS for banks across Africa. Multi-tenant. Event-driven. Production-ready. Install the core. Add modules. Ship.
         </p>
         <div class="hero-cta" style="justify-content: center;">
-          <a href="#waitlist" class="btn btn-primary btn-lg">Join the Waitlist →</a>
+          <a href="#pricing" class="btn btn-primary btn-lg">Get the Scaffold &rarr;</a>
+          <button onclick="openDiagramModal()" class="btn btn-secondary btn-lg arch-peek-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            Preview Architecture
+          </button>
+        </div>
+      </div>    
+
+    </div>
+  </section>
+
+  <!-- Architecture Peek Banner -->
+  <section class="arch-peek-section">
+    <div class="container">
+      <div class="arch-peek-banner">
+        <div class="arch-peek-left">
+          <span class="arch-peek-badge">WHAT’S INSIDE THE SCAFFOLD</span>
+          <h3 class="arch-peek-title">5 layers. 14 enterprise patterns. Production-proven.</h3>
+          <p class="arch-peek-sub">Every pattern a tech lead would spend 3–6 months building — already done, already tested in live banking systems.</p>
+        </div>
+        <div class="arch-peek-right">
+          <div class="arch-peek-layers">
+            <span class="arch-peek-layer" style="--lc: var(--accent-cyan);">Presentation</span>
+            <span class="arch-peek-arrow">↓</span>
+            <span class="arch-peek-layer" style="--lc: var(--accent-blue);">Application</span>
+            <span class="arch-peek-arrow">↓</span>
+            <span class="arch-peek-layer" style="--lc: var(--accent-purple);">Infrastructure</span>
+            <span class="arch-peek-arrow">↓</span>
+            <span class="arch-peek-layer" style="--lc: rgba(255,255,255,0.35);">Domain</span>
+            <span class="arch-peek-arrow">↓</span>
+            <span class="arch-peek-layer" style="--lc: rgba(110,125,154,0.7);">Persistence</span>
+          </div>
+          <button onclick="openArchModal()" class="btn btn-primary arch-peek-btn" style="margin-top: var(--space-md); width: 100%;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            Open Full Architecture
+          </button>
         </div>
       </div>
     </div>
@@ -82,7 +155,7 @@
             </svg>
           </div>
           <h4>Clean Architecture Core</h4>
-          <p style="color: var(--text-muted);">Pre-configured project structure with Domain, Application, Infrastructure, and API layers. No decisions to make. Just build.</p>
+          <p style="color: var(--text-muted);">Domain → Application → Infrastructure → API — all four layers fully wired from day one. MediatR, AutoMapper, and FluentValidation pre-configured. Every dependency points inward. Open the solution and start building your domain immediately.</p>
         </div>
         
         <div class="card">
@@ -93,7 +166,7 @@
             </svg>
           </div>
           <h4>Multi-Tenancy Built-In</h4>
-          <p style="color: var(--text-muted);">Tenant isolation at the database level. Shared or dedicated databases per tenant. Automatic tenant resolution from headers or subdomains.</p>
+          <p style="color: var(--text-muted);">Country-code-driven strategy pattern routes every request to the correct tenant service at runtime. Add a new market with one factory class — no controller changes, no routing changes. Nigeria, Ghana, and beyond, from a single codebase.</p>
         </div>
         
         <div class="card">
@@ -103,7 +176,7 @@
             </svg>
           </div>
           <h4>Event-Driven Messaging</h4>
-          <p style="color: var(--text-muted);">Kafka integration out of the box. Domain events, integration events, and sagas for long-running processes.</p>
+          <p style="color: var(--text-muted);">Three production Kafka Saga patterns pre-wired: Approval Saga, User Sync Saga, Customer Sync Saga — all idempotent with Kafka offset retry. Coravel background queue handles audit jobs off the critical path with automatic 3× retry built-in.</p>
         </div>
         
         <div class="card">
@@ -114,8 +187,8 @@
               <line x1="12" y1="8" x2="12.01" y2="8"></line>
             </svg>
           </div>
-          <h4>Auth & Authorization</h4>
-          <p style="color: var(--text-muted);">JWT authentication with refresh tokens. Role-based and permission-based authorization. Identity Server integration ready.</p>
+          <h4>Auth &amp; Security at Boundary</h4>
+          <p style="color: var(--text-muted);">AES encryption at the API boundary — requests are decrypted on entry, responses re-encrypted on exit via middleware. JWT auth pre-wired. LanguageFilter and CountryFilter resolve locale per request. Your data never travels in plaintext.</p>
         </div>
         
         <div class="card">
@@ -126,8 +199,8 @@
               <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
             </svg>
           </div>
-          <h4>Database & Migrations</h4>
-          <p style="color: var(--text-muted);">Entity Framework Core with PostgreSQL. Automatic migrations. Seeding for development and testing.</p>
+          <h4>Multi-Database, Zero Re-work</h4>
+          <p style="color: var(--text-muted);">Switch between SQL Server, Oracle, or PostgreSQL with a single config value — no code changes. Soft-delete, full audit trail (CreatedAt / UpdatedBy), bulk insert/update, and deterministic DB seeding are all pre-built and tested.</p>
         </div>
         
         <div class="card">
@@ -140,8 +213,8 @@
               <polyline points="10 9 9 9 8 9"></polyline>
             </svg>
           </div>
-          <h4>Documentation & Examples</h4>
-          <p style="color: var(--text-muted);">Complete ARCHITECTURE.md. Sample implementations for common patterns. Getting started guide in under 10 minutes.</p>
+          <h4>NuGet Template — Ship in Minutes</h4>
+          <p style="color: var(--text-muted);">Install with <code style="font-family: var(--font-mono); font-size: 0.8em; color: var(--accent-cyan);">dotnet new install TensectraKit.Template</code>. Visual Studio 2022 wizard sets your DB engine, Redis, Kafka, and AES key. From zero to a running, named service in under 10 minutes.</p>
         </div>
       </div>
     </div>
@@ -160,27 +233,26 @@
           <div style="width: 60px; height: 60px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-md);">
             <span style="color: white; font-weight: 700; font-size: 1.5rem;">1</span>
           </div>
-          <h4>Install the Core</h4>
-          <p style="color: var(--text-muted);">Clone the repository. Run the setup script. The core infrastructure is ready in minutes.</p>
-          <div class="ascii-diagram" style="text-align: left; font-size: 0.7rem; margin-top: var(--space-md);">
-dotnet new tensectra-erp -n MyERP
-cd MyERP
-dotnet run
-          </div>
+          <h4>Install the Template</h4>
+          <p style="color: var(--text-muted);">One <code style="font-family:var(--font-mono);font-size:0.8em;color:var(--accent-cyan);">dotnet new install</code> registers the template globally. One <code style="font-family:var(--font-mono);font-size:0.8em;color:var(--accent-cyan);">dotnet new tensectrakit</code> creates your named project. Every namespace, filename, and config reference auto-renames to match. Running in under 2 minutes.
+          <div class="ascii-diagram" style="text-align: left; font-size: 0.7rem; margin-top: var(--space-md);">dotnet new install \
+  TensectraKit.Template
+
+dotnet new tensectrakit \
+  -n MyPaymentService</div>
         </div>
         
         <div class="card" style="text-align: center;">
           <div style="width: 60px; height: 60px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-md);">
             <span style="color: white; font-weight: 700; font-size: 1.5rem;">2</span>
           </div>
-          <h4>Add Modules</h4>
-          <p style="color: var(--text-muted);">Install pre-built modules or create your own. Each module follows the same clean architecture pattern.</p>
-          <div class="ascii-diagram" style="text-align: left; font-size: 0.7rem; margin-top: var(--space-md);">
-dotnet add package \
-  Tensectra.Modules.Inventory
-dotnet add package \
-  Tensectra.Modules.HR
-          </div>
+          <h4>Configure via Wizard</h4>
+          <p style="color: var(--text-muted);">Visual Studio 2022 opens a setup wizard. Choose DB engine, paste your connection string, set Redis and Kafka endpoints, enter your AES encryption key. Every value flows into <code style="font-family:var(--font-mono);font-size:0.8em;color:var(--accent-cyan);">appsettings.json</code> — no placeholder hunting.</p>
+          <div class="ascii-diagram" style="text-align: left; font-size: 0.7rem; margin-top: var(--space-md);">DB:    Oracle / PostgreSQL
+       / SQL Server
+Redis: localhost:6379
+Kafka: localhost:9092
+Key:   YourAESKey32Chars___</div>
         </div>
         
         <div class="card" style="text-align: center;">
@@ -188,16 +260,15 @@ dotnet add package \
             <span style="color: white; font-weight: 700; font-size: 1.5rem;">3</span>
           </div>
           <h4>Ship to Production</h4>
-          <p style="color: var(--text-muted);">Deploy to your cloud provider. The kit includes Docker files, CI/CD templates, and deployment guides.</p>
-          <div class="ascii-diagram" style="text-align: left; font-size: 0.7rem; margin-top: var(--space-md);">
-docker build -t myerp .
-docker push myerp
-kubectl apply -f k8s/
-          </div>
+          <p style="color: var(--text-muted);">Dockerfile, health checks, Prometheus metrics, and Serilog structured logging — all included and pre-configured. The scaffold is production-hardened. Build your image, push, and deploy. No last-minute surprises.</p>
+          <div class="ascii-diagram" style="text-align: left; font-size: 0.7rem; margin-top: var(--space-md);">docker build -t my-service .
+docker push my-service:latest
+kubectl apply -f k8s/</div>
         </div>
       </div>
     </div>
   </section>
+
 
   <!-- Architecture Diagram -->
   <section class="section">
@@ -255,53 +326,122 @@ TENSECTRA ERP KIT
     </div>
   </section>
 
-  <!-- Waitlist Section -->
-  <section id="waitlist" class="section" style="background: var(--bg-card);">
+  <!-- AI Prompt Playbook Banner -->
+  <section class="section" style="background: linear-gradient(135deg, rgba(0,204,255,0.04) 0%, rgba(123,47,255,0.07) 100%); border-top: 1px solid rgba(0,204,255,0.12); border-bottom: 1px solid rgba(123,47,255,0.12);">
     <div class="container">
-      <div class="grid-2" style="align-items: center; max-width: 1000px; margin: 0 auto;">
-        <div>
-          <h2 style="margin-bottom: var(--space-md);">Join the Waitlist</h2>
-          <p style="color: var(--text-muted); margin-bottom: var(--space-lg);">
-            Be the first to know when the ERP Infrastructure Kit launches. Waitlist members get early access and founding member pricing.
-          </p>
-          
-          <div class="card" style="background: rgba(0, 204, 255, 0.05);">
-            <h4 style="margin-bottom: var(--space-sm); color: var(--accent-cyan);">What You Get</h4>
-            <ul style="list-style: none; color: var(--text-muted);">
-              <li style="margin-bottom: var(--space-xs);">✓ Early access before public launch</li>
-              <li style="margin-bottom: var(--space-xs);">✓ Founding member discount (30% off)</li>
-              <li style="margin-bottom: var(--space-xs);">✓ Direct input on feature roadmap</li>
-              <li>✓ Priority support for first 3 months</li>
-            </ul>
+      <div style="max-width: 860px; margin: 0 auto; text-align: center;">
+        <span class="ladder-badge" style="background: rgba(123,47,255,0.15); border-color: rgba(123,47,255,0.3); color: var(--accent-purple);">PROMPT PLAYBOOK &mdash; INCLUDED WITH EVERY KIT</span>
+        <h2 style="margin: var(--space-md) 0;">AI handles the heavy lifting.<br><span class="text-cyan">You own the architecture.</span></h2>
+        <p style="color: var(--text-muted); font-size: 1.1rem; font-style: italic; max-width: 680px; margin: 0 auto var(--space-xl);">&ldquo;AI writes the code. You design the architecture. This scaffold teaches you the difference &mdash; and makes you dangerous with both.&rdquo;</p>
+        <div class="grid-3" style="text-align: left; gap: var(--space-lg);">
+          <div class="card" style="display: flex; gap: var(--space-md); align-items: flex-start;">
+            <div style="width: 40px; height: 40px; background: rgba(0,204,255,0.1); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+            </div>
+            <div><strong style="color: var(--text-white); display: block; margin-bottom: 4px;">Prompt Playbook Included</strong><p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">50+ battle-tested prompts for Copilot &amp; Cursor — generate handlers, validators, sagas, and tests that match the scaffold&rsquo;s exact patterns.</p></div>
+          </div>
+          <div class="card" style="display: flex; gap: var(--space-md); align-items: flex-start;">
+            <div style="width: 40px; height: 40px; background: rgba(123,47,255,0.1); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-purple)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </div>
+            <div><strong style="color: var(--text-white); display: block; margin-bottom: 4px;">Architecture-First Mindset</strong><p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">AI fills in the implementation. You make every pattern decision. The scaffold is the frame &mdash; you are the architect who decides what goes inside it.</p></div>
+          </div>
+          <div class="card" style="display: flex; gap: var(--space-md); align-items: flex-start;">
+            <div style="width: 40px; height: 40px; background: rgba(59,91,255,0.1); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+            </div>
+            <div><strong style="color: var(--text-white); display: block; margin-bottom: 4px;">10&times; Velocity</strong><p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">The scaffold eliminates setup. AI eliminates boilerplate. You spend 100% of your time on real engineering decisions that matter to the business.</p></div>
           </div>
         </div>
-        
-        <div class="card">
-          <form name="infrastructure-waitlist" netlify>
-            <div class="form-group">
-              <label class="form-label">Full Name *</label>
-              <input type="text" name="name" class="form-input" required>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="pricing" class="section kit-pricing-section">
+    <div class="container">
+
+      <div class="kit-pricing-header">
+        <span class="ladder-badge">STARTER KIT &mdash; AVAILABLE NOW</span>
+        <h2>The Scaffold Is Ready.<br><span class="text-cyan">Start Building Today.</span></h2>
+        <p>One payment. Permanent access. No subscriptions. Skip 3&ndash;6 months of setup and ship enterprise-grade systems from day one.</p>
+      </div>
+
+      <!-- Featured Starter Card -->
+      <div class="kit-starter-card">
+        <div class="kit-starter-left">
+          <div class="kit-live-badge">
+            <span class="kit-live-dot"></span>
+            <span>Live &amp; Available</span>
+          </div>
+          <div class="kit-tier-label">STARTER KIT</div>
+          <div class="kit-price-row">
+            <span class="kit-price-amount">$299</span>
+            <div class="kit-price-meta">
+              <span>One-time</span>
+              <span>payment</span>
             </div>
-            
-            <div class="form-group">
-              <label class="form-label">Email Address *</label>
-              <input type="email" name="email" class="form-input" required>
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">Company (Optional)</label>
-              <input type="text" name="company" class="form-input">
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">What are you building? (Optional)</label>
-              <textarea name="project" class="form-textarea" rows="3" placeholder="Tell us about your project or use case..."></textarea>
-            </div>
-            
-            <button type="submit" class="btn btn-primary" style="width: 100%;">Join Waitlist →</button>
-          </form>
+          </div>
+          <p class="kit-tagline">The complete TensectraKit scaffold. 5 layers. 14 patterns. 3 database providers. Yours to keep, extend, and ship.</p>
+          <button class="btn btn-primary kit-cta-btn" data-modal="purchase-modal">
+            Get the Scaffold &rarr;
+          </button>
+          <p class="kit-cta-note">Email us to purchase &mdash; we respond within 4 hours.</p>
+        </div>
+        <div class="kit-starter-right">
+          <div class="kit-features-label">WHAT&rsquo;S INCLUDED</div>
+          <ul class="kit-features-list">
+            <li>
+              <span class="kit-check">&#10003;</span>
+              <div><strong>.NET 8 Clean Architecture (5 layers)</strong><span>Domain &rarr; Application &rarr; Infrastructure &rarr; API &rarr; Persistence, fully wired</span></div>
+            </li>
+            <li>
+              <span class="kit-check">&#10003;</span>
+              <div><strong>Multi-Database Provider</strong><span>SQL Server, Oracle, or PostgreSQL &mdash; switch with one config value, no code changes</span></div>
+            </li>
+            <li>
+              <span class="kit-check">&#10003;</span>
+              <div><strong>Kafka Sagas (3 patterns pre-wired)</strong><span>Approval Saga, User Sync, Customer Sync &mdash; idempotent with Kafka offset retry</span></div>
+            </li>
+            <li>
+              <span class="kit-check">&#10003;</span>
+              <div><strong>AES Encryption at Boundary</strong><span>Request decrypt + response encrypt middleware &mdash; zero configuration needed</span></div>
+            </li>
+            <li>
+              <span class="kit-check">&#10003;</span>
+              <div><strong>dotnet new NuGet Template</strong><span>Visual Studio 2022 wizard &mdash; from zero to running named service in under 10 minutes</span></div>
+            </li>
+            <li>
+              <span class="kit-check">&#10003;</span>
+              <div><strong>Full Architecture Documentation</strong><span>Every pattern explained, end-to-end scenario walkthrough, and setup guide</span></div>
+            </li>
+          </ul>
         </div>
       </div>
+
+      <!-- Roadmap tiers -->
+      <div class="kit-roadmap">
+        <div class="kit-roadmap-label">COMING NEXT</div>
+        <div class="kit-roadmap-grid">
+          <div class="kit-roadmap-tier">
+            <div class="kit-roadmap-tier-head">
+              <span class="kit-roadmap-tier-name">Pro Kit</span>
+              <span class="kit-roadmap-price">$899</span>
+            </div>
+            <p>Modules library, advanced multi-tenancy, monitoring dashboards, team onboarding guide, and 6 months of priority support.</p>
+            <span class="kit-roadmap-badge">In Development</span>
+          </div>
+          <div class="kit-roadmap-tier">
+            <div class="kit-roadmap-tier-head">
+              <span class="kit-roadmap-tier-name">Enterprise</span>
+              <span class="kit-roadmap-price">Custom</span>
+            </div>
+            <p>White-label rights, custom module development, team workshops, architecture consultancy, and a dedicated support channel.</p>
+            <a href="../forms/contact" class="kit-roadmap-badge kit-roadmap-link">Talk to Us &rarr;</a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -389,6 +529,573 @@ TENSECTRA ERP KIT
     </button>
   </div>
 
-  <script src="../js/main.js"></script>
+  <!-- Architecture Preview Modal -->
+  <div id="arch-modal" class="arch-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="arch-modal-title">
+    <div class="arch-modal">
+      <div class="arch-modal-header">
+        <div>
+          <span class="ladder-badge">ARCHITECTURE PREVIEW</span>
+          <h3 class="arch-modal-title" id="arch-modal-title">TensectraKit — System Architecture</h3>
+          <p class="arch-modal-meta">.NET 8 &middot; Clean Architecture &middot; Multi-DB &middot; Kafka &middot; gRPC &middot; Redis &middot; AES Encryption</p>
+        </div>
+        <button class="arch-modal-close" onclick="closeArchModal()" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="arch-modal-body">
+        <!-- External callers -->
+        <div class="arch-callers">
+          <div class="arch-caller-pill"><span class="arch-caller-icon">↴</span><span>HTTP / REST</span></div>
+          <div class="arch-caller-pill"><span class="arch-caller-icon">↴</span><span>gRPC (protobuf)</span></div>
+          <div class="arch-caller-pill"><span class="arch-caller-icon">↴</span><span>Kafka Event Streams</span></div>
+        </div>
+
+        <!-- Layer stack -->
+        <div class="arch-layers">
+
+          <div class="arch-layer" style="--lborder: var(--accent-cyan);">
+            <div class="arch-layer-head">
+              <div class="arch-layer-dot" style="background: var(--accent-cyan);"></div>
+              <div>
+                <div class="arch-layer-name">PRESENTATION LAYER</div>
+                <div class="arch-layer-pkg">TensectraKit.Api — .NET 8 Web API</div>
+              </div>
+            </div>
+            <div class="arch-layer-pills">
+              <span class="arch-pill arch-pill-key">AES EncryptResponse Middleware</span>
+              <span class="arch-pill arch-pill-key">DecryptRequestDataFilter&lt;T&gt;</span>
+              <span class="arch-pill">ASP.NET Core Middleware Pipeline</span>
+              <span class="arch-pill">CountryFilter (header → ICountryService)</span>
+              <span class="arch-pill">LanguageFilter (header → ILanguageService)</span>
+              <span class="arch-pill">ApiExceptionFilterAttribute</span>
+              <span class="arch-pill">REST Controllers (ApiControllerBase)</span>
+              <span class="arch-pill">gRPC Entry Point (CreateUsersService)</span>
+              <span class="arch-pill">Serilog Logging</span>
+              <span class="arch-pill">Prometheus Metrics</span>
+              <span class="arch-pill">Swagger / OpenAPI</span>
+            </div>
+          </div>
+
+          <div class="arch-layer-connector">MediatR.Send(Command / Query)</div>
+
+          <div class="arch-layer" style="--lborder: var(--accent-blue);">
+            <div class="arch-layer-head">
+              <div class="arch-layer-dot" style="background: var(--accent-blue);"></div>
+              <div>
+                <div class="arch-layer-name">APPLICATION LAYER</div>
+                <div class="arch-layer-pkg">TensectraKit.Application</div>
+              </div>
+            </div>
+            <div class="arch-layer-pills">
+              <span class="arch-pill arch-pill-key">CQRS via MediatR (Commands &amp; Queries)</span>
+              <span class="arch-pill arch-pill-key">ValidationBehavior (FluentValidation pipeline)</span>
+              <span class="arch-pill arch-pill-key">Country Strategy Factory (IUsersStrategyFactory)</span>
+              <span class="arch-pill">NigeriaUsersStrategyServiceFactory</span>
+              <span class="arch-pill">GhanaUsersStrategyServiceFactory</span>
+              <span class="arch-pill arch-pill-key">Approval Saga (PostAvailmentApprovalCompleted)</span>
+              <span class="arch-pill arch-pill-key">User Sync Saga (UserProfileUpdated)</span>
+              <span class="arch-pill arch-pill-key">Customer Sync Saga (CustomerUpdated)</span>
+              <span class="arch-pill">Coravel Queue + AuditLogInvocable + 3&times; Retry</span>
+              <span class="arch-pill">AutoMapper profiles</span>
+              <span class="arch-pill">IMessageProducers (Kafka publish)</span>
+            </div>
+          </div>
+
+          <div class="arch-layer-connector">IRepositoryWrapper (Unit of Work)</div>
+
+          <div class="arch-layer" style="--lborder: var(--accent-purple);">
+            <div class="arch-layer-head">
+              <div class="arch-layer-dot" style="background: var(--accent-purple);"></div>
+              <div>
+                <div class="arch-layer-name">INFRASTRUCTURE LAYER</div>
+                <div class="arch-layer-pkg">TensectraKit.Infrastructure</div>
+              </div>
+            </div>
+            <div class="arch-layer-pills">
+              <span class="arch-pill arch-pill-key">RepositoryWrapper (lazy-init, single entry point)</span>
+              <span class="arch-pill">RepositoryBase&lt;T&gt; — CRUD + Bulk + QueryJoin</span>
+              <span class="arch-pill">Soft-delete via reflection (IsDeleted flag)</span>
+              <span class="arch-pill">Audit auto-fill on SaveChanges</span>
+              <span class="arch-pill arch-pill-key">SqlServerDbContext</span>
+              <span class="arch-pill arch-pill-key">OracleDbContext (BOOLEAN → NUMBER(2))</span>
+              <span class="arch-pill arch-pill-key">PostgresDbContext (Npgsql)</span>
+              <span class="arch-pill">BulkInsertAsync / BulkUpdateAsync / BulkDeleteAsync</span>
+              <span class="arch-pill">DbSeeder (hashes passwords, handles Oracle identity)</span>
+            </div>
+          </div>
+
+          <div class="arch-layer-connector">Domain contracts (no outward dependencies)</div>
+
+          <div class="arch-layer" style="--lborder: rgba(255,255,255,0.2);">
+            <div class="arch-layer-head">
+              <div class="arch-layer-dot" style="background: rgba(255,255,255,0.4);"></div>
+              <div>
+                <div class="arch-layer-name">DOMAIN LAYER</div>
+                <div class="arch-layer-pkg">TensectraKit.Domain — zero external dependencies</div>
+              </div>
+            </div>
+            <div class="arch-layer-pills">
+              <span class="arch-pill">Entity&lt;TPrimaryKey&gt; base</span>
+              <span class="arch-pill">IAuditable (CreatedAt, UpdatedAt, CreatedBy, UpdatedBy)</span>
+              <span class="arch-pill">ISoftDelete</span>
+              <span class="arch-pill">IApproval (ApprovedStatus, Comment, Date)</span>
+              <span class="arch-pill">IRepositoryBase&lt;T&gt;</span>
+              <span class="arch-pill">IRepositoryWrapper</span>
+              <span class="arch-pill">IUnitOfWork</span>
+              <span class="arch-pill">DTOs (CreateUserDto, UsersDto)</span>
+              <span class="arch-pill">ApprovalStatus enum</span>
+              <span class="arch-pill">BOOLEAN enum (Oracle-safe)</span>
+            </div>
+          </div>
+
+          <div class="arch-layer-connector">gRPC Protobuf contracts</div>
+
+          <div class="arch-layer" style="--lborder: rgba(110,125,154,0.5);">
+            <div class="arch-layer-head">
+              <div class="arch-layer-dot" style="background: rgba(110,125,154,0.6);"></div>
+              <div>
+                <div class="arch-layer-name">PERSISTENCE LAYER</div>
+                <div class="arch-layer-pkg">TensectraKit.Persistence — gRPC contract layer</div>
+              </div>
+            </div>
+            <div class="arch-layer-pills">
+              <span class="arch-pill">Users.proto contract</span>
+              <span class="arch-pill">CreateUsersService : CreateUsers.CreateUsersBase</span>
+              <span class="arch-pill">gPayloadResponse (Any.Pack for nested data)</span>
+              <span class="arch-pill">gRPCMappingProfile (AutoMapper)</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Cross-cutting -->
+        <div class="arch-crosscut">
+          <div class="arch-crosscut-label">CROSS-CUTTING CONCERNS</div>
+          <div class="arch-crosscut-pills">
+            <span class="arch-pill arch-pill-key">Redis Cache (ICacheProvider + TTL config per key)</span>
+            <span class="arch-pill arch-pill-key">Kafka Messaging (KafkaLibrary)</span>
+            <span class="arch-pill arch-pill-key">AES Encryption (request &amp; response boundary)</span>
+            <span class="arch-pill">Serilog → Console / Elasticsearch / Seq</span>
+            <span class="arch-pill">FluentValidation (MediatR pipeline behaviour)</span>
+            <span class="arch-pill">Coravel background queue</span>
+            <span class="arch-pill">Prometheus metrics endpoint</span>
+            <span class="arch-pill">Swagger SecurityDefinitions (CountryCode + LanguageCode)</span>
+            <span class="arch-pill">AutoMapper (DTO ↔ Entity ↔ Proto)</span>
+          </div>
+        </div>
+
+        <!-- Patterns -->
+        <div class="arch-patterns">
+          <div class="arch-patterns-label">14 PRODUCTION PATTERNS — ALL PRE-BUILT</div>
+          <div class="arch-patterns-grid">
+            <span class="arch-pattern-badge">Clean Architecture</span>
+            <span class="arch-pattern-badge">CQRS</span>
+            <span class="arch-pattern-badge">Repository Pattern</span>
+            <span class="arch-pattern-badge">Wrapper / Aggregator</span>
+            <span class="arch-pattern-badge">Factory / Strategy</span>
+            <span class="arch-pattern-badge">Saga (Kafka)</span>
+            <span class="arch-pattern-badge">Pipeline Behaviour</span>
+            <span class="arch-pattern-badge">Soft Delete</span>
+            <span class="arch-pattern-badge">Audit Trail</span>
+            <span class="arch-pattern-badge">Encryption at Boundary</span>
+            <span class="arch-pattern-badge">Background + 3× Retry</span>
+            <span class="arch-pattern-badge">Multi-DB Provider</span>
+            <span class="arch-pattern-badge">Dual Entry (REST + gRPC)</span>
+            <span class="arch-pattern-badge">DB Seeding</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-modal-footer">
+        <p class="arch-modal-footer-text">Production-proven in financial SaaS serving banks across Africa. Every pattern above is ready to run from day one — not a tutorial scaffold.</p>
+        <a href="#pricing" onclick="closeArchModal()" class="btn btn-primary">Get the Scaffold &mdash; $299 &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Architecture Diagram Modal (raw ASCII textual diagram) -->
+  <div id="arch-diagram-modal" class="arch-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="arch-diag-title">
+    <div class="arch-modal arch-diag-modal">
+      <div class="arch-modal-header">
+        <div>
+          <span class="ladder-badge">PART 1 — HIGH-LEVEL DIAGRAM</span>
+          <h3 class="arch-modal-title" id="arch-diag-title">C360 Backend Architecture — TensectraKit (.NET 8)</h3>
+          <p class="arch-modal-meta">Textual boxes &amp; arrows &middot; Presentation &rarr; Application &rarr; Infrastructure &rarr; Domain &rarr; Persistence</p>
+        </div>
+        <button class="arch-modal-close" onclick="closeDiagramModal()" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="arch-modal-body arch-diag-body">
+        <pre id="arch-diagram-pre" class="arch-diagram-pre"></pre>
+      </div>
+      <div class="arch-modal-footer">
+        <p class="arch-modal-footer-text">This is the exact architecture structure inside TensectraKit — production-proven in financial SaaS serving banks across Africa.</p>
+        <a href="#pricing" onclick="closeDiagramModal()" class="btn btn-primary">Get the Scaffold &mdash; $299 &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Purchase Intent Modal -->
+  <div id="purchase-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="purchase-modal-title">
+    <div class="modal" style="max-width: 480px;">
+      <div class="modal-header">
+        <div>
+          <span class="ladder-badge">STARTER KIT &mdash; $299 ONE-TIME</span>
+          <h3 id="purchase-modal-title" style="margin-top: var(--space-xs);">Get the Scaffold</h3>
+        </div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="color: var(--text-muted); margin-bottom: var(--space-lg);">Leave your name and email &mdash; we&rsquo;ll send the payment link and scaffold access within 4 hours.</p>
+        <form id="purchase-form" onsubmit="submitPurchaseForm(event)">
+          <div style="margin-bottom: var(--space-md);">
+            <label for="purchase-name" style="display: block; color: var(--text-primary); font-weight: 500; font-size: 0.9rem; margin-bottom: var(--space-xs);">Your Name</label>
+            <input id="purchase-name" type="text" required placeholder="e.g. Segun Adeyemi"
+              style="width: 100%; box-sizing: border-box; background: var(--bg-primary); border: 1px solid var(--bg-border); border-radius: var(--radius-md); padding: 0.75rem var(--space-md); color: var(--text-white); font-size: 1rem; outline: none;">
+          </div>
+          <div style="margin-bottom: var(--space-lg);">
+            <label for="purchase-email" style="display: block; color: var(--text-primary); font-weight: 500; font-size: 0.9rem; margin-bottom: var(--space-xs);">Your Email</label>
+            <input id="purchase-email" type="email" required placeholder="you@company.com"
+              style="width: 100%; box-sizing: border-box; background: var(--bg-primary); border: 1px solid var(--bg-border); border-radius: var(--radius-md); padding: 0.75rem var(--space-md); color: var(--text-white); font-size: 1rem; outline: none;">
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1rem; padding: 0.85rem;">Send Purchase Request &rarr;</button>
+          <p style="color: var(--text-muted); font-size: 0.82rem; text-align: center; margin-top: var(--space-sm);">We respond within 4 hours. No spam &mdash; ever.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/main.js?v=2"></script>
+  <script>
+    function submitPurchaseForm(e) {
+      e.preventDefault();
+      const name  = document.getElementById('purchase-name').value.trim();
+      const email = document.getElementById('purchase-email').value.trim();
+      const subj  = encodeURIComponent('TensectraKit Starter Kit — Purchase Request');
+      const body  = encodeURIComponent(
+        'Hi Tensectra,\n\nI would like to purchase the TensectraKit Starter Kit.\n\n'
+        + 'Name:  ' + name + '\nEmail: ' + email
+        + '\n\nPlease send me the payment link and scaffold access.\n\nThank you!'
+      );
+      window.location.href = 'mailto:hello@tensectra.com?subject=' + subj + '&body=' + body;
+      closeAllModals();
+      showNotification('Opening your email client — your details are pre-filled!', 'success');
+    }
+
+    /* ── Modal 1: Full Architecture (pill cards) ── */
+    function openArchModal() {
+      document.getElementById('arch-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeArchModal() {
+      document.getElementById('arch-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('arch-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeArchModal();
+    });
+
+    /* ── Modal 2: Raw textual diagram with syntax colours ── */
+    const ARCH_DIAGRAM_RAW = `\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557
+\u2551           C360 BACKEND ARCHITECTURE  \u2014 TensectraKit  (.NET 8 Clean Architecture)                 \u2551
+\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d
+
+\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501
+PART 1 \u2014 HIGH-LEVEL ARCHITECTURE DIAGRAM  (TEXTUAL, BOXES & ARROWS)
+\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501
+
+  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
+  \u2502                          EXTERNAL CALLERS                                               \u2502
+  \u2502  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510     \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510     \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510   \u2502
+  \u2502  \u2502  HTTP/REST Client    \u2502     \u2502  gRPC Client         \u2502     \u2502  Kafka Message Broker  \u2502   \u2502
+  \u2502  \u2502  (Browser / Mobile / \u2502     \u2502  (Internal Service   \u2502     \u2502  (Event Streams /      \u2502   \u2502
+  \u2502  \u2502   Postman / etc.)    \u2502     \u2502   or 3rd party)      \u2502     \u2502   Approval / Sync)     \u2502   \u2502
+  \u2502  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518     \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518     \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518   \u2502
+  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2502\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500  \u2502  \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500-\u2500\u2502\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 \u2518
+                \u2502  HTTP/HTTPS                \u2502  gRPC (protobuf)           \u2502  Kafka Events
+                \u25bc                             \u25bc                           \u25bc
+  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
+  \u2502                  PRESENTATION LAYER  \u2014 TensectraKit.Api  (.NET 8 Web API)               \u2502
+  \u2502                                                                                         \u2502
+  \u2502   \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510                        \u2502
+  \u2502   \u2502  ASP.NET Core Middleware Pipeline (Program.cs)             \u2502                        \u2502
+  \u2502   \u2502  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510                \u2502                        \u2502
+  \u2502   \u2502  \u2502 Serilog Logging  \u2502  \u2502Prometheus Metrics\u2502                \u2502                        \u2502
+  \u2502   \u2502  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518                \u2502                        \u2502
+  \u2502   \u2502  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510                  \u2502                        \u2502
+  \u2502   \u2502  \u2502  EncryptResponseDataMiddleware       \u2502\u25c4\u2500\u2500 intercepts    \u2502                        \u2502
+  \u2502   \u2502  \u2502  (encrypts ALL outgoing responses)   \u2502    response body \u2502                        \u2502
+  \u2502   \u2502  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518                  \u2502                        \u2502
+  \u2502   \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518                        \u2502
+  \u2502                              \u2502                                                          \u2502
+  \u2502                              \u25bc                                                          \u2502
+  \u2502   \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510                        \u2502
+  \u2502   \u2502  ACTION FILTERS  (per-endpoint pipeline)                   \u2502                        \u2502
+  \u2502   \u2502  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510                \u2502                        \u2502
+  \u2502   \u2502  \u2502 LanguageFilter  \u2502  \u2502 CountryFilter     \u2502                \u2502                        \u2502
+  \u2502   \u2502  \u2502 (reads          \u2502  \u2502 (reads CountryCode\u2502                \u2502                        \u2502
+  \u2502   \u2502  \u2502  LanguageCode   \u2502  \u2502  header, sets     \u2502                \u2502                        \u2502
+  \u2502   \u2502  \u2502  header)        \u2502  \u2502  CountryService)  \u2502                \u2502                        \u2502
+  \u2502   \u2502  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518                \u2502                        \u2502
+  \u2502   \u2502  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510              \u2502                        \u2502
+  \u2502   \u2502  \u2502  DecryptRequestDataFilter<T>             \u2502              \u2502                        \u2502
+  \u2502   \u2502  \u2502  (validates & AES-decrypts Base64        \u2502              \u2502                        \u2502
+  \u2502   \u2502  \u2502   encrypted request body \u2192 command)      \u2502              \u2502                        \u2502
+  \u2502   \u2502  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518              \u2502                        \u2502
+  \u2502   \u2502  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510              \u2502                        \u2502
+  \u2502   \u2502  \u2502  ApiExceptionFilterAttribute             \u2502              \u2502                        \u2502
+  \u2502   \u2502  \u2502  (global exception handler \u2192             \u2502              \u2502                        \u2502
+  \u2502   \u2502  \u2502   maps to PayloadResponse error codes)   \u2502              \u2502                        \u2502
+  \u2502   \u2502  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518              \u2502                        \u2502
+  \u2502   \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518                        \u2502
+  \u2502                              \u2502                                                          \u2502
+  \u2502                              \u25bc                                                          \u2502
+  \u2502   \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510                        \u2502
+  \u2502   \u2502  CONTROLLERS                                               \u2502                        \u2502
+  \u2502   \u2502  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510  \u2502                        \u2502
+  \u2502   \u2502  \u2502  ApiControllerBase  (abstract)                       \u2502  \u2502                        \u2502
+  \u2502   \u2502  \u2502   \u2514\u2500\u2500 ISender Mediator (lazy resolved via DI)        \u2502  \u2502                        \u2502
+  \u2502   \u2502  \u2502         \u2502                                            \u2502  \u2502                        \u2502
+  \u2502   \u2502  \u2502  UsersController  : ApiControllerBase                \u2502  \u2502                        \u2502
+  \u2502   \u2502  \u2502   POST /api/v1/SSOUser/OnboardSS0User                \u2502  \u2502                        \u2502
+  \u2502   \u2502  \u2502   \u2192 Mediator.Send(CreateUserCommand)                 \u2502  \u2502                        \u2502
+  \u2502   \u2502  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518  \u2502                        \u2502
+  \u2502   \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518                        \u2502
+  \u2502                                                                                         \u2502
+  \u2502   \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510                        \u2502
+  \u2502   \u2502  GRPC ENTRY POINT  (TensectraKit.Persistence)              \u2502                        \u2502
+  \u2502   \u2502  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510  \u2502                        \u2502
+  \u2502   \u2502  \u2502  CreateUsersService : CreateUsers.CreateUsersBase    \u2502  \u2502                        \u2502
+  \u2502   \u2502  \u2502  (proto-generated)                                   \u2502  \u2502                        \u2502
+  \u2502   \u2502  \u2502   gRPC CreateUser(CreateUserRequest) \u2192               \u2502  \u2502                        \u2502
+  \u2502   \u2502  \u2502   IMediator.Send(CreateUserCommand) \u2192                \u2502  \u2502                        \u2502
+  \u2502   \u2502  \u2502   maps result \u2192 gPayloadResponse (protobuf)          \u2502  \u2502                        \u2502
+  \u2502   \u2502  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518  \u2502                        \u2502
+  \u2502   \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518                        \u2502
+  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518
+                              \u2502  MediatR.Send(Command)
+                              \u25bc
+  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
+  \u2502                   APPLICATION LAYER  \u2014 TensectraKit.Application                         \u2502
+  \u2502                                                                                         \u2502
+  \u2502   \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510                  \u2502
+  \u2502   \u2502  MediatR Pipeline                                                \u2502                  \u2502
+  \u2502   \u2502   Command / Query                                                \u2502                  \u2502
+  \u2502   \u2502   (e.g. CreateUserCommand : CreateUserDto, IRequest<...>)        \u2502                  \u2502
+  \u2502   \u2502          \u2502                                                       \u2502                  \u2502
+  \u2502   \u2502          \u25bc                                                       \u2502                  \u2502
+  \u2502   \u2502   ValidationBehavior<TRequest,TResponse>   \u2190 IPipelineBehavior   \u2502                  \u2502
+  \u2502   \u2502   (FluentValidation runs ALL validators for the command)          \u2502                  \u2502
+  \u2502   \u2502          \u2502                                                       \u2502                  \u2502
+  \u2502   \u2502          \u25bc (if valid)                                            \u2502                  \u2502
+  \u2502   \u2502   CreateUserCommandHandler : IRequestHandler<...>                \u2502                  \u2502
+  \u2502   \u2502          \u2502 reads CountryCode from ICountryService                \u2502                  \u2502
+  \u2502   \u2502          \u2502 calls IUsersStrategyFactory.CreateUserServiceAsync()  \u2502                  \u2502
+  \u2502   \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2502\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518                  \u2502
+  \u2502              \u2502                                                                          \u2502
+  \u2502              \u25bc                                                                          \u2502
+  \u2502   \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510                  \u2502
+  \u2502   \u2502  FACTORY PATTERN  (Country-Based Strategy)                       \u2502                  \u2502
+  \u2502   \u2502   IUsersStrategyFactory                                          \u2502                  \u2502
+  \u2502   \u2502          \u2502                                                       \u2502                  \u2502
+  \u2502   \u2502          \u25bc                                                       \u2502                  \u2502
+  \u2502   \u2502   UsersStrategyFactory (reads CountryCodeSettings from config)   \u2502                  \u2502
+  \u2502   \u2502          \u2502                                                       \u2502                  \u2502
+  \u2502   \u2502          \u251c\u2500\u2500\u2500 CountryCode == "01" (Nigeria) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u25ba   \u2502                  \u2502
+  \u2502   \u2502          \u2502         NigeriaUsersStrategyServiceFactory            \u2502                  \u2502
+  \u2502   \u2502          \u2502         (wraps IUserService for Nigeria rules)        \u2502                  \u2502
+  \u2502   \u2502          \u2514\u2500\u2500\u2500 CountryCode == "02" (Ghana) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u25ba   \u2502                  \u2502
+  \u2502   \u2502                    GhanaUsersStrategyServiceFactory              \u2502                  \u2502
+  \u2502   \u2502                    (wraps IUserService for Ghana rules)          \u2502                  \u2502
+  \u2502   \u2502   UsersStrategyService  (abstract base)                          \u2502                  \u2502
+  \u2502   \u2502   \u2514\u2500\u2500 abstract CreateUserAsync(CreateUserDto) : PayloadResponse  \u2502                  \u2502
+  \u2502   \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518                  \u2502
+  \u2502              \u2502                                                                          \u2502
+  \u2502              \u25bc                                                                          \u2502
+  \u2502   \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510                  \u2502
+  \u2502   \u2502  SERVICE LAYER  (e.g. UserService : IUserService)                \u2502                  \u2502
+  \u2502   \u2502  Dependencies injected:                                          \u2502                  \u2502
+  \u2502   \u2502   \u251c\u2500\u2500 IRepositoryWrapper  (DB access)                            \u2502                  \u2502
+  \u2502   \u2502   \u251c\u2500\u2500 ICacheProvider      (Redis read/write)                     \u2502                  \u2502
+  \u2502   \u2502   \u251c\u2500\u2500 ICacheOptionsProvider<CacheEnum>  (TTL config per key)     \u2502                  \u2502
+  \u2502   \u2502   \u251c\u2500\u2500 IMessageProvider    (localised response messages)          \u2502                  \u2502
+  \u2502   \u2502   \u251c\u2500\u2500 IMapper  (AutoMapper)                                      \u2502                  \u2502
+  \u2502   \u2502   \u251c\u2500\u2500 IMessageProducers   (Kafka publish)                        \u2502                  \u2502
+  \u2502   \u2502   \u2514\u2500\u2500 IQueue              (Coravel background queue)             \u2502                  \u2502
+  \u2502   \u2502  Flow:                                                           \u2502                  \u2502
+  \u2502   \u2502   1. Hash password with ClipsHashAndSalt                         \u2502                  \u2502
+  \u2502   \u2502   2. Check Redis cache (get user by ID/username/email/phone)     \u2502                  \u2502
+  \u2502   \u2502   3. Call RepositoryWrapper.UserRepository.CreateAsync()         \u2502                  \u2502
+  \u2502   \u2502   4. Enqueue AuditLogInvocable via IQueue (Coravel)              \u2502                  \u2502
+  \u2502   \u2502   5. Publish Kafka event via IMessageProducers (if needed)       \u2502                  \u2502
+  \u2502   \u2502   6. Return PayloadResponse<UsersDto>                            \u2502                  \u2502
+  \u2502   \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518                  \u2502
+  \u2502                                                                                         \u2502
+  \u2502   \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510                  \u2502
+  \u2502   \u2502  KAFKA CONSUMER  (Saga Pattern)                                  \u2502                  \u2502
+  \u2502   \u2502   APPROVAL SAGA (Topic: PostAvailmentApprovalCompleted)          \u2502                  \u2502
+  \u2502   \u2502   \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500             \u2502                  \u2502
+  \u2502   \u2502   PostAvailmentApprovalConsumer                                  \u2502                  \u2502
+  \u2502   \u2502          1. IsForThisEntity(entityType) guard                  \u2502                  \u2502
+  \u2502   \u2502          2. GetEntityAsync(id) from DB via IRepositoryWrapper  \u2502                  \u2502
+  \u2502   \u2502          3. Update ApprovalStatus, ApprovalComment, Date       \u2502                  \u2502
+  \u2502   \u2502          4. ApplyEntitySpecificApprovalLogic() (abstract)      \u2502                  \u2502
+  \u2502   \u2502          5. SaveEntityAsync() + QueueAuditAsync()              \u2502                  \u2502
+  \u2502   \u2502          (Idempotent \u2014 retried via Kafka offset management)    \u2502                  \u2502
+  \u2502   \u2502                                                                \u2502                  \u2502
+  \u2502   \u2502   USER SYNC SAGA (Topic: UserProfileUpdated)                  \u2502                  \u2502
+  \u2502   \u2502   CUSTOMER SYNC SAGA (Topic: CustomerUpdated)                 \u2502                  \u2502
+  \u2502   \u2502          (Completion event published back to Kafka = saga reply)\u2502                  \u2502
+  \u2502   \u2502                                                                \u2502                  \u2502
+  \u2502   \u2502  CORAVEL INVOCABLE  (Background Job Queue)                       \u2502                  \u2502
+  \u2502   \u2502   AuditLogInvocable : BaseInvocable<Users>                       \u2502                  \u2502
+  \u2502   \u2502   \u2514\u2500\u2500 RetryAsync(maxRetries=3) \u2014 off critical path             \u2502                  \u2502
+  \u2502   \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518                  \u2502
+  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518
+                              \u2502  IRepositoryWrapper
+                              \u25bc
+  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
+  \u2502                  INFRASTRUCTURE LAYER  \u2014 TensectraKit.Infrastructure                    \u2502
+  \u2502                                                                                         \u2502
+  \u2502   \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510                  \u2502
+  \u2502   \u2502  REPOSITORY WRAPPER PATTERN                                      \u2502                  \u2502
+  \u2502   \u2502   IRepositoryWrapper  (Domain contract)                          \u2502                  \u2502
+  \u2502   \u2502   RepositoryWrapper  \u2192 lazy-initialises all repos               \u2502                  \u2502
+  \u2502   \u2502       (single unit-of-work entry point for all repos)            \u2502                  \u2502
+  \u2502   \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518                  \u2502
+  \u2502              \u2502                                                                          \u2502
+  \u2502              \u25bc                                                                          \u2502
+  \u2502   \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510                  \u2502
+  \u2502   \u2502  REPOSITORY BASE PATTERN                                         \u2502                  \u2502
+  \u2502   \u2502   IRepositoryBase<TModel>  \u2014 CRUD + Query + Include + Bulk       \u2502                  \u2502
+  \u2502   \u2502   \u2514\u2500\u2500 BulkInsertAsync / BulkUpdateAsync / BulkDeleteAsync \u2b50      \u2502                  \u2502
+  \u2502   \u2502   RepositoryBase<TModel>  (abstract implementation)              \u2502                  \u2502
+  \u2502   \u2502   \u2514\u2500\u2500 Soft-delete: Delete() sets IsDeleted=true via reflection   \u2502                  \u2502
+  \u2502   \u2502   \u2514\u2500\u2500 CreateRangeAsync() for batch inserts                       \u2502                  \u2502
+  \u2502   \u2502   \u2514\u2500\u2500 QueryJoin() exposes raw IQueryable for complex JOINs       \u2502                  \u2502
+  \u2502   \u2502   UserRepository : RepositoryBase<Users>                         \u2502                  \u2502
+  \u2502   \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518                  \u2502
+  \u2502              \u2502                                                                          \u2502
+  \u2502              \u25bc                                                                          \u2502
+  \u2502   \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510                  \u2502
+  \u2502   \u2502  MULTI-DATABASE PROVIDER  (config-driven, no code change needed) \u2502                  \u2502
+  \u2502   \u2502   appsettings.json \u2192 DatabaseSettings:DatabaseProviderName       \u2502                  \u2502
+  \u2502   \u2502   DbModel  (abstract base DbContext)                             \u2502                  \u2502
+  \u2502   \u2502                                                                  \u2502                  \u2502
+  \u2502   \u2502   \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510   \u2502                  \u2502
+  \u2502   \u2502   \u2502SqlServerDbContext\u2502  \u2502 OracleDbContext  \u2502  \u2502PostgresDbCtx\u2502   \u2502                  \u2502
+  \u2502   \u2502   \u2502  : DbModel       \u2502  \u2502  : DbModel       \u2502  \u2502  : DbModel   \u2502   \u2502                  \u2502
+  \u2502   \u2502   \u2502 - Soft-delete    \u2502  \u2502 - BOOLEAN enum  \u2502  \u2502 - Npgsql    \u2502   \u2502                  \u2502
+  \u2502   \u2502   \u2502   global filter  \u2502  \u2502   \u2192 NUMBER(2)    \u2502  \u2502   provider   \u2502   \u2502                  \u2502
+  \u2502   \u2502   \u2502 - Audit auto-   \u2502  \u2502 - Expression-   \u2502  \u2502             \u2502   \u2502                  \u2502
+  \u2502   \u2502   \u2502   fill on Save   \u2502  \u2502   based filter  \u2502  \u2502             \u2502   \u2502                  \u2502
+  \u2502   \u2502   \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518   \u2502                  \u2502
+  \u2502   \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518                  \u2502
+  \u2502                                                                                         \u2502
+  \u2502   DB SEEDER: Loads users.json \u2192 hashes passwords \u2192 SaveChangesAsync()                  \u2502
+  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518
+                              \u2502
+                              \u25bc
+  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
+  \u2502                  DOMAIN LAYER  \u2014 TensectraKit.Domain  (no dependencies)                 \u2502
+  \u2502   Entity<TPrimaryKey>  \u2014 IAuditable (CreatedAt, UpdatedAt, CreatedBy, UpdatedBy)        \u2502
+  \u2502   Users : Entity<int>, ISoftDelete, IApproval                                           \u2502
+  \u2502   \u2514\u2500\u2500 PasswordHash, PasswordSalt  (never raw password)                               \u2502
+  \u2502   \u2514\u2500\u2500 ISoftDelete \u2192 IsDeleted (BOOLEAN enum)                                         \u2502
+  \u2502   \u2514\u2500\u2500 IApproval  \u2192 ApprovedStatus, ApprovalComment, ApprovalDate                    \u2502
+  \u2502                                                                                         \u2502
+  \u2502   INTERFACES (contracts, no implementations)                                            \u2502
+  \u2502   \u251c\u2500\u2500 IRepositoryBase<TModel>  \u2014 all DB ops + bulk ops                               \u2502
+  \u2502   \u251c\u2500\u2500 IUserRepository          \u2014 user-specific queries                              \u2502
+  \u2502   \u251c\u2500\u2500 IRepositoryWrapper       \u2014 aggregates all repos                              \u2502
+  \u2502   \u2514\u2500\u2500 IUnitOfWork              \u2014 transaction boundary                              \u2502
+  \u2502                                                                                         \u2502
+  \u2502   DTOs: CreateUserDto, UsersDto                                                         \u2502
+  \u2502   Enums: ApprovalStatus (Pending/Approved/Rejected), BOOLEAN (FALSE=0/TRUE=1)           \u2502
+  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518
+                              \u2502
+                              \u25bc
+  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
+  \u2502              PERSISTENCE LAYER  \u2014 TensectraKit.Persistence (gRPC contract layer)        \u2502
+  \u2502   Users.proto  (protobuf contract)                                                      \u2502
+  \u2502   \u2514\u2500\u2500 CreateUserRequest / gPayloadResponse / UsersDto (proto messages)              \u2502
+  \u2502   CreateUsersService : CreateUsers.CreateUsersBase                                      \u2502
+  \u2502   \u2514\u2500\u2500 gRPC CreateUser(CreateUserRequest) \u2192 IMediator.Send(command)                   \u2502
+  \u2502   \u2514\u2500\u2500 maps result \u2192 gPayloadResponse (Any.Pack for nested data)                     \u2502
+  \u2502   gRPCMappingProfile : Profile  \u2192 CreateMap<CreateUserRequest, CreateUserCommand>       \u2502
+  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518
+
+ \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
+ \u2502                  CROSS-CUTTING CONCERNS  (apply across all layers)                         \u2502
+ \u2502                                                                                            \u2502
+ \u2502  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510   \u2502
+ \u2502  \u2502  REDIS CACHE      \u2502  \u2502  KAFKA MESSAGING  \u2502  \u2502  ENCRYPTION  (AES symmetric)          \u2502   \u2502
+ \u2502  \u2502  ICacheProvider   \u2502  \u2502  IMessageProducers\u2502  \u2502  Request: DecryptRequestDataFilter \u2502   \u2502
+ \u2502  \u2502  ICacheOptions-   \u2502  \u2502  ConsumerBase     \u2502  \u2502  Response: EncryptResponseMiddleware\u2502   \u2502
+ \u2502  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518   \u2502
+ \u2502                                                                                            \u2502
+ \u2502  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510   \u2502
+ \u2502  \u2502  LOGGING          \u2502  \u2502  VALIDATION       \u2502  \u2502  SWAGGER / OPENAPI                   \u2502   \u2502
+ \u2502  \u2502  Serilog          \u2502  \u2502  FluentValidation \u2502  \u2502  SwaggerHeaderFilter                 \u2502   \u2502
+ \u2502  \u2502  \u2192 Console        \u2502  \u2502  + ValidationBe-  \u2502  \u2502  CountryCode + LanguageCode headers  \u2502   \u2502
+ \u2502  \u2502  \u2192 Elasticsearch  \u2502  \u2502  havior (MediatR  \u2502  \u2502  exposed as SecurityDefinitions      \u2502   \u2502
+ \u2502  \u2502  \u2192 Seq            \u2502  \u2502  pipeline)        \u2502  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518   \u2502
+ \u2502  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518                                              \u2502
+ \u2502                                                                                            \u2502
+ \u2502  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510                                              \u2502
+ \u2502  \u2502  CORAVEL QUEUE    \u2502  \u2502  AUTOMAPPER        \u2502                                             \u2502
+ \u2502  \u2502  AuditLogInvocable\u2502  \u2502  MappingProfile    \u2502                                             \u2502
+ \u2502  \u2502  RetryAsync x3    \u2502  \u2502  gRPCMappingProfile\u2502                                             \u2502
+ \u2502  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518                                              \u2502
+ \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518`;
+
+    function colorizeArchDiagram(raw) {
+      const escaped = raw
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
+      const sectionMap = {
+        'EXTERNAL CALLERS':     'diag-external',
+        'PRESENTATION LAYER':   'diag-pres',
+        'APPLICATION LAYER':    'diag-app',
+        'INFRASTRUCTURE LAYER': 'diag-infra',
+        'DOMAIN LAYER':         'diag-domain',
+        'PERSISTENCE LAYER':    'diag-persist',
+        'CROSS-CUTTING CONCERNS': 'diag-cross'
+      };
+
+      let section = 'diag-title';
+      return escaped.split('\n').map(line => {
+        for (const [marker, cls] of Object.entries(sectionMap)) {
+          if (line.includes(marker)) { section = cls; break; }
+        }
+        return `<span class="${section}">${line}</span>`;
+      }).join('\n');
+    }
+
+    function openDiagramModal() {
+      const pre = document.getElementById('arch-diagram-pre');
+      if (!pre.innerHTML) pre.innerHTML = colorizeArchDiagram(ARCH_DIAGRAM_RAW);
+      document.getElementById('arch-diagram-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDiagramModal() {
+      document.getElementById('arch-diagram-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('arch-diagram-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeDiagramModal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeArchModal();
+        closeDiagramModal();
+      }
+    });
+  </script>
 </body>
 </html>
