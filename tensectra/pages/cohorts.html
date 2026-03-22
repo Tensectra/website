@@ -45,16 +45,16 @@
       
       <ul class="navbar-nav">
         <li><a href="../">Home</a></li>
+        <li><a href="consultancy">Consultancy</a></li>
+        <li><a href="infrastructure">Infrastructure Kit</a></li>
+        <li><a href="cohorts" class="active">Cohorts</a></li>
         <li><a href="courses">Courses</a></li>
         <li><a href="pro">Pro</a></li>
-        <li><a href="cohorts" class="active">Cohorts</a></li>
-        <li><a href="consultancy">Consultancy</a></li>
-        <li><a href="infrastructure">Infrastructure</a></li>
         <li><a href="about">About</a></li>
       </ul>
       
       <div class="navbar-cta">
-        <a href="#apply" class="btn btn-primary btn-sm">Apply Now</a>
+        <a href="#apply" class="btn btn-primary btn-sm">Join Cohort</a>
       </div>
       
       <button class="mobile-menu-btn" aria-label="Toggle menu">
@@ -382,8 +382,8 @@
   <section id="apply" class="section" style="background: var(--bg-card);">
     <div class="container">
       <div class="tabs">
-        <button class="tab-btn active" data-pricing="live">Live Cohort</button>
-        <button class="tab-btn" data-pricing="self">Self-Paced</button>
+        <button class="tab-btn active" data-pricing="live">Live Cohort &mdash; Recommended</button>
+        <button class="tab-btn" data-pricing="self">Materials Only</button>
       </div>
       
       <!-- Live Cohort Pricing -->
@@ -403,17 +403,19 @@
             </div>
             
             <ul class="tier-features">
-              <li>All ebooks and playbooks</li>
+              <li>All ebooks, playbooks &amp; AI Prompt Playbook</li>
               <li>6 weekly live sessions (2 hours each)</li>
-              <li>Private cohort Slack channel</li>
-              <li>Week 6 presentation to cohort</li>
+              <li>Private cohort Slack channel &mdash; real deadlines, real peers</li>
+              <li><strong>Week 6 architecture presentation</strong> &mdash; you ship and defend your system</li>
+              <li>TensectraKit scaffold licence included</li>
               <li>Certificate of completion</li>
-              <li>Alumni community access</li>
+              <li>Alumni community access (permanent)</li>
+              <li>First month of Pro free on completion</li>
             </ul>
             
-            <a href="../forms/cohort-application" class="btn btn-primary" style="width: 100%;">Apply for Cohort →</a>
+            <a href="../forms/cohort-application" class="btn btn-primary" style="width: 100%;">Apply for Cohort &rarr;</a>
             <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-top: var(--space-sm);">
-              Application reviewed within 48 hours
+              Application reviewed within 48 hours &mdash; 12 seats per cohort
             </p>
           </div>
           
@@ -455,37 +457,37 @@
         <div class="grid-2" style="align-items: start;">
           <div class="card tier-card">
             <div class="tier-header">
-              <h3 class="tier-name">Self-Paced</h3>
+              <h3 class="tier-name">Materials Only</h3>
               <div class="tier-price">$149</div>
               <p class="tier-price-note">One-time payment</p>
             </div>
-            
-            <div style="background: rgba(59, 91, 255, 0.05); padding: var(--space-md); border-radius: var(--radius-md); margin-bottom: var(--space-lg);">
-              <p style="color: var(--accent-blue); font-weight: 600; margin: 0;">Always Available — Start Anytime</p>
+
+            <div style="background: rgba(255,100,0,0.06); border: 1px solid rgba(255,100,0,0.2); padding: var(--space-md); border-radius: var(--radius-md); margin-bottom: var(--space-lg);">
+              <p style="color: rgba(255,160,80,0.9); font-weight: 600; margin: 0 0 4px;">No accountability. No community. No deadline.</p>
+              <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0;">Self-directed study works for some people. For most, the live cohort is the difference between finishing and not finishing.</p>
             </div>
-            
+
             <ul class="tier-features">
               <li>All ebooks and playbooks</li>
               <li>Recorded session videos</li>
-              <li>Community access (async)</li>
               <li>Course materials for 1 year</li>
             </ul>
-            
-            <ul class="tier-features" style="opacity: 0.5;">
-              <li style="text-decoration: line-through;">Live sessions</li>
+
+            <ul class="tier-features" style="opacity: 0.45;">
+              <li style="text-decoration: line-through;">Live sessions &amp; real deadlines</li>
               <li style="text-decoration: line-through;">Private cohort channel</li>
-              <li style="text-decoration: line-through;">Week 6 presentation</li>
+              <li style="text-decoration: line-through;">Week 6 architecture presentation</li>
+              <li style="text-decoration: line-through;">TensectraKit scaffold licence</li>
+              <li style="text-decoration: line-through;">Alumni community access</li>
             </ul>
-            
-            <a href="#" class="btn btn-secondary" style="width: 100%;" onclick="showNotification('Self-paced checkout coming soon!', 'info')">Purchase Self-Paced →</a>
+
+            <a href="#" class="btn btn-outline" style="width: 100%;" onclick="showNotification('Materials-only checkout coming soon.', 'info')">Get the Materials &rarr;</a>
           </div>
-          
-          <div class="card" style="background: rgba(0, 204, 255, 0.05);">
-            <h4 style="margin-bottom: var(--space-md); color: var(--accent-cyan);">Upgrade Later</h4>
-            <p style="color: var(--text-muted);">
-              Completed the self-paced course and want more? You can upgrade to Pro for ongoing access to all courses and updates.
-            </p>
-            <a href="pro" class="btn btn-outline btn-sm" style="margin-top: var(--space-md);">Learn About Pro →</a>
+
+          <div class="card" style="background: rgba(0, 204, 255, 0.05); border: 1px solid rgba(0,204,255,0.15);">
+            <h4 style="margin-bottom: var(--space-sm); color: var(--accent-cyan);">Still unsure?</h4>
+            <p style="color: var(--text-muted); margin-bottom: var(--space-md);">The live cohort is $299 &mdash; $150 more than materials-only. That $150 buys you a live instructor, 11 peers building alongside you, a hard Week 6 deadline, and a deployed product at the end. Most people who buy materials-only never finish. Most people who join a cohort do.</p>
+            <a href="../forms/cohort-application" class="btn btn-primary btn-sm">Apply for the Live Cohort &rarr;</a>
           </div>
         </div>
       </div>

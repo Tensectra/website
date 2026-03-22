@@ -117,16 +117,16 @@
       
       <ul class="navbar-nav">
         <li><a href="./" class="active">Home</a></li>
+        <li><a href="pages/consultancy">Consultancy</a></li>
+        <li><a href="pages/infrastructure">Infrastructure Kit</a></li>
+        <li><a href="pages/cohorts">Cohorts</a></li>
         <li><a href="pages/courses">Courses</a></li>
         <li><a href="pages/pro">Pro</a></li>
-        <li><a href="pages/cohorts">Cohorts</a></li>
-        <li><a href="pages/consultancy">Consultancy</a></li>
-        <li><a href="pages/infrastructure">Infrastructure</a></li>
         <li><a href="pages/about">About</a></li>
       </ul>
       
       <div class="navbar-cta">
-        <a href="pages/courses" class="btn btn-primary btn-sm">Get Started</a>
+        <a href="pages/consultancy" class="btn btn-primary btn-sm">Book a Call</a>
       </div>
       
       <button class="mobile-menu-btn" aria-label="Toggle menu">
@@ -158,11 +158,11 @@
             "AI writes the code. You design the architecture. This course teaches you the difference — and makes you dangerous with both."
           </p>
           <div class="hero-cta">
-            <a href="pages/courses" class="btn btn-primary btn-lg hero-btn-1" data-track="explore_courses">Explore Courses</a>
-            <a href="pages/consultancy" class="btn btn-secondary btn-lg hero-btn-2" data-track="work_with_us">Work With Us</a>
+            <a href="pages/consultancy" class="btn btn-primary btn-lg hero-btn-1" data-track="work_with_us">Work With Us &rarr;</a>
+            <a href="pages/cohorts" class="btn btn-secondary btn-lg hero-btn-2" data-track="explore_cohorts">See the Cohorts</a>
           </div>
           <p class="hero-stats">
-            Join <span>400+</span> developers and companies in the Tensectra ecosystem.
+            Architecture proven in production financial SaaS &mdash; <span>serving real banks</span> across Africa.
           </p>
         </div>
 
@@ -272,19 +272,6 @@
       </div>
       
       <div class="grid-3">
-        <!-- For Developers -->
-        <div class="card path-card card-cyan">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="16 18 22 12 16 6"></polyline>
-              <polyline points="8 6 2 12 8 18"></polyline>
-            </svg>
-          </div>
-          <h3>For Developers</h3>
-          <p>6-week live cohorts, self-paced courses, and a Pro membership that grows with you.</p>
-          <a href="pages/courses" class="btn btn-primary">View Courses →</a>
-        </div>
-        
         <!-- For Companies -->
         <div class="card path-card card-blue">
           <div class="card-icon">
@@ -302,13 +289,13 @@
             </svg>
           </div>
           <h3>For Companies</h3>
-          <p>Private cohorts, architecture workshops, and ongoing retainer support. Three tiers to match your timeline.</p>
-          <a href="pages/consultancy" class="btn btn-secondary">See Consultancy →</a>
+          <p>Private cohorts, architecture workshops, and retainer support. We work inside your codebase, with your team, on your deadline.</p>
+          <a href="pages/consultancy" class="btn btn-primary">Book a Discovery Call &rarr;</a>
         </div>
         
         <!-- Infrastructure Kit -->
         <div class="card path-card card-purple">
-          <span class="badge">Coming Soon</span>
+          <span class="badge" style="background: rgba(0,204,255,0.12); color: var(--accent-cyan); border: 1px solid rgba(0,204,255,0.25);">Available Now &mdash; $299</span>
           <div class="card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
@@ -317,36 +304,21 @@
             </svg>
           </div>
           <h3>Infrastructure Kit</h3>
-          <p>Enterprise-grade .NET 8 scaffold. Install the core. Add modules. Ship production systems without starting from scratch.</p>
-          <a href="pages/infrastructure" class="btn btn-outline">Join Waitlist →</a>
+          <p>Enterprise .NET 8 scaffold — 5 layers, 14 patterns, 3 database providers. Production-proven in live banking systems. Install and ship today.</p>
+          <a href="pages/infrastructure" class="btn btn-secondary">Get the Scaffold &rarr;</a>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Tensectra Pro Teaser -->
-  <section class="section" style="background: rgba(10, 22, 40, 0.5);">
-    <div class="container">
-      <div class="pro-teaser">
-        <div class="pro-teaser-content">
-          <h3>Stay in the Ecosystem.</h3>
-          <p>One membership. Every course. Always updated.</p>
-          <ul>
-            <li>All current and future courses included as they release</li>
-            <li>Ebooks and playbooks updated for every framework version</li>
-            <li>Monthly ecosystem digest — what changed and what to update in your code</li>
-            <li>Private Pro community and monthly live Q&A</li>
-          </ul>
-        </div>
-        <div class="pro-teaser-pricing">
-          <div class="pricing-pill">
-            <div class="price">$15<span style="font-size: 1rem;">/mo</span></div>
-            <div class="price-period">or $120/year (save $60)</div>
+        
+        <!-- For Developers -->
+        <div class="card path-card card-cyan">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="16 18 22 12 16 6"></polyline>
+              <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
           </div>
-          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: var(--space-md);">
-            Your first month free when you complete any Tensectra cohort.
-          </p>
-          <a href="pages/pro" class="btn btn-primary">Learn About Pro →</a>
+          <h3>For Developers</h3>
+          <p>6-week live cohorts. Ship a real product. Get the TensectraKit. Join a community of engineers who build at production level.</p>
+          <a href="pages/cohorts" class="btn btn-outline">View Cohorts &rarr;</a>
         </div>
       </div>
     </div>
@@ -374,15 +346,21 @@
           </ul>
         </div>
         <div class="ascii-diagram">
-TENSECTRA ECOSYSTEM
+TENSECTRA HIERARCHY
 ════════════════════
-[Cohorts + Self-Paced]
-         ↓
-[Enterprise Engineers]
-         ↓
-[ERP Infrastructure Kit]
-         ↓
-[Production Systems]
+  Consultancy
+  → Highest margin
+  → Most defensible
+        ↓
+  Infrastructure Kit
+  → Instant B2B value
+  → Production-proven
+        ↓
+  Cohorts
+  → Community + upsell to Kit
+        ↓
+  Pro + Courses
+  → Retention + top-of-funnel
         </div>
       </div>
     </div>
@@ -561,50 +539,92 @@ TENSECTRA ECOSYSTEM
     </div>
   </section>
 
-  <!-- Consultancy Teaser -->
-  <section class="section" style="background: var(--bg-card);">
+  <!-- Tensectra Pro Teaser -->
+  <section class="section" style="background: rgba(10, 22, 40, 0.5);">
     <div class="container">
-      <div class="section-header">
-        <h2>We Also Train Teams.</h2>
-        <p>From private cohorts to architecture blueprints — three engagement tiers for companies who cannot afford to build slowly.</p>
-      </div>
-      
-      <div style="text-align: center; margin-bottom: var(--space-xl);">
-        <div style="display: flex; justify-content: center; gap: var(--space-lg); flex-wrap: wrap; color: var(--text-muted);">
-          <span style="color: var(--accent-cyan);">Corporate Cohort</span>
-          <span>·</span>
-          <span style="color: var(--accent-blue);">Corporate Workshop</span>
-          <span>·</span>
-          <span style="color: var(--accent-purple);">Architecture Consultation</span>
+      <div class="pro-teaser">
+        <div class="pro-teaser-content">
+          <h3>Stay in the Ecosystem.</h3>
+          <p>One membership. Every course. Always updated.</p>
+          <ul>
+            <li>All current and future courses included as they release</li>
+            <li>Ebooks and playbooks updated for every framework version</li>
+            <li>Monthly ecosystem digest &mdash; what changed and what to update in your code</li>
+            <li>Private Pro community and monthly live Q&amp;A</li>
+          </ul>
         </div>
-      </div>
-      
-      <div style="text-align: center;">
-        <a href="pages/consultancy" class="btn btn-primary btn-lg">See How It Works →</a>
+        <div class="pro-teaser-pricing">
+          <div class="pricing-pill">
+            <div class="price">$15<span style="font-size: 1rem;">/mo</span></div>
+            <div class="price-period">or $120/year (save $60)</div>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: var(--space-md);">
+            Your first month free when you complete any Tensectra cohort.
+          </p>
+          <a href="pages/pro" class="btn btn-primary">Learn About Pro &rarr;</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Testimonials -->
+  <!-- Consultancy Teaser -->
+  <section class="section" style="background: var(--bg-card);">
+    <div class="container">
+      <div class="section-header">
+        <h2>The Highest-Value Thing We Do.</h2>
+        <p>Not a tutorial. Not a webinar. Your team builds on their own codebase &mdash; with a lead architect in the room &mdash; and leaves with a production-grade system they understand end to end.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card" style="border-left: 3px solid var(--accent-cyan);">
+          <span class="ladder-badge" style="display: inline-block; margin-bottom: var(--space-md);">TIER 1</span>
+          <h4>Corporate Cohort</h4>
+          <p style="color: var(--text-muted);">6-week private cohort for your entire engineering team. Run inside your company, on your codebase, with the same architecture powering live banking systems across Africa.</p>
+          <a href="pages/consultancy" class="btn btn-outline btn-sm" style="margin-top: var(--space-md);">See Details &rarr;</a>
+        </div>
+        <div class="card" style="border-left: 3px solid var(--accent-blue);">
+          <span class="ladder-badge" style="display: inline-block; margin-bottom: var(--space-md); background: rgba(59,91,255,0.15); border-color: rgba(59,91,255,0.3); color: var(--accent-blue);">TIER 2</span>
+          <h4>Architecture Workshop</h4>
+          <p style="color: var(--text-muted);">Full-day intensive. We audit your architecture, document every pattern decision, and hand over a production-grade blueprint your team can build from immediately.</p>
+          <a href="pages/consultancy" class="btn btn-outline btn-sm" style="margin-top: var(--space-md);">See Details &rarr;</a>
+        </div>
+        <div class="card" style="border-left: 3px solid var(--accent-purple);">
+          <span class="ladder-badge" style="display: inline-block; margin-bottom: var(--space-md); background: rgba(123,47,255,0.15); border-color: rgba(123,47,255,0.3); color: var(--accent-purple);">TIER 3</span>
+          <h4>Architecture Consultation</h4>
+          <p style="color: var(--text-muted);">Targeted 2-hour session. Bring your architecture problems. Leave with decisions documented, trade-offs explained, and the implementation path clear.</p>
+          <a href="pages/consultancy" class="btn btn-outline btn-sm" style="margin-top: var(--space-md);">See Details &rarr;</a>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: var(--space-xl);">
+        <a href="pages/consultancy" class="btn btn-primary btn-lg">Start With a Free Discovery Call &rarr;</a>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: var(--space-sm);">30 minutes. No pitch. We tell you exactly what fits &mdash; or what doesn&rsquo;t.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Production Evidence -->
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <h2>What Our Students Say</h2>
-        <p>Real outcomes from real cohorts.</p>
+        <h2>The Proof Is in Production.</h2>
+        <p>Cohort 1 finishes June 2026 &mdash; real student outcomes then. Until that day, here is what the architecture itself has already proven in live banking systems.</p>
       </div>
-      
       <div class="grid-3">
-        <div class="card testimonial-card">
-          <p class="testimonial-quote">"Cohort 1 outcomes coming — June 2026."</p>
-          <p style="color: var(--text-muted); font-size: 0.9rem;">First cohort in progress. Check back soon for real testimonials.</p>
+        <div class="card" style="text-align: center;">
+          <div style="font-size: 2.5rem; font-weight: 700; color: var(--accent-cyan); font-family: var(--font-mono);">99.9%</div>
+          <p style="color: var(--text-white); font-weight: 600; margin-top: var(--space-sm);">Uptime</p>
+          <p style="color: var(--text-muted); font-size: 0.9rem);">On the exact architecture we teach &mdash; running live in production financial SaaS across Africa.</p>
         </div>
-        <div class="card testimonial-card">
-          <p class="testimonial-quote">"Cohort 1 outcomes coming — June 2026."</p>
-          <p style="color: var(--text-muted); font-size: 0.9rem;">First cohort in progress. Check back soon for real testimonials.</p>
+        <div class="card" style="text-align: center;">
+          <div style="font-size: 2.5rem; font-weight: 700; color: var(--accent-blue); font-family: var(--font-mono);">&lt;50ms</div>
+          <p style="color: var(--text-white); font-weight: 600; margin-top: var(--space-sm);">API Response Time</p>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Redis caching + CQRS read models &mdash; the patterns you implement in Week 5 of the cohort.</p>
         </div>
-        <div class="card testimonial-card">
-          <p class="testimonial-quote">"Cohort 1 outcomes coming — June 2026."</p>
-          <p style="color: var(--text-muted); font-size: 0.9rem;">First cohort in progress. Check back soon for real testimonials.</p>
+        <div class="card" style="text-align: center;">
+          <div style="font-size: 2.5rem; font-weight: 700; color: var(--accent-purple); font-family: var(--font-mono);">3+</div>
+          <p style="color: var(--text-white); font-weight: 600; margin-top: var(--space-sm);">Countries, One Codebase</p>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Nigeria, Ghana, and growing &mdash; on the multi-tenant factory pattern you build in Week 4.</p>
         </div>
       </div>
     </div>
