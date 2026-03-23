@@ -761,7 +761,7 @@ TENSECTRA ERP KIT
       </div>
       <div class="modal-body">
         <p style="color: var(--text-muted); margin-bottom: var(--space-lg);">Leave your name and email &mdash; we&rsquo;ll send the payment link and scaffold access within 4 hours.</p>
-        <form id="purchase-form" name="kit-purchase" netlify onsubmit="submitPurchaseForm(event)">
+        <form id="purchase-form" name="kit-purchase" method="POST" netlify onsubmit="submitPurchaseForm(event)">
           <input type="hidden" name="form-name" value="kit-purchase">
           <input type="hidden" name="country_code"    id="f-country-code">
           <input type="hidden" name="country_name"    id="f-country-name">

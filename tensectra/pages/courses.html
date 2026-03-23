@@ -194,7 +194,7 @@
         <!-- Placeholder -->
         <div class="card" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-style: dashed; min-height: 300px;" data-category="coming-soon">
           <p style="color: var(--text-muted); margin-bottom: var(--space-md);">More courses arriving quarterly for Pro members.</p>
-          <form style="width: 100%; max-width: 280px;" netlify name="course-notify">
+          <form style="width: 100%; max-width: 280px;" name="course-notify" method="POST" netlify>
             <input type="hidden" name="country_code"    id="f-country-code">
             <input type="hidden" name="country_name"    id="f-country-name">
             <input type="hidden" name="city"            id="f-city">
