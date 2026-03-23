@@ -1,0 +1,315 @@
+﻿# TENSECTRA — DATA MODELS & ENTITIES
+# Every form submission, payment record, and dynamic interaction on the site.
+# Use this as the schema blueprint when connecting Supabase or any backend.
+# ============================================================
+
+
+## 1. COHORT_APPLICATION
+Captured by: forms/cohort-application.html (Netlify Form / Supabase)
+
+Fields:
+  id                  UUID / auto-increment
+  name                string, required
+  email               string, required, unique per cohort
+  course              enum: backend | frontend | mobile
+  role                string  (current job title / self-taught etc.)
+  experience          enum: 0-1 | 1-3 | 3-5 | 5+
+  gap                 text    (biggest technical gap)
+  goals               text    (what they want by Week 6)
+  portfolio           string, optional (LinkedIn / GitHub / URL)
+  country             string  (ISO 3166-1 alpha-2, e.g. NG, GB, US)
+  country_name        string  (e.g. Nigeria, United Kingdom)
+  city                string, optional (auto-detected)
+  location_source     enum: user_selected | auto_detected
+  is_scholarship      boolean, default false
+  scholarship_reason  text, required if is_scholarship = true
+  status              enum: pending | accepted | rejected | waitlisted
+  cohort_id           FK → COHORT.id (set manually after acceptance)
+  reviewed_at         timestamp, nullable
+  reviewed_by         string, nullable
+  notes               text, nullable (internal reviewer notes)
+  created_at          timestamp
+
+Indexes: email, status, course, cohort_id
+
+
+## 2. COHORT
+Master record for each cohort run.
+
+Fields:
+  id                  UUID
+  name                string  (e.g. "Cohort 1 — Backend June 2026")
+  course              enum: backend | frontend | mobile
+  start_date          date
+  end_date            date
+  seats_total         integer
+  seats_remaining     integer  (decremented on payment confirmation)
+  scholarship_slots   integer, default 5
+  scholarship_filled  integer, default 0
+  status              enum: open | closed | in_progress | completed
+  price_usd           integer  (in cents, e.g. 29900)
+  created_at          timestamp
+
+
+## 3. ENROLMENT
+Created when a cohort application is accepted AND payment is confirmed.
+Links the applicant, cohort, and payment together.
+
+Fields:
+  id                  UUID
+  application_id      FK → COHORT_APPLICATION.id
+  cohort_id           FK → COHORT.id
+  payment_id          FK → PAYMENT.id, nullable (null if scholarship)
+  is_scholarship      boolean
+  discord_invited     boolean, default false
+  materials_sent      boolean, default false
+  status              enum: active | dropped | completed
+  enrolled_at         timestamp
+
+
+## 4. PAYMENT
+Created on Stripe webhook (payment.succeeded) or manual confirmation.
+
+Fields:
+  id                  UUID
+  stripe_payment_id   string, unique (pi_xxx or cs_xxx)
+  stripe_customer_id  string, nullable
+  payer_name          string
+  payer_email         string
+  product_type        enum: cohort | kit | pro_monthly | pro_annual | materials_only | consultancy
+  product_ref         string  (cohort ID, kit SKU, etc.)
+  amount_cents        integer
+  currency            string, default USD
+  status              enum: pending | succeeded | refunded | failed
+  refunded_at         timestamp, nullable
+  created_at          timestamp
+
+Indexes: stripe_payment_id, payer_email, product_type, status
+
+
+## 5. SCHOLARSHIP_APPLICATION
+Extension record when is_scholarship = true on COHORT_APPLICATION.
+(Can be a separate table or kept inline — separate is cleaner for review.)
+
+Fields:
+  id                  UUID
+  application_id      FK → COHORT_APPLICATION.id, unique
+  reason              text, required
+  status              enum: pending | awarded | declined
+  awarded_at          timestamp, nullable
+  awarded_by          string, nullable
+  notes               text, nullable
+  created_at          timestamp
+
+
+## 6. CONSULTANCY_ENQUIRY
+Captured by: forms/consultancy.html
+
+Fields:
+  id                  UUID
+  name                string
+  email               string
+  company             string, optional
+  job_title           string, optional
+  team_size           enum: 1-5 | 6-20 | 21-50 | 50+, optional
+  tier                enum: tier1_cohort | tier2_workshop | tier3_consultation | retainer
+  message             text
+  preferred_date      date, optional
+  budget_range        string, optional
+  country             string, optional (ISO 3166-1 alpha-2)
+  country_name        string, optional
+  status              enum: new | contacted | proposal_sent | won | lost
+  calendly_link_sent  boolean, default false
+  hubspot_id          string, nullable
+  created_at          timestamp
+
+
+## 7. CONTACT
+Captured by: forms/contact.html (general enquiries)
+
+Fields:
+  id                  UUID
+  name                string
+  email               string
+  subject             string
+  message             text
+  source              string, optional  (page they submitted from)
+  country             string, optional (ISO 3166-1 alpha-2)
+  country_name        string, optional
+  replied             boolean, default false
+  replied_at          timestamp, nullable
+  created_at          timestamp
+
+
+## 8. KIT_PURCHASE_REQUEST
+Captured by: infrastructure.html purchase modal (email-based for now).
+
+Fields:
+  id                  UUID
+  name                string
+  email               string
+  payment_id          FK → PAYMENT.id, nullable (set after Stripe confirmation)
+  kit_tier            enum: starter | pro | enterprise, default starter
+  status              enum: pending | paid | delivered | refunded
+  delivery_sent_at    timestamp, nullable
+  created_at          timestamp
+
+
+## 9. PRO_MEMBER
+Created when Pro subscription is active (Stripe webhook).
+
+Fields:
+  id                  UUID
+  stripe_customer_id  string, unique
+  stripe_sub_id       string, unique
+  name                string
+  email               string, unique
+  plan                enum: monthly | annual
+  status              enum: active | cancelled | past_due | paused
+  cohort_alumni       boolean, default false  (first month free flag)
+  discord_invited     boolean, default false
+  digest_subscribed   boolean, default true
+  started_at          timestamp
+  renews_at           timestamp, nullable
+  cancelled_at        timestamp, nullable
+
+
+## 10. WAITLIST
+Covers: Designer course, AI Business course, Pro (early interest), Kit updates.
+
+Fields:
+  id                  UUID
+  email               string
+  product             enum: course_designer | course_ai_biz | pro | kit_pro | kit_enterprise | general
+  name                string, optional
+  country             string, optional (ISO 3166-1 alpha-2)
+  country_name        string, optional
+  created_at          timestamp
+
+Unique: (email, product)
+
+
+## 11. SUBSCRIBER / NEWSLETTER
+Mailchimp or own table for email lists.
+
+Fields:
+  id                  UUID
+  email               string
+  name                string, optional
+  list                enum: general | pro_members | alumni | kit_owners | waitlist
+  source              string  (which page / form they signed up from)
+  status              enum: subscribed | unsubscribed | bounced
+  subscribed_at       timestamp
+  unsubscribed_at     timestamp, nullable
+
+
+## 12. CONTENT_LEAD (LinkedIn / YouTube traffic capture)
+For visitors who click "Read on LinkedIn" or "Watch on YouTube" — optional future retargeting.
+
+Fields:
+  id                  UUID
+  email               string
+  content_title       string
+  content_type        enum: article | video | post
+  created_at          timestamp
+
+
+# ============================================================
+# RELATIONSHIPS SUMMARY
+# ============================================================
+
+COHORT_APPLICATION  →  COHORT              (many applications per cohort)
+COHORT_APPLICATION  →  SCHOLARSHIP         (one scholarship record if applicable)
+COHORT_APPLICATION  →  ENROLMENT           (one enrolment on acceptance + payment)
+ENROLMENT           →  PAYMENT             (one payment per enrolment, null if scholarship)
+PAYMENT             →  KIT_PURCHASE        (one kit purchase per payment where product=kit)
+PAYMENT             →  PRO_MEMBER          (one pro member per payment where product=pro)
+PRO_MEMBER          →  SUBSCRIBER          (auto-added to pro_members list)
+ENROLMENT           →  SUBSCRIBER          (auto-added to alumni list on completion)
+
+
+# ============================================================
+# SUPABASE SETUP NOTES
+# ============================================================
+
+Priority tables to create first (covers 90% of site interactions):
+  1. cohort_application   — every application + scholarship in one table
+  2. payment              — Stripe webhook target
+  3. enrolment            — joins application + payment + cohort
+  4. consultancy_enquiry  — highest revenue surface
+  5. waitlist             — captures future demand before products exist
+
+RLS Rules (minimum viable for static HTML frontend):
+  - cohort_application:    anon INSERT allowed, SELECT/UPDATE/DELETE denied
+  - payment:               anon INSERT denied (server-only via Stripe webhook)
+  - consultancy_enquiry:   anon INSERT allowed, SELECT denied
+  - waitlist:              anon INSERT allowed, SELECT denied
+  - contact:               anon INSERT allowed, SELECT denied
+
+Admin reads (your dashboard):  use service_role key server-side only, never in HTML.
+
+
+# ============================================================
+# WHAT NETLIFY FORMS COVERS TODAY (no backend needed yet)
+# ============================================================
+
+  cohort-application  → stores in Netlify, emails you on submit  ✓
+  consultancy         → stores in Netlify, emails you on submit  ✓
+  contact             → stores in Netlify, emails you on submit  ✓
+  waitlist            → stores in Netlify                        ✓
+
+  Missing from Netlify Forms (need Supabase or manual):
+  - payment records                                              ✗
+  - enrolment tracking                                           ✗
+  - pro membership state                                         ✗
+  - kit delivery tracking                                        ✗
+  - cross-referencing any of the above                          ✗
+
+
+# ============================================================
+# LOCATION TRACKING STRATEGY
+# ============================================================
+
+Method: Auto-detect via ipapi.co (free, no API key, 1000 req/day)
+  - JS fetches https://ipapi.co/json/ on page load
+  - Pre-fills hidden fields: country_code, country_name, city
+  - Country dropdown shown to user — pre-selected, overridable
+  - location_source set to 'auto_detected' (or 'user_selected' if changed)
+
+Hidden fields added to every form:
+  <input type="hidden" name="country_code"   id="f-country-code">
+  <input type="hidden" name="country_name"   id="f-country-name">
+  <input type="hidden" name="city"           id="f-city">
+  <input type="hidden" name="location_source" id="f-loc-source" value="auto_detected">
+
+Reporting queries (Supabase / SQL):
+  -- Applications by country
+  SELECT country_name, COUNT(*) AS total
+  FROM cohort_application
+  GROUP BY country_name
+  ORDER BY total DESC;
+
+  -- Revenue by country (join payments)
+  SELECT a.country_name, SUM(p.amount_cents)/100 AS revenue_usd
+  FROM enrolment e
+  JOIN cohort_application a ON e.application_id = a.id
+  JOIN payment p ON e.payment_id = p.id
+  WHERE p.status = 'succeeded'
+  GROUP BY a.country_name
+  ORDER BY revenue_usd DESC;
+
+  -- Scholarship applicants by country
+  SELECT country_name, COUNT(*) AS scholarship_applications
+  FROM cohort_application
+  WHERE is_scholarship = true
+  GROUP BY country_name;
+
+Reporting with Netlify Forms (no Supabase):
+  - Export CSV from Netlify dashboard
+  - Open in Google Sheets
+  - Insert > Pivot Table → Rows: country_name, Values: COUNTA(email)
+
+
+# Document Version: 1.1
+# Last Updated: 2026
+# Owner: Tensectra Engineering

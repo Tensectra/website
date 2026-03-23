@@ -77,6 +77,16 @@
               <input type="text" name="role" class="form-input" placeholder="e.g., Developer, Designer, Founder">
             </div>
             
+            <!-- Location (auto-detected, overridable) -->
+            <div class="form-group">
+              <label class="form-label">Country</label>
+              <select id="f-country-select" class="form-select" aria-label="Country"></select>
+              <input type="hidden" name="country_code"    id="f-country-code">
+              <input type="hidden" name="country_name"    id="f-country-name">
+              <input type="hidden" name="city"            id="f-city">
+              <input type="hidden" name="location_source" id="f-loc-source" value="auto_detected">
+            </div>
+
             <button type="submit" class="btn btn-primary" style="width: 100%;">Join Waitlist →</button>
           </form>
         </div>
@@ -140,5 +150,6 @@
   </footer>
 
   <script src="../js/main.js"></script>
+  <script src="../js/location.js"></script>
 </body>
 </html>

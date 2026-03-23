@@ -761,15 +761,20 @@ TENSECTRA ERP KIT
       </div>
       <div class="modal-body">
         <p style="color: var(--text-muted); margin-bottom: var(--space-lg);">Leave your name and email &mdash; we&rsquo;ll send the payment link and scaffold access within 4 hours.</p>
-        <form id="purchase-form" onsubmit="submitPurchaseForm(event)">
+        <form id="purchase-form" name="kit-purchase" netlify onsubmit="submitPurchaseForm(event)">
+          <input type="hidden" name="form-name" value="kit-purchase">
+          <input type="hidden" name="country_code"    id="f-country-code">
+          <input type="hidden" name="country_name"    id="f-country-name">
+          <input type="hidden" name="city"            id="f-city">
+          <input type="hidden" name="location_source" id="f-loc-source" value="auto_detected">
           <div style="margin-bottom: var(--space-md);">
             <label for="purchase-name" style="display: block; color: var(--text-primary); font-weight: 500; font-size: 0.9rem; margin-bottom: var(--space-xs);">Your Name</label>
-            <input id="purchase-name" type="text" required placeholder="e.g. Segun Adeyemi"
+            <input id="purchase-name" name="name" type="text" required placeholder="e.g. Segun Adeyemi"
               style="width: 100%; box-sizing: border-box; background: var(--bg-primary); border: 1px solid var(--bg-border); border-radius: var(--radius-md); padding: 0.75rem var(--space-md); color: var(--text-white); font-size: 1rem; outline: none;">
           </div>
           <div style="margin-bottom: var(--space-lg);">
             <label for="purchase-email" style="display: block; color: var(--text-primary); font-weight: 500; font-size: 0.9rem; margin-bottom: var(--space-xs);">Your Email</label>
-            <input id="purchase-email" type="email" required placeholder="you@company.com"
+            <input id="purchase-email" name="email" type="email" required placeholder="you@company.com"
               style="width: 100%; box-sizing: border-box; background: var(--bg-primary); border: 1px solid var(--bg-border); border-radius: var(--radius-md); padding: 0.75rem var(--space-md); color: var(--text-white); font-size: 1rem; outline: none;">
           </div>
           <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1rem; padding: 0.85rem;">Send Purchase Request &rarr;</button>
@@ -780,20 +785,33 @@ TENSECTRA ERP KIT
   </div>
 
   <script src="../js/main.js?v=2"></script>
+  <script src="../js/location.js"></script>
   <script>
     function submitPurchaseForm(e) {
       e.preventDefault();
       const name  = document.getElementById('purchase-name').value.trim();
       const email = document.getElementById('purchase-email').value.trim();
-      const subj  = encodeURIComponent('TensectraKit Starter Kit — Purchase Request');
-      const body  = encodeURIComponent(
-        'Hi Tensectra,\n\nI would like to purchase the TensectraKit Starter Kit.\n\n'
-        + 'Name:  ' + name + '\nEmail: ' + email
-        + '\n\nPlease send me the payment link and scaffold access.\n\nThank you!'
-      );
-      window.location.href = 'mailto:hello@tensectra.com?subject=' + subj + '&body=' + body;
-      closeAllModals();
-      showNotification('Opening your email client — your details are pre-filled!', 'success');
+      const params = new URLSearchParams({
+        'form-name':     'kit-purchase',
+        name:            name,
+        email:           email,
+        country_code:    (document.getElementById('f-country-code')  || {}).value || '',
+        country_name:    (document.getElementById('f-country-name')  || {}).value || '',
+        city:            (document.getElementById('f-city')           || {}).value || '',
+        location_source: (document.getElementById('f-loc-source')    || {}).value || ''
+      });
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString()
+      })
+      .then(function () {
+        closeAllModals();
+        showNotification('Purchase request received! We will email you within 4 hours.', 'success');
+      })
+      .catch(function () {
+        showNotification('Something went wrong. Please email hello@tensectra.com directly.', 'error');
+      });
     }
 
     /* ── Modal 1: Full Architecture (pill cards) ── */
