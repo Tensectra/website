@@ -2,3 +2,16 @@
 1.	Create images/og-image.png — 1200×630px, dark background, your logo + tagline. Every social share currently resolves to a broken image. This is the highest-impact single task.
 2.	Replace G-XXXXXXXXXX in index.html with your real Google Analytics ID — otherwise you have zero traffic data.
 3.	Submit to Google Search Console at search.google.com/search-console — paste https://tensectra.com, verify ownership, then submit https://tensectra.com/sitemap.xml. Google will start indexing within 24–48 hours. Do the same on Bing Webmaster Tools.
+
+--------------------------
+
+Bonus:
+Inside Netlify Forms, you can:
+
+Export submissions (CSV)
+Set email notifications
+Add spam filtering
+Connect to Zapier / automation
+
+
+------------------------
