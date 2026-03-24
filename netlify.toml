@@ -1,15 +1,2 @@
 [build]
   publish = "tensectra"
-
-# Strip .html extension — redirect to clean URL
-[[redirects]]
-  from = "/*.html"
-  to   = "/:splat"
-  status = 301
-  force  = true
-
-# Serve clean URLs — internally rewrite to .html file
-[[redirects]]
-  from = "/*"
-  to   = "/:splat.html"
-  status = 200
