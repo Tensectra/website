@@ -265,16 +265,16 @@ function initCourseFilters() {
 // FORMS
 // ============================================
 function initForms() {
-  // Form validation and submission
-  document.querySelectorAll('form').forEach(form => {
+  // Attach AJAX submit handler to all Netlify forms.
+  // Skip forms that declare their own onsubmit handler (e.g. the purchase form).
+  document.querySelectorAll('form[netlify]:not([onsubmit]), form[data-netlify]:not([onsubmit])').forEach(function(form) {
     form.addEventListener('submit', function(e) {
-      // Netlify Forms will handle the actual submission
-      // This is just for client-side validation and UX
-      
-      const requiredFields = form.querySelectorAll('[required]');
-      let isValid = true;
-      
-      requiredFields.forEach(field => {
+      e.preventDefault();
+
+      var requiredFields = form.querySelectorAll('[required]');
+      var isValid = true;
+
+      requiredFields.forEach(function(field) {
         if (!field.value.trim()) {
           isValid = false;
           field.classList.add('error');
@@ -282,14 +282,30 @@ function initForms() {
           field.classList.remove('error');
         }
       });
-      
+
       if (!isValid) {
-        e.preventDefault();
         showNotification('Please fill in all required fields.', 'error');
-      } else {
-        // Show success message
-        showNotification('Thank you! Your submission has been received.', 'success');
+        return;
       }
+
+      var params = new URLSearchParams(new FormData(form));
+      // Netlify requires form-name in AJAX submissions
+      if (!params.get('form-name')) {
+        params.set('form-name', form.getAttribute('name') || '');
+      }
+
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString()
+      })
+      .then(function() {
+        showNotification('Thank you! Your submission has been received.', 'success');
+        form.reset();
+      })
+      .catch(function() {
+        showNotification('Something went wrong. Please try again or email hello@tensectra.com.', 'error');
+      });
     });
   });
 }
