@@ -1,0 +1,57 @@
+TENSECTRA — PRIVACY POLICY
+Effective: March 2026 | Live page: tensectra.com/pages/privacy
+?????????????????????????????????????????????????????????
+
+COMPLIANCE SCOPE
+  Nigeria Data Protection Act 2023 (NDPA)
+  Nigeria Data Protection Regulation 2019 (NDPR)
+  EU GDPR (for EU visitors)
+
+DATA COLLECTED
+  • Forms: name, email, company, message, course/service interest,
+           background (cohort), use case (kit purchase)
+  • Location: ipapi.co auto-detects country/city from IP for form pre-fill
+              (user can change before submitting)
+  • Analytics: Google Analytics 4 — page views, session data, device/browser,
+               approximate location (aggregated, no individual identification)
+  • Server logs: Netlify standard access logs (IP, user-agent, referring URL)
+  • Fonts: Google Fonts server connection (IP exposed to Google as technical necessity)
+
+THIRD-PARTY PROCESSORS
+  Netlify, Inc.         — hosting + form collection    — United States
+  Google LLC            — Google Analytics 4           — United States
+  Google LLC            — Google Fonts                 — United States
+  ipapi.co (Kloudend)   — IP geolocation for forms     — United States
+
+DATA WE DO NOT SELL
+  We do not sell, rent, or trade personal data to any third party for marketing.
+
+RETENTION
+  Form submissions          2 years (or until deletion requested)
+  Purchase/billing records  7 years (legal/tax compliance)
+  Google Analytics          26 months
+  Netlify server logs       Per Netlify policy
+
+USER RIGHTS
+  Access · Correction · Deletion · Portability · Object · Withdraw consent
+  Request: email hello@tensectra.com with subject "Data Rights Request"
+  Response within 30 calendar days
+
+COMPLAINTS
+  Nigeria: Nigeria Data Protection Commission (NDPC) at ndpc.gov.ng
+  EU:      Local supervisory authority
+
+COOKIES
+  Strictly necessary: Netlify CSRF (cannot disable without breaking forms)
+  Analytics: _ga, _gid, _gat (Google Analytics)
+  Opt-out: tools.google.com/dlpage/gaoptout
+  No advertising cookies. No ad network data sharing.
+
+CHILDREN
+  Services directed at professionals only. No data collected from under-16s.
+
+CHANGES
+  Material changes communicated by email before taking effect.
+
+CONTACT
+  hello@tensectra.com | tensectra.com
