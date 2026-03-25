@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
   initTabs();
   initCourseFilters();
   initForms();
-  initSourceDownload();
 });
 
 // ============================================
@@ -353,61 +352,6 @@ function showNotification(message, type = 'info') {
     notification.style.animation = 'slideOut 0.3s ease';
     setTimeout(() => notification.remove(), 300);
   }, 5000);
-}
-
-// ============================================
-// SOURCE CODE DOWNLOAD
-// ============================================
-function initSourceDownload() {
-  const downloadBtn = document.getElementById('source-download-btn');
-  if (!downloadBtn) return;
-  
-  downloadBtn.addEventListener('click', function() {
-    // Create a README file content
-    const readmeContent = `# Tensectra Website Source Code
-
-## Overview
-This is the complete source code for the Tensectra website - an enterprise engineering education platform.
-
-## Structure
-- \`index.html\` - Homepage
-- \`pages/\` - All other pages (courses, pro, cohorts, etc.)
-- \`css/\` - Stylesheets
-- \`js/\` - JavaScript files
-- \`images/\` - Image assets
-- \`forms/\` - Form templates
-
-## Tech Stack
-- HTML5
-- CSS3 (Custom properties, Grid, Flexbox)
-- Vanilla JavaScript (ES6+)
-- Netlify Forms for form handling
-
-## Setup
-1. Upload all files to your web server or Netlify
-2. Configure forms in Netlify dashboard
-3. Update links and contact information
-
-## License
-MIT License - Feel free to use and modify.
-
----
-Built with ❤️ by Tensectra Engineering Team
-`;
-
-    // Create and download the README
-    const blob = new Blob([readmeContent], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'TENSECTRA_SOURCE_README.txt';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    
-    showNotification('Source code README downloaded!', 'success');
-  });
 }
 
 // ============================================
