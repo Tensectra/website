@@ -1,0 +1,562 @@
+﻿
+╔══════════════════════════════════════════════════════════════════════════════════════════════════╗
+║          TENSECTRAKIT  —  VOICE + AI TRANSACTION GUIDE                                          ║
+║          "Brutal Honesty Edition — Is it real? Yes. Is it easy? No. Here is the truth."         ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 0 — BRUTAL HONESTY FIRST  (read before anything else)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  THE DREAM:
+    Client says:  "Capture an invoice — customer John bought Service A, quantity 3,
+                   unit price 500, apply 10% discount."
+    AI replies:   "Invoice captured. Reference INV-00847. Total 1,350. Done."
+
+  IS IT POSSIBLE?      ✅  YES — 100% real and production-proven.
+  IS IT PLUG-AND-PLAY? ❌  NO — it needs a dedicated new layer on top of your scaffold.
+  IS IT EXPENSIVE?     ⚠   DEPENDS — OpenAI API costs per token. Budget carefully.
+  IS IT RISKY?         ⚠   YES — AI can misinterpret. You MUST validate before committing.
+  TIME TO BUILD MVP:   ~2–3 weeks for a focused developer who knows the stack.
+
+  THE HONEST DANGER ZONE:
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+  ❌ Do NOT let AI write directly to the database.
+  ❌ Do NOT skip human-confirmation for financial transactions above a threshold.
+  ❌ Do NOT trust AI-parsed amounts/dates without validation — hallucinations are REAL.
+  ✅ AI should call your existing REST commands ONLY via your API layer.
+  ✅ Always make the AI ask the user to CONFIRM before final commit.
+  ✅ Log every AI-initiated transaction with a special audit flag.
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 1 — HOW THE FULL FLOW WORKS  (the architecture in plain English)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  User speaks
+      │
+      ▼
+  [BROWSER / MOBILE APP]
+  Web Speech API  ──────────────────────────────────────────────────────┐
+  (free, built-in to Chrome/Edge/Safari)                                │
+  Converts voice → raw text string in real time                        │
+      │                                                                 │
+      ▼                                                                 │
+  "Customer John bought Service A qty 3 price 500 with 10% discount"  │
+      │                                                                 │
+      ▼                                                                 │
+  [AI GATEWAY MICROSERVICE]  ◄─────────────────────────────────────────┘
+  TensectraKit.AiGateway  (new service you add to this scaffold)
+      │
+      │  Sends text + conversation history to LLM with your
+      │  API command schemas registered as "tools/functions"
+      │
+      ▼
+  [OPENAI GPT-4o  OR  AZURE OPENAI]
+  ─ Understands the intent: "Create Invoice"
+  ─ Extracts parameters: customer, service, qty, price, discount
+  ─ Detects missing fields: "What is the invoice date?"
+  ─ Returns structured JSON: { "tool": "CreateInvoice", "params": { ... } }
+      │
+      ▼
+  [AI GATEWAY]
+  ─ Validates returned parameters
+  ─ Asks user to confirm: "Shall I capture this invoice? [Yes / No]"
+      │
+      ▼ (on confirmation)
+  [YOUR EXISTING TENSECTRAKIT REST API]
+  POST /api/invoices/create   ← exact same endpoint your UI would call
+      │
+      ▼
+  [CQRS COMMAND → EF CORE → DATABASE]
+  Invoice saved, Kafka event published, response returned
+      │
+      ▼
+  AI reads API response → speaks back: "Invoice INV-00847 captured. Total 1,350."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 2 — WHAT YOUR CURRENT SCAFFOLD ALREADY GIVES YOU  (the good news)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✅  Clean CQRS Commands — AI maps voice intent → command, 1:1. Perfect fit.
+  ✅  FluentValidation — catches bad AI-parsed parameters BEFORE they hit the DB.
+  ✅  Structured JSON responses — AI can read and narrate them back easily.
+  ✅  Kafka — AI-initiated events are indistinguishable from UI-initiated ones.
+  ✅  Serilog + Seq — all AI transactions are fully traceable in the log dashboard.
+  ✅  Swagger/OpenAPI — your API schemas can be fed directly to the AI as tool definitions.
+  ✅  gRPC — if you need ultra-low-latency AI ↔ API communication in the same cluster.
+  ✅  Redis — store conversation history/session state between turns cheaply.
+  ✅  MediatR — your existing handlers do not change at all. AI is just another caller.
+
+  Nothing in your existing microservice code needs to change.
+  You add ONE new service on top.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 3 — THE TECHNOLOGY CHOICES  (what to actually use)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  LAYER 1 — VOICE TO TEXT
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+  Option A: Web Speech API (BEST for MVP)
+    ✅ Built into Chrome, Edge, Safari — zero cost, zero setup
+    ✅ Real-time streaming transcription in the browser
+    ❌ Does not work in Firefox or server-side
+    Code:  const recognition = new webkitSpeechRecognition();
+           recognition.onresult = (e) => sendToAI(e.results[0][0].transcript);
+
+  Option B: OpenAI Whisper API
+    ✅ Highest accuracy, 99 languages, handles accents extremely well
+    ✅ Works from any platform (mobile, desktop, server)
+    ❌ Costs $0.006 per minute of audio
+    ❌ Not real-time — sends audio file, gets transcript back (300ms–2s delay)
+
+  Option C: Azure Cognitive Services Speech
+    ✅ Real-time streaming, enterprise SLA, works on-premise
+    ✅ Best choice if you are already on Azure
+    ❌ Requires Azure subscription and SDK setup
+
+  RECOMMENDATION FOR THIS SCAFFOLD:
+    Start with Web Speech API (free, works day 1).
+    Upgrade to Azure Speech when you go to production.
+
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+
+  LAYER 2 — AI INTENT + PARAMETER EXTRACTION
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+  THE RIGHT TOOL: OpenAI Function Calling / Tool Use  (GPT-4o)
+
+    You define your CQRS commands as "tools":
+
+      {
+        "name": "CreateInvoice",
+        "description": "Captures a new sales invoice for a customer",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "customerId":   { "type": "string",  "description": "Customer UUID" },
+            "serviceCode":  { "type": "string",  "description": "Service product code" },
+            "quantity":     { "type": "integer", "description": "Units purchased" },
+            "unitPrice":    { "type": "number",  "description": "Price per unit" },
+            "discountPct":  { "type": "number",  "description": "Discount percentage 0-100" },
+            "invoiceDate":  { "type": "string",  "description": "Date in YYYY-MM-DD format" }
+          },
+          "required": ["customerId", "serviceCode", "quantity", "unitPrice", "invoiceDate"]
+        }
+      }
+
+    GPT-4o receives user text + your tool definitions.
+    It EITHER:
+      → Returns: tool_call { "name": "CreateInvoice", "arguments": { ... } }  (all params found)
+      → Returns: text reply "What is the invoice date?"                        (param missing)
+
+    Your gateway handles both cases in a simple loop.
+
+  BEST .NET LIBRARY: Microsoft Semantic Kernel
+    NuGet: Microsoft.SemanticKernel
+    Why:   Microsoft-backed, .NET-native, designed for exactly this use case.
+           Handles function calling, conversation history, streaming, and plugin wiring.
+           Integrates with Azure OpenAI and standard OpenAI identically.
+
+  Alternative: OpenAI .NET SDK (lower level, more control)
+    NuGet: OpenAI
+    Why:   Lighter weight if you do not need the full Semantic Kernel pipeline.
+
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+
+  LAYER 3 — CONVERSATION STATE  (remembering what was said)
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+  USE: Redis (already in your scaffold)
+    Key:   session:{userId}:conversation
+    Value: JSON array of { role, content } messages
+    TTL:   30 minutes of inactivity
+
+  This is what allows:
+    User: "Capture invoice for John, Service A, qty 3, price 500"
+    AI:   "What is the discount?"
+    User: "Ten percent"                    ← AI remembers the previous context
+    AI:   "Confirmed. Invoice captured."
+
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+
+  LAYER 4 — TEXT TO SPEECH  (AI speaks back)
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+  Option A: Web Speech Synthesis API (free, browser-native)
+    window.speechSynthesis.speak(new SpeechSynthesisUtterance("Invoice captured."));
+
+  Option B: OpenAI TTS API (natural voices, $0.015 per 1K characters)
+
+  Option C: Azure Neural TTS (best voice quality, enterprise grade)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 4 — CONCRETE IMPLEMENTATION PLAN  (step by step)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  STEP 1 — ADD THE AI GATEWAY PROJECT  (Day 1–2)
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+  Create:  TensectraKit\Presentation\TensectraKit.AiGateway\
+
+  This is a standard ASP.NET Core Web API project (same SDK as TensectraKit.Api).
+
+  Packages to add to Directory.Packages.props:
+
+    <PackageVersion Include="Microsoft.SemanticKernel"           Version="1.x.x" />
+    <PackageVersion Include="Microsoft.SemanticKernel.Connectors.OpenAI" Version="1.x.x" />
+
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+
+  STEP 2 — REGISTER YOUR COMMANDS AS SEMANTIC KERNEL PLUGINS  (Day 2–3)
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+  Create one plugin class per domain area:
+
+    public class InvoicePlugin
+    {
+        private readonly HttpClient _apiClient;
+
+        [KernelFunction("CreateInvoice")]
+        [Description("Captures a new sales invoice for a customer")]
+        public async Task<string> CreateInvoice(
+            [Description("Customer unique identifier")]           string customerId,
+            [Description("Service or product code")]              string serviceCode,
+            [Description("Number of units purchased")]            int quantity,
+            [Description("Price per unit")]                       decimal unitPrice,
+            [Description("Discount percentage (0-100)")]          decimal discountPct,
+            [Description("Invoice date in YYYY-MM-DD format")]    string invoiceDate)
+        {
+            // Call your existing TensectraKit.Api endpoint
+            var response = await _apiClient.PostAsJsonAsync("/api/invoices", new {
+                customerId, serviceCode, quantity, unitPrice, discountPct, invoiceDate
+            });
+            var result = await response.Content.ReadFromJsonAsync<InvoiceResponse>();
+            return $"Invoice {result.Reference} captured. Total: {result.Total:N2}.";
+        }
+    }
+
+  Semantic Kernel reads the [Description] attributes and builds the
+  OpenAI tool definition JSON automatically. No manual JSON writing.
+
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+
+  STEP 3 — BUILD THE CHAT ENDPOINT  (Day 3–4)
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+
+    [ApiController]
+    [Route("api/ai")]
+    public class AiController : ControllerBase
+    {
+        private readonly Kernel _kernel;
+        private readonly IDatabase _redis;
+
+        [HttpPost("chat")]
+        public async Task<IActionResult> Chat([FromBody] ChatRequest request)
+        {
+            // 1. Load conversation history from Redis
+            var history = await LoadHistory(request.SessionId);
+
+            // 2. Add user message
+            history.AddUserMessage(request.UserText);
+
+            // 3. Call Semantic Kernel — it handles tool calling automatically
+            var settings = new OpenAIPromptExecutionSettings {
+                ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions
+            };
+            var response = await _kernel.InvokePromptAsync(
+                request.UserText, new(settings) { History = history }
+            );
+
+            // 4. Save updated history to Redis (TTL: 30 min)
+            await SaveHistory(request.SessionId, history);
+
+            // 5. Return AI reply text → browser speaks it back via TTS
+            return Ok(new { reply = response.ToString() });
+        }
+    }
+
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+
+  STEP 4 — ADD CONFIRMATION BEFORE COMMIT  (Day 4 — CRITICAL)
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+  NEVER commit a financial transaction without user confirmation.
+
+  Pattern: Two-phase tool design
+    Phase 1:  "PreviewInvoice" — AI calls this first, returns a summary for user to hear
+    Phase 2:  "ConfirmInvoice" — AI calls this only after user says "yes" / "confirm"
+
+  System prompt instruction to add:
+    "You are TensectraKit assistant. Before executing any write operation
+     (create, update, delete), ALWAYS call the Preview version first and
+     present the summary to the user. Only proceed with the actual operation
+     after the user explicitly confirms with 'yes', 'confirm', or 'proceed'."
+
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+
+  STEP 5 — BROWSER VOICE INTEGRATION  (Day 5)
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+  Add to your frontend (React / Angular / plain JS — works with all):
+
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.continuous = false;
+    recognition.lang = 'en-US';
+
+    recognition.onresult = async (event) => {
+        const transcript = event.results[0][0].transcript;
+        showTypingIndicator();
+
+        const res = await fetch('/api/ai/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sessionId: getUserSessionId(), userText: transcript })
+        });
+
+        const { reply } = await res.json();
+
+        // Speak the AI reply back to the user
+        const utterance = new SpeechSynthesisUtterance(reply);
+        window.speechSynthesis.speak(utterance);
+    };
+
+    document.getElementById('micBtn').onclick = () => recognition.start();
+
+  That is the complete browser side. Fewer than 20 lines.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 5 — WHAT THIS LOOKS LIKE END TO END  (the invoice example)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  USER clicks microphone button.
+
+  USER speaks:
+    "Customer John Doe just bought Service A, quantity three, unit price five hundred."
+
+  BROWSER transcribes → sends to AI Gateway:
+    { "userText": "Customer John Doe just bought Service A, quantity 3, unit price 500." }
+
+  AI GATEWAY calls GPT-4o with InvoicePlugin registered.
+
+  GPT-4o sees missing required field "invoiceDate" → responds with text:
+    "What is the invoice date?"
+
+  AI GATEWAY returns → BROWSER speaks:
+    "What is the invoice date?"
+
+  USER speaks:
+    "Today."
+
+  BROWSER sends:
+    { "userText": "Today." }  (Redis still holds context from turn 1)
+
+  GPT-4o has all fields. Calls PreviewInvoice tool first.
+  PreviewInvoice returns summary:
+    "Invoice preview: John Doe, Service A × 3 @ 500.00 = 1,500.00. Date: 2026-03-21."
+
+  BROWSER speaks:
+    "Invoice preview: John Doe, Service A, three units at five hundred each, total 1,500.
+     Shall I proceed?"
+
+  USER speaks:
+    "Yes, confirm."
+
+  GPT-4o calls ConfirmInvoice → Gateway POSTs to /api/invoices → DB saved → Kafka event fired.
+  Returns: "Invoice INV-00847 captured successfully. Total 1,500.00."
+
+  BROWSER speaks:
+    "Invoice INV-00847 captured successfully. Total 1,500."
+
+  TOTAL ELAPSED TIME:  4–8 seconds.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 6 — COST REALITY CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  GPT-4o pricing (as of 2024):
+    Input tokens:   $5.00  per 1 million tokens
+    Output tokens:  $15.00 per 1 million tokens
+
+  A typical voice transaction (2-3 turns, invoice create):
+    ≈ 800 input tokens + 200 output tokens = $0.007 per transaction
+
+  100 transactions/day   = $0.70/day   = ~$21/month
+  1,000 transactions/day = $7.00/day   = ~$210/month
+  10,000 transactions/day = $70/day    = ~$2,100/month
+
+  COST REDUCTION OPTIONS:
+  ─ Use GPT-4o-mini for low-risk read queries (10x cheaper, slightly less accurate)
+  ─ Cache common lookups in Redis before sending to AI
+  ─ Use Azure OpenAI with a committed-use tier for high volume
+
+  VERDICT: Economically viable for enterprise internal tools.
+           For a consumer app doing millions of calls, cost needs careful modelling.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 7 — SECURITY & COMPLIANCE  (non-negotiable for financial data)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✅  AI Gateway authenticates with TensectraKit.Api using the SAME JWT tokens as the user.
+      The AI has exactly the same permissions as the user who triggered the voice command.
+      If the user cannot create invoices above $50,000 — neither can the AI acting as them.
+
+  ✅  Every AI-initiated API call is tagged with an audit header: X-Initiated-By: AI-Voice
+      Your Serilog logs will show this in Seq for every transaction.
+
+  ✅  Conversation history in Redis is encrypted at rest using your existing AES-256 key.
+
+  ✅  No raw financial data is sent to OpenAI. The AI only receives:
+      — The user's text (intent)
+      — Structured tool definitions (schemas, no real data)
+      — Tool results (success/failure messages, references, totals)
+      Customer PII (email, address, account number) does NOT leave your system.
+
+  ⚠  If your client operates in a data-residency-restricted environment (GDPR, NDPR):
+      Use Azure OpenAI (data stays in your Azure region, not OpenAI's US servers).
+      Azure OpenAI uses the identical GPT-4o model — zero code difference.
+
+  ✅  Add a transaction amount threshold for voice:
+      Hard rule: any voice-initiated transaction above X amount requires
+      a secondary PIN or biometric confirmation from the user.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 8 — WHAT THIS SCAFFOLD NEEDS ADDED  (the honest gap list)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ALREADY IN SCAFFOLD — NO CHANGES NEEDED:
+  ✅  REST API (TensectraKit.Api) — AI Gateway calls this as-is
+  ✅  Redis — conversation history store
+  ✅  Kafka — AI-triggered events publish here automatically
+  ✅  Serilog/Seq — AI transactions appear in logs automatically
+  ✅  FluentValidation — catches invalid AI-parsed data
+  ✅  AES encryption — secure conversation storage
+
+  NEEDS TO BE ADDED:
+  ┌──────────────────────────────────────────────────────────────────────────────────┐
+  │  WHAT                              EFFORT      NOTES                            │
+  ├──────────────────────────────────────────────────────────────────────────────────┤
+  │  TensectraKit.AiGateway project    3–4 days    New ASP.NET Core project         │
+  │  Semantic Kernel plugin classes    2–3 days    1 plugin per business domain      │
+  │  Redis conversation history        1 day       Uses existing Redis container     │
+  │  Browser microphone JS             0.5 day     Web Speech API, 20 lines         │
+  │  Preview/Confirm two-phase flow    1 day       Safety guard for writes           │
+  │  Audit header middleware           0.5 day     Tags AI calls in logs            │
+  │  OpenAI / Azure OpenAI API key     1 hour      Config in appsettings             │
+  ├──────────────────────────────────────────────────────────────────────────────────┤
+  │  TOTAL MVP ESTIMATE                ~2 weeks    Solo developer, focused sprint    │
+  └──────────────────────────────────────────────────────────────────────────────────┘
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 9 — QUICK START  (get a proof of concept running today)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  1. Get an OpenAI API key:   https://platform.openai.com/api-keys
+
+  2. Create the AI Gateway project:
+       dotnet new webapi -n TensectraKit.AiGateway
+       dotnet add package Microsoft.SemanticKernel
+       dotnet add package Microsoft.SemanticKernel.Connectors.OpenAI
+
+  3. Register the kernel in Program.cs:
+       builder.Services.AddKernel()
+           .AddOpenAIChatCompletion("gpt-4o", builder.Configuration["OpenAI:ApiKey"])
+           .Plugins.AddFromType<InvoicePlugin>();
+
+  4. Add your OpenAI key to appsettings.json:
+       "OpenAI": { "ApiKey": "sk-..." }
+
+  5. Build a minimal InvoicePlugin (Section 4, Step 2 above).
+
+  6. POST to /api/ai/chat with:
+       { "sessionId": "test-123", "userText": "Create an invoice for test customer" }
+
+  7. Watch the AI ask for missing parameters turn by turn.
+
+  You have a working proof of concept in one afternoon.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 10 — SUMMARY TABLE  (one-page reference)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ┌──────────────────────┬──────────────────────────────┬───────────────────────────────────────┐
+  │  CAPABILITY          │  TECHNOLOGY                  │  STATUS IN THIS SCAFFOLD              │
+  ├──────────────────────┼──────────────────────────────┼───────────────────────────────────────┤
+  │  Voice → Text        │  Web Speech API / Whisper    │  Add to frontend (20 lines)           │
+  │  Intent Extraction   │  GPT-4o Function Calling     │  Add AiGateway project                │
+  │  Missing Param Ask   │  Semantic Kernel + history   │  Add AiGateway project                │
+  │  Conversation State  │  Redis (existing)            │  Already running ✅                   │
+  │  API Execution       │  TensectraKit.Api (existing) │  No changes needed ✅                 │
+  │  Event Publishing    │  Kafka (existing)            │  Automatic ✅                         │
+  │  Audit Logging       │  Serilog/Seq (existing)      │  Add AI header tag (30 min)           │
+  │  Text → Speech       │  Web Speech Synthesis        │  Add to frontend (5 lines)            │
+  │  Data Residency      │  Azure OpenAI                │  Config change only                   │
+  │  Security            │  JWT passthrough + threshold │  Add to AiGateway (1 day)             │
+  └──────────────────────┴──────────────────────────────┴───────────────────────────────────────┘
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  BOTTOM LINE
+
+  This is not a gimmick. This is how modern enterprise software is being built right now.
+  Your scaffold's clean CQRS architecture is actually IDEAL for this pattern.
+  The AI is not replacing your code — it is becoming a voice-controlled client of it.
+  Every safeguard, every validation, every audit trail you already wrote still runs.
+  The AI just speaks to your API the way a human would click buttons.
+
+  Build the gateway. Define the plugins. Ship it. 🚀
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Who Should Build It
+Do NOT put it in the scaffold template itself.
+Here is why:
+•	Every developer who downloads the template gets forced into OpenAI billing and Azure dependencies they may not want
+•	It adds ~3 NuGet packages and an entire microservice to a scaffold whose job is to be a clean starting point
+•	It breaks the single-responsibility of the template
+
+The right move: Publish it as a separate companion template on NuGet:
+---  TensectraKit.Template          ← what you have now (clean scaffold)
+---  TensectraKit.AiGateway.Template ← voice AI layer, installed on top optionally
+
+A dev downloads the scaffold, builds their invoice microservice, then optionally runs:
+---  dotnet new tensectrakit-ai -n MyApp.AiGateway
+
+and gets the gateway wired in. Clean separation.
+
+2. Is It a Selling Point — For the Scaffold or the ERP App?
+
+  ┌──────────────────┬──────────────────────────────────────────────┬──────────────────────────────────────────────┐
+  │                  │  SCAFFOLD  (TensectraKit)                    │  ERP APP BUILT WITH IT                       │
+  ├──────────────────┼──────────────────────────────────────────────┼──────────────────────────────────────────────┤
+  │  Selling point?  │  ✅  Indirectly — "AI-Ready Architecture"   │  ✅✅  Directly — massive differentiator     │
+  ├──────────────────┼──────────────────────────────────────────────┼──────────────────────────────────────────────┤
+  │  How to market   │  "Redis, Kafka, CQRS — your stack is        │  "Capture invoices, log transactions,        │
+  │                  │   voice-AI-ready on day one"                 │   query balances — by voice"                 │
+  ├──────────────────┼──────────────────────────────────────────────┼──────────────────────────────────────────────┤
+  │  Who cares       │  Developers choosing a scaffold              │  Finance directors, field workers,           │
+  │                  │                                              │  warehouse staff                             │
+  ├──────────────────┼──────────────────────────────────────────────┼──────────────────────────────────────────────┤
+  │  Competition     │  Most .NET scaffolds have zero AI story      │  SAP / Oracle ERP — no voice entry at all   │
+  ├──────────────────┼──────────────────────────────────────────────┼──────────────────────────────────────────────┤
+  │  Strength level  │  Medium — it is a promise                    │  ⭐ HIGH — clients will pay for this        │
+  └──────────────────┴──────────────────────────────────────────────┴──────────────────────────────────────────────┘
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  BRUTAL BOTTOM LINE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  The scaffold selling point is:
+    "Your architecture is already shaped for AI — nothing to rip apart later."
+
+  The ERP app selling point is genuinely strong — enterprise ERP is the most form-heavy,
+  click-heavy software on earth. A field manager saying:
+    "Post goods receipt, item 4071, quantity 200, warehouse B"
+  instead of navigating 6 screens is a real competitive advantage that SAP charges
+  hundreds of thousands of dollars for.
+
+  ┌─────────────────────────────────────────────────────────────────────────────────┐
+  │  RECOMMENDATION                                                                 │
+  │                                                                                 │
+  │  1. Ship the scaffold now as-is.                                                │
+  │  2. VoiceAI.txt documents the roadmap — it is already in the package.           │
+  │  3. Build TensectraKit.AiGateway.Template as version 2.                         │
+  │  4. Add ONE word to your NuGet description: "AI-Ready"                          │
+  │     — costs nothing, is 100% honest given your architecture.                   │
+  └─────────────────────────────────────────────────────────────────────────────────┘
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
