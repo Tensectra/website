@@ -240,6 +240,87 @@ Not theory. Battle-tested patterns.
     </div>
   </section>
 
+  <!-- Roadmap Section -->
+  <section id="roadmap" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Where Tensectra Is Going.</h2>
+        <p>What exists today. What is being built. What is on the horizon.</p>
+      </div>
+
+      <div class="grid-3" style="margin-bottom: var(--space-xl);">
+
+        <!-- Available Now -->
+        <div class="card" style="border-top: 3px solid #28C840;">
+          <p style="color: #28C840; font-weight: 700; font-size: 0.72rem; letter-spacing: 0.09em; margin-bottom: var(--space-md);">&#10003; AVAILABLE NOW</p>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-xs);">
+            <li style="color: var(--text-primary); font-size: 0.9rem;"><span style="color: #28C840; margin-right: 6px;">&#9658;</span>TensectraKit Starter &mdash; $299</li>
+            <li style="color: var(--text-primary); font-size: 0.9rem;"><span style="color: #28C840; margin-right: 6px;">&#9658;</span>Backend Engineer Cohort (6-week live)</li>
+            <li style="color: var(--text-primary); font-size: 0.9rem;"><span style="color: #28C840; margin-right: 6px;">&#9658;</span>Frontend Engineer Cohort (6-week live)</li>
+            <li style="color: var(--text-primary); font-size: 0.9rem;"><span style="color: #28C840; margin-right: 6px;">&#9658;</span>Mobile Builder Cohort (6-week live)</li>
+            <li style="color: var(--text-primary); font-size: 0.9rem;"><span style="color: #28C840; margin-right: 6px;">&#9658;</span>Consultancy (3 engagement tiers)</li>
+            <li style="color: var(--text-primary); font-size: 0.9rem;"><span style="color: #28C840; margin-right: 6px;">&#9658;</span>Pro Membership</li>
+          </ul>
+        </div>
+
+        <!-- In Development -->
+        <div class="card" style="border-top: 3px solid var(--accent-cyan);">
+          <p style="color: var(--accent-cyan); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.09em; margin-bottom: var(--space-md);">&#9881; IN DEVELOPMENT</p>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-xs);">
+            <li style="color: var(--text-primary); font-size: 0.9rem;"><span style="color: var(--accent-cyan); margin-right: 6px;">&#9658;</span><strong style="color: var(--text-white);">TensectraKit.AiGateway</strong> &mdash; Voice + AI transaction layer</li>
+            <li style="color: var(--text-primary); font-size: 0.9rem;"><span style="color: var(--accent-cyan); margin-right: 6px;">&#9658;</span>TensectraKit Pro Kit &mdash; $899</li>
+            <li style="color: var(--text-primary); font-size: 0.9rem;"><span style="color: var(--accent-cyan); margin-right: 6px;">&#9658;</span>Product Design Cohort (6-week live)</li>
+            <li style="color: var(--text-primary); font-size: 0.9rem;"><span style="color: var(--accent-cyan); margin-right: 6px;">&#9658;</span>AI Workflow Cohort (solo business automation)</li>
+          </ul>
+        </div>
+
+        <!-- Planned -->
+        <div class="card" style="border-top: 3px solid var(--accent-purple);">
+          <p style="color: var(--accent-purple); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.09em; margin-bottom: var(--space-md);">&#9702; PLANNED</p>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-xs);">
+            <li style="color: var(--text-primary); font-size: 0.9rem;"><span style="color: var(--accent-purple); margin-right: 6px;">&#9658;</span>TensectraKit Enterprise &mdash; Custom pricing</li>
+            <li style="color: var(--text-primary); font-size: 0.9rem;"><span style="color: var(--accent-purple); margin-right: 6px;">&#9658;</span>NuGet template: <code style="font-family: var(--font-mono); font-size: 0.78rem;">dotnet new tensectrakit-ai</code></li>
+            <li style="color: var(--text-primary); font-size: 0.9rem;"><span style="color: var(--accent-purple); margin-right: 6px;">&#9658;</span>Architecture Reference Card v2</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Voice AI Feature Callout -->
+      <div class="card" style="background: linear-gradient(135deg, rgba(0,204,255,0.05) 0%, rgba(123,47,255,0.08) 100%); border: 1px solid rgba(0,204,255,0.18);">
+        <div class="grid-2" style="align-items: center; gap: var(--space-xl);">
+          <div>
+            <span class="ladder-badge" style="display: inline-block; margin-bottom: var(--space-md);">IN DEVELOPMENT &mdash; TENSECTRAKIT.AIGATEWAY</span>
+            <h3 style="margin-bottom: var(--space-md);">Voice-Controlled Enterprise Transactions.</h3>
+            <p style="color: var(--text-primary); font-size: 1.05rem; margin-bottom: var(--space-md); font-style: italic;">&ldquo;Post goods receipt, item 4071, quantity 200, warehouse B.&rdquo;</p>
+            <p style="color: var(--text-muted); margin-bottom: var(--space-md);">That sentence becomes a validated, audited, Kafka-published transaction &mdash; no form, no screen navigation, no clicks. The AI extracts the intent, asks for any missing parameters, shows a preview, waits for your confirmation, then calls your existing API endpoint.</p>
+            <p style="color: var(--text-muted); margin-bottom: var(--space-md);">Your current scaffold is already shaped for this. CQRS commands map 1:1 to AI function calls. Redis holds conversation state between turns. Kafka publishes AI-initiated events identically to UI-initiated ones. FluentValidation catches bad AI-parsed parameters before they reach the database. <strong style="color: var(--text-white);">Nothing in your existing code changes. You add one new service on top.</strong></p>
+            <p style="color: var(--accent-cyan); font-size: 0.9rem; font-style: italic;">SAP and Oracle charge hundreds of thousands of dollars for this capability. You bolt it onto what you already own.</p>
+          </div>
+          <div class="ascii-diagram" style="font-size: 0.77rem; line-height: 2;">
+User: &quot;Post invoice, John Doe,
+       Service A, qty 3, price 500&quot;
+                 &#8595;
+   AI Gateway (GPT-4o)
+   Extracts intent + parameters
+                 &#8595;
+   &quot;What is the invoice date?&quot;
+                 &#8595; User: &quot;Today&quot;
+   Preview shown &#8594; user confirms
+                 &#8595;
+   POST /api/invoices  (existing endpoint)
+                 &#8595;
+   CQRS &#8594; EF Core &#8594; Database
+   Kafka event published
+                 &#8595;
+   &quot;Invoice INV-00847 captured.
+    Total: 1,500.00.&quot;
+   Elapsed: 6 seconds.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- Contact Section -->
   <section class="section">
     <div class="container">
@@ -391,18 +472,6 @@ Not theory. Battle-tested patterns.
       </div>
     </div>
   </footer>
-
-  <!-- Source Code Download Button -->
-  <div class="source-download">
-    <button class="source-download-btn" id="source-download-btn" title="Download Source Code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-        <polyline points="7 10 12 15 17 10"></polyline>
-        <line x1="12" y1="15" x2="12" y2="3"></line>
-      </svg>
-      <span>Source Code</span>
-    </button>
-  </div>
 
   <script src="../js/main.js?v=2"></script>
   <script src="../js/location.js"></script>
