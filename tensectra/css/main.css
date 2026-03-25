@@ -679,6 +679,15 @@ p {
   flex-direction: column;
 }
 
+/* Badge inside course cards must be in normal flow, not absolutely positioned,
+   so it sits above the title with breathing room instead of overlapping it */
+.course-card .badge {
+  position: static;
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: var(--space-sm);
+}
+
 .course-card.coming-soon {
   opacity: 0.85;
 }
