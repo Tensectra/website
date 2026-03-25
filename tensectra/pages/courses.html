@@ -194,7 +194,7 @@
         <!-- Placeholder -->
         <div class="card" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-style: dashed; min-height: 300px;" data-category="coming-soon">
           <p style="color: var(--text-muted); margin-bottom: var(--space-md);">More courses arriving quarterly for Pro members.</p>
-          <form style="width: 100%; max-width: 280px;" netlify name="course-notify">
+          <form style="width: 100%; max-width: 280px;" name="course-notify" method="POST" netlify>
             <input type="hidden" name="country_code"    id="f-country-code">
             <input type="hidden" name="country_name"    id="f-country-name">
             <input type="hidden" name="city"            id="f-city">
@@ -373,12 +373,12 @@
         <div class="footer-col">
           <h4>Legal</h4>
           <ul class="footer-links">
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms of Service</a></li>
+            <li><a href="privacy">Privacy Policy</a></li>
+            <li><a href="terms">Terms of Service</a></li>
           </ul>
           
           <div class="footer-social">
-            <a href="#" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/company/tensectra/" target="_blank" rel="noopener" aria-label="LinkedIn">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
                 <rect x="2" y="9" width="4" height="12"></rect>
@@ -409,17 +409,6 @@
     </div>
   </footer>
 
-  <!-- Source Code Download Button -->
-  <div class="source-download">
-    <button class="source-download-btn" id="source-download-btn" title="Download Source Code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-        <polyline points="7 10 12 15 17 10"></polyline>
-        <line x1="12" y1="15" x2="12" y2="3"></line>
-      </svg>
-      <span>Source Code</span>
-    </button>
-  </div>
 
   <script src="../js/main.js?v=2"></script>
   <script src="../js/location.js"></script>

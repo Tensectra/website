@@ -454,6 +454,33 @@ TENSECTRA ERP KIT
         </div>
       </div>
 
+      <!-- Voice AI — AI-Ready callout -->
+      <div style="margin-top: var(--space-xl); padding: var(--space-xl); background: linear-gradient(135deg, rgba(0,204,255,0.05) 0%, rgba(123,47,255,0.08) 100%); border: 1px solid rgba(0,204,255,0.15); border-radius: var(--radius-lg);">
+        <div class="grid-2" style="align-items: center; gap: var(--space-xl);">
+          <div>
+            <span class="ladder-badge" style="display: inline-block; margin-bottom: var(--space-md);">COMING IN V2 &mdash; TENSECTRAKIT.AIGATEWAY</span>
+            <h3 style="margin-bottom: var(--space-md);">This scaffold is AI-ready on day one.</h3>
+            <p style="color: var(--text-muted); margin-bottom: var(--space-md);">
+              <strong style="color: var(--text-white);">TensectraKit.AiGateway</strong> is in development as a separate companion template. One microservice added on top of what you already own &mdash; and your system handles voice-controlled transactions.
+            </p>
+            <p style="color: var(--accent-cyan); font-style: italic; margin-bottom: var(--space-md);">
+              &ldquo;Post invoice, John Doe, Service A, quantity 3, price 500.&rdquo; &mdash; Validated. Audited. Kafka-published. Done.
+            </p>
+            <a href="about#roadmap" class="btn btn-outline btn-sm">See the Full Roadmap &rarr;</a>
+          </div>
+          <div>
+            <div class="kit-features-label" style="margin-bottom: var(--space-md);">WHY YOUR SCAFFOLD IS ALREADY SHAPED FOR THIS</div>
+            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-xs);">
+              <li style="color: var(--text-primary); font-size: 0.9rem; display: flex; gap: var(--space-sm);"><span style="color: var(--accent-cyan); flex-shrink: 0;">&#10003;</span>CQRS commands map 1:1 to AI function calls &mdash; no code changes</li>
+              <li style="color: var(--text-primary); font-size: 0.9rem; display: flex; gap: var(--space-sm);"><span style="color: var(--accent-cyan); flex-shrink: 0;">&#10003;</span>Redis already running &mdash; stores AI conversation state between turns</li>
+              <li style="color: var(--text-primary); font-size: 0.9rem; display: flex; gap: var(--space-sm);"><span style="color: var(--accent-cyan); flex-shrink: 0;">&#10003;</span>Kafka publishes AI-initiated events identically to UI-initiated ones</li>
+              <li style="color: var(--text-primary); font-size: 0.9rem; display: flex; gap: var(--space-sm);"><span style="color: var(--accent-cyan); flex-shrink: 0;">&#10003;</span>FluentValidation catches bad AI-parsed parameters before the database</li>
+              <li style="color: var(--text-primary); font-size: 0.9rem; display: flex; gap: var(--space-sm);"><span style="color: var(--accent-cyan); flex-shrink: 0;">&#10003;</span>Serilog + Seq traces every AI transaction automatically</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -493,12 +520,12 @@ TENSECTRA ERP KIT
         <div class="footer-col">
           <h4>Legal</h4>
           <ul class="footer-links">
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms of Service</a></li>
+            <li><a href="privacy">Privacy Policy</a></li>
+            <li><a href="terms">Terms of Service</a></li>
           </ul>
           
           <div class="footer-social">
-            <a href="#" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/company/tensectra/" target="_blank" rel="noopener" aria-label="LinkedIn">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
                 <rect x="2" y="9" width="4" height="12"></rect>
@@ -529,17 +556,6 @@ TENSECTRA ERP KIT
     </div>
   </footer>
 
-  <!-- Source Code Download Button -->
-  <div class="source-download">
-    <button class="source-download-btn" id="source-download-btn" title="Download Source Code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-        <polyline points="7 10 12 15 17 10"></polyline>
-        <line x1="12" y1="15" x2="12" y2="3"></line>
-      </svg>
-      <span>Source Code</span>
-    </button>
-  </div>
 
   <!-- Architecture Preview Modal -->
   <div id="arch-modal" class="arch-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="arch-modal-title">
@@ -732,7 +748,7 @@ TENSECTRA ERP KIT
       <div class="arch-modal-header">
         <div>
           <span class="ladder-badge">PART 1 — HIGH-LEVEL DIAGRAM</span>
-          <h3 class="arch-modal-title" id="arch-diag-title">C360 Backend Architecture — TensectraKit (.NET 8)</h3>
+          <h3 class="arch-modal-title" id="arch-diag-title">Detailed Backend Architecture — TensectraKit (.NET 8)</h3>
           <p class="arch-modal-meta">Textual boxes &amp; arrows &middot; Presentation &rarr; Application &rarr; Infrastructure &rarr; Domain &rarr; Persistence</p>
         </div>
         <button class="arch-modal-close" onclick="closeDiagramModal()" aria-label="Close">
@@ -761,7 +777,7 @@ TENSECTRA ERP KIT
       </div>
       <div class="modal-body">
         <p style="color: var(--text-muted); margin-bottom: var(--space-lg);">Leave your name and email &mdash; we&rsquo;ll send the payment link and scaffold access within 4 hours.</p>
-        <form id="purchase-form" name="kit-purchase" netlify onsubmit="submitPurchaseForm(event)">
+        <form id="purchase-form" name="kit-purchase" method="POST" netlify onsubmit="submitPurchaseForm(event)">
           <input type="hidden" name="form-name" value="kit-purchase">
           <input type="hidden" name="country_code"    id="f-country-code">
           <input type="hidden" name="country_name"    id="f-country-name">
@@ -829,7 +845,7 @@ TENSECTRA ERP KIT
 
     /* ── Modal 2: Raw textual diagram with syntax colours ── */
     const ARCH_DIAGRAM_RAW = `\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557
-\u2551           C360 BACKEND ARCHITECTURE  \u2014 TensectraKit  (.NET 8 Clean Architecture)                 \u2551
+\u2551            BACKEND ARCHITECTURE  \u2014 TensectraKit  (.NET 8 Clean Architecture)                 \u2551
 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d
 
 \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501
