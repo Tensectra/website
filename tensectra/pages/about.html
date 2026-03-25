@@ -377,7 +377,7 @@ User: &quot;Post invoice, John Doe,
         
         <div class="card">
           <h4 style="margin-bottom: var(--space-md);">Send a Message</h4>
-          <form name="contact-about" method="POST" netlify>
+          <form id="contact-about-form">
             <div class="form-group">
               <label class="form-label">Name *</label>
               <input type="text" name="name" class="form-input" required>
@@ -484,5 +484,8 @@ User: &quot;Post invoice, John Doe,
 
   <script src="../js/main.js?v=2"></script>
   <script src="../js/location.js"></script>
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/form-handler.js"></script>
+  <script>initForm('contact-about-form', 'contact_submissions', 'We\u2019ll be in touch within 48 hours.');</script>
 </body>
 </html>

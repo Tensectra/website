@@ -50,7 +50,7 @@
         </p>
         
         <div class="card" style="text-align: left;">
-          <form name="waitlist" method="POST" netlify>
+          <form id="waitlist-form">
             <div class="form-group">
               <label class="form-label">Full Name *</label>
               <input type="text" name="name" class="form-input" placeholder="Your full name" required>
@@ -134,8 +134,8 @@
         <div class="footer-col">
           <h4>Legal</h4>
           <ul class="footer-links">
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms of Service</a></li>
+            <li><a href="../pages/privacy">Privacy Policy</a></li>
+            <li><a href="../pages/terms">Terms of Service</a></li>
           </ul>
         </div>
       </div>
@@ -151,5 +151,8 @@
 
   <script src="../js/main.js"></script>
   <script src="../js/location.js"></script>
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/form-handler.js"></script>
+  <script>initForm('waitlist-form', 'waitlist_submissions', 'You\u2019re on the list. We\u2019ll notify you first.');</script>
 </body>
 </html>

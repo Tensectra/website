@@ -62,7 +62,7 @@
         </div>
         
         <div class="card">
-          <form name="consultancy-enquiry" method="POST" netlify>
+          <form id="consultancy-form">
             <div class="form-group">
               <label class="form-label">Which tier are you interested in? *</label>
               <select name="tier" class="form-select" id="tier-select" required>
@@ -180,8 +180,8 @@
         <div class="footer-col">
           <h4>Legal</h4>
           <ul class="footer-links">
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms of Service</a></li>
+            <li><a href="../pages/privacy">Privacy Policy</a></li>
+            <li><a href="../pages/terms">Terms of Service</a></li>
           </ul>
         </div>
       </div>
@@ -197,7 +197,10 @@
 
   <script src="../js/main.js"></script>
   <script src="../js/location.js"></script>
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/form-handler.js"></script>
   <script>
+    initForm('consultancy-form', 'consultancy_enquiries', 'Enquiry received. Expect a response with next steps within 24 hours.');
     // Pre-select tier from URL parameter
     const urlParams = new URLSearchParams(window.location.search);
     const tier = urlParams.get('tier');

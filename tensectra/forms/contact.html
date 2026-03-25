@@ -62,7 +62,7 @@
         </div>
         
         <div class="card">
-          <form name="contact" method="POST" netlify>
+          <form id="contact-form">
             <div class="form-group">
               <label class="form-label">Your Name *</label>
               <input type="text" name="name" class="form-input" placeholder="Your full name" required>
@@ -143,8 +143,8 @@
         <div class="footer-col">
           <h4>Legal</h4>
           <ul class="footer-links">
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms of Service</a></li>
+            <li><a href="../pages/privacy">Privacy Policy</a></li>
+            <li><a href="../pages/terms">Terms of Service</a></li>
           </ul>
         </div>
       </div>
@@ -160,5 +160,8 @@
 
   <script src="../js/main.js"></script>
   <script src="../js/location.js"></script>
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/form-handler.js"></script>
+  <script>initForm('contact-form', 'contact_submissions', 'We\u2019ll be in touch within 48 hours.');</script>
 </body>
 </html>
