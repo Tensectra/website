@@ -675,10 +675,17 @@ p {
 .course-card {
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .course-card.coming-soon {
   opacity: 0.85;
+}
+
+/* Pin the "Join Waitlist" button to the bottom of coming-soon cards */
+.course-card.coming-soon > .btn {
+  margin-top: auto;
 }
 
 .course-accent-cyan { border-left: 4px solid var(--accent-cyan); }
@@ -727,6 +734,7 @@ p {
 .course-actions {
   display: flex;
   gap: var(--space-sm);
+  margin-top: auto;
 }
 
 /* Filter Bar */
