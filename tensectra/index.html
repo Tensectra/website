@@ -755,6 +755,13 @@ TENSECTRA HIERARCHY
   </footer>
 
 
+  <!-- Ghost form: Netlify detects this at deploy time so AJAX ref-card submissions are captured -->
+  <form name="ref-card-download" method="POST" netlify hidden aria-hidden="true" data-no-init>
+    <input type="text" name="name">
+    <input type="email" name="email">
+    <input type="hidden" name="lead_source">
+  </form>
+
   <!-- Scripts -->
   <script src="js/main.js?v=2"></script>
 </body>
