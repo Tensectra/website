@@ -10,3 +10,12 @@ Secrets (e.g. Supabase keys, Firebase config)
 Passwords or tokens
 
 👉 If you do, remove them first or move them to environment variables
+----------------------
+🚀 Bonus (useful for you)
+
+Inside Netlify Forms, you can:
+
+Export submissions (CSV)
+Set email notifications
+Add spam filtering
+Connect to Zapier / automation
