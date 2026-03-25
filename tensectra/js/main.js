@@ -265,9 +265,9 @@ function initCourseFilters() {
 // FORMS
 // ============================================
 function initForms() {
-  // Attach AJAX submit handler to all Netlify forms.
-  // Skip forms that declare their own onsubmit handler (e.g. the purchase form).
-  document.querySelectorAll('form[netlify]:not([onsubmit]), form[data-netlify]:not([onsubmit])').forEach(function(form) {
+  // form[netlify] is stripped by Netlify at deploy time — select by method="POST" instead.
+  // Exclude forms with a custom onsubmit handler (e.g. the purchase modal form).
+  document.querySelectorAll('form[method="POST"]:not([onsubmit])').forEach(function(form) {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
 
