@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complete Your Cohort Payment | Tensectra</title>
+  <meta name="robots" content="noindex, nofollow">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="icon" type="image/png" href="../images/logo2.png">
+  
+  <!-- Paystack -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  
+  <!-- Environment Configuration -->
+  <meta name="config:supabase-url" content="https://ahcfozfntvqbfgbinxwr.supabase.co">
+  <meta name="config:supabase-anon-key" content="sb_publishable_9t2QGBpQl4yd4H73dkSdlg_9QVNarpS">
+  <meta name="config:ga-measurement-id" content="G-Y75Q7F95P4">
+</head>
+<body>
+  
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="../" class="navbar-logo">
+        <img src="../images/logo2.png" alt="Tensectra">
+        <span>TENSECTRA</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Payment Section -->
+  <section class="section" style="padding-top: 120px; min-height: 100vh; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);">
+    <div class="container" style="max-width: 700px;">
+      
+      <!-- Loading State -->
+      <div id="loading-state" style="text-align: center; padding: 4rem 0;">
+        <div style="width: 50px; height: 50px; border: 3px solid rgba(0,204,255,0.2); border-top-color: #00CCFF; border-radius: 50%; margin: 0 auto 2rem; animation: spin 1s linear infinite;"></div>
+        <p style="color: var(--text-muted);">Loading payment details...</p>
+      </div>
+
+      <!-- Payment Form -->
+      <div id="payment-form" style="display: none;">
+        <div class="card" style="text-align: center; margin-bottom: 2rem; background: linear-gradient(135deg, rgba(0,204,255,0.1), rgba(123,47,255,0.05));">
+          <h1 style="font-size: 2rem; margin-bottom: 1rem;">Complete Your Enrollment ??</h1>
+          <p style="color: var(--text-muted); font-size: 1.1rem;">
+            You've been accepted! Complete payment below to secure your spot.
+          </p>
+        </div>
+
+        <div class="card">
+          <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #00CCFF, #7B2FFF); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="30" height="30" fill="white" viewBox="0 0 24 24">
+                <path d="M12 2L2 7v10c0 5.5 3.8 10.7 10 12 6.2-1.3 10-6.5 10-12V7l-10-5z"/>
+                <path d="M9 12l2 2 4-4" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div style="flex: 1; text-align: left;">
+              <h2 id="course-name" style="margin: 0 0 0.25rem 0; font-size: 1.3rem;">Backend Engineer Cohort</h2>
+              <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem;">6-week intensive program</p>
+            </div>
+          </div>
+
+          <div style="background: rgba(0,204,255,0.05); border: 1px solid rgba(0,204,255,0.2); border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <span style="color: var(--text-muted);">Amount Due:</span>
+              <span id="price-display" style="font-size: 2rem; font-weight: 700; color: var(--accent-cyan);">?150,000</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="color: var(--text-muted); font-size: 0.85rem;">Price for your location</span>
+              <span id="currency-display" style="font-size: 0.85rem; color: var(--text-muted);">NGN</span>
+            </div>
+          </div>
+
+          <div style="background: rgba(123,47,255,0.05); border: 1px solid rgba(123,47,255,0.2); border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem;">
+            <h3 style="margin: 0 0 1rem 0; font-size: 1rem;">Payment Details</h3>
+            
+            <div class="form-group">
+              <label class="form-label">Full Name *</label>
+              <input type="text" id="payer-name" class="form-input" placeholder="Your full name" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">Email Address *</label>
+              <input type="email" id="payer-email" class="form-input" placeholder="you@example.com" required>
+            </div>
+          </div>
+
+          <button id="pay-button" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem; margin-bottom: 1rem;">
+            Pay <span id="button-price">?150,000</span> Now ?
+          </button>
+
+          <div style="text-align: center;">
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0;">
+              ?? Secure payment powered by Paystack/Stripe
+            </p>
+          </div>
+        </div>
+
+        <div class="card" style="background: rgba(40,200,64,0.05); border: 1px solid rgba(40,200,64,0.2);">
+          <h3 style="margin: 0 0 1rem 0; font-size: 1rem;">What Happens Next?</h3>
+          <ul style="margin: 0; padding-left: 1.5rem; color: var(--text-muted); line-height: 1.8;">
+            <li>Payment is processed securely</li>
+            <li>Instant email confirmation</li>
+            <li>Discord invite within 24 hours</li>
+            <li>Access to course materials</li>
+            <li>Pre-cohort prep email (7 days before start)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Success State -->
+      <div id="success-state" style="display: none; text-align: center; padding: 4rem 0;">
+        <div style="width: 80px; height: 80px; background: rgba(40,200,64,0.1); border: 3px solid #28C840; border-radius: 50%; margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center;">
+          <svg width="40" height="40" fill="#28C840" viewBox="0 0 24 24">
+            <path d="M9 12l2 2 4-4m6-2a10 10 0 11-20 0 10 10 0 0120 0z"/>
+          </svg>
+        </div>
+        <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #28C840;">Payment Successful! ??</h2>
+        <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem;">
+          Check your email for confirmation and next steps.
+        </p>
+        <a href="../pages/cohorts" class="btn btn-primary">View Cohort Details</a>
+      </div>
+
+      <!-- Error State -->
+      <div id="error-state" style="display: none;">
+        <div class="card" style="text-align: center; background: rgba(255,68,68,0.05); border: 1px solid rgba(255,68,68,0.3);">
+          <div style="width: 60px; height: 60px; background: rgba(255,68,68,0.1); border: 2px solid #ff4444; border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center;">
+            <span style="font-size: 2rem;">??</span>
+          </div>
+          <h2 style="margin-bottom: 1rem;">Invalid Payment Link</h2>
+          <p id="error-message" style="color: var(--text-muted); margin-bottom: 2rem;">
+            This payment link is invalid or has expired.
+          </p>
+          <a href="../forms/cohort-application" class="btn btn-outline">Apply for Cohort</a>
+          <p style="margin-top: 1rem; font-size: 0.85rem;">
+            Need help? Email <a href="mailto:hello@tensectra.com" style="color: var(--accent-cyan);">hello@tensectra.com</a>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="../js/analytics.js"></script>
+  <script src="../js/pricing.js"></script>
+  
+  <script>
+    // Parse URL parameters
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get('email');
+    const course = params.get('course');
+    const ref = params.get('ref') || params.get('application_id');
+    const name = params.get('name');
+
+    // Course details
+    const courseDetails = {
+      backend: {
+        name: 'Backend Engineer Cohort',
+        description: '6-week intensive program',
+        productType: 'cohort'
+      },
+      frontend: {
+        name: 'Frontend Engineer Cohort',
+        description: '6-week intensive program',
+        productType: 'cohort'
+      },
+      mobile: {
+        name: 'Mobile Builder Cohort',
+        description: '6-week intensive program',
+        productType: 'cohort'
+      }
+    };
+
+    async function initPaymentPage() {
+      // Validate required parameters
+      if (!email || !course) {
+        showError('Missing required parameters. Please contact support.');
+        return;
+      }
+
+      if (!courseDetails[course]) {
+        showError('Invalid course selection. Please contact support.');
+        return;
+      }
+
+      // Wait for pricing to load
+      await waitForPricing();
+
+      // Get course info
+      const courseInfo = courseDetails[course];
+      document.getElementById('course-name').textContent = courseInfo.name;
+
+      // Pre-fill form
+      if (name) document.getElementById('payer-name').value = name;
+      if (email) document.getElementById('payer-email').value = email;
+
+      // Update pricing display
+      updatePriceDisplay();
+
+      // Setup payment button
+      setupPaymentButton(courseInfo);
+
+      // Show form
+      document.getElementById('loading-state').style.display = 'none';
+      document.getElementById('payment-form').style.display = 'block';
+
+      // Track page view
+      if (window.TensectraAnalytics) {
+        window.TensectraAnalytics.trackPageView('/payment/cohort');
+      }
+    }
+
+    function waitForPricing() {
+      return new Promise((resolve) => {
+        const check = () => {
+          if (window.TensectraPricing && window.TensectraPricing.pricing) {
+            resolve();
+          } else {
+            setTimeout(check, 100);
+          }
+        };
+        check();
+      });
+    }
+
+    function updatePriceDisplay() {
+      const pricing = window.TensectraPricing.pricing;
+      const symbol = pricing.symbol;
+      const amount = pricing.cohort;
+      
+      document.getElementById('price-display').textContent = symbol + amount.toLocaleString();
+      document.getElementById('button-price').textContent = symbol + amount.toLocaleString();
+      document.getElementById('currency-display').textContent = pricing.currency;
+    }
+
+    function setupPaymentButton(courseInfo) {
+      const button = document.getElementById('pay-button');
+      const nameInput = document.getElementById('payer-name');
+      const emailInput = document.getElementById('payer-email');
+
+      button.addEventListener('click', () => {
+        const payerName = nameInput.value.trim();
+        const payerEmail = emailInput.value.trim();
+
+        if (!payerName || !payerEmail) {
+          alert('Please fill in all required fields');
+          return;
+        }
+
+        // Initiate payment
+        window.TensectraPricing.initiatePayment(
+          courseInfo.name,
+          courseInfo.productType,
+          payerEmail,
+          payerName
+        );
+      });
+    }
+
+    function showError(message) {
+      document.getElementById('loading-state').style.display = 'none';
+      document.getElementById('error-message').textContent = message;
+      document.getElementById('error-state').style.display = 'block';
+    }
+
+    function showSuccess() {
+      document.getElementById('payment-form').style.display = 'none';
+      document.getElementById('success-state').style.display = 'block';
+    }
+
+    // Initialize when page loads
+    window.addEventListener('load', initPaymentPage);
+
+    // Listen for payment success
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.event === 'payment_success') {
+        showSuccess();
+      }
+    });
+  </script>
+
+  <style>
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+
+</body>
+</html>

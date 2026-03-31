@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Page Not Found | Tensectra</title>
+  <meta name="robots" content="noindex, nofollow">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="icon" type="image/png" href="/images/logo2.png">
+  
+  <style>
+    .error-code {
+      font-size: clamp(4rem, 15vw, 12rem);
+      font-weight: 700;
+      line-height: 1;
+      background: linear-gradient(135deg, #00CCFF, #7B2FFF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      font-family: var(--font-mono);
+      letter-spacing: -0.02em;
+    }
+
+    .glitch-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .glitch-wrapper::before,
+    .glitch-wrapper::after {
+      content: '404';
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0.8;
+    }
+
+    .glitch-wrapper::before {
+      animation: glitch-1 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+      color: #00CCFF;
+      z-index: -1;
+    }
+
+    .glitch-wrapper::after {
+      animation: glitch-2 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
+      color: #7B2FFF;
+      z-index: -2;
+    }
+
+    @keyframes glitch-1 {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(-2px, -2px); }
+      60% { transform: translate(2px, 2px); }
+      80% { transform: translate(2px, -2px); }
+      100% { transform: translate(0); }
+    }
+
+    @keyframes glitch-2 {
+      0% { transform: translate(0); }
+      20% { transform: translate(2px, -2px); }
+      40% { transform: translate(2px, 2px); }
+      60% { transform: translate(-2px, -2px); }
+      80% { transform: translate(-2px, 2px); }
+      100% { transform: translate(0); }
+    }
+
+    .search-box {
+      position: relative;
+      max-width: 500px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 1rem 3rem 1rem 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      color: var(--text-white);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--accent-cyan);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 0 3px rgba(0, 204, 255, 0.1);
+    }
+
+    .search-box button {
+      position: absolute;
+      right: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--accent-cyan);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .search-box button:hover {
+      background: #00b8e6;
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      max-width: 800px;
+      margin: 3rem auto 0;
+    }
+
+    .quick-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .quick-link:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--accent-cyan);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 204, 255, 0.15);
+    }
+
+    .quick-link-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, rgba(0, 204, 255, 0.2), rgba(123, 47, 255, 0.2));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .quick-link-title {
+      color: var(--text-white);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .quick-link-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .floating-particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--accent-cyan);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 10s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      25% { transform: translateY(-30px) translateX(20px); }
+      50% { transform: translateY(-60px) translateX(-20px); }
+      75% { transform: translateY(-30px) translateX(10px); }
+    }
+
+    .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 20%; animation-delay: 2s; }
+    .particle:nth-child(3) { left: 30%; animation-delay: 4s; }
+    .particle:nth-child(4) { left: 40%; animation-delay: 1s; }
+    .particle:nth-child(5) { left: 50%; animation-delay: 3s; }
+    .particle:nth-child(6) { left: 60%; animation-delay: 5s; }
+    .particle:nth-child(7) { left: 70%; animation-delay: 2.5s; }
+    .particle:nth-child(8) { left: 80%; animation-delay: 4.5s; }
+    .particle:nth-child(9) { left: 90%; animation-delay: 1.5s; }
+
+    @media (max-width: 768px) {
+      .quick-links {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="/" class="navbar-logo">
+        <img src="/images/logo2.png" alt="Tensectra">
+        <span>TENSECTRA</span>
+      </a>
+      
+      <ul class="navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/pages/consultancy">Consultancy</a></li>
+        <li><a href="/pages/cohorts">Cohorts</a></li>
+        <li><a href="/pages/courses">Courses</a></li>
+        <li><a href="/pages/about">About</a></li>
+      </ul>
+      
+      <div class="navbar-cta">
+        <a href="/pages/consultancy" class="btn btn-primary btn-sm">Book a Call</a>
+      </div>
+      
+      <button class="mobile-menu-btn" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- 404 Section -->
+  <section class="section" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding-top: 100px; position: relative; overflow: hidden;">
+    
+    <!-- Floating Particles -->
+    <div class="floating-particles">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
+
+    <div class="glow-cyan" style="top: 20%; right: 10%;"></div>
+    <div class="glow-purple" style="bottom: 30%; left: 15%;"></div>
+    
+    <div class="container" style="position: relative; z-index: 1;">
+      <div style="text-align: center; max-width: 900px; margin: 0 auto;">
+        
+        <!-- Error Code -->
+        <div class="glitch-wrapper">
+          <div class="error-code">404</div>
+        </div>
+
+        <!-- Main Message -->
+        <h1 style="font-size: clamp(1.5rem, 4vw, 2.5rem); margin-bottom: 1rem; color: var(--text-white);">
+          Oops! This Page Took a Wrong Turn
+        </h1>
+        
+        <p style="color: var(--text-muted); font-size: 1.2rem; margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+          The page you're looking for has been removed, renamed, or doesn't exist. 
+          <br>But don't worry — we'll help you find what you need.
+        </p>
+
+        <!-- Search Box -->
+        <div class="search-box" style="margin-bottom: 3rem;">
+          <form id="search-form" action="/search" method="GET">
+            <input 
+              type="text" 
+              id="search-input" 
+              name="q" 
+              placeholder="Search for courses, cohorts, resources..." 
+              autocomplete="off"
+            >
+            <button type="submit" aria-label="Search">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </button>
+          </form>
+        </div>
+
+        <!-- Quick Links -->
+        <h2 style="font-size: 1.2rem; color: var(--text-white); margin-bottom: 2rem;">
+          Popular Destinations
+        </h2>
+
+        <div class="quick-links">
+          <a href="/pages/cohorts" class="quick-link">
+            <div class="quick-link-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <div class="quick-link-title">Live Cohorts</div>
+            <div class="quick-link-desc">6-week intensive programs</div>
+          </a>
+
+          <a href="/pages/courses" class="quick-link">
+            <div class="quick-link-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+              </svg>
+            </div>
+            <div class="quick-link-title">Courses</div>
+            <div class="quick-link-desc">Self-paced learning</div>
+          </a>
+
+          <a href="/pages/consultancy" class="quick-link">
+            <div class="quick-link-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </div>
+            <div class="quick-link-title">Consultancy</div>
+            <div class="quick-link-desc">Enterprise architecture</div>
+          </a>
+
+          <a href="/pages/infrastructure" class="quick-link">
+            <div class="quick-link-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+              </svg>
+            </div>
+            <div class="quick-link-title">ERP Kit</div>
+            <div class="quick-link-desc">Production-ready scaffold</div>
+          </a>
+        </div>
+
+        <!-- Additional Help -->
+        <div style="margin-top: 4rem; padding: 2rem; background: rgba(0, 204, 255, 0.05); border: 1px solid rgba(0, 204, 255, 0.2); border-radius: 12px;">
+          <h3 style="margin-bottom: 1rem; color: var(--text-white); font-size: 1.1rem;">
+            Still Can't Find What You Need?
+          </h3>
+          <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+            We're here to help. Reach out and we'll get you sorted.
+          </p>
+          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="/forms/contact" class="btn btn-primary">Contact Support</a>
+            <a href="/" class="btn btn-outline">Back to Home</a>
+          </div>
+        </div>
+
+        <!-- ASCII Art Footer -->
+        <div style="margin-top: 4rem; opacity: 0.5;">
+          <pre style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); text-align: center; overflow-x: auto;">
+     ?????????????????????????????????
+     ?   TENSECTRA - BUILD BOLDLY    ?
+     ?   Error: Path not found       ?
+     ?   Status: 404                 ?
+     ?????????????????????????????????
+          </pre>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/main.js"></script>
+  
+  <script>
+    // Simple search redirect (you can enhance this later)
+    document.getElementById('search-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const query = document.getElementById('search-input').value.trim().toLowerCase();
+      
+      // Simple keyword matching for quick redirects
+      const redirects = {
+        'cohort': '/pages/cohorts',
+        'course': '/pages/courses',
+        'consultancy': '/pages/consultancy',
+        'consult': '/pages/consultancy',
+        'infrastructure': '/pages/infrastructure',
+        'erp': '/pages/infrastructure',
+        'kit': '/pages/infrastructure',
+        'pro': '/pages/pro',
+        'about': '/pages/about',
+        'contact': '/forms/contact',
+        'backend': '/pages/cohorts',
+        'frontend': '/pages/cohorts',
+        'mobile': '/pages/cohorts',
+        'pricing': '/pages/cohorts',
+        'price': '/pages/cohorts'
+      };
+      
+      // Check if query matches any keyword
+      for (const [keyword, url] of Object.entries(redirects)) {
+        if (query.includes(keyword)) {
+          window.location.href = url;
+          return;
+        }
+      }
+      
+      // If no match, go to home
+      window.location.href = '/';
+    });
+
+    // Track 404 error (optional)
+    if (window.TensectraAnalytics) {
+      window.TensectraAnalytics.trackEvent('error', {
+        type: '404',
+        path: window.location.pathname,
+        referrer: document.referrer
+      });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Purchase Course | Tensectra</title>
+  <meta name="description" content="Purchase self-paced courses, ebooks, and resources from Tensectra">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="icon" type="image/png" href="../images/logo2.png">
+  
+  <!-- Gumroad -->
+  <script src="https://gumroad.com/js/gumroad.js"></script>
+  
+  <!-- Paystack (for direct purchases) -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  
+  <!-- Environment Configuration -->
+  <meta name="config:supabase-url" content="https://ahcfozfntvqbfgbinxwr.supabase.co">
+  <meta name="config:supabase-anon-key" content="sb_publishable_9t2QGBpQl4yd4H73dkSdlg_9QVNarpS">
+  <meta name="config:ga-measurement-id" content="G-Y75Q7F95P4">
+</head>
+<body>
+  
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="../" class="navbar-logo">
+        <img src="../images/logo2.png" alt="Tensectra">
+        <span>TENSECTRA</span>
+      </a>
+      
+      <ul class="navbar-nav">
+        <li><a href="../">Home</a></li>
+        <li><a href="../pages/cohorts">Cohorts</a></li>
+        <li><a href="../pages/courses" class="active">Courses</a></li>
+        <li><a href="../pages/pro">Pro</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Payment Section -->
+  <section class="section" style="padding-top: 120px; min-height: 100vh;">
+    <div class="container" style="max-width: 900px;">
+      
+      <!-- Loading State -->
+      <div id="loading-state" style="text-align: center; padding: 4rem 0;">
+        <div style="width: 50px; height: 50px; border: 3px solid rgba(0,204,255,0.2); border-top-color: #00CCFF; border-radius: 50%; margin: 0 auto 2rem; animation: spin 1s linear infinite;"></div>
+        <p style="color: var(--text-muted);">Loading product...</p>
+      </div>
+
+      <!-- Product Display -->
+      <div id="product-display" style="display: none;">
+        <div class="grid-2" style="gap: 3rem; align-items: start;">
+          
+          <!-- Product Image -->
+          <div>
+            <div id="product-image" style="width: 100%; aspect-ratio: 4/5; background: linear-gradient(135deg, rgba(0,204,255,0.2), rgba(123,47,255,0.2)); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 2rem;">
+              <svg width="100" height="100" fill="rgba(255,255,255,0.3)" viewBox="0 0 24 24">
+                <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+              </svg>
+            </div>
+            
+            <div class="card" style="background: rgba(255,208,0,0.05); border: 1px solid rgba(255,208,0,0.3);">
+              <h3 style="margin: 0 0 1rem 0; font-size: 1rem;">What's Included:</h3>
+              <ul id="whats-included" style="margin: 0; padding-left: 1.5rem; color: var(--text-muted); line-height: 1.8;">
+                <li>Instant digital download</li>
+                <li>Lifetime access</li>
+                <li>All future updates</li>
+                <li>PDF format</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Product Details -->
+          <div>
+            <div style="margin-bottom: 1rem;">
+              <span style="display: inline-block; padding: 0.25rem 0.75rem; background: rgba(0,204,255,0.2); border: 1px solid var(--accent-cyan); border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
+                <span id="product-category">Ebook</span>
+              </span>
+            </div>
+
+            <h1 id="product-title" style="font-size: 2.5rem; margin-bottom: 1rem; line-height: 1.2;">
+              Architecture Playbook
+            </h1>
+
+            <div style="display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2rem;">
+              <span id="product-price" style="font-size: 3rem; font-weight: 700; color: var(--accent-cyan);">$49</span>
+              <span id="original-price" style="font-size: 1.5rem; text-decoration: line-through; color: var(--text-muted); display: none;">$79</span>
+            </div>
+
+            <p id="product-description" style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">
+              Comprehensive guide to building scalable enterprise systems with real-world examples and best practices.
+            </p>
+
+            <div style="background: rgba(123,47,255,0.05); border: 1px solid rgba(123,47,255,0.2); border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem;">
+              <h3 style="margin: 0 0 1rem 0; font-size: 1rem;">Your Information</h3>
+              
+              <div class="form-group">
+                <label class="form-label">Email Address *</label>
+                <input type="email" id="buyer-email" class="form-input" placeholder="you@example.com" required>
+                <p style="margin: 0.5rem 0 0 0; font-size: 0.85rem; color: var(--text-muted);">
+                  Your download link will be sent here
+                </p>
+              </div>
+            </div>
+
+            <button id="buy-button" class="btn btn-primary" style="width: 100%; padding: 1.25rem; font-size: 1.2rem; margin-bottom: 1rem;">
+              Buy Now for <span id="button-price">$49</span>
+            </button>
+
+            <div style="text-align: center; margin-bottom: 2rem;">
+              <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0;">
+                ?? Secure checkout • Instant delivery
+              </p>
+            </div>
+
+            <div class="card" style="background: rgba(40,200,64,0.05); border: 1px solid rgba(40,200,64,0.2);">
+              <h3 style="margin: 0 0 1rem 0; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span>?</span> 30-Day Money-Back Guarantee
+              </h3>
+              <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem;">
+                Not satisfied? Get a full refund within 30 days, no questions asked.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Success State -->
+      <div id="success-state" style="display: none; text-align: center; padding: 4rem 0;">
+        <div style="width: 80px; height: 80px; background: rgba(40,200,64,0.1); border: 3px solid #28C840; border-radius: 50%; margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center;">
+          <svg width="40" height="40" fill="#28C840" viewBox="0 0 24 24">
+            <path d="M9 12l2 2 4-4m6-2a10 10 0 11-20 0 10 10 0 0120 0z"/>
+          </svg>
+        </div>
+        <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #28C840;">Purchase Complete! ??</h2>
+        <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem;">
+          Check your email for your download link.
+        </p>
+        <a href="../pages/courses" class="btn btn-primary">Browse More Resources</a>
+      </div>
+
+      <!-- Error State -->
+      <div id="error-state" style="display: none;">
+        <div class="card" style="text-align: center; background: rgba(255,68,68,0.05); border: 1px solid rgba(255,68,68,0.3);">
+          <div style="width: 60px; height: 60px; background: rgba(255,68,68,0.1); border: 2px solid #ff4444; border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center;">
+            <span style="font-size: 2rem;">??</span>
+          </div>
+          <h2 style="margin-bottom: 1rem;">Product Not Found</h2>
+          <p id="error-message" style="color: var(--text-muted); margin-bottom: 2rem;">
+            The product you're looking for doesn't exist or is no longer available.
+          </p>
+          <a href="../pages/courses" class="btn btn-outline">View All Courses</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="../js/analytics.js"></script>
+  <script src="../js/pricing.js"></script>
+  
+  <script>
+    // Product catalog
+    const products = {
+      'architecture-playbook': {
+        title: 'Architecture Playbook Bundle',
+        description: 'Complete guide to Clean Architecture, CQRS, Event Sourcing, and DDD. 150+ pages of patterns, examples, and best practices.',
+        price: 49,
+        category: 'Ebook Bundle',
+        includes: [
+          '5 comprehensive playbooks',
+          '150+ pages of content',
+          'Real-world code examples',
+          'Architecture diagrams',
+          'Lifetime updates',
+          'Instant PDF download'
+        ],
+        gumroadLink: 'https://tensectra.gumroad.com/l/architecture-playbook'
+      },
+      'reference-cards': {
+        title: 'Architecture Reference Card Library',
+        description: 'Quick-reference cards for design patterns, architecture styles, and best practices. Perfect for interviews and daily development.',
+        price: 19,
+        category: 'Reference Cards',
+        includes: [
+          '20+ reference cards',
+          'Design patterns',
+          'Architecture patterns',
+          'Printable PDF format',
+          'Digital device optimized',
+          'Lifetime access'
+        ],
+        gumroadLink: 'https://tensectra.gumroad.com/l/reference-cards'
+      },
+      'self-paced': {
+        title: 'Self-Paced Course Access',
+        description: 'Access to all recorded cohort sessions, materials, and resources. Learn at your own pace with lifetime access to our complete curriculum.',
+        price: 149,
+        category: 'Self-Paced Course',
+        includes: [
+          'All cohort recordings',
+          'Course materials & slides',
+          'Code repositories',
+          'Architecture templates',
+          'Lifetime access',
+          'Certificate of completion'
+        ],
+        gumroadLink: 'https://tensectra.gumroad.com/l/self-paced'
+      }
+    };
+
+    // Parse URL parameters
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('product') || params.get('id');
+
+    function initPaymentPage() {
+      if (!productId || !products[productId]) {
+        showError('Product not found');
+        return;
+      }
+
+      const product = products[productId];
+
+      // Populate product details
+      document.getElementById('product-title').textContent = product.title;
+      document.getElementById('product-description').textContent = product.description;
+      document.getElementById('product-category').textContent = product.category;
+      document.getElementById('product-price').textContent = '$' + product.price;
+      document.getElementById('button-price').textContent = '$' + product.price;
+
+      // Update includes list
+      const includesList = document.getElementById('whats-included');
+      includesList.innerHTML = product.includes.map(item => `<li>${item}</li>`).join('');
+
+      // Setup buy button
+      setupBuyButton(product);
+
+      // Show product
+      document.getElementById('loading-state').style.display = 'none';
+      document.getElementById('product-display').style.display = 'block';
+
+      // Track page view
+      if (window.TensectraAnalytics) {
+        window.TensectraAnalytics.trackPageView('/payment/self-paced');
+      }
+    }
+
+    function setupBuyButton(product) {
+      const button = document.getElementById('buy-button');
+      const emailInput = document.getElementById('buyer-email');
+
+      button.addEventListener('click', () => {
+        const email = emailInput.value.trim();
+
+        if (!email) {
+          alert('Please enter your email address');
+          emailInput.focus();
+          return;
+        }
+
+        // Track purchase intent
+        if (window.TensectraAnalytics) {
+          window.TensectraAnalytics.trackPaymentInitiated(product.title, product.price, 'USD');
+        }
+
+        // Option 1: Redirect to Gumroad
+        if (product.gumroadLink) {
+          window.location.href = product.gumroadLink + '?email=' + encodeURIComponent(email);
+        }
+        
+        // Option 2: Use Paystack for direct payment
+        // (Uncomment when you set up backend)
+        /*
+        window.TensectraPricing.initiatePayment(
+          product.title,
+          'materials_only',
+          email,
+          ''
+        );
+        */
+      });
+    }
+
+    function showError(message) {
+      document.getElementById('loading-state').style.display = 'none';
+      document.getElementById('error-message').textContent = message;
+      document.getElementById('error-state').style.display = 'block';
+    }
+
+    function showSuccess() {
+      document.getElementById('product-display').style.display = 'none';
+      document.getElementById('success-state').style.display = 'block';
+    }
+
+    // Initialize when page loads
+    window.addEventListener('load', initPaymentPage);
+  </script>
+
+  <style>
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .grid-2 {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
+
+</body>
+</html>

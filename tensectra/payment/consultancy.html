@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consultancy Invoice Payment | Tensectra</title>
+  <meta name="robots" content="noindex, nofollow">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="icon" type="image/png" href="../images/logo2.png">
+  
+  <!-- Paystack -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  
+  <!-- Environment Configuration -->
+  <meta name="config:supabase-url" content="https://ahcfozfntvqbfgbinxwr.supabase.co">
+  <meta name="config:supabase-anon-key" content="sb_publishable_9t2QGBpQl4yd4H73dkSdlg_9QVNarpS">
+  <meta name="config:ga-measurement-id" content="G-Y75Q7F95P4">
+</head>
+<body>
+  
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="../" class="navbar-logo">
+        <img src="../images/logo2.png" alt="Tensectra">
+        <span>TENSECTRA</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Payment Section -->
+  <section class="section" style="padding-top: 120px; min-height: 100vh;">
+    <div class="container" style="max-width: 700px;">
+      
+      <!-- Loading State -->
+      <div id="loading-state" style="text-align: center; padding: 4rem 0;">
+        <div style="width: 50px; height: 50px; border: 3px solid rgba(0,204,255,0.2); border-top-color: #00CCFF; border-radius: 50%; margin: 0 auto 2rem; animation: spin 1s linear infinite;"></div>
+        <p style="color: var(--text-muted);">Loading invoice...</p>
+      </div>
+
+      <!-- Invoice/Payment Form -->
+      <div id="payment-form" style="display: none;">
+        <div class="card" style="text-align: center; margin-bottom: 2rem;">
+          <h1 style="font-size: 2rem; margin-bottom: 1rem;">Invoice Payment</h1>
+          <p style="color: var(--text-muted);">
+            Tensectra Consultancy Services
+          </p>
+        </div>
+
+        <div class="card">
+          <div style="background: rgba(123,47,255,0.05); border: 1px solid rgba(123,47,255,0.2); border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem;">
+            <h2 style="margin: 0 0 1.5rem 0; font-size: 1.2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Invoice Details</h2>
+            
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+              <span style="color: var(--text-muted);">Invoice #:</span>
+              <span id="invoice-number" style="font-weight: 600;">INV-001</span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+              <span style="color: var(--text-muted);">Service:</span>
+              <span id="service-name" style="font-weight: 600;">Consultancy</span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+              <span style="color: var(--text-muted);">Client:</span>
+              <span id="client-name" style="font-weight: 600;">Company Name</span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+              <span style="color: var(--text-muted);">Date Issued:</span>
+              <span id="invoice-date" style="font-weight: 600;">2024-01-15</span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+              <span style="color: var(--text-muted);">Due Date:</span>
+              <span id="due-date" style="font-weight: 600;">2024-01-30</span>
+            </div>
+            
+            <div style="border-top: 2px solid var(--accent-cyan); margin-top: 1.5rem; padding-top: 1.5rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 1.2rem; font-weight: 600;">Total Amount:</span>
+                <span id="amount-display" style="font-size: 2rem; font-weight: 700; color: var(--accent-cyan);">$2,500</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="background: rgba(0,204,255,0.05); border: 1px solid rgba(0,204,255,0.2); border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem;">
+            <h3 style="margin: 0 0 1rem 0; font-size: 1rem;">Payment Information</h3>
+            
+            <div class="form-group">
+              <label class="form-label">Full Name *</label>
+              <input type="text" id="payer-name" class="form-input" placeholder="Your full name" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">Email Address *</label>
+              <input type="email" id="payer-email" class="form-input" placeholder="you@company.com" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Company Name</label>
+              <input type="text" id="company-name" class="form-input" placeholder="Your company">
+            </div>
+          </div>
+
+          <button id="pay-button" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem; margin-bottom: 1rem;">
+            Pay <span id="button-amount">$2,500</span> Now ?
+          </button>
+
+          <div style="text-align: center;">
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0;">
+              ?? Secure payment powered by Stripe
+            </p>
+          </div>
+        </div>
+
+        <div class="card" style="background: rgba(255,208,0,0.05); border: 1px solid rgba(255,208,0,0.3);">
+          <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem;">
+            <strong style="color: var(--accent-gold);">Payment Terms:</strong><br>
+            • Full payment due within 15 days of invoice date<br>
+            • A receipt will be sent to your email upon successful payment<br>
+            • For payment plans or questions, contact hello@tensectra.com
+          </p>
+        </div>
+      </div>
+
+      <!-- Success State -->
+      <div id="success-state" style="display: none; text-align: center; padding: 4rem 0;">
+        <div style="width: 80px; height: 80px; background: rgba(40,200,64,0.1); border: 3px solid #28C840; border-radius: 50%; margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center;">
+          <svg width="40" height="40" fill="#28C840" viewBox="0 0 24 24">
+            <path d="M9 12l2 2 4-4m6-2a10 10 0 11-20 0 10 10 0 0120 0z"/>
+          </svg>
+        </div>
+        <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #28C840;">Payment Received! ??</h2>
+        <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem;">
+          Thank you! Your payment receipt has been sent to your email.
+        </p>
+        <a href="../pages/consultancy" class="btn btn-primary">Back to Services</a>
+      </div>
+
+      <!-- Error State -->
+      <div id="error-state" style="display: none;">
+        <div class="card" style="text-align: center; background: rgba(255,68,68,0.05); border: 1px solid rgba(255,68,68,0.3);">
+          <div style="width: 60px; height: 60px; background: rgba(255,68,68,0.1); border: 2px solid #ff4444; border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center;">
+            <span style="font-size: 2rem;">??</span>
+          </div>
+          <h2 style="margin-bottom: 1rem;">Invalid Payment Link</h2>
+          <p id="error-message" style="color: var(--text-muted); margin-bottom: 2rem;">
+            This payment link is invalid or has expired.
+          </p>
+          <a href="../pages/consultancy" class="btn btn-outline">View Services</a>
+          <p style="margin-top: 1rem; font-size: 0.85rem;">
+            Need help? Email <a href="mailto:hello@tensectra.com" style="color: var(--accent-cyan);">hello@tensectra.com</a>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="../js/analytics.js"></script>
+  
+  <script>
+    // Parse URL parameters
+    const params = new URLSearchParams(window.location.search);
+    const invoiceId = params.get('invoice') || params.get('ref');
+    const amount = params.get('amount');
+    const currency = params.get('currency') || 'USD';
+    const email = params.get('email');
+    const name = params.get('name');
+    const company = params.get('company');
+    const service = params.get('service') || 'Consultancy Services';
+
+    function initPaymentPage() {
+      // Validate required parameters
+      if (!invoiceId || !amount) {
+        showError('Missing required invoice information. Please contact support.');
+        return;
+      }
+
+      // Populate invoice details
+      document.getElementById('invoice-number').textContent = invoiceId;
+      document.getElementById('service-name').textContent = service;
+      document.getElementById('invoice-date').textContent = new Date().toLocaleDateString();
+      
+      const dueDate = new Date();
+      dueDate.setDate(dueDate.getDate() + 15);
+      document.getElementById('due-date').textContent = dueDate.toLocaleDateString();
+
+      // Pre-fill form
+      if (name) document.getElementById('payer-name').value = name;
+      if (email) document.getElementById('payer-email').value = email;
+      if (company) {
+        document.getElementById('company-name').value = company;
+        document.getElementById('client-name').textContent = company;
+      }
+
+      // Update amount display
+      const currencySymbol = currency === 'USD' ? '$' : currency === 'NGN' ? '?' : currency;
+      const formattedAmount = currencySymbol + parseInt(amount).toLocaleString();
+      document.getElementById('amount-display').textContent = formattedAmount;
+      document.getElementById('button-amount').textContent = formattedAmount;
+
+      // Setup payment button
+      setupPaymentButton();
+
+      // Show form
+      document.getElementById('loading-state').style.display = 'none';
+      document.getElementById('payment-form').style.display = 'block';
+
+      // Track page view
+      if (window.TensectraAnalytics) {
+        window.TensectraAnalytics.trackPageView('/payment/consultancy');
+      }
+    }
+
+    function setupPaymentButton() {
+      const button = document.getElementById('pay-button');
+      const nameInput = document.getElementById('payer-name');
+      const emailInput = document.getElementById('payer-email');
+      const companyInput = document.getElementById('company-name');
+
+      button.addEventListener('click', () => {
+        const payerName = nameInput.value.trim();
+        const payerEmail = emailInput.value.trim();
+
+        if (!payerName || !payerEmail) {
+          alert('Please fill in all required fields');
+          return;
+        }
+
+        // For consultancy, we typically use Stripe for larger amounts
+        alert('Payment integration: Contact hello@tensectra.com for payment processing or use the Stripe link provided in your invoice email.');
+        
+        // TODO: Implement Stripe Payment Links or redirect to Stripe Checkout
+        // window.location.href = 'https://buy.stripe.com/xxxxx';
+      });
+    }
+
+    function showError(message) {
+      document.getElementById('loading-state').style.display = 'none';
+      document.getElementById('error-message').textContent = message;
+      document.getElementById('error-state').style.display = 'block';
+    }
+
+    function showSuccess() {
+      document.getElementById('payment-form').style.display = 'none';
+      document.getElementById('success-state').style.display = 'block';
+    }
+
+    // Initialize when page loads
+    window.addEventListener('load', initPaymentPage);
+  </script>
+
+  <style>
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+
+</body>
+</html>

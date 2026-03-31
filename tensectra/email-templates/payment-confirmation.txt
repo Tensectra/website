@@ -1,0 +1,41 @@
+Subject: Payment Received - Welcome to Tensectra! ??
+
+---
+
+Hey [Name],
+
+Your payment has been successfully processed! ??
+
+PAYMENT DETAILS:
+- Product: [Product Name]
+- Amount: [Currency][Amount]
+- Reference: [Payment Reference]
+- Date: [Date]
+
+WHAT'S NEXT:
+
+For Cohort Students:
+? Discord invite (check email within 24 hours)
+? Pre-cohort materials (7 days before start)
+? Live session details (sent 48 hours before)
+
+For Pro Members:
+? Discord Pro channel access
+? Monthly digest subscription activated
+? Exclusive content unlocked
+
+For Kit Purchases:
+? Download link sent to your email
+? Setup guide included
+? 30-day support access activated
+
+NEED HELP?
+Reply to this email or book a call: https://calendly.com/tensectra-office/30min
+
+Best regards,
+Tensectra Team
+
+---
+
+This email serves as your official receipt.
+Keep it for your records.

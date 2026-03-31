@@ -1,45 +1,113 @@
 (function () {
-  'use strict';
+'use strict';
 
-  async function _insert(table, payload) {
-    const res = await fetch(window.SUPABASE_URL + '/rest/v1/' + table, {
-      method: 'POST',
-      headers: {
-        'apikey':        window.SUPABASE_ANON_KEY,
-        'Authorization': 'Bearer ' + window.SUPABASE_ANON_KEY,
-        'Content-Type':  'application/json',
-        'Prefer':        'return=minimal'
-      },
-      body: JSON.stringify(payload)
-    });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
+async function _insert(table, payload) {
+  const res = await fetch(window.SUPABASE_URL + '/rest/v1/' + table, {
+    method: 'POST',
+    headers: {
+      'apikey':        window.SUPABASE_ANON_KEY,
+      'Authorization': 'Bearer ' + window.SUPABASE_ANON_KEY,
+      'Content-Type':  'application/json',
+      'Prefer':        'return=minimal'
+    },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+}
+
+// Field mappings for form-to-database alignment
+const FIELD_MAPPINGS = {
+  consultancy_enquiries: {
+    'role': 'job_title',
+    'challenges': 'message',
+    'timeline': 'preferred_date'
+  },
+  waitlist_submissions: {
+    'interest': 'product'
   }
+};
 
-  window.initForm = function (formId, table, successMsg) {
-    const form = document.getElementById(formId);
-    if (!form) return;
+// Value mappings
+const VALUE_MAPPINGS = {
+  waitlist_submissions: {
+    product: {
+      'product-design': 'course_designer',
+      'ai-workflow': 'course_ai_biz',
+      'erp-kit': 'kit_pro',
+      'new-courses': 'general'
+    }
+  }
+};
 
-    const btn          = form.querySelector('[type="submit"]');
-    const originalLabel = btn ? btn.textContent.trim() : 'Submit';
+window.initForm = function (formId, table, successMsg) {
+  const form = document.getElementById(formId);
+  if (!form) return;
 
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault();
-      if (btn) { btn.disabled = true; btn.textContent = 'Sending\u2026'; }
+  const btn          = form.querySelector('[type="submit"]');
+  const originalLabel = btn ? btn.textContent.trim() : 'Submit';
 
-      try {
-        const fd      = new FormData(form);
-        const payload = { submitted_at: new Date().toISOString() };
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    if (btn) { btn.disabled = true; btn.textContent = 'Sending\u2026'; }
 
-        for (const [k, v] of fd.entries()) {
-          payload[k] = v || null;
+    try {
+      const fd      = new FormData(form);
+      const payload = { submitted_at: new Date().toISOString() };
+
+      for (const [k, v] of fd.entries()) {
+        payload[k] = v || null;
+      }
+
+      // Unchecked checkboxes are absent from FormData — explicitly mark as 'no'
+      form.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
+        if (!(cb.name in payload)) payload[cb.name] = 'no';
+      });
+
+      // Apply field mappings for this table
+      if (FIELD_MAPPINGS[table]) {
+        const mappings = FIELD_MAPPINGS[table];
+        for (const [oldField, newField] of Object.entries(mappings)) {
+          if (oldField in payload) {
+            payload[newField] = payload[oldField];
+            delete payload[oldField];
+          }
         }
+      }
 
-        // Unchecked checkboxes are absent from FormData — explicitly mark as 'no'
-        form.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
-          if (!(cb.name in payload)) payload[cb.name] = 'no';
-        });
+      // Apply value mappings for this table
+      if (VALUE_MAPPINGS[table]) {
+        const valueMaps = VALUE_MAPPINGS[table];
+        for (const [field, valueMap] of Object.entries(valueMaps)) {
+          if (field in payload && payload[field] in valueMap) {
+            payload[field] = valueMap[payload[field]];
+          }
+        }
+      }
 
-        await _insert(table, payload);
+      // Special conversions for specific tables
+      if (table === 'cohort_applications') {
+        // Convert scholarship checkbox to boolean
+        if ('scholarship' in payload) {
+          payload.is_scholarship = (payload.scholarship === 'yes');
+          delete payload.scholarship;
+        }
+      }
+
+      if (table === 'consultancy_enquiries') {
+        // Set default tier if not provided
+        if (!payload.tier) {
+          payload.tier = 'tier3_consultation';
+        }
+        // Remove fields not in database
+        delete payload.stack;
+      }
+
+      if (table === 'waitlist_submissions') {
+        // Remove role field (not in database)
+        delete payload.role;
+      }
+
+      await _insert(table, payload);
 
         form.innerHTML = [
           '<div style="text-align:center;padding:var(--space-xl) var(--space-md);">',

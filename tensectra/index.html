@@ -97,14 +97,15 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/tensectra-logo.png">
   
-  <!-- Google Analytics (placeholder - replace with actual ID) oo -->  
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
-  </script>
+  <!-- Environment Configuration -->
+  <meta name="config:supabase-url" content="https://ahcfozfntvqbfgbinxwr.supabase.co">
+  <meta name="config:supabase-anon-key" content="sb_publishable_9t2QGBpQl4yd4H73dkSdlg_9QVNarpS">
+  <meta name="config:ga-measurement-id" content="G-Y75Q7F95P4">
+  <meta name="config:calendly-url" content="https://calendly.com/tensectra-office/30min">
+  <meta name="config:app-url" content="https://www.tensectra.com">
+  
+  <!-- Paystack -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
 </head>
 <body>
   <!-- Navigation -->
@@ -763,6 +764,21 @@ TENSECTRA HIERARCHY
   </form>
 
   <!-- Scripts -->
-  <script src="js/main.js?v=2"></script>
+  <!-- Core Configuration -->
+  <script src="js/config.js"></script>
+  
+  <!-- Supabase Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  
+  <!-- Integrations -->
+  <script src="js/analytics.js"></script>
+  <script src="js/pricing.js"></script>
+  <script src="js/scholarship-tracker.js"></script>
+  <script src="js/calendly.js"></script>
+  <script src="js/mailchimp.js"></script>
+  
+  <!-- Main Application -->
+  <script src="js/main.js?v=3"></script>
 </body>
 </html>
