@@ -19,3 +19,18 @@ Export submissions (CSV)
 Set email notifications
 Add spam filtering
 Connect to Zapier / automation
+-------------
+STEP 8 — SET UP EMAIL NOTIFICATIONS  (optional, 10 min)
+????????????????????????????????????????????????????????
+Option A — Supabase + Resend (recommended, free tier generous):
+  1. Create account at resend.com
+  2. Supabase ? Database ? Webhooks ? Create webhook
+  3. Trigger: INSERT on contact_submissions (repeat for each table)
+  4. URL: your Resend webhook endpoint
+  5. Resend sends email to hello@tensectra.com on each submission
+
+Option B — Check Supabase dashboard daily (zero setup)
+  Table Editor shows all submissions with timestamps.
+  Sort by submitted_at DESC to see new ones.
+  -------------------
+  COmplete the Crawaler Set Up now that we domain
