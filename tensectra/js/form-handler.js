@@ -17,11 +17,6 @@ async function _insert(table, payload) {
 
 // Field mappings for form-to-database alignment
 const FIELD_MAPPINGS = {
-  consultancy_enquiries: {
-    'role': 'job_title',
-    'challenges': 'message',
-    'timeline': 'preferred_date'
-  },
   waitlist_submissions: {
     'interest': 'product'
   }
@@ -94,17 +89,10 @@ window.initForm = function (formId, table, successMsg) {
       }
 
       if (table === 'consultancy_enquiries') {
-        // Set default tier if not provided
+        // Default tier if user didn't select one
         if (!payload.tier) {
-          payload.tier = 'tier3_consultation';
+          payload.tier = 'unsure';
         }
-        // Remove fields not in database
-        delete payload.stack;
-      }
-
-      if (table === 'waitlist_submissions') {
-        // Remove role field (not in database)
-        delete payload.role;
       }
 
       await _insert(table, payload);
