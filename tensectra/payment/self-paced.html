@@ -115,7 +115,7 @@
 
             <div style="text-align: center; margin-bottom: 2rem;">
               <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0;">
-                ?? Secure checkout • Instant delivery
+                ?? Secure checkout ï¿½ Instant delivery
               </p>
             </div>
 
@@ -171,6 +171,67 @@
   <script>
     // Product catalog
     const products = {
+      'backend-playbook': {
+        title: 'Backend Engineer Playbook',
+        description: 'Clean Architecture, CQRS, Event Sourcing, multi-tenant patterns \u2014 for .NET 8 backends. The complete week-by-week reference used in our live cohort.',
+        price: 49,
+        category: 'Ebook',
+        includes: [
+          '150+ pages of patterns & examples',
+          '.NET 8 code examples throughout',
+          'Architecture diagrams',
+          'Multi-tenant system design',
+          'Lifetime updates',
+          'Instant PDF download'
+        ],
+        gumroadLink: 'https://tensectra.gumroad.com/l/backend-playbook'
+      },
+      'frontend-playbook': {
+        title: 'Frontend Engineer Playbook',
+        description: 'Next.js 14, server components, state architecture, and scalable UI patterns. From junior habits to senior thinking \u2014 in practical terms.',
+        price: 49,
+        category: 'Ebook',
+        includes: [
+          '130+ pages of patterns & examples',
+          'Next.js 14 real-world examples',
+          'Component architecture patterns',
+          'TypeScript best practices',
+          'Lifetime updates',
+          'Instant PDF download'
+        ],
+        gumroadLink: 'https://tensectra.gumroad.com/l/frontend-playbook'
+      },
+      'mobile-playbook': {
+        title: 'Mobile Builder Playbook',
+        description: 'React Native, Expo, navigation architecture, offline-first patterns, and EAS Build. Ship production-ready apps to the App Store and Play Store.',
+        price: 49,
+        category: 'Ebook',
+        includes: [
+          '120+ pages of patterns & examples',
+          'React Native + Expo setup guide',
+          'Navigation architecture patterns',
+          'App store submission checklist',
+          'Lifetime updates',
+          'Instant PDF download'
+        ],
+        gumroadLink: 'https://tensectra.gumroad.com/l/mobile-playbook'
+      },
+      'full-pack': {
+        title: 'Full Stack Pack \u2014 All 3 Ebooks',
+        description: 'Backend + Frontend + Mobile. Every Tensectra playbook in one bundle. The complete reference library for engineers building across the full stack.',
+        price: 120,
+        originalPrice: 147,
+        category: 'Bundle \u2014 Best Value',
+        includes: [
+          'All 3 ebooks (400+ pages total)',
+          'Backend Engineer Playbook ($49)',
+          'Frontend Engineer Playbook ($49)',
+          'Mobile Builder Playbook ($49)',
+          'Save $27 vs buying separately',
+          'Lifetime updates to all 3'
+        ],
+        gumroadLink: 'https://tensectra.gumroad.com/l/full-stack-pack'
+      },
       'architecture-playbook': {
         title: 'Architecture Playbook Bundle',
         description: 'Complete guide to Clean Architecture, CQRS, Event Sourcing, and DDD. 150+ pages of patterns, examples, and best practices.',
@@ -185,36 +246,6 @@
           'Instant PDF download'
         ],
         gumroadLink: 'https://tensectra.gumroad.com/l/architecture-playbook'
-      },
-      'reference-cards': {
-        title: 'Architecture Reference Card Library',
-        description: 'Quick-reference cards for design patterns, architecture styles, and best practices. Perfect for interviews and daily development.',
-        price: 19,
-        category: 'Reference Cards',
-        includes: [
-          '20+ reference cards',
-          'Design patterns',
-          'Architecture patterns',
-          'Printable PDF format',
-          'Digital device optimized',
-          'Lifetime access'
-        ],
-        gumroadLink: 'https://tensectra.gumroad.com/l/reference-cards'
-      },
-      'self-paced': {
-        title: 'Self-Paced Course Access',
-        description: 'Access to all recorded cohort sessions, materials, and resources. Learn at your own pace with lifetime access to our complete curriculum.',
-        price: 149,
-        category: 'Self-Paced Course',
-        includes: [
-          'All cohort recordings',
-          'Course materials & slides',
-          'Code repositories',
-          'Architecture templates',
-          'Lifetime access',
-          'Certificate of completion'
-        ],
-        gumroadLink: 'https://tensectra.gumroad.com/l/self-paced'
       }
     };
 
@@ -236,6 +267,15 @@
       document.getElementById('product-category').textContent = product.category;
       document.getElementById('product-price').textContent = '$' + product.price;
       document.getElementById('button-price').textContent = '$' + product.price;
+
+      // Show original price if bundle discount applies
+      const origEl = document.getElementById('original-price');
+      if (product.originalPrice) {
+        origEl.textContent = '$' + product.originalPrice;
+        origEl.style.display = 'inline';
+      } else {
+        origEl.style.display = 'none';
+      }
 
       // Update includes list
       const includesList = document.getElementById('whats-included');

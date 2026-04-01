@@ -16,23 +16,10 @@ async function _insert(table, payload) {
 }
 
 // Field mappings for form-to-database alignment
-const FIELD_MAPPINGS = {
-  waitlist_submissions: {
-    'interest': 'product'
-  }
-};
+const FIELD_MAPPINGS = {};
 
 // Value mappings
-const VALUE_MAPPINGS = {
-  waitlist_submissions: {
-    product: {
-      'product-design': 'course_designer',
-      'ai-workflow': 'course_ai_biz',
-      'erp-kit': 'kit_pro',
-      'new-courses': 'general'
-    }
-  }
-};
+const VALUE_MAPPINGS = {};
 
 window.initForm = function (formId, table, successMsg) {
   const form = document.getElementById(formId);

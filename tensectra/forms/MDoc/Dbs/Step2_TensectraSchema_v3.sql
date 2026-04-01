@@ -163,13 +163,20 @@ CREATE POLICY "anon_insert_consultancy"
 CREATE TABLE waitlist_submissions (
   id              UUID        DEFAULT uuid_generate_v4() PRIMARY KEY,
   submitted_at    TIMESTAMPTZ,
+  phone           TEXT,
   name            TEXT,
   email           TEXT        NOT NULL,
+  city_text       TEXT,
   product         TEXT        CHECK (product IN (
+                    'ai_frontend', 'ai_backend', 'ai_mobile',
                     'course_designer', 'course_ai_biz', 'pro',
                     'kit_pro', 'kit_enterprise', 'general'
                   )),
-  role            TEXT,                          -- form sends this, must be in DB
+  has_built_api   TEXT        CHECK (has_built_api IN ('yes_deployed', 'yes_not_deployed', 'no')),
+  skill_level     TEXT        CHECK (skill_level IN ('beginner', 'intermediate', 'advanced')),
+  reason          TEXT,
+  when_joining    TEXT        CHECK (when_joining IN ('immediately', '1-2-months', 'exploring')),
+  heard_from      TEXT        CHECK (heard_from IN ('linkedin', 'twitter', 'instagram', 'youtube', 'referral', 'ads')),
   country_code    TEXT,
   country_name    TEXT,
   city            TEXT,

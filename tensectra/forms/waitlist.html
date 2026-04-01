@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Join Waitlist | Tensectra</title>
-  <meta name="description" content="Join the waitlist for upcoming Tensectra courses and products.">
+  <title>AI Cohort Early Access Waitlist | Tensectra</title>
+  <meta name="description" content="Join the waitlist for the Tensectra AI Cohort. Build & Deploy an ERP System with AI.">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +28,6 @@
         <li><a href="../pages/pro">Pro</a></li>
         <li><a href="../pages/cohorts">Cohorts</a></li>
         <li><a href="../pages/consultancy">Consultancy</a></li>
-        <li><a href="../pages/infrastructure">Infrastructure</a></li>
         <li><a href="../pages/about">About</a></li>
       </ul>
       
@@ -43,57 +42,154 @@
   <!-- Form Section -->
   <section class="section" style="padding-top: 120px; min-height: 100vh;">
     <div class="container">
-      <div style="max-width: 600px; margin: 0 auto; text-align: center;">
-        <h1 style="margin-bottom: var(--space-md);">Join the Waitlist</h1>
-        <p style="color: var(--text-muted); margin-bottom: var(--space-lg);">
-          Be the first to know when new courses and products launch. Waitlist members get early access and special pricing.
-        </p>
-        
-        <div class="card" style="text-align: left;">
+      <div style="max-width: 640px; margin: 0 auto;">
+
+        <!-- Header -->
+        <div style="text-align: center; margin-bottom: var(--space-xl);">
+          <span style="display: inline-block; padding: 0.25rem 1rem; background: rgba(0,204,255,0.1); border: 1px solid rgba(0,204,255,0.3); border-radius: 20px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-cyan); margin-bottom: var(--space-md);">Early Access Waitlist</span>
+          <h1 style="margin-bottom: var(--space-md);">Tensectra AI Cohort</h1>
+          <p style="color: var(--text-primary); font-size: 1.1rem; margin-bottom: var(--space-sm);">
+            Build &amp; Deploy a Real ERP System Using AI.
+          </p>
+          <p style="color: var(--text-muted);">
+            Join the waitlist for early access, founding pricing, and first notification when the cohort opens.
+          </p>
+        </div>
+
+        <!-- Disclaimer -->
+        <div style="background: rgba(255,165,0,0.06); border: 1px solid rgba(255,165,0,0.3); border-radius: var(--radius-md); padding: var(--space-lg); margin-bottom: var(--space-xl);">
+          <h3 style="color: #FFA500; margin-bottom: var(--space-sm); font-size: 1rem; display: flex; align-items: center; gap: 8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFA500" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Important: Read Before Applying
+          </h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: var(--space-sm);">
+            If you are any of the following, please pause your application and complete foundational learning first:
+          </p>
+          <ul style="color: var(--text-muted); font-size: 0.9rem; padding-left: 1.25rem; margin-bottom: var(--space-sm); line-height: 1.8;">
+            <li>Complete beginners in programming</li>
+            <li>People learning their first programming language</li>
+            <li>Those unwilling to deploy real projects</li>
+          </ul>
+          <p style="font-size: 0.9rem; margin: 0;">
+            📘 Start here first:
+            <a href="https://yourlink.com/ai-foundation-guide" target="_blank" rel="noopener" style="color: var(--accent-cyan);">AI Foundation Guide →</a>
+          </p>
+        </div>
+
+        <!-- Form -->
+        <div class="card">
           <form id="waitlist-form">
+
+            <div class="form-group">
+              <label class="form-label">Phone Number (WhatsApp) *</label>
+              <input type="tel" name="phone" class="form-input" placeholder="+234 800 000 0000" required>
+            </div>
+
             <div class="form-group">
               <label class="form-label">Full Name *</label>
               <input type="text" name="name" class="form-input" placeholder="Your full name" required>
             </div>
-            
+
             <div class="form-group">
               <label class="form-label">Email Address *</label>
               <input type="email" name="email" class="form-input" placeholder="you@example.com" required>
             </div>
-            
+
             <div class="form-group">
-              <label class="form-label">What are you interested in? *</label>
-              <select name="interest" class="form-select" required>
-                <option value="">Select an option</option>
-                <option value="product-design">Product Design Course</option>
-                <option value="ai-workflow">AI Workflow & CRM Automation</option>
-                <option value="erp-kit">ERP Infrastructure Kit</option>
-                <option value="new-courses">All New Courses</option>
-              </select>
+              <label class="form-label">City *</label>
+              <input type="text" name="city_text" class="form-input" placeholder="e.g. Lagos, Accra, Nairobi" required>
             </div>
-            
-            <div class="form-group">
-              <label class="form-label">Your Current Role</label>
-              <input type="text" name="role" class="form-input" placeholder="e.g., Developer, Designer, Founder">
-            </div>
-            
+
             <!-- Location (auto-detected, overridable) -->
             <div class="form-group">
-              <label class="form-label">Country</label>
-              <select id="f-country-select" class="form-select" aria-label="Country"></select>
+              <label class="form-label">Country *</label>
+              <select id="f-country-select" class="form-select" aria-label="Country" required></select>
               <input type="hidden" name="country_code"    id="f-country-code">
               <input type="hidden" name="country_name"    id="f-country-name">
               <input type="hidden" name="city"            id="f-city">
               <input type="hidden" name="location_source" id="f-loc-source" value="auto_detected">
             </div>
 
-            <button type="submit" class="btn btn-primary" style="width: 100%;">Join Waitlist →</button>
+            <div class="form-group">
+              <label class="form-label">Which course are you interested in? *</label>
+              <select name="product" class="form-select" required>
+                <option value="">Select a track</option>
+                <option value="ai_frontend">AI Frontend Engineering</option>
+                <option value="ai_backend">AI Backend Engineering</option>
+                <option value="ai_mobile">AI Mobile Builder</option>
+              </select>
+              <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: var(--space-xs);">
+                This program assumes you have built at least one API before.
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Have you built and deployed an API before? *</label>
+              <div style="display: flex; flex-direction: column; gap: 10px; margin-top: var(--space-xs);">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; color: var(--text-primary);">
+                  <input type="radio" name="has_built_api" value="yes_deployed" required style="accent-color: var(--accent-cyan);">
+                  Yes, I have built and deployed at least one API
+                </label>
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; color: var(--text-primary);">
+                  <input type="radio" name="has_built_api" value="yes_not_deployed" style="accent-color: var(--accent-cyan);">
+                  Yes, I have built an API but not deployed it
+                </label>
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; color: var(--text-primary);">
+                  <input type="radio" name="has_built_api" value="no" style="accent-color: var(--accent-cyan);">
+                  No
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">What is your current skill level? *</label>
+              <select name="skill_level" class="form-select" required>
+                <option value="">Select your level</option>
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Why do you want to join this cohort? *</label>
+              <textarea name="reason" class="form-textarea" rows="4" placeholder="Be specific — what are you building, what problem are you solving, what's your current situation?" required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">When are you likely to join? *</label>
+              <select name="when_joining" class="form-select" required>
+                <option value="">Select timing</option>
+                <option value="immediately">Immediately when cohort opens</option>
+                <option value="1-2-months">Within 1–2 months</option>
+                <option value="exploring">Just exploring</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">How did you hear about us? *</label>
+              <select name="heard_from" class="form-select" required>
+                <option value="">Select one</option>
+                <option value="linkedin">LinkedIn</option>
+                <option value="twitter">Twitter / X</option>
+                <option value="instagram">Instagram</option>
+                <option value="youtube">YouTube</option>
+                <option value="referral">Friend / Referral</option>
+                <option value="ads">Online Ads</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.05rem;">
+              Join AI Cohort Waitlist &rarr;
+            </button>
+
           </form>
         </div>
-        
-        <div style="margin-top: var(--space-xl);">
-          <a href="../pages/courses" class="btn btn-outline">← Back to Courses</a>
+
+        <div style="margin-top: var(--space-xl); text-align: center;">
+          <a href="../pages/cohorts" class="btn btn-outline">← View Live Cohorts</a>
         </div>
+
       </div>
     </div>
   </section>
@@ -143,7 +239,7 @@
       <div class="footer-bottom">
         <p class="footer-tagline">Learn Boldly. Build Fearlessly. Scale Intelligently.</p>
         <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: var(--space-sm);">
-          © 2026 Tensectra. All rights reserved.
+          &copy; 2026 Tensectra. All rights reserved.
         </p>
       </div>
     </div>
@@ -153,6 +249,10 @@
   <script src="../js/location.js"></script>
   <script src="../js/supabase-config.js"></script>
   <script src="../js/form-handler.js"></script>
-  <script>initForm('waitlist-form', 'waitlist_submissions', 'You\u2019re on the list. We\u2019ll notify you first.');</script>
+  <script>
+    initForm('waitlist-form', 'waitlist_submissions', 'You\u2019re on the list! We\u2019ll contact you on WhatsApp and email when the AI Cohort opens.');
+  </script>
 </body>
+
+
 </html>
