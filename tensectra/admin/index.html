@@ -4,7 +4,7 @@
   <script>(function(){var d=document.documentElement,t=localStorage.getItem("tensectra-theme")||"dark";d.setAttribute("data-theme",t);}());</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Login � Tensectra</title>
+  <title>Admin Login � Tensectra</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -19,22 +19,25 @@
         <p style="font-size:.7rem;font-weight:700;letter-spacing:.15em;color:#00CCFF;margin:6px 0 0">TENSECTRA</p>
       </div>
       <h1 class="login-title">Admin Panel</h1>
-      <p class="login-sub">Enter your email to receive a magic login link.</p>
+      <p class="login-sub">Sign in with your admin credentials.</p>
 
       <div id="login-form-wrap">
         <div class="form-group">
-          <label class="form-label" for="admin-email">Admin Email</label>
-          <input class="form-input" id="admin-email" type="email" placeholder="tensectra.office@gmail.com" autocomplete="email">
+          <label class="form-label" for="admin-email">Email</label>
+          <input class="form-input" id="admin-email" type="email" placeholder="tensectra.office@gmail.com" autocomplete="email" required>
         </div>
-        <button class="btn btn-primary" id="send-link-btn" style="width:100%;justify-content:center;margin-top:4px">
-          Send Magic Link
+        <div class="form-group">
+          <label class="form-label" for="admin-password">Password</label>
+          <input class="form-input" id="admin-password" type="password" placeholder="••••••••" autocomplete="current-password" required>
+        </div>
+        <button class="btn btn-primary" id="login-btn" style="width:100%;justify-content:center;margin-top:4px">
+          Sign In
         </button>
         <p class="login-error" id="login-error"></p>
       </div>
 
       <div class="login-success" id="login-success">
-        <p>? Magic link sent!<br>Check <strong id="sent-email"></strong> and click the link.</p>
-        <p style="margin-top:8px;color:#4A5A6A;font-size:.8rem">The link expires in 1 hour. Check spam if it doesn't arrive.</p>
+        <p>✅ Login successful!<br>Redirecting to dashboard...</p>
       </div>
     </div>
   </div>
@@ -63,33 +66,43 @@
       }
     });
 
-    document.getElementById('send-link-btn').addEventListener('click', async function () {
+    // Password login handler
+    document.getElementById('login-btn').addEventListener('click', async function () {
       var email = document.getElementById('admin-email').value.trim();
-      if (!email) return;
+      var password = document.getElementById('admin-password').value.trim();
+      if (!email || !password) return;
+
       var btn = this;
       var errEl = document.getElementById('login-error');
       errEl.style.display = 'none';
       btn.disabled = true;
-      btn.textContent = 'Sending�';
+      btn.textContent = 'Signing in…';
 
-      var { error } = await _supabase.auth.signInWithOtp({
+      var { data, error } = await _supabase.auth.signInWithPassword({
         email: email,
-        options: { emailRedirectTo: window.location.origin + '/admin/dashboard' },
+        password: password
       });
 
       if (error) {
         errEl.textContent = error.message;
         errEl.style.display = 'block';
         btn.disabled = false;
-        btn.textContent = 'Send Magic Link';
+        btn.textContent = 'Sign In';
       } else {
-        document.getElementById('sent-email').textContent = email;
         document.getElementById('login-form-wrap').style.display = 'none';
-        document.getElementById('login-success').style.display = 'block';
+        document.getElementById('login-success').style.display = 'flex';
+        setTimeout(function () {
+          window.location.href = '/admin/dashboard';
+        }, 1000);
       }
     });
 
-    document.getElementById('admin-email').addEventListener('keydown', function (e) {
+    // Enter key submits form
+    document.getElementById('admin-password').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        document.getElementById('login-btn').click();
+      }
+    });
       if (e.key === 'Enter') document.getElementById('send-link-btn').click();
     });
   </script>
