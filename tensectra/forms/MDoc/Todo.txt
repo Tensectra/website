@@ -5,7 +5,7 @@
 ----------------------
 Before switching to public, make sure you don’t have:
 
-API keys
+API keysp;s 
 Secrets (e.g. Supabase keys, Firebase config)
 Passwords or tokens
 
