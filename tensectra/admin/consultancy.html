@@ -4,7 +4,7 @@
   <script>(function(){var d=document.documentElement,t=localStorage.getItem("tensectra-theme")||"dark";d.setAttribute("data-theme",t);}());</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Consultancy — Tensectra Admin</title>
+  <title>Consultancy ï¿½ Tensectra Admin</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -30,10 +30,20 @@
       <a href="/admin/newsletter"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Newsletter</a>
     </nav>
     <div class="sidebar-footer">
-      <span class="sidebar-user-email" id="admin-user-email">Loading…</span>
+      <span class="sidebar-user-email" id="admin-user-email">Loadingï¿½</span>
       <button class="btn-logout" id="logout-btn">Sign Out</button>
     </div>
   </aside>
+
+  <!-- Mobile menu toggle -->
+  <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </button>
+  <div class="mobile-overlay" id="mobile-overlay"></div>
 
   <main class="admin-main">
     <div class="admin-header">
@@ -47,7 +57,7 @@
         <button class="filter-btn" data-filter="proposal_sent">Proposal Sent</button>
         <button class="filter-btn" data-filter="won">Won</button>
         <button class="filter-btn" data-filter="lost">Lost</button>
-        <input class="filter-search" id="search-input" type="text" placeholder="Search name, email, company…">
+        <input class="filter-search" id="search-input" type="text" placeholder="Search name, email, companyï¿½">
       </div>
       <div class="table-card">
         <div class="table-card-header">
@@ -60,7 +70,7 @@
               <th>Name</th><th>Company</th><th>Service</th><th>Status</th>
               <th>Location</th><th>Date</th><th>Actions</th>
             </tr></thead>
-            <tbody id="enquiries-tbody"><tr><td colspan="7" style="text-align:center;padding:40px" class="muted">Loading…</td></tr></tbody>
+            <tbody id="enquiries-tbody"><tr><td colspan="7" style="text-align:center;padding:40px" class="muted">Loadingï¿½</td></tr></tbody>
           </table>
         </div>
         <div class="pagination" id="pagination"></div>
@@ -122,11 +132,11 @@
       return;
     }
     document.getElementById('enquiries-tbody').innerHTML = rows.map(function (r) {
-      var tier = tierNames[r.tier] || r.tier || '—';
-      var loc  = [r.city, r.country_name].filter(Boolean).join(', ') || '—';
+      var tier = tierNames[r.tier] || r.tier || 'ï¿½';
+      var loc  = [r.city, r.country_name].filter(Boolean).join(', ') || 'ï¿½';
       return '<tr>'
-        + '<td><strong style="color:#E6EDF3">' + (r.name||'—') + '</strong><br><span class="muted" style="font-size:.75rem">' + (r.email||'') + '</span></td>'
-        + '<td class="muted">' + (r.company||'—') + '</td>'
+        + '<td><strong style="color:#E6EDF3">' + (r.name||'ï¿½') + '</strong><br><span class="muted" style="font-size:.75rem">' + (r.email||'') + '</span></td>'
+        + '<td class="muted">' + (r.company||'ï¿½') + '</td>'
         + '<td class="muted">' + tier + '</td>'
         + '<td>' + statusBadge(r.status) + '</td>'
         + '<td class="muted" style="font-size:.8rem">' + loc + '</td>'
@@ -159,6 +169,32 @@
   });
 
   document.getElementById('search-input').addEventListener('input', applyFilter);
+</script>
+
+<script>
+// Mobile menu toggle
+(function() {
+  var sidebar = document.querySelector('.admin-sidebar');
+  var toggle = document.getElementById('mobile-menu-btn');
+  var overlay = document.getElementById('mobile-overlay');
+  
+  function closeMobile() {
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('active');
+  }
+  
+  toggle.addEventListener('click', function() {
+    sidebar.classList.toggle('mobile-open');
+    overlay.classList.toggle('active');
+  });
+  
+  overlay.addEventListener('click', closeMobile);
+  
+  // Close on nav click
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    link.addEventListener('click', closeMobile);
+  });
+})();
 </script>
 </body>
 </html>

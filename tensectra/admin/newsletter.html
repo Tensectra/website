@@ -4,7 +4,7 @@
   <script>(function(){var d=document.documentElement,t=localStorage.getItem("tensectra-theme")||"dark";d.setAttribute("data-theme",t);}());</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Newsletter — Tensectra Admin</title>
+  <title>Newsletter ï¿½ Tensectra Admin</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -30,10 +30,20 @@
       <a href="/admin/newsletter" class="active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Newsletter</a>
     </nav>
     <div class="sidebar-footer">
-      <span class="sidebar-user-email" id="admin-user-email">Loading…</span>
+      <span class="sidebar-user-email" id="admin-user-email">Loadingï¿½</span>
       <button class="btn-logout" id="logout-btn">Sign Out</button>
     </div>
   </aside>
+
+  <!-- Mobile menu toggle -->
+  <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </button>
+  <div class="mobile-overlay" id="mobile-overlay"></div>
 
   <main class="admin-main">
     <div class="admin-header">
@@ -49,7 +59,7 @@
         <button class="filter-btn" data-filter="alumni">Alumni</button>
         <button class="filter-btn" data-filter="pro_members">Pro Members</button>
         <button class="filter-btn" data-filter="waitlist">Waitlist</button>
-        <input class="filter-search" id="search-input" type="text" placeholder="Search email or name…">
+        <input class="filter-search" id="search-input" type="text" placeholder="Search email or nameï¿½">
       </div>
       <div class="table-card">
         <div class="table-card-header">
@@ -62,7 +72,7 @@
               <th>Email</th><th>Name</th><th>List</th><th>Source</th>
               <th>Status</th><th>Subscribed</th>
             </tr></thead>
-            <tbody id="subs-tbody"><tr><td colspan="6" style="text-align:center;padding:40px" class="muted">Loading…</td></tr></tbody>
+            <tbody id="subs-tbody"><tr><td colspan="6" style="text-align:center;padding:40px" class="muted">Loadingï¿½</td></tr></tbody>
           </table>
         </div>
         <div class="pagination" id="pagination"></div>
@@ -85,12 +95,34 @@
 
   async function loadData() {
     var client = window._supabase;
-    var { data, error } = await client.from('newsletter_subscribers')
+    
+    // Load newsletter subscribers
+    var { data: newsData, error: newsError } = await client.from('newsletter_subscribers')
       .select('*').order('subscribed_at', { ascending: false });
-    if (error) { showToast('Load error: ' + error.message, 'error'); return; }
-    allRows = data || [];
+    if (newsError) { console.error('Newsletter error:', newsError); }
+    
+    // Load waitlist submissions
+    var { data: waitData, error: waitError } = await client.from('waitlist_submissions')
+      .select('*').order('submitted_at', { ascending: false });
+    if (waitError) { console.error('Waitlist error:', waitError); }
+    
+    // Combine both sources
+    allRows = (newsData || []).map(function(r) { return Object.assign({}, r, {_source: 'newsletter'}); })
+      .concat((waitData || []).map(function(r) { 
+        return {
+          email: r.email,
+          name: r.name,
+          list_type: 'waitlist',
+          source: r.location_source || 'form',
+          subscribed: true,
+          subscribed_at: r.submitted_at,
+          _source: 'waitlist',
+          _full: r
+        };
+      }));
+    
     document.getElementById('header-count').textContent =
-      allRows.filter(function (r) { return r.subscribed; }).length + ' active · ' + allRows.length + ' total';
+      allRows.filter(function (r) { return r.subscribed; }).length + ' active â€¢ ' + allRows.length + ' total';
     applyFilter();
   }
 
@@ -119,10 +151,10 @@
         ? '<span class="status status-succeeded">Active</span>'
         : '<span class="status status-lost">Unsubscribed</span>';
       return '<tr>'
-        + '<td class="mono" style="font-size:.8rem">' + (r.email||'—') + '</td>'
-        + '<td>' + (r.name||'—') + '</td>'
-        + '<td class="muted">' + (r.list_type||'—') + '</td>'
-        + '<td class="muted">' + (r.source||'—') + '</td>'
+        + '<td class="mono" style="font-size:.8rem">' + (r.email||'ï¿½') + '</td>'
+        + '<td>' + (r.name||'ï¿½') + '</td>'
+        + '<td class="muted">' + (r.list_type||'ï¿½') + '</td>'
+        + '<td class="muted">' + (r.source||'ï¿½') + '</td>'
         + '<td>' + subBadge + '</td>'
         + '<td class="muted">' + fmtDate(r.subscribed_at) + '</td>'
         + '</tr>';
@@ -169,6 +201,32 @@
     URL.revokeObjectURL(url);
     showToast('Exported ' + rows.length + ' rows', 'success');
   });
+</script>
+
+<script>
+// Mobile menu toggle
+(function() {
+  var sidebar = document.querySelector('.admin-sidebar');
+  var toggle = document.getElementById('mobile-menu-btn');
+  var overlay = document.getElementById('mobile-overlay');
+  
+  function closeMobile() {
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('active');
+  }
+  
+  toggle.addEventListener('click', function() {
+    sidebar.classList.toggle('mobile-open');
+    overlay.classList.toggle('active');
+  });
+  
+  overlay.addEventListener('click', closeMobile);
+  
+  // Close on nav click
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    link.addEventListener('click', closeMobile);
+  });
+})();
 </script>
 </body>
 </html>

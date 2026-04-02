@@ -4,7 +4,7 @@
   <script>(function(){var d=document.documentElement,t=localStorage.getItem("tensectra-theme")||"dark";d.setAttribute("data-theme",t);}());</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard — Tensectra Admin</title>
+  <title>Dashboard ï¿½ Tensectra Admin</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -49,10 +49,20 @@
       </a>
     </nav>
     <div class="sidebar-footer">
-      <span class="sidebar-user-email" id="admin-user-email">Loading…</span>
+      <span class="sidebar-user-email" id="admin-user-email">Loadingï¿½</span>
       <button class="btn-logout" id="logout-btn">Sign Out</button>
     </div>
   </aside>
+
+  <!-- Mobile menu toggle -->
+  <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </button>
+  <div class="mobile-overlay" id="mobile-overlay"></div>
 
   <!-- Main -->
   <main class="admin-main">
@@ -68,22 +78,22 @@
       <div class="stat-grid">
         <div class="stat-card cyan">
           <div class="stat-label">New Enquiries (7d)</div>
-          <div class="stat-value" id="stat-enquiries">—</div>
+          <div class="stat-value" id="stat-enquiries">ï¿½</div>
           <div class="stat-sub" id="stat-enquiries-total"></div>
         </div>
         <div class="stat-card blue">
           <div class="stat-label">Pending Applications</div>
-          <div class="stat-value" id="stat-apps">—</div>
+          <div class="stat-value" id="stat-apps">ï¿½</div>
           <div class="stat-sub" id="stat-apps-total"></div>
         </div>
         <div class="stat-card green">
           <div class="stat-label">Revenue (30d)</div>
-          <div class="stat-value" id="stat-revenue">—</div>
+          <div class="stat-value" id="stat-revenue">ï¿½</div>
           <div class="stat-sub" id="stat-revenue-currency"></div>
         </div>
         <div class="stat-card purple">
           <div class="stat-label">Subscribers</div>
-          <div class="stat-value" id="stat-subs">—</div>
+          <div class="stat-value" id="stat-subs">ï¿½</div>
           <div class="stat-sub">newsletter list</div>
         </div>
       </div>
@@ -99,7 +109,7 @@
             <thead><tr>
               <th>Name</th><th>Tier</th><th>Status</th><th>Date</th>
             </tr></thead>
-            <tbody id="recent-enquiries"><tr><td colspan="4" class="muted" style="text-align:center;padding:20px">Loading…</td></tr></tbody>
+            <tbody id="recent-enquiries"><tr><td colspan="4" class="muted" style="text-align:center;padding:20px">Loadingï¿½</td></tr></tbody>
           </table>
         </div>
 
@@ -113,7 +123,7 @@
             <thead><tr>
               <th>Name</th><th>Course</th><th>Status</th><th>Date</th>
             </tr></thead>
-            <tbody id="recent-apps"><tr><td colspan="4" class="muted" style="text-align:center;padding:20px">Loading…</td></tr></tbody>
+            <tbody id="recent-apps"><tr><td colspan="4" class="muted" style="text-align:center;padding:20px">Loadingï¿½</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -171,7 +181,7 @@
     var { data: enquiries } = await client.from('consultancy_enquiries')
       .select('id,name,tier,status,submitted_at').order('submitted_at', { ascending: false }).limit(6);
     var enqHtml = (enquiries || []).map(function (r) {
-      return '<tr><td>' + (r.name||'—') + '</td><td class="muted">' + (tierNames[r.tier]||r.tier||'—') + '</td><td>' + statusBadge(r.status) + '</td><td class="muted">' + fmtDate(r.submitted_at) + '</td></tr>';
+      return '<tr><td>' + (r.name||'ï¿½') + '</td><td class="muted">' + (tierNames[r.tier]||r.tier||'ï¿½') + '</td><td>' + statusBadge(r.status) + '</td><td class="muted">' + fmtDate(r.submitted_at) + '</td></tr>';
     }).join('') || '<tr><td colspan="4" class="muted" style="text-align:center;padding:20px">None yet</td></tr>';
     document.getElementById('recent-enquiries').innerHTML = enqHtml;
 
@@ -179,10 +189,36 @@
     var { data: apps } = await client.from('cohort_applications')
       .select('id,name,course,status,submitted_at').order('submitted_at', { ascending: false }).limit(6);
     var appsHtml = (apps || []).map(function (r) {
-      return '<tr><td>' + (r.name||'—') + '</td><td class="muted">' + (r.course||'—') + '</td><td>' + statusBadge(r.status) + '</td><td class="muted">' + fmtDate(r.submitted_at) + '</td></tr>';
+      return '<tr><td>' + (r.name||'ï¿½') + '</td><td class="muted">' + (r.course||'ï¿½') + '</td><td>' + statusBadge(r.status) + '</td><td class="muted">' + fmtDate(r.submitted_at) + '</td></tr>';
     }).join('') || '<tr><td colspan="4" class="muted" style="text-align:center;padding:20px">None yet</td></tr>';
     document.getElementById('recent-apps').innerHTML = appsHtml;
   });
+</script>
+
+<script>
+// Mobile menu toggle
+(function() {
+  var sidebar = document.querySelector('.admin-sidebar');
+  var toggle = document.getElementById('mobile-menu-btn');
+  var overlay = document.getElementById('mobile-overlay');
+  
+  function closeMobile() {
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('active');
+  }
+  
+  toggle.addEventListener('click', function() {
+    sidebar.classList.toggle('mobile-open');
+    overlay.classList.toggle('active');
+  });
+  
+  overlay.addEventListener('click', closeMobile);
+  
+  // Close on nav click
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    link.addEventListener('click', closeMobile);
+  });
+})();
 </script>
 </body>
 </html>
