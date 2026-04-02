@@ -3123,7 +3123,7 @@ p {
 
 /* ============================================
    LIGHT / DARK THEME SYSTEM
-   Default: light  |  Toggle via data-theme="dark"
+   Default: dark  |  Toggle via data-theme="light"
    ============================================ */
 
 /* ── Smooth transition on theme switch ────── */
@@ -3144,23 +3144,8 @@ body,
     box-shadow       0.25s ease;
 }
 
-/* ── LIGHT THEME (default) ────────────────── */
+/* ── DARK THEME (default) ────────────────── */
 :root,
-[data-theme="light"] {
-  --bg-primary:    #F4F7FC;
-  --bg-card:       #FFFFFF;
-  --bg-card-hover: #EDF2FB;
-  --bg-border:     #D8E2F0;
-
-  --text-primary:  #1C2B44;
-  --text-muted:    #52647E;
-  --text-white:    #0D1E35;
-
-  --shadow-card:   0 2px 16px rgba(0, 80, 160, 0.08);
-  --shadow-glow:   0 0 30px rgba(0, 150, 220, 0.15);
-}
-
-/* ── DARK THEME ────────────────────────────── */
 [data-theme="dark"] {
   --bg-primary:    #050A14;
   --bg-card:       #0A1628;
@@ -3173,6 +3158,21 @@ body,
 
   --shadow-card:   0 4px 20px rgba(0, 0, 0, 0.4);
   --shadow-glow:   0 0 30px rgba(0, 204, 255, 0.3);
+}
+
+/* ── LIGHT THEME ────────────────────────────── */
+[data-theme="light"] {
+  --bg-primary:    #F4F7FC;
+  --bg-card:       #FFFFFF;
+  --bg-card-hover: #EDF2FB;
+  --bg-border:     #D8E2F0;
+
+  --text-primary:  #1C2B44;
+  --text-muted:    #52647E;
+  --text-white:    #0D1E35;
+
+  --shadow-card:   0 2px 16px rgba(0, 80, 160, 0.08);
+  --shadow-glow:   0 0 30px rgba(0, 150, 220, 0.15);
 }
 
 /* ── Navbar ───────────────────────────────── */
