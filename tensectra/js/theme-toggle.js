@@ -1,29 +1,16 @@
 /**
  * TENSECTRA — Theme Toggle
- * Dark-first: default is dark, persists to localStorage
- * Load this in <head> (before CSS renders) to prevent FOUC
+ * Reads preference from localStorage (default: dark).
+ * Wires click handlers after DOM is ready.
  */
 (function () {
   'use strict';
 
   var STORAGE_KEY = 'tensectra-theme';
 
-  function getInitialTheme() {
-    var stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === 'light' || stored === 'dark') return stored;
-    return 'dark';
-  }
-
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem(STORAGE_KEY, theme);
-
-    var btns = document.querySelectorAll('.theme-toggle-btn');
-    btns.forEach(function (btn) {
-      btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
-      btn.dataset.themeCurrent = theme;
-    });
-
     var meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', theme === 'light' ? '#F8FAFE' : '#00CCFF');
   }
@@ -33,17 +20,15 @@
     applyTheme(current === 'light' ? 'dark' : 'light');
   }
 
-  applyTheme(getInitialTheme());
-
   document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.theme-toggle-btn').forEach(function (btn) {
       btn.addEventListener('click', toggle);
     });
-    applyTheme(document.documentElement.getAttribute('data-theme') || 'dark');
   });
 
   window.TensectraTheme = { toggle: toggle, apply: applyTheme };
 }());
+
   'use strict';
 
   var STORAGE_KEY = 'tensectra-theme';

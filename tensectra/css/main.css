@@ -3121,11 +3121,8 @@ p {
 }
 
 
-/* Suppress transitions during initial theme application (FOUC prevention) */
-html.no-t *, html.no-t *::before, html.no-t *::after { transition: none !important; }
-
 /* ============================================
-   LIGHT / DARK THEME SYSTEM
+LIGHT / DARK THEME SYSTEM
    Default: dark  |  Toggle via data-theme="light"
    ============================================ */
 
@@ -3283,6 +3280,21 @@ body,
 /* ── Binary rain (suppress in light mode) ─── */
 [data-theme="light"] .binary-rain {
   opacity: 0.04;
+}
+
+/* ── Override hardcoded dark rgba inline section backgrounds ── */
+[data-theme="light"] section[style*="rgba(10, 22, 40"],
+[data-theme="light"] section[style*="rgba(10,22,40"] {
+  background: #EEF3FA !important;
+}
+[data-theme="light"] .pro-teaser {
+  background: #E8F1FF;
+}
+[data-theme="light"] .authority-bar {
+  background: #DDE8F6;
+}
+[data-theme="light"] .hero {
+  background: linear-gradient(180deg, #EBF3FF 0%, #F4F7FC 100%) !important;
 }
 
 /* ── Theme Toggle Button ──────────────────── */
