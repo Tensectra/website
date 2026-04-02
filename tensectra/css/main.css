@@ -3121,6 +3121,9 @@ p {
 }
 
 
+/* Suppress transitions during initial theme application (FOUC prevention) */
+html.no-t *, html.no-t *::before, html.no-t *::after { transition: none !important; }
+
 /* ============================================
    LIGHT / DARK THEME SYSTEM
    Default: dark  |  Toggle via data-theme="light"
