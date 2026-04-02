@@ -645,7 +645,7 @@ Roles stored in a Supabase admin_users table. Checked on every page load.
 
 WHAT YOU MUST DO MANUALLY (one-time setup)
 Step	Where	What
-1	Resend dashboard	Verify tensectra.com domain → get API key
+1	Resend dashboard	Verify tensectra.com domain → get API key   = re_2cqgLRBK_NLK1SaJuchuXFsKmX1mKgt7n
 2	Vercel dashboard → Settings → Environment Variables	Add RESEND_API_KEY, PAYSTACK_SECRET_KEY, SUPABASE_SERVICE_ROLE_KEY
 3	Supabase → Database → Webhooks → Create Webhook	Trigger: INSERT on consultancy_enquiries → URL: https://tensectra.com/api/notify
 4	Supabase → same	Trigger: INSERT on cohort_applications → URL: https://tensectra.com/api/notify
