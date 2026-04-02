@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){var d=document.documentElement,t=localStorage.getItem("tensectra-theme")||"dark";d.setAttribute("data-theme",t);}());</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — Tensectra</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="icon" type="image/png" href="../images/tensectra-logo.png">
+</head>
+<body class="admin-body">
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-logo">
+        <img src="../images/logo2.png" alt="Tensectra">
+        <p style="font-size:.7rem;font-weight:700;letter-spacing:.15em;color:#00CCFF;margin:6px 0 0">TENSECTRA</p>
+      </div>
+      <h1 class="login-title">Admin Panel</h1>
+      <p class="login-sub">Enter your email to receive a magic login link.</p>
+
+      <div id="login-form-wrap">
+        <div class="form-group">
+          <label class="form-label" for="admin-email">Admin Email</label>
+          <input class="form-input" id="admin-email" type="email" placeholder="tensectra.office@gmail.com" autocomplete="email">
+        </div>
+        <button class="btn btn-primary" id="send-link-btn" style="width:100%;justify-content:center;margin-top:4px">
+          Send Magic Link
+        </button>
+        <p class="login-error" id="login-error"></p>
+      </div>
+
+      <div class="login-success" id="login-success">
+        <p>? Magic link sent!<br>Check <strong id="sent-email"></strong> and click the link.</p>
+        <p style="margin-top:8px;color:#4A5A6A;font-size:.8rem">The link expires in 1 hour. Check spam if it doesn't arrive.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error banners from redirect -->
+  <div id="error-banner" style="display:none;position:fixed;top:16px;left:50%;transform:translateX(-50%);background:rgba(255,68,68,.12);border:1px solid rgba(255,68,68,.3);color:#ff6b6b;padding:10px 20px;border-radius:6px;font-size:.85rem;text-align:center;z-index:999"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    var SUPABASE_URL = 'https://ahcfozfntvqbfgbinxwr.supabase.co';
+    var ANON_KEY     = 'sb_publishable_9t2QGBpQl4yd4H73dkSdlg_9QVNarpS';
+    var _supabase    = supabase.createClient(SUPABASE_URL, ANON_KEY);
+
+    // Show redirect error if any
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('error') === 'not-admin') {
+      var banner = document.getElementById('error-banner');
+      banner.textContent = 'Your email is not registered as an admin. Contact the system administrator.';
+      banner.style.display = 'block';
+    }
+
+    // If already logged in, redirect
+    _supabase.auth.getSession().then(function (res) {
+      if (res.data.session) {
+        window.location.href = '/admin/dashboard';
+      }
+    });
+
+    document.getElementById('send-link-btn').addEventListener('click', async function () {
+      var email = document.getElementById('admin-email').value.trim();
+      if (!email) return;
+      var btn = this;
+      var errEl = document.getElementById('login-error');
+      errEl.style.display = 'none';
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      var { error } = await _supabase.auth.signInWithOtp({
+        email: email,
+        options: { emailRedirectTo: window.location.origin + '/admin/dashboard' },
+      });
+
+      if (error) {
+        errEl.textContent = error.message;
+        errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Send Magic Link';
+      } else {
+        document.getElementById('sent-email').textContent = email;
+        document.getElementById('login-form-wrap').style.display = 'none';
+        document.getElementById('login-success').style.display = 'block';
+      }
+    });
+
+    document.getElementById('admin-email').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') document.getElementById('send-link-btn').click();
+    });
+  </script>
+</body>
+</html>

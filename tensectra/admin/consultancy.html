@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){var d=document.documentElement,t=localStorage.getItem("tensectra-theme")||"dark";d.setAttribute("data-theme",t);}());</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consultancy — Tensectra Admin</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="icon" type="image/png" href="../images/tensectra-logo.png">
+</head>
+<body class="admin-body">
+<div class="admin-layout">
+
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">
+      <img src="../images/logo2.png" alt="Tensectra">
+      <div><div class="sidebar-logo-text">TENSECTRA</div><div class="sidebar-badge">ADMIN</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Main</div>
+      <a href="/admin/dashboard"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a>
+      <div class="sidebar-section">CRM</div>
+      <a href="/admin/consultancy" class="active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>Consultancy</a>
+      <a href="/admin/applications"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Applications</a>
+      <a href="/admin/payments"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Payments</a>
+      <div class="sidebar-section">Lists</div>
+      <a href="/admin/newsletter"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Newsletter</a>
+    </nav>
+    <div class="sidebar-footer">
+      <span class="sidebar-user-email" id="admin-user-email">Loading…</span>
+      <button class="btn-logout" id="logout-btn">Sign Out</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-header">
+      <div><h1>Consultancy Enquiries</h1><p class="admin-header-sub" id="header-count"></p></div>
+    </div>
+    <div class="admin-content">
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="new">New</button>
+        <button class="filter-btn" data-filter="contacted">Contacted</button>
+        <button class="filter-btn" data-filter="proposal_sent">Proposal Sent</button>
+        <button class="filter-btn" data-filter="won">Won</button>
+        <button class="filter-btn" data-filter="lost">Lost</button>
+        <input class="filter-search" id="search-input" type="text" placeholder="Search name, email, company…">
+      </div>
+      <div class="table-card">
+        <div class="table-card-header">
+          <span class="table-card-title">Enquiries</span>
+          <span class="table-card-count" id="table-count"></span>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="admin-table">
+            <thead><tr>
+              <th>Name</th><th>Company</th><th>Service</th><th>Status</th>
+              <th>Location</th><th>Date</th><th>Actions</th>
+            </tr></thead>
+            <tbody id="enquiries-tbody"><tr><td colspan="7" style="text-align:center;padding:40px" class="muted">Loading…</td></tr></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="pagination"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/admin-auth.js"></script>
+<script src="../js/admin.js"></script>
+<script>
+  var allRows    = [];
+  var filtered   = [];
+  var activeFilter = 'all';
+  var PAGE_SIZE  = 25;
+  var page       = 0;
+  var pricing    = {};  // tier ? { amount, currency }
+  var tierNames  = { '1':'Corporate Cohort','2':'Architecture Workshop','3':'Architecture Consultation',retainer:'Architecture Retainer',unsure:'TBD' };
+
+  window.reloadTable = loadData;
+
+  document.addEventListener('adminReady', async function () {
+    var client = window._supabase;
+    // Load consultancy_pricing for default amounts
+    var { data: priceData } = await client.from('consultancy_pricing').select('tier,amount,currency');
+    (priceData || []).forEach(function (p) { pricing[p.tier] = { amount: p.amount, currency: p.currency }; });
+    loadData();
+  });
+
+  async function loadData() {
+    var client = window._supabase;
+    var { data, error } = await client.from('consultancy_enquiries')
+      .select('*').order('submitted_at', { ascending: false });
+    if (error) { showToast('Load error: ' + error.message, 'error'); return; }
+    allRows = data || [];
+    document.getElementById('header-count').textContent = allRows.length + ' total enquiries';
+    applyFilter();
+  }
+
+  function applyFilter() {
+    var q = (document.getElementById('search-input').value || '').toLowerCase();
+    filtered = allRows.filter(function (r) {
+      var matchStatus = activeFilter === 'all' || r.status === activeFilter;
+      var matchSearch = !q || (r.name||'').toLowerCase().includes(q) || (r.email||'').toLowerCase().includes(q) || (r.company||'').toLowerCase().includes(q);
+      return matchStatus && matchSearch;
+    });
+    page = 0;
+    renderTable();
+  }
+
+  function renderTable() {
+    document.getElementById('table-count').textContent = filtered.length + ' records';
+    var start = page * PAGE_SIZE;
+    var rows  = filtered.slice(start, start + PAGE_SIZE);
+    if (!rows.length) {
+      document.getElementById('enquiries-tbody').innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px" class="muted">No records found</td></tr>';
+      document.getElementById('pagination').innerHTML = '';
+      return;
+    }
+    document.getElementById('enquiries-tbody').innerHTML = rows.map(function (r) {
+      var tier = tierNames[r.tier] || r.tier || '—';
+      var loc  = [r.city, r.country_name].filter(Boolean).join(', ') || '—';
+      return '<tr>'
+        + '<td><strong style="color:#E6EDF3">' + (r.name||'—') + '</strong><br><span class="muted" style="font-size:.75rem">' + (r.email||'') + '</span></td>'
+        + '<td class="muted">' + (r.company||'—') + '</td>'
+        + '<td class="muted">' + tier + '</td>'
+        + '<td>' + statusBadge(r.status) + '</td>'
+        + '<td class="muted" style="font-size:.8rem">' + loc + '</td>'
+        + '<td class="muted">' + fmtDate(r.submitted_at) + '</td>'
+        + '<td><div class="action-group">'
+        + '<button class="btn-action" onclick="openConsultancyDetail(' + JSON.stringify(r).replace(/"/g, '&quot;') + ')">View</button>'
+        + '<button class="btn-action btn-pay" onclick="openPaymentLinkModal(' + JSON.stringify(r).replace(/"/g, '&quot;') + ',\'consultancy\',' + JSON.stringify(pricing[r.tier]||{amount:25000000,currency:\'NGN\'}).replace(/"/g,'&quot;') + ')">?? Pay Link</button>'
+        + '</div></td>'
+        + '</tr>';
+    }).join('');
+
+    // Pagination
+    var totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+    if (totalPages <= 1) { document.getElementById('pagination').innerHTML = ''; return; }
+    var pHtml = '<span class="page-info">' + (page+1) + ' / ' + totalPages + '</span>';
+    if (page > 0) pHtml = '<button class="page-btn" onclick="goPage(' + (page-1) + ')">? Prev</button>' + pHtml;
+    if (page < totalPages - 1) pHtml += '<button class="page-btn" onclick="goPage(' + (page+1) + ')">Next ?</button>';
+    document.getElementById('pagination').innerHTML = pHtml;
+  }
+
+  window.goPage = function (p) { page = p; renderTable(); };
+
+  document.querySelectorAll('.filter-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      applyFilter();
+    });
+  });
+
+  document.getElementById('search-input').addEventListener('input', applyFilter);
+</script>
+</body>
+</html>
