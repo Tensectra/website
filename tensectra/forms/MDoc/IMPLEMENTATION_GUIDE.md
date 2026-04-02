@@ -1,4 +1,4 @@
-# TENSECTRA WEBSITE - BATCH 1 IMPLEMENTATION COMPLETE ?
+﻿# TENSECTRA WEBSITE - BATCH 1 IMPLEMENTATION COMPLETE ?
 
 ## What Has Been Done
 
@@ -90,10 +90,10 @@ TensectraAnalytics.trackPaymentSuccess('Backend Cohort', 299, 'ref_123', 'USD');
   - Kenya: KSh38,000
   - South Africa: R5,400
   - US/International: $299
-  - UK: �239
+  - UK: £239
   - Canada: CA$399
   - UAE: AED1,099
-  - Germany/Netherlands: �279
+  - Germany/Netherlands: €279
 - Automatically selects payment gateway:
   - Paystack for African countries (NG, GH, KE, ZA)
   - Stripe for international
@@ -133,7 +133,7 @@ TensectraAnalytics.trackPaymentSuccess('Backend Cohort', 299, 'ref_123', 'USD');
 ```html
 <!-- Overall scholarship status -->
 <span data-scholarship-overall="filled">3</span> of 
-<span data-scholarship-overall="total">5</span> slots filled � 
+<span data-scholarship-overall="total">5</span> slots filled — 
 <span data-scholarship-overall="remaining">2</span> remaining
 
 <!-- Course-specific -->
@@ -575,3 +575,107 @@ You now have:
 
 **Priority:** Get Paystack test keys and test a complete payment ? verification ? email flow.
 
+*********************************************************************************************
+
+THE FULL AUTOMATION ARCHITECTURE
+
+SCENARIO A — Consultancy
+─────────────────────────────────────────────────────────
+Client fills form
+  → Supabase INSERT (consultancy_enquiries)
+  → Supabase Webhook → POST /api/notify
+      • Resend → Client: "Enquiry received" email (your template)
+      • Resend → sales.tensectra@gmail.com: "New enquiry" notification
+
+Team has meeting (manual — you book it externally)
+
+Admin Panel → Consultancy tab → click "Send Payment Link"
+  → Modal: confirm amount + product name
+  → POST /api/send-payment-link
+      • Paystack API creates a payment link dynamically (amount + client email)
+      • Resend → Client: "Here is your payment link" email
+      • Supabase: status = 'payment_link_sent'
+
+Client clicks link → pays on Paystack
+  → Paystack Webhook → POST /api/webhook/paystack
+      • Verify with Paystack API
+      • Supabase INSERT into payments table
+      • Resend → Client: receipt email
+      • Resend → tensectra.office@gmail.com: "Payment confirmed" email
+
+
+
+SCENARIO B — Cohort Application
+─────────────────────────────────────────────────────────
+Student fills cohort-application form
+  → Supabase INSERT (cohort_applications)
+  → Supabase Webhook → POST /api/notify
+      • Resend → Student: "Application received + Discord/WhatsApp links"
+      • Resend → hr.tensectra@gmail.com: "New application" notification
+
+Admin Panel → Applications tab
+  → Click "Approve" → status = 'approved'
+  → Click "Send Payment Link"
+      • Same flow as Consultancy ↑
+      
+Student pays
+  → Paystack webhook → payments DB record
+  → Resend → Student: receipt + "Welcome, what to expect" email
+  → Resend → tensectra.office@gmail.com: confirmation
+  → Supabase: application status = 'paid'
+
+  ─────────────────────────────────────────────────────────
+  ADMIN PANEL — What it does
+Auth: Supabase magic link (email) — no password to manage. You send a login link to tensectra.office@gmail.com.
+Pages & their purpose:
+Page	Who uses it	What it does
+/admin/	All staff	Login via magic link
+/admin/dashboard	All	Live counts — new enquiries, pending applications, revenue this month
+/admin/consultancy	Sales	View all enquiries, status filter, Send Payment Link button, update status
+/admin/applications	HR/Sales	View cohort applications, Approve / Reject, Send Payment Link, scholarship flag
+/admin/payments	Admin	All payment records, gateway, amount, date — read only
+/admin/newsletter	Marketing	All subscribers, tags, export CSV
+Role system (simple for now):
+•	admin — sees everything
+•	sales — consultancy + payments
+•	hr — applications + scholarship
+Roles stored in a Supabase admin_users table. Checked on every page load.
+
+
+
+WHAT YOU MUST DO MANUALLY (one-time setup)
+Step	Where	What
+1	Resend dashboard	Verify tensectra.com domain → get API key
+2	Vercel dashboard → Settings → Environment Variables	Add RESEND_API_KEY, PAYSTACK_SECRET_KEY, SUPABASE_SERVICE_ROLE_KEY
+3	Supabase → Database → Webhooks → Create Webhook	Trigger: INSERT on consultancy_enquiries → URL: https://tensectra.com/api/notify
+4	Supabase → same	Trigger: INSERT on cohort_applications → URL: https://tensectra.com/api/notify
+5	Paystack dashboard → Settings → Webhooks	URL: https://tensectra.com/api/webhook/paystack
+
+
+QUESTIONS TO CONFIRM BEFORE I BUILD
+1.	Payment link for consultancy — amounts vary per client. Confirm: Admin enters the amount manually in the panel when sending the link? (Yes/No) -- amount is already in the  webite page -- thereis already a table in db that house the amount / service setup let the page reflect the amount based on the db table setup, and the admin can edit the amount in the admin panel if needed before sending the payment link. This way you have a default amount but can customize per client if needed.
+
+2.	Cohort payment amount — is it fixed per cohort (e.g. Backend = $299 / ₦150,000)? Or does admin set it per student? (Recommend fixed per cohort, but can be overridden in admin panel if needed) there is db table that house the amount / service setup let the page reflect the amount based on the db table setup, and the admin can edit the amount in the admin panel if needed before sending the payment link. This way you have a default amount but can customize per student if needed.
+ 
+3.	Resend domain — have you verified tensectra.com in Resend yet? If yes, what is your from address — hello@tensectra.com or noreply@tensectra.com? yes  hello@tensectra.com 
+4.	Admin panel URL — should it be /admin (public URL, protected by login) or do you want it on a separate subdomain like admin.tensectra.com? /admin is simpler. -- (public URL, protected by login)
+5.	Discord/WhatsApp links for the cohort CRM email — share those links so I can put them in the email template. -- Use a demo link forthe 2 we will replace it later when we have the actual links. For now you can use https://discord.gg/tensectra and https://wa.me/1234567890
+
+
+Your 5 manual steps to go live
+#	Where	Action
+1	Vercel → Settings → Env Vars	Add RESEND_API_KEY, PAYSTACK_SECRET_KEY, SUPABASE_SERVICE_ROLE_KEY, APP_URL=https://www.tensectra.com
+2	Supabase → SQL Editor	Run Step3_AdminSchema.sql
+3	Supabase → Authentication → URL Config	Set redirect URL to https://tensectra.com/admin/dashboard
+4	Supabase → Database → Webhooks	INSERT on consultancy_enquiries → https://tensectra.com/api/notify; same for cohort_applications
+5	Paystack → Settings → Webhooks	URL: https://tensectra.com/api/webhook/paystack
+
+
+
+What a Nigerian visitor now sees
+Page	Before	After
+/pages/cohorts	$299	₦150,000
+/pages/cohorts (materials)	$149	₦75,000
+/pages/pro	$15/month	₦7,500/month
+/pages/pro	$120/year	₦60,000/year
+/pages/infrastructure	$299	₦150,000

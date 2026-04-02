@@ -395,7 +395,7 @@
             <div class="tier-header">
               <span class="badge" style="position: static; display: inline-block; margin-bottom: var(--space-sm);">Founding Member</span>
               <h3 class="tier-name">Live Cohort</h3>
-              <div class="tier-price">$299</div>
+              <div class="tier-price" data-price="cohort">$299</div>
               <p class="tier-price-note">One-time payment</p>
             </div>
             
@@ -460,7 +460,7 @@
           <div class="card tier-card">
             <div class="tier-header">
               <h3 class="tier-name">Materials Only</h3>
-              <div class="tier-price">$149</div>
+              <div class="tier-price" data-price="materials">$149</div>
               <p class="tier-price-note">One-time payment</p>
             </div>
 
@@ -702,6 +702,8 @@
 
   <script src="../js/theme-toggle.js"></script>
   <script src="../js/main.js?v=2"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/pricing.js"></script>
   <script>
     function animateTabIn(el) {
       el.classList.remove('active');

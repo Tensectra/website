@@ -42,50 +42,55 @@ class TensectraPricing {
   }
 
   // Load pricing for user's location
+  // Amounts are display units (not smallest unit — Paystack ×100 happens at payment time)
+  // kit = TensectraKit Starter | materials = self-paced materials only
   async loadPricing() {
     const pricingMap = {
-      'NG': { currency: 'NGN', symbol: '?', cohort: 150000, proMonthly: 7500, proAnnual: 60000 },
-      'GH': { currency: 'GHS', symbol: 'GH?', cohort: 1800, proMonthly: 90, proAnnual: 720 },
-      'KE': { currency: 'KES', symbol: 'KSh', cohort: 38000, proMonthly: 1900, proAnnual: 15200 },
-      'ZA': { currency: 'ZAR', symbol: 'R', cohort: 5400, proMonthly: 270, proAnnual: 2160 },
-      'US': { currency: 'USD', symbol: '$', cohort: 299, proMonthly: 15, proAnnual: 120 },
-      'GB': { currency: 'GBP', symbol: '£', cohort: 239, proMonthly: 12, proAnnual: 96 },
-      'CA': { currency: 'CAD', symbol: 'CA$', cohort: 399, proMonthly: 20, proAnnual: 160 },
-      'AE': { currency: 'AED', symbol: 'AED', cohort: 1099, proMonthly: 55, proAnnual: 440 },
-      'DE': { currency: 'EUR', symbol: '€', cohort: 279, proMonthly: 14, proAnnual: 112 },
-      'NL': { currency: 'EUR', symbol: '€', cohort: 279, proMonthly: 14, proAnnual: 112 },
-      'DEFAULT': { currency: 'USD', symbol: '$', cohort: 299, proMonthly: 15, proAnnual: 120 }
+      'NG': { currency: 'NGN', symbol: '\u20a6',    cohort: 150000, proMonthly: 7500,  proAnnual: 60000,  kit: 150000, materials: 75000  },
+      'GH': { currency: 'GHS', symbol: 'GH\u20b5',  cohort: 1800,   proMonthly: 90,    proAnnual: 720,    kit: 1800,   materials: 900    },
+      'KE': { currency: 'KES', symbol: 'KSh\u00a0', cohort: 38000,  proMonthly: 1900,  proAnnual: 15200,  kit: 38000,  materials: 19000  },
+      'ZA': { currency: 'ZAR', symbol: 'R',         cohort: 5400,   proMonthly: 270,   proAnnual: 2160,   kit: 5400,   materials: 2700   },
+      'US': { currency: 'USD', symbol: '$',         cohort: 299,    proMonthly: 15,    proAnnual: 120,    kit: 299,    materials: 149    },
+      'GB': { currency: 'GBP', symbol: '\u00a3',   cohort: 239,    proMonthly: 12,    proAnnual: 96,     kit: 239,    materials: 119    },
+      'CA': { currency: 'CAD', symbol: 'CA$',       cohort: 399,    proMonthly: 20,    proAnnual: 160,    kit: 399,    materials: 199    },
+      'AE': { currency: 'AED', symbol: 'AED\u00a0', cohort: 1099,   proMonthly: 55,    proAnnual: 440,    kit: 1099,   materials: 549    },
+      'DE': { currency: 'EUR', symbol: '\u20ac',   cohort: 279,    proMonthly: 14,    proAnnual: 112,    kit: 279,    materials: 139    },
+      'NL': { currency: 'EUR', symbol: '\u20ac',   cohort: 279,    proMonthly: 14,    proAnnual: 112,    kit: 279,    materials: 139    },
+      'DEFAULT': { currency: 'USD', symbol: '$',   cohort: 299,    proMonthly: 15,    proAnnual: 120,    kit: 299,    materials: 149    }
     };
 
     const countryCode = this.userLocation?.countryCode || 'DEFAULT';
     this.pricing = pricingMap[countryCode] || pricingMap['DEFAULT'];
 
-    console.log('?? Pricing loaded:', this.pricing);
+    console.log('Tensectra pricing:', this.pricing);
     this.updatePricesOnPage();
   }
 
   // Update all prices on the page
   updatePricesOnPage() {
-    const { symbol, cohort, proMonthly, proAnnual } = this.pricing;
+    const { symbol, cohort, proMonthly, proAnnual, kit, materials } = this.pricing;
+    const fmt = (n) => symbol + n.toLocaleString();
 
-    // Update cohort prices
-    document.querySelectorAll('[data-price="cohort"]').forEach(el => {
-      el.textContent = `${symbol}${cohort.toLocaleString()}`;
+    // Cohort (live)
+    document.querySelectorAll('[data-price="cohort"]').forEach(el => { el.textContent = fmt(cohort); });
+
+    // Materials-only (self-paced)
+    document.querySelectorAll('[data-price="materials"]').forEach(el => { el.textContent = fmt(materials); });
+
+    // TensectraKit
+    document.querySelectorAll('[data-price="kit"]').forEach(el => { el.textContent = fmt(kit); });
+
+    // Pro membership
+    document.querySelectorAll('[data-price="pro-monthly"]').forEach(el => { el.textContent = fmt(proMonthly); });
+    document.querySelectorAll('[data-price="pro-annual"]').forEach(el => { el.textContent = fmt(proAnnual); });
+
+    // Pro annual savings note (e.g. "Save ?15,000 — two months free")
+    document.querySelectorAll('[data-price-save="pro-annual"]').forEach(el => {
+      el.textContent = `Save ${fmt(proMonthly * 2)} \u2014 two months free`;
     });
 
-    // Update Pro membership prices
-    document.querySelectorAll('[data-price="pro-monthly"]').forEach(el => {
-      el.textContent = `${symbol}${proMonthly.toLocaleString()}`;
-    });
-
-    document.querySelectorAll('[data-price="pro-annual"]').forEach(el => {
-      el.textContent = `${symbol}${proAnnual.toLocaleString()}`;
-    });
-
-    // Update currency indicators
-    document.querySelectorAll('[data-currency]').forEach(el => {
-      el.textContent = this.pricing.currency;
-    });
+    // Currency code labels (e.g. span showing "NGN")
+    document.querySelectorAll('[data-currency]').forEach(el => { el.textContent = this.pricing.currency; });
   }
 
   // Get appropriate payment gateway
@@ -159,12 +164,14 @@ class TensectraPricing {
     // window.location.href = `https://buy.stripe.com/xxxxx`;
   }
 
-  // Get product price based on type
+  // Get product price based on type (display unit — multiply by 100 for Paystack)
   getProductPrice(productType) {
     const priceMap = {
-      'cohort': this.pricing.cohort,
+      'cohort':      this.pricing.cohort,
       'pro_monthly': this.pricing.proMonthly,
-      'pro_annual': this.pricing.proAnnual
+      'pro_annual':  this.pricing.proAnnual,
+      'kit':         this.pricing.kit,
+      'materials':   this.pricing.materials
     };
     return priceMap[productType] || 0;
   }
@@ -216,8 +223,8 @@ class TensectraPricing {
   // Get currency symbol
   getCurrencySymbol(currency) {
     const symbols = {
-      'USD': '$', 'EUR': '€', 'GBP': '£', 'NGN': '?', 'GHS': 'GH?',
-      'KES': 'KSh', 'ZAR': 'R', 'CAD': 'CA$', 'AED': 'AED'
+      'USD': '$', 'EUR': '\u20ac', 'GBP': '\u00a3', 'NGN': '\u20a6',
+      'GHS': 'GH\u20b5', 'KES': 'KSh\u00a0', 'ZAR': 'R', 'CAD': 'CA$', 'AED': 'AED\u00a0'
     };
     return symbols[currency] || currency;
   }

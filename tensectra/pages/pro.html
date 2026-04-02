@@ -204,7 +204,7 @@
         <div class="card tier-card" style="text-align: center;">
           <div class="tier-header">
             <h3 class="tier-name">Monthly</h3>
-            <div class="tier-price">$15<span style="font-size: 1rem;">/month</span></div>
+            <div class="tier-price"><span data-price="pro-monthly">$15</span><span style="font-size: 1rem;">/month</span></div>
             <p class="tier-price-note">Cancel anytime</p>
           </div>
           <ul class="tier-features" style="text-align: left;">
@@ -224,8 +224,8 @@
           <span class="badge" style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); white-space: nowrap;">Recommended</span>
           <div class="tier-header" style="padding-top: var(--space-sm);">
             <h3 class="tier-name">Annual</h3>
-            <div class="tier-price">$120<span style="font-size: 1rem;">/year</span></div>
-            <p class="tier-price-note">Save $60 — two months free</p>
+            <div class="tier-price"><span data-price="pro-annual">$120</span><span style="font-size: 1rem;">/year</span></div>
+            <p class="tier-price-note" data-price-save="pro-annual">Save $30 &mdash; two months free</p>
           </div>
           <ul class="tier-features" style="text-align: left;">
             <li>All current courses</li>
@@ -417,5 +417,7 @@
 
   <script src="../js/theme-toggle.js"></script>
   <script src="../js/main.js?v=2"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/pricing.js"></script>
 </body>
 </html>
