@@ -1,4 +1,4 @@
-# TEST VERIFICATION CHECKLIST
+﻿# TEST VERIFICATION CHECKLIST
 
 Run through this checklist to verify all fixes are working correctly.
 
@@ -480,4 +480,7 @@ If any tests fail, check:
 4. Console logs in browser
 
 Or contact: hello@tensectra.com
+
+-----------------------------------------------------------
+
 
