@@ -20,6 +20,10 @@ CREATE TABLE IF NOT EXISTS admin_users (
 );
 
 ALTER TABLE admin_users ENABLE ROW LEVEL SECURITY;
+
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "admin_users_self_read" ON admin_users;
+
 -- Any authenticated user can check their own admin record
 CREATE POLICY "admin_users_self_read"
   ON admin_users FOR SELECT TO authenticated
@@ -49,6 +53,10 @@ INSERT INTO consultancy_pricing (tier, name, currency, amount, description) VALU
 ON CONFLICT (tier) DO NOTHING;
 
 ALTER TABLE consultancy_pricing ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "admin_read_pricing" ON consultancy_pricing;
+DROP POLICY IF EXISTS "admin_update_pricing" ON consultancy_pricing;
+
 CREATE POLICY "admin_read_pricing"
   ON consultancy_pricing FOR SELECT TO authenticated
   USING ((SELECT role FROM admin_users WHERE email = auth.jwt()->>'email' AND active = TRUE) IS NOT NULL);
@@ -77,10 +85,17 @@ CREATE TABLE IF NOT EXISTS payment_links (
   used_at             TIMESTAMPTZ
 );
 
+DROP INDEX IF EXISTS idx_payment_links_record;
+DROP INDEX IF EXISTS idx_payment_links_email;
+
 CREATE INDEX idx_payment_links_record ON payment_links(record_id);
 CREATE INDEX idx_payment_links_email  ON payment_links(payer_email);
 
 ALTER TABLE payment_links ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "admin_read_payment_links" ON payment_links;
+DROP POLICY IF EXISTS "admin_insert_payment_links" ON payment_links;
+
 CREATE POLICY "admin_read_payment_links"
   ON payment_links FOR SELECT TO authenticated
   USING ((SELECT role FROM admin_users WHERE email = auth.jwt()->>'email' AND active = TRUE) IS NOT NULL);
@@ -90,9 +105,13 @@ CREATE POLICY "admin_insert_payment_links"
 
 -- =============================================================
 -- RLS — ADMIN READ/UPDATE POLICIES on existing tables
+-- Drop existing policies first to avoid conflicts
 -- =============================================================
 
 -- consultancy_enquiries
+DROP POLICY IF EXISTS "admin_select_consultancy" ON consultancy_enquiries;
+DROP POLICY IF EXISTS "admin_update_consultancy" ON consultancy_enquiries;
+
 CREATE POLICY "admin_select_consultancy"
   ON consultancy_enquiries FOR SELECT TO authenticated
   USING ((SELECT role FROM admin_users WHERE email = auth.jwt()->>'email' AND active = TRUE) IS NOT NULL);
@@ -102,6 +121,9 @@ CREATE POLICY "admin_update_consultancy"
   WITH CHECK (TRUE);
 
 -- cohort_applications
+DROP POLICY IF EXISTS "admin_select_applications" ON cohort_applications;
+DROP POLICY IF EXISTS "admin_update_applications" ON cohort_applications;
+
 CREATE POLICY "admin_select_applications"
   ON cohort_applications FOR SELECT TO authenticated
   USING ((SELECT role FROM admin_users WHERE email = auth.jwt()->>'email' AND active = TRUE) IS NOT NULL);
@@ -111,16 +133,23 @@ CREATE POLICY "admin_update_applications"
   WITH CHECK (TRUE);
 
 -- payments (read-only for admin)
+DROP POLICY IF EXISTS "admin_select_payments" ON payments;
+
 CREATE POLICY "admin_select_payments"
   ON payments FOR SELECT TO authenticated
   USING ((SELECT role FROM admin_users WHERE email = auth.jwt()->>'email' AND active = TRUE) IS NOT NULL);
 
 -- newsletter_subscribers
+DROP POLICY IF EXISTS "admin_select_newsletter" ON newsletter_subscribers;
+
 CREATE POLICY "admin_select_newsletter"
   ON newsletter_subscribers FOR SELECT TO authenticated
   USING ((SELECT role FROM admin_users WHERE email = auth.jwt()->>'email' AND active = TRUE) IS NOT NULL);
 
 -- contact_submissions
+DROP POLICY IF EXISTS "admin_select_contact" ON contact_submissions;
+DROP POLICY IF EXISTS "admin_update_contact" ON contact_submissions;
+
 CREATE POLICY "admin_select_contact"
   ON contact_submissions FOR SELECT TO authenticated
   USING ((SELECT role FROM admin_users WHERE email = auth.jwt()->>'email' AND active = TRUE) IS NOT NULL);
@@ -130,6 +159,9 @@ CREATE POLICY "admin_update_contact"
   WITH CHECK (TRUE);
 
 -- cohorts (admin can read + update)
+DROP POLICY IF EXISTS "admin_select_cohorts" ON cohorts;
+DROP POLICY IF EXISTS "admin_update_cohorts" ON cohorts;
+
 CREATE POLICY "admin_select_cohorts"
   ON cohorts FOR SELECT TO authenticated
   USING ((SELECT role FROM admin_users WHERE email = auth.jwt()->>'email' AND active = TRUE) IS NOT NULL);

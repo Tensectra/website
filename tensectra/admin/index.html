@@ -26,9 +26,19 @@
           <label class="form-label" for="admin-email">Email</label>
           <input class="form-input" id="admin-email" type="email" placeholder="tensectra.office@gmail.com" autocomplete="email" required>
         </div>
-        <div class="form-group">
+        <div class="form-group" style="position:relative;">
           <label class="form-label" for="admin-password">Password</label>
-          <input class="form-input" id="admin-password" type="password" placeholder="••••••••" autocomplete="current-password" required>
+          <input class="form-input" id="admin-password" type="password" placeholder="••••••••" autocomplete="current-password" required style="padding-right:45px;">
+          <button type="button" id="toggle-password" style="position:absolute;right:10px;top:36px;background:none;border:none;cursor:pointer;color:#4A5A6A;padding:6px;display:flex;align-items:center;" aria-label="Toggle password visibility">
+            <svg id="eye-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <svg id="eye-closed" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>
+          </button>
         </div>
         <button class="btn btn-primary" id="login-btn" style="width:100%;justify-content:center;margin-top:4px">
           Sign In
@@ -66,34 +76,145 @@
       }
     });
 
-    // Password login handler
+    // Password visibility toggle
+    document.getElementById('toggle-password').addEventListener('click', function() {
+      var passwordInput = document.getElementById('admin-password');
+      var eyeOpen = document.getElementById('eye-open');
+      var eyeClosed = document.getElementById('eye-closed');
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeOpen.style.display = 'none';
+        eyeClosed.style.display = 'block';
+      } else {
+        passwordInput.type = 'password';
+        eyeOpen.style.display = 'block';
+        eyeClosed.style.display = 'none';
+      }
+    });
+
+    // Password login handler with detailed error messages
     document.getElementById('login-btn').addEventListener('click', async function () {
       var email = document.getElementById('admin-email').value.trim();
       var password = document.getElementById('admin-password').value.trim();
-      if (!email || !password) return;
-
       var btn = this;
       var errEl = document.getElementById('login-error');
+      
+      // Clear previous errors
       errEl.style.display = 'none';
+      errEl.textContent = '';
+
+      // Validation
+      if (!email) {
+        errEl.textContent = '⚠️ Please enter your email address';
+        errEl.style.display = 'block';
+        document.getElementById('admin-email').focus();
+        return;
+      }
+
+      if (!password) {
+        errEl.textContent = '⚠️ Please enter your password';
+        errEl.style.display = 'block';
+        document.getElementById('admin-password').focus();
+        return;
+      }
+
+      // Email format validation
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        errEl.textContent = '⚠️ Please enter a valid email address';
+        errEl.style.display = 'block';
+        document.getElementById('admin-email').focus();
+        return;
+      }
+
+      // Show loading state
       btn.disabled = true;
       btn.textContent = 'Signing in…';
+      console.log('🔐 Attempting login for:', email);
 
-      var { data, error } = await _supabase.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
+      try {
+        var { data, error } = await _supabase.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
 
-      if (error) {
-        errEl.textContent = error.message;
+        console.log('Auth response:', { data, error });
+
+        if (error) {
+          // Handle specific error types
+          var errorMessage = '';
+          
+          if (error.message.includes('Invalid login credentials')) {
+            errorMessage = '❌ Invalid email or password. Please check and try again.';
+          } else if (error.message.includes('Email not confirmed')) {
+            errorMessage = '⚠️ Email not verified. Please check your inbox.';
+          } else if (error.message.includes('network') || error.message.includes('fetch')) {
+            errorMessage = '🌐 Network error. Please check your internet connection.';
+          } else if (error.message.includes('rate limit')) {
+            errorMessage = '⏱️ Too many attempts. Please wait a few minutes.';
+          } else {
+            errorMessage = '❌ Login failed: ' + error.message;
+          }
+          
+          console.error('Login error:', error);
+          errEl.textContent = errorMessage;
+          errEl.style.display = 'block';
+          btn.disabled = false;
+          btn.textContent = 'Sign In';
+        } else if (!data.session) {
+          console.error('No session returned');
+          errEl.textContent = '❌ Login failed. No session created.';
+          errEl.style.display = 'block';
+          btn.disabled = false;
+          btn.textContent = 'Sign In';
+        } else {
+          // Success - check if user is in admin_users table
+          console.log('✅ Auth successful, checking admin status...');
+          
+          var { data: adminUser, error: adminError } = await _supabase
+            .from('admin_users')
+            .select('email, role, active')
+            .eq('email', email)
+            .eq('active', true)
+            .maybeSingle();
+
+          console.log('Admin check:', { adminUser, adminError });
+
+          if (adminError) {
+            console.error('Admin check error:', adminError);
+            errEl.textContent = '⚠️ Database error: ' + adminError.message;
+            errEl.style.display = 'block';
+            await _supabase.auth.signOut();
+            btn.disabled = false;
+            btn.textContent = 'Sign In';
+            return;
+          }
+
+          if (!adminUser) {
+            console.warn('User not in admin_users table');
+            errEl.textContent = '🚫 This account does not have admin access. Contact the administrator.';
+            errEl.style.display = 'block';
+            await _supabase.auth.signOut();
+            btn.disabled = false;
+            btn.textContent = 'Sign In';
+            return;
+          }
+
+          // All checks passed - redirect to dashboard
+          console.log('✅ Login successful, redirecting...');
+          document.getElementById('login-form-wrap').style.display = 'none';
+          document.getElementById('login-success').style.display = 'flex';
+          setTimeout(function () {
+            window.location.href = '/admin/dashboard';
+          }, 1000);
+        }
+      } catch (err) {
+        console.error('Unexpected error:', err);
+        errEl.textContent = '❌ Unexpected error: ' + err.message;
         errEl.style.display = 'block';
         btn.disabled = false;
         btn.textContent = 'Sign In';
-      } else {
-        document.getElementById('login-form-wrap').style.display = 'none';
-        document.getElementById('login-success').style.display = 'flex';
-        setTimeout(function () {
-          window.location.href = '/admin/dashboard';
-        }, 1000);
       }
     });
 
@@ -103,7 +224,11 @@
         document.getElementById('login-btn').click();
       }
     });
-      if (e.key === 'Enter') document.getElementById('send-link-btn').click();
+    
+    document.getElementById('admin-email').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        document.getElementById('login-btn').click();
+      }
     });
   </script>
 </body>

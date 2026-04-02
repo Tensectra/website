@@ -1,11 +1,15 @@
--- =====================================================
--- Tensectra Admin User Creation Script
+﻿-- =====================================================
+-- Tensectra Admin User Creation (Fixed for Supabase v2)
 -- Run this ONCE in Supabase SQL Editor
 -- =====================================================
 
 -- STEP 1: Create the auth user with password
--- Replace 'YourSecurePassword123!' with your actual password
--- This creates the user in Supabase Auth
+-- ⚠️ CHANGE 'YourSecurePassword123!' to your actual password
+DELETE FROM admin_users WHERE email = 'tensectra.office@gmail.com';
+DELETE FROM auth.users WHERE email = 'tensectra.office@gmail.com';
+
+
+
 
 INSERT INTO auth.users (
   instance_id,
@@ -15,14 +19,14 @@ INSERT INTO auth.users (
   email,
   encrypted_password,
   email_confirmed_at,
-  confirmation_sent_at,
-  confirmed_at,
-  last_sign_in_at,
   raw_app_meta_data,
   raw_user_meta_data,
   created_at,
   updated_at,
-  is_super_admin
+  confirmation_token,
+  email_change,
+  email_change_token_new,
+  recovery_token
 )
 VALUES (
   '00000000-0000-0000-0000-000000000000',
@@ -30,16 +34,16 @@ VALUES (
   'authenticated',
   'authenticated',
   'tensectra.office@gmail.com',
-  crypt('Adminx!2', gen_salt('bf')), -- ?? CHANGE THIS PASSWORD
-  NOW(),
-  NOW(),
-  NOW(),
+  crypt('Adminx!2', gen_salt('bf')), -- ⚠️ CHANGE THIS PASSWORD
   NOW(),
   '{"provider":"email","providers":["email"]}'::jsonb,
   '{}'::jsonb,
   NOW(),
   NOW(),
-  false
+  '',
+  '',
+  '',
+  ''
 );
 
 -- STEP 2: Add to admin_users table
@@ -64,42 +68,55 @@ FROM auth.users u
 LEFT JOIN admin_users a ON u.email = a.email
 WHERE u.email = 'tensectra.office@gmail.com';
 
+-- Expected result: 1 row with email_confirmed_at populated
+
 -- =====================================================
 -- TO ADD MORE ADMIN USERS LATER
 -- =====================================================
--- Use this template and change email/password/name/role:
+-- Copy and modify this template:
 
 /*
 INSERT INTO auth.users (
   instance_id, id, aud, role, email, encrypted_password,
-  email_confirmed_at, confirmation_sent_at, confirmed_at, last_sign_in_at,
-  raw_app_meta_data, raw_user_meta_data, created_at, updated_at, is_super_admin
+  email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+  created_at, updated_at, confirmation_token, email_change,
+  email_change_token_new, recovery_token
 )
 VALUES (
   '00000000-0000-0000-0000-000000000000',
   gen_random_uuid(),
   'authenticated',
   'authenticated',
-  'new.admin@tensectra.com',
-  crypt('NewPassword456!', gen_salt('bf')),
-  NOW(), NOW(), NOW(), NOW(),
+  'hr.tensectra@gmail.com',
+  crypt('HrPassword456!', gen_salt('bf')),
+  NOW(),
   '{"provider":"email","providers":["email"]}'::jsonb,
   '{}'::jsonb,
-  NOW(), NOW(), false
+  NOW(), NOW(), '', '', '', ''
 );
 
 INSERT INTO admin_users (email, name, role, active)
-VALUES ('new.admin@tensectra.com', 'New Admin', 'sales', true);
+VALUES ('hr.tensectra@gmail.com', 'HR Manager', 'hr', true);
 */
 
 -- =====================================================
 -- PASSWORD RESET (if you forget your password)
 -- =====================================================
--- Update the encrypted_password field:
 
 /*
 UPDATE auth.users
-SET encrypted_password = crypt('NewPassword789!', gen_salt('bf')),
-    updated_at = NOW()
+SET 
+  encrypted_password = crypt('NewPassword789!', gen_salt('bf')),
+  updated_at = NOW()
 WHERE email = 'tensectra.office@gmail.com';
+*/
+
+-- =====================================================
+-- TROUBLESHOOTING
+-- =====================================================
+
+-- If you get "user already exists" error, delete first:
+/*
+DELETE FROM admin_users WHERE email = 'tensectra.office@gmail.com';
+DELETE FROM auth.users WHERE email = 'tensectra.office@gmail.com';
 */
