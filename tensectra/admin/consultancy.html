@@ -4,11 +4,11 @@
   <script>(function(){var d=document.documentElement,t=localStorage.getItem("tensectra-theme")||"dark";d.setAttribute("data-theme",t);}());</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Consultancy � Tensectra Admin</title>
+  <title>Consultancy - Tensectra Admin</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/admin.css?v=2">
+  <link rel="stylesheet" href="../css/admin.css?v=5">
   <link rel="icon" type="image/png" href="../images/tensectra-logo.png">
 </head>
 <body class="admin-body">
@@ -30,12 +30,11 @@
       <a href="/admin/newsletter"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Newsletter</a>
     </nav>
     <div class="sidebar-footer">
-      <span class="sidebar-user-email" id="admin-user-email">Loading�</span>
+      <span class="sidebar-user-email" id="admin-user-email">Loading...</span>
       <button class="btn-logout" id="logout-btn">Sign Out</button>
     </div>
   </aside>
 
-  <!-- Mobile menu toggle -->
   <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle menu">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -47,7 +46,7 @@
 
   <main class="admin-main">
     <div class="admin-header">
-      <div><h1>Consultancy Enquiries</h1><p class="admin-header-sub" id="header-count"></p></div>
+      <div><h1>Consultancy Enquiries</h1><p class="admin-header-sub" id="header-count">Loading...</p></div>
     </div>
     <div class="admin-content">
       <div class="filter-bar">
@@ -57,12 +56,12 @@
         <button class="filter-btn" data-filter="proposal_sent">Proposal Sent</button>
         <button class="filter-btn" data-filter="won">Won</button>
         <button class="filter-btn" data-filter="lost">Lost</button>
-        <input class="filter-search" id="search-input" type="text" placeholder="Search name, email, company�">
+        <input class="filter-search" id="search-input" type="text" placeholder="Search name, email, company">
       </div>
       <div class="table-card">
         <div class="table-card-header">
           <span class="table-card-title">Enquiries</span>
-          <span class="table-card-count" id="table-count"></span>
+          <span class="table-card-count" id="table-count">0 records</span>
         </div>
         <div style="overflow-x:auto">
           <table class="admin-table">
@@ -70,7 +69,7 @@
               <th>Name</th><th>Company</th><th>Service</th><th>Status</th>
               <th>Location</th><th>Date</th><th>Actions</th>
             </tr></thead>
-            <tbody id="enquiries-tbody"><tr><td colspan="7" style="text-align:center;padding:40px" class="muted">Loading�</td></tr></tbody>
+            <tbody id="enquiries-tbody"><tr><td colspan="7" style="text-align:center;padding:40px" class="muted">Loading...</td></tr></tbody>
           </table>
         </div>
         <div class="pagination" id="pagination"></div>
@@ -83,114 +82,109 @@
 <script src="../js/admin-auth.js"></script>
 <script src="../js/admin.js"></script>
 <script>
-  var allRows    = [];
-  var filtered   = [];
-  var activeFilter = 'all';
-  var PAGE_SIZE  = 25;
-  var page       = 0;
-  var pricing    = {};  // tier ? { amount, currency }
-  var tierNames  = { '1':'Corporate Cohort','2':'Architecture Workshop','3':'Architecture Consultation',retainer:'Architecture Retainer',unsure:'TBD' };
+var allRows = [];
+var filtered = [];
+var activeFilter = 'all';
+var PAGE_SIZE = 25;
+var page = 0;
+var pricing = {};
+var tierNames = { '1':'Corporate Cohort','2':'Architecture Workshop','3':'Architecture Consultation',retainer:'Architecture Retainer',unsure:'TBD' };
 
-  window.reloadTable = loadData;
+window.reloadTable = loadData;
 
-  document.addEventListener('adminReady', async function () {
-    var client = window._supabase;
-    // Load consultancy_pricing for default amounts
-    var { data: priceData } = await client.from('consultancy_pricing').select('tier,amount,currency');
-    (priceData || []).forEach(function (p) { pricing[p.tier] = { amount: p.amount, currency: p.currency }; });
-    loadData();
+document.addEventListener('adminReady', async function () {
+  var client = window._supabase;
+  var { data: priceData } = await client.from('consultancy_pricing').select('tier,amount,currency');
+  (priceData || []).forEach(function (p) { pricing[p.tier] = { amount: p.amount, currency: p.currency }; });
+  loadData();
+});
+
+async function loadData() {
+  var client = window._supabase;
+  console.log('[Consultancy] Loading...');
+  var { data, error } = await client.from('consultancy_enquiries').select('*').order('submitted_at', { ascending: false });
+  console.log('[Consultancy] Result:', { count: (data || []).length, error: error ? error.message : null });
+  if (error) { alert('Error: ' + error.message); return; }
+  allRows = data || [];
+  document.getElementById('header-count').textContent = allRows.length + ' total enquiries';
+  applyFilter();
+}
+
+function applyFilter() {
+  var q = (document.getElementById('search-input').value || '').toLowerCase();
+  filtered = allRows.filter(function (r) {
+    var matchStatus = activeFilter === 'all' || r.status === activeFilter;
+    var matchSearch = !q || (r.name||'').toLowerCase().includes(q) || (r.email||'').toLowerCase().includes(q) || (r.company||'').toLowerCase().includes(q);
+    return matchStatus && matchSearch;
   });
+  page = 0;
+  renderTable();
+}
 
-  async function loadData() {
-    var client = window._supabase;
-    var { data, error } = await client.from('consultancy_enquiries')
-      .select('*').order('submitted_at', { ascending: false });
-    if (error) { showToast('Load error: ' + error.message, 'error'); return; }
-    allRows = data || [];
-    document.getElementById('header-count').textContent = allRows.length + ' total enquiries';
+function renderTable() {
+  document.getElementById('table-count').textContent = filtered.length + ' records';
+  var start = page * PAGE_SIZE;
+  var rows = filtered.slice(start, start + PAGE_SIZE);
+  if (!rows.length) {
+    document.getElementById('enquiries-tbody').innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px" class="muted">No records found</td></tr>';
+    document.getElementById('pagination').innerHTML = '';
+    return;
+  }
+  document.getElementById('enquiries-tbody').innerHTML = rows.map(function (r) {
+    var tier = tierNames[r.tier] || r.tier || '-';
+    var loc = [r.city, r.country_name].filter(Boolean).join(', ') || '-';
+    return '<tr><td><strong style="color:#E6EDF3">' + (r.name||'-') + '</strong><br><span class="muted" style="font-size:.75rem">' + (r.email||'') + '</span></td>'
+      + '<td class="muted">' + (r.company||'-') + '</td>'
+      + '<td class="muted">' + tier + '</td>'
+      + '<td>' + statusBadge(r.status) + '</td>'
+      + '<td class="muted" style="font-size:.8rem">' + loc + '</td>'
+      + '<td class="muted">' + fmtDate(r.submitted_at) + '</td>'
+      + '<td><div class="action-group">'
+      + '<button class="btn-action" onclick="openConsultancyDetail(' + JSON.stringify(r).replace(/"/g,'&quot;') + ')">View</button>'
+      + '<button class="btn-action btn-pay" onclick="alert(\'Payment link coming soon\')">Pay Link</button>'
+      + '</div></td></tr>';
+  }).join('');
+  
+  var totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  if (totalPages <= 1) { document.getElementById('pagination').innerHTML = ''; return; }
+  var pHtml = '<span class="page-info">' + (page+1) + ' / ' + totalPages + '</span>';
+  if (page > 0) pHtml = '<button class="page-btn" onclick="goPage(' + (page-1) + ')">Prev</button>' + pHtml;
+  if (page < totalPages - 1) pHtml += '<button class="page-btn" onclick="goPage(' + (page+1) + ')">Next</button>';
+  document.getElementById('pagination').innerHTML = pHtml;
+}
+
+window.goPage = function (p) { page = p; renderTable(); };
+
+document.querySelectorAll('.filter-btn').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    document.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
     applyFilter();
-  }
-
-  function applyFilter() {
-    var q = (document.getElementById('search-input').value || '').toLowerCase();
-    filtered = allRows.filter(function (r) {
-      var matchStatus = activeFilter === 'all' || r.status === activeFilter;
-      var matchSearch = !q || (r.name||'').toLowerCase().includes(q) || (r.email||'').toLowerCase().includes(q) || (r.company||'').toLowerCase().includes(q);
-      return matchStatus && matchSearch;
-    });
-    page = 0;
-    renderTable();
-  }
-
-  function renderTable() {
-    document.getElementById('table-count').textContent = filtered.length + ' records';
-    var start = page * PAGE_SIZE;
-    var rows  = filtered.slice(start, start + PAGE_SIZE);
-    if (!rows.length) {
-      document.getElementById('enquiries-tbody').innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px" class="muted">No records found</td></tr>';
-      document.getElementById('pagination').innerHTML = '';
-      return;
-    }
-    document.getElementById('enquiries-tbody').innerHTML = rows.map(function (r) {
-      var tier = tierNames[r.tier] || r.tier || '�';
-      var loc  = [r.city, r.country_name].filter(Boolean).join(', ') || '�';
-      return '<tr>'
-        + '<td><strong style="color:#E6EDF3">' + (r.name||'�') + '</strong><br><span class="muted" style="font-size:.75rem">' + (r.email||'') + '</span></td>'
-        + '<td class="muted">' + (r.company||'�') + '</td>'
-        + '<td class="muted">' + tier + '</td>'
-        + '<td>' + statusBadge(r.status) + '</td>'
-        + '<td class="muted" style="font-size:.8rem">' + loc + '</td>'
-        + '<td class="muted">' + fmtDate(r.submitted_at) + '</td>'
-        + '<td><div class="action-group">'
-        + '<button class="btn-action" onclick="openConsultancyDetail(' + JSON.stringify(r).replace(/"/g, '&quot;') + ')">View</button>'
-        + '<button class="btn-action btn-pay" onclick="openPaymentLinkModal(' + JSON.stringify(r).replace(/"/g, '&quot;') + ',\'consultancy\',' + JSON.stringify(pricing[r.tier]||{amount:25000000,currency:\'NGN\'}).replace(/"/g,'&quot;') + ')">?? Pay Link</button>'
-        + '</div></td>'
-        + '</tr>';
-    }).join('');
-
-    // Pagination
-    var totalPages = Math.ceil(filtered.length / PAGE_SIZE);
-    if (totalPages <= 1) { document.getElementById('pagination').innerHTML = ''; return; }
-    var pHtml = '<span class="page-info">' + (page+1) + ' / ' + totalPages + '</span>';
-    if (page > 0) pHtml = '<button class="page-btn" onclick="goPage(' + (page-1) + ')">? Prev</button>' + pHtml;
-    if (page < totalPages - 1) pHtml += '<button class="page-btn" onclick="goPage(' + (page+1) + ')">Next ?</button>';
-    document.getElementById('pagination').innerHTML = pHtml;
-  }
-
-  window.goPage = function (p) { page = p; renderTable(); };
-
-  document.querySelectorAll('.filter-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      document.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      activeFilter = btn.dataset.filter;
-      applyFilter();
-    });
   });
+});
 
-  document.getElementById('search-input').addEventListener('input', applyFilter);
+document.getElementById('search-input').addEventListener('input', applyFilter);
+
+function openConsultancyDetail(record) {
+  alert('Consultancy Detail:\n\nName: ' + record.name + '\nCompany: ' + record.company + '\nEmail: ' + record.email + '\nService: ' + (tierNames[record.tier]||record.tier) + '\nStatus: ' + record.status);
+}
 </script>
 
 <script>
-// Mobile menu toggle
 (function() {
   var sidebar = document.querySelector('.admin-sidebar');
   var toggle = document.getElementById('mobile-menu-btn');
   var overlay = document.getElementById('mobile-overlay');
-  
   function closeMobile() {
     sidebar.classList.remove('mobile-open');
     overlay.classList.remove('active');
   }
-  
   toggle.addEventListener('click', function() {
     sidebar.classList.toggle('mobile-open');
     overlay.classList.toggle('active');
   });
-  
   overlay.addEventListener('click', closeMobile);
-  
-  // Close on nav click
   document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
     link.addEventListener('click', closeMobile);
   });

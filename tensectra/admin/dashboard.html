@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/admin.css?v=2">
+  <link rel="stylesheet" href="../css/admin.css?v=5">
   <link rel="icon" type="image/png" href="../images/tensectra-logo.png">
 </head>
 <body class="admin-body">
@@ -77,18 +77,18 @@
       <!-- Stats -->
       <div class="stat-grid">
         <div class="stat-card cyan">
-          <div class="stat-label">New Enquiries (7d)</div>
-          <div class="stat-value" id="stat-enquiries">�</div>
+          <div class="stat-label">Consultancy Enquiries (7d)</div>
+          <div class="stat-value" id="stat-enquiries">—</div>
           <div class="stat-sub" id="stat-enquiries-total"></div>
         </div>
         <div class="stat-card blue">
-          <div class="stat-label">Pending Applications</div>
-          <div class="stat-value" id="stat-apps">�</div>
+          <div class="stat-label">Cohort Applications</div>
+          <div class="stat-value" id="stat-apps">—</div>
           <div class="stat-sub" id="stat-apps-total"></div>
         </div>
         <div class="stat-card green">
-          <div class="stat-label">Revenue (30d)</div>
-          <div class="stat-value" id="stat-revenue">�</div>
+          <div class="stat-label">Total Revenue (30d)</div>
+          <div class="stat-value" id="stat-revenue">—</div>
           <div class="stat-sub" id="stat-revenue-currency"></div>
         </div>
         <div class="stat-card purple">
@@ -159,19 +159,28 @@
       client.from('cohort_applications').select('*', { count:'exact', head:true }),
       client.from('cohort_applications').select('*', { count:'exact', head:true }).eq('status', 'pending'),
     ]);
-    document.getElementById('stat-apps').textContent = appsPending || 0;
-    document.getElementById('stat-apps-total').textContent = (appsTotal || 0) + ' total';
+    document.getElementById('stat-apps').textContent = appsTotal || 0;
+    document.getElementById('stat-apps-total').textContent = (appsPending || 0) + ' pending';
     var navAppsCount = document.getElementById('nav-apps-count');
-    if (appsPending > 0) navAppsCount.textContent = appsPending;
+    if (appsTotal > 0) navAppsCount.textContent = appsTotal;
 
-    // Revenue (last 30d, NGN succeeded payments)
+    // Revenue (last 30d, all succeeded payments)
     var { data: payments } = await client.from('payments')
       .select('amount_cents, currency')
       .eq('status', 'succeeded')
       .gte('created_at', ago30d);
-    var totalNgn = (payments || []).reduce(function (s, p) { return s + (p.amount_cents || 0); }, 0);
-    document.getElementById('stat-revenue').textContent = '?' + (totalNgn / 100).toLocaleString('en-NG', { minimumFractionDigits: 0 });
-    document.getElementById('stat-revenue-currency').textContent = (payments || []).length + ' payment(s)';
+    
+    var totalCents = (payments || []).reduce(function (s, p) { return s + (p.amount_cents || 0); }, 0);
+    var paymentCount = (payments || []).length;
+    
+    if (paymentCount === 0) {
+      document.getElementById('stat-revenue').textContent = '₦0';
+      document.getElementById('stat-revenue-currency').textContent = 'No payments yet';
+    } else {
+      // Assume NGN for now (most payments), can be enhanced later to show mixed currencies
+      document.getElementById('stat-revenue').textContent = '₦' + (totalCents / 100).toLocaleString('en-NG', { minimumFractionDigits: 0 });
+      document.getElementById('stat-revenue-currency').textContent = paymentCount + ' payment(s)';
+    }
 
     // Subscribers
     var { count: subs } = await client.from('newsletter_subscribers').select('*', { count:'exact', head:true }).eq('subscribed', true);

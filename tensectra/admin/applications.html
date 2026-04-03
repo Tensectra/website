@@ -4,11 +4,11 @@
   <script>(function(){var d=document.documentElement,t=localStorage.getItem("tensectra-theme")||"dark";d.setAttribute("data-theme",t);}());</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Applications � Tensectra Admin</title>
+  <title>Applications - Tensectra Admin</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/admin.css?v=2">
+  <link rel="stylesheet" href="../css/admin.css?v=7">
   <link rel="icon" type="image/png" href="../images/tensectra-logo.png">
 </head>
 <body class="admin-body">
@@ -30,12 +30,11 @@
       <a href="/admin/newsletter"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Newsletter</a>
     </nav>
     <div class="sidebar-footer">
-      <span class="sidebar-user-email" id="admin-user-email">Loading�</span>
+      <span class="sidebar-user-email" id="admin-user-email">Loading...</span>
       <button class="btn-logout" id="logout-btn">Sign Out</button>
     </div>
   </aside>
 
-  <!-- Mobile menu toggle -->
   <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle menu">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -47,22 +46,22 @@
 
   <main class="admin-main">
     <div class="admin-header">
-      <div><h1>Cohort Applications</h1><p class="admin-header-sub" id="header-count"></p></div>
+      <div><h1>Cohort Applications</h1><p class="admin-header-sub" id="header-count">Loading...</p></div>
     </div>
     <div class="admin-content">
       <div class="filter-bar">
         <button class="filter-btn active" data-filter="all">All</button>
         <button class="filter-btn" data-filter="pending">Pending</button>
         <button class="filter-btn" data-filter="accepted">Accepted</button>
-        <button class="filter-btn" data-filter="waitlisted">Waitlisted</button>
         <button class="filter-btn" data-filter="rejected">Rejected</button>
-        <button class="filter-btn" data-filter="scholarship">? Scholarship</button>
-        <input class="filter-search" id="search-input" type="text" placeholder="Search name, email, course�">
+        <button class="filter-btn" data-filter="waitlisted">Waitlisted</button>
+        <button class="filter-btn" data-filter="scholarship">Scholarship</button>
+        <input class="filter-search" id="search-input" type="text" placeholder="Search name, email, course">
       </div>
       <div class="table-card">
         <div class="table-card-header">
           <span class="table-card-title">Applications</span>
-          <span class="table-card-count" id="table-count"></span>
+          <span class="table-card-count" id="table-count">0 records</span>
         </div>
         <div style="overflow-x:auto">
           <table class="admin-table">
@@ -70,7 +69,7 @@
               <th>Name</th><th>Course</th><th>Experience</th><th>Scholarship</th>
               <th>Status</th><th>Location</th><th>Date</th><th>Actions</th>
             </tr></thead>
-            <tbody id="apps-tbody"><tr><td colspan="8" style="text-align:center;padding:40px" class="muted">Loading�</td></tr></tbody>
+            <tbody id="apps-tbody"><tr><td colspan="8" style="text-align:center;padding:40px" class="muted">Loading...</td></tr></tbody>
           </table>
         </div>
         <div class="pagination" id="pagination"></div>
@@ -79,115 +78,11 @@
   </main>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../js/admin-auth.js"></script>
-<script src="../js/admin.js"></script>
-<script>
-  var allRows      = [];
-  var filtered     = [];
-  var activeFilter = 'all';
-  var PAGE_SIZE    = 25;
-  var page         = 0;
-  var cohortPrices = {};  // course ? { amount, currency } from cohorts table
-
-  window.reloadTable = loadData;
-
-  document.addEventListener('adminReady', async function () {
-    var client = window._supabase;
-    // Load open cohort prices
-    var { data: cohorts } = await client.from('cohorts')
-      .select('course, price_usd, status')
-      .in('status', ['open', 'in_progress']);
-    (cohorts || []).forEach(function (c) {
-      // price_usd is in cents, convert to NGN kobo for Paystack default
-      // For now store as USD cents � admin can switch currency in modal
-      cohortPrices[c.course] = { amount: c.price_usd || 29900, currency: 'USD' };
-    });
-    loadData();
-  });
-
-  async function loadData() {
-    var client = window._supabase;
-    var { data, error } = await client.from('cohort_applications')
-      .select('*').order('submitted_at', { ascending: false });
-    if (error) { showToast('Load error: ' + error.message, 'error'); return; }
-    allRows = data || [];
-    document.getElementById('header-count').textContent = allRows.length + ' total applications';
-    applyFilter();
-  }
-
-  function applyFilter() {
-    var q = (document.getElementById('search-input').value || '').toLowerCase();
-    filtered = allRows.filter(function (r) {
-      var matchStatus = activeFilter === 'all' || activeFilter === 'scholarship'
-        ? (activeFilter === 'scholarship' ? r.is_scholarship : true)
-        : r.status === activeFilter;
-      var matchSearch = !q || (r.name||'').toLowerCase().includes(q) || (r.email||'').toLowerCase().includes(q) || (r.course||'').toLowerCase().includes(q);
-      return matchStatus && matchSearch;
-    });
-    page = 0;
-    renderTable();
-  }
-
-  function renderTable() {
-    document.getElementById('table-count').textContent = filtered.length + ' records';
-    var start = page * PAGE_SIZE;
-    var rows  = filtered.slice(start, start + PAGE_SIZE);
-    if (!rows.length) {
-      document.getElementById('apps-tbody').innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px" class="muted">No records found</td></tr>';
-      document.getElementById('pagination').innerHTML = '';
-      return;
-    }
-    var courseShort = { backend:'Backend', frontend:'Frontend', mobile:'Mobile' };
-    document.getElementById('apps-tbody').innerHTML = rows.map(function (r) {
-      var loc = [r.city, r.country_name].filter(Boolean).join(', ') || '�';
-      var schBadge = r.is_scholarship ? '<span class="chip-scholarship">?</span>' : '<span class="muted">�</span>';
-      var defaultPrice = cohortPrices[r.course] || { amount: 29900, currency: 'USD' };
-      return '<tr>'
-        + '<td><strong style="color:#E6EDF3">' + (r.name||'�') + '</strong><br><span class="muted" style="font-size:.75rem">' + (r.email||'') + '</span></td>'
-        + '<td class="muted">' + (courseShort[r.course]||r.course||'�') + '</td>'
-        + '<td class="muted">' + (r.experience||'�') + '</td>'
-        + '<td>' + schBadge + '</td>'
-        + '<td>' + statusBadge(r.status) + '</td>'
-        + '<td class="muted" style="font-size:.8rem">' + loc + '</td>'
-        + '<td class="muted">' + fmtDate(r.submitted_at) + '</td>'
-        + '<td><div class="action-group">'
-        + '<button class="btn-action" onclick="openApplicationDetail(' + JSON.stringify(r).replace(/"/g,'&quot;') + ')">View</button>'
-        + '<button class="btn-action btn-approve" onclick="updateStatus(\'cohort_applications\',\'' + r.id + '\',\'accepted\',function(){loadData()})" title="Approve"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00FF88" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></button>'
-        + '<button class="btn-action btn-reject"  onclick="updateStatus(\'cohort_applications\',\'' + r.id + '\',\'rejected\',function(){loadData()})" title="Reject"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF4444" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>'
-        + '<button class="btn-action btn-pay" onclick="openPaymentLinkModal(' + JSON.stringify(r).replace(/"/g,'&quot;') + ',\'cohort\',' + JSON.stringify(defaultPrice).replace(/"/g,'&quot;') + ')" title="Send Payment Link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></button>'
-        + '</div></td>'
-        + '</tr>';
-    }).join('');
-
-    var totalPages = Math.ceil(filtered.length / PAGE_SIZE);
-    if (totalPages <= 1) { document.getElementById('pagination').innerHTML = ''; return; }
-    var pHtml = '<span class="page-info">' + (page+1) + ' / ' + totalPages + '</span>';
-    if (page > 0) pHtml = '<button class="page-btn" onclick="goPage(' + (page-1) + ')">? Prev</button>' + pHtml;
-    if (page < totalPages - 1) pHtml += '<button class="page-btn" onclick="goPage(' + (page+1) + ')">Next ?</button>';
-    document.getElementById('pagination').innerHTML = pHtml;
-  }
-
-  window.goPage = function (p) { page = p; renderTable(); };
-
-  document.querySelectorAll('.filter-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      document.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      activeFilter = btn.dataset.filter;
-      applyFilter();
-    });
-  });
-
-  document.getElementById('search-input').addEventListener('input', applyFilter);
-</script>
-
-<!-- Payment Link Modal -->
 <div class="modal" id="payment-link-modal">
   <div class="modal-content" style="max-width: 500px;">
     <div class="modal-header">
       <h3>Send Payment Link</h3>
-      <button class="modal-close" onclick="document.getElementById('payment-link-modal').style.display='none'">&times;</button>
+      <button class="modal-close" onclick="closePaymentModal()">&times;</button>
     </div>
     <div class="modal-body">
       <div class="form-group">
@@ -220,17 +115,124 @@
       <input type="hidden" id="pay-record-type">
     </div>
     <div class="modal-footer">
-      <button class="btn-cancel" onclick="document.getElementById('payment-link-modal').style.display='none'">Cancel</button>
+      <button class="btn-cancel" onclick="closePaymentModal()">Cancel</button>
       <button class="btn-primary" onclick="sendPaymentLink()">Generate & Send Link</button>
     </div>
   </div>
 </div>
 
-<!-- Toast Notification -->
 <div id="toast-container" style="position:fixed;top:20px;right:20px;z-index:9999;"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/admin-auth.js"></script>
+<script src="../js/admin.js"></script>
 <script>
-// Utility: Show toast notification
+var allRows = [];
+var filtered = [];
+var activeFilter = 'all';
+var PAGE_SIZE = 25;
+var page = 0;
+var cohortPrices = {};
+var currentPaymentRecord = null;
+
+window.reloadTable = loadData;
+
+document.addEventListener('adminReady', async function () {
+  var client = window._supabase;
+  var result = await client.from('cohorts').select('course, price_usd, status').in('status', ['open', 'in_progress']);
+  var cohorts = result.data || [];
+  cohorts.forEach(function (c) {
+    cohortPrices[c.course] = { amount: c.price_usd || 29900, currency: 'USD' };
+  });
+  loadData();
+});
+
+async function loadData() {
+  var client = window._supabase;
+  console.log('[Applications] Loading...');
+  var result = await client.from('cohort_applications').select('*').order('submitted_at', { ascending: false });
+  if (result.error) { 
+    alert('Error: ' + result.error.message); 
+    return; 
+  }
+  allRows = result.data || [];
+  console.log('[Applications] Loaded', allRows.length, 'records');
+  document.getElementById('header-count').textContent = allRows.length + ' total applications';
+  applyFilter();
+}
+
+function applyFilter() {
+  var q = (document.getElementById('search-input').value || '').toLowerCase();
+  filtered = allRows.filter(function (r) {
+    var matchStatus = activeFilter === 'all' || activeFilter === 'scholarship' 
+      ? (activeFilter === 'scholarship' ? r.is_scholarship : true)
+      : r.status === activeFilter;
+    var matchSearch = !q || (r.name||'').toLowerCase().includes(q) || (r.email||'').toLowerCase().includes(q) || (r.course||'').toLowerCase().includes(q);
+    return matchStatus && matchSearch;
+  });
+  page = 0;
+  renderTable();
+}
+
+function renderTable() {
+  document.getElementById('table-count').textContent = filtered.length + ' records';
+  var start = page * PAGE_SIZE;
+  var rows = filtered.slice(start, start + PAGE_SIZE);
+  if (!rows.length) {
+    document.getElementById('apps-tbody').innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px" class="muted">No records found</td></tr>';
+    document.getElementById('pagination').innerHTML = '';
+    return;
+  }
+  
+  var courseShort = { backend:'Backend', frontend:'Frontend', mobile:'Mobile' };
+  document.getElementById('apps-tbody').innerHTML = rows.map(function (r) {
+    var loc = [r.city, r.country_name].filter(Boolean).join(', ') || '-';
+    var schBadge = r.is_scholarship ? '<span class="chip-scholarship">S</span>' : '<span class="muted">-</span>';
+    var defaultPrice = cohortPrices[r.course] || { amount: 29900, currency: 'USD' };
+    var rowData = JSON.stringify(r).replace(/"/g, '&quot;');
+    var priceData = JSON.stringify(defaultPrice).replace(/"/g, '&quot;');
+    
+    return '<tr>'
+      + '<td><strong style="color:#E6EDF3">' + (r.name||'-') + '</strong><br><span class="muted" style="font-size:.75rem">' + (r.email||'') + '</span></td>'
+      + '<td class="muted">' + (courseShort[r.course]||r.course||'-') + '</td>'
+      + '<td class="muted">' + (r.experience||'-') + '</td>'
+      + '<td>' + schBadge + '</td>'
+      + '<td>' + statusBadge(r.status) + '</td>'
+      + '<td class="muted" style="font-size:.8rem">' + loc + '</td>'
+      + '<td class="muted">' + fmtDate(r.submitted_at) + '</td>'
+      + '<td><div class="action-group">'
+      + '<button class="btn-action" onclick="viewApplication(' + rowData + ')">View</button>'
+      + '<button class="btn-action btn-approve" onclick="updateStatus(\'cohort_applications\',\'' + r.id + '\',\'accepted\',loadData)" title="Approve"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00FF88" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></button>'
+      + '<button class="btn-action btn-reject" onclick="updateStatus(\'cohort_applications\',\'' + r.id + '\',\'rejected\',loadData)" title="Reject"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF4444" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>'
+      + '<button class="btn-action btn-pay" onclick="openPaymentLinkModal(' + rowData + ',\'cohort\',' + priceData + ')" title="Send Payment Link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></button>'
+      + '</div></td>'
+      + '</tr>';
+  }).join('');
+  
+  var totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  if (totalPages <= 1) { 
+    document.getElementById('pagination').innerHTML = ''; 
+    return; 
+  }
+  var pHtml = '<span class="page-info">' + (page+1) + ' / ' + totalPages + '</span>';
+  if (page > 0) pHtml = '<button class="page-btn" onclick="goPage(' + (page-1) + ')">Prev</button>' + pHtml;
+  if (page < totalPages - 1) pHtml += '<button class="page-btn" onclick="goPage(' + (page+1) + ')">Next</button>';
+  document.getElementById('pagination').innerHTML = pHtml;
+}
+
+window.goPage = function (p) { page = p; renderTable(); };
+
+document.querySelectorAll('.filter-btn').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    document.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    applyFilter();
+  });
+});
+
+document.getElementById('search-input').addEventListener('input', applyFilter);
+
 function showToast(message, type) {
   var toast = document.createElement('div');
   toast.className = 'toast toast-' + (type || 'info');
@@ -243,27 +245,25 @@ function showToast(message, type) {
   }, 3000);
 }
 
-// Utility: Update status
 async function updateStatus(table, id, newStatus, callback) {
   if (!confirm('Update status to "' + newStatus + '"?')) return;
   var client = window._supabase;
-  var { error } = await client.from(table).update({
+  var result = await client.from(table).update({
     status: newStatus,
     reviewed_at: new Date().toISOString(),
     reviewed_by: window.ADMIN_USER.email
   }).eq('id', id);
-  if (error) {
-    showToast('Update failed: ' + error.message, 'error');
+  
+  if (result.error) {
+    showToast('Update failed: ' + result.error.message, 'error');
   } else {
     showToast('Status updated to ' + newStatus, 'success');
     if (callback) callback();
   }
 }
 
-// Open payment link modal
-var currentPaymentRecord = null;
-
 function openPaymentLinkModal(record, type, defaultPrice) {
+  console.log('Opening payment modal', record, type, defaultPrice);
   currentPaymentRecord = record;
   document.getElementById('pay-student-name').value = record.name || '';
   document.getElementById('pay-student-email').value = record.email || '';
@@ -275,7 +275,10 @@ function openPaymentLinkModal(record, type, defaultPrice) {
   document.getElementById('payment-link-modal').style.display = 'flex';
 }
 
-// Send payment link
+function closePaymentModal() {
+  document.getElementById('payment-link-modal').style.display = 'none';
+}
+
 async function sendPaymentLink() {
   var email = document.getElementById('pay-student-email').value;
   var amount = parseFloat(document.getElementById('pay-amount').value);
@@ -290,39 +293,52 @@ async function sendPaymentLink() {
   
   var amountCents = Math.round(amount * 100);
   
+  var sessionResult = await window._supabase.auth.getSession();
+  if (!sessionResult.data.session) {
+    showToast('Session expired. Please login again.', 'error');
+    return;
+  }
+  
   try {
     var response = await fetch('/api/send-payment-link', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + sessionResult.data.session.access_token
+      },
       body: JSON.stringify({
+        record_id: recordId,
+        record_type: recordType,
         email: email,
         name: currentPaymentRecord.name,
         amount: amountCents,
         currency: currency,
-        recordType: recordType,
-        recordId: recordId,
-        productName: currentPaymentRecord.course || currentPaymentRecord.tier,
-        sentBy: window.ADMIN_USER.email
+        product_name: currentPaymentRecord.course || currentPaymentRecord.tier || 'Service',
+        note: ''
       })
     });
     
-    if (!response.ok) throw new Error('API call failed');
+    if (!response.ok) {
+      var errorData = await response.json();
+      throw new Error(errorData.error || 'API call failed');
+    }
     
     var data = await response.json();
     showToast('Payment link sent to ' + email, 'success');
-    document.getElementById('payment-link-modal').style.display = 'none';
+    closePaymentModal();
     loadData();
   } catch (err) {
     showToast('Failed to send link: ' + err.message, 'error');
+    console.error('Payment link error:', err);
   }
 }
 
-// Application detail modal
-function openApplicationDetail(record) {
-  alert('Detail view coming soon!\n\nName: ' + record.name + '\nEmail: ' + record.email + '\nCourse: ' + record.course + '\nExperience: ' + record.experience + '\nScholarship: ' + (record.is_scholarship ? 'Yes' : 'No'));
+function viewApplication(record) {
+  alert('Application Detail:\n\nName: ' + record.name + '\nEmail: ' + record.email + '\nCourse: ' + record.course + '\nExperience: ' + record.experience + '\nScholarship: ' + (record.is_scholarship ? 'Yes' : 'No'));
 }
+</script>
 
-// Mobile menu toggle
+<script>
 (function() {
   var sidebar = document.querySelector('.admin-sidebar');
   var toggle = document.getElementById('mobile-menu-btn');
@@ -340,7 +356,6 @@ function openApplicationDetail(record) {
   
   overlay.addEventListener('click', closeMobile);
   
-  // Close on nav click
   document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
     link.addEventListener('click', closeMobile);
   });
@@ -407,12 +422,62 @@ function openApplicationDetail(record) {
   padding: 20px;
 }
 
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.875rem;
+  color: #8B96A8;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 12px;
+  background: #0D1B2A;
+  border: 1px solid #1B2E42;
+  border-radius: 6px;
+  color: #E6EDF3;
+  font-size: 0.875rem;
+}
+
 .modal-footer {
   padding: 16px 20px;
   border-top: 1px solid #0D2040;
   display: flex;
   gap: 10px;
   justify-content: flex-end;
+}
+
+.btn-cancel {
+  padding: 10px 20px;
+  background: transparent;
+  border: 1px solid #1B2E42;
+  color: #8B96A8;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.btn-cancel:hover {
+  background: #0D1B2A;
+}
+
+.btn-primary {
+  padding: 10px 20px;
+  background: #00CCFF;
+  border: none;
+  color: #000;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.btn-primary:hover {
+  background: #00B8E6;
 }
 </style>
 </body>
