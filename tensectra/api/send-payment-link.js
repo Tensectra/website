@@ -115,24 +115,55 @@ function paymentLinkEmail({ type, name, product_name, amount, currency, paymentU
 </table></td></tr></table></body></html>`;
 }
 
-// ?? Main handler ???????????????????????????????????????????????????????????
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).end();
-
-  const token = (req.headers.authorization || '').replace('Bearer ', '').trim();
-  if (!token) return res.status(401).json({ error: 'Missing Authorization header' });
-
-  const admin = await verifyAdmin(token);
-  if (!admin) return res.status(403).json({ error: 'Not authorised as admin' });
-
-  const { record_id, record_type, email, name, amount, currency = 'NGN', product_name, note = '', cohort_details } = req.body || {};
-  if (!record_id || !record_type || !email || !amount || !product_name) {
-    return res.status(400).json({ error: 'Missing: record_id, record_type, email, amount, product_name' });
+  // Add CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
+    const token = (req.headers.authorization || '').replace('Bearer ', '').trim();
+    if (!token) {
+      return res.status(401).json({ error: 'Missing Authorization header' });
+    }
+
+    const admin = await verifyAdmin(token);
+    if (!admin) {
+      return res.status(403).json({ error: 'Not authorised as admin' });
+    }
+
+    const { record_id, record_type, email, name, amount, currency = 'NGN', product_name, note = '', cohort_details } = req.body || {};
+    
+    if (!record_id || !record_type || !email || !amount || !product_name) {
+      return res.status(400).json({ 
+        error: 'Missing required fields',
+        required: ['record_id', 'record_type', 'email', 'amount', 'product_name']
+      });
+    }
+
+    // Validate environment variables
+    if (!PAYSTACK_KEY || !RESEND_KEY || !SERVICE_KEY) {
+      console.error('Missing environment variables:', {
+        hasPaystack: !!PAYSTACK_KEY,
+        hasResend: !!RESEND_KEY,
+        hasSupabase: !!SERVICE_KEY
+      });
+      return res.status(500).json({ error: 'Server configuration error - missing API keys' });
+    }
+
     // Create Paystack transaction
     const reference = `TEN-${Date.now()}-${Math.random().toString(36).substr(2, 5).toUpperCase()}`;
+    
+    console.log('[Payment Link] Creating Paystack transaction:', { email, amount, currency, reference });
+    
     const psRes = await fetch('https://api.paystack.co/transaction/initialize', {
       method: 'POST',
       headers: { Authorization: `Bearer ${PAYSTACK_KEY}`, 'Content-Type': 'application/json' },
@@ -146,41 +177,89 @@ export default async function handler(req, res) {
         },
       }),
     });
+    
     const psData = await psRes.json();
-    if (!psData.status) throw new Error(`Paystack: ${psData.message}`);
+    
+    if (!psData.status) {
+      console.error('[Payment Link] Paystack error:', psData);
+      throw new Error(`Paystack: ${psData.message || 'Unknown error'}`);
+    }
+    
     const paymentUrl = psData.data.authorization_url;
+    console.log('[Payment Link] Paystack URL created:', paymentUrl);
 
     // Send email
-    await fetch('https://api.resend.com/emails', {
+    console.log('[Payment Link] Sending email to:', email);
+    
+    const emailSubject = record_type === 'cohort'
+      ? `You're accepted - complete your enrolment for ${product_name}`
+      : `Invoice ready - ${product_name}`;
+    
+    const emailRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: { Authorization: `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: FROM, to: [email],
-        subject: record_type === 'cohort'
-          ? `?? You're accepted — complete your enrolment for ${product_name}`
-          : `Invoice ready — ${product_name} · ${fmtAmount(amount, currency)}`,
+        from: FROM, 
+        to: [email],
+        subject: emailSubject,
         html: paymentLinkEmail({ type: record_type, name, product_name, amount, currency, paymentUrl, note, cohort_details }),
       }),
     });
+    
+    if (!emailRes.ok) {
+      const emailError = await emailRes.text();
+      console.error('[Payment Link] Resend error:', emailError);
+      throw new Error(`Email failed: ${emailError}`);
+    }
+    
+    console.log('[Payment Link] Email sent successfully');
 
     // Update record status + log note
-    const table  = record_type === 'consultancy' ? 'consultancy_enquiries' : 'cohort_applications';
+    const table = record_type === 'consultancy' ? 'consultancy_enquiries' : 'cohort_applications';
     const status = record_type === 'consultancy' ? 'proposal_sent' : 'waitlisted';
+    
     await sb(`${table}?id=eq.${record_id}`, {
-      method: 'PATCH', prefer: 'return=minimal',
-      body: JSON.stringify({ status, notes: `Payment link sent ${new Date().toISOString().slice(0,10)} by ${admin.email}. Ref: ${reference}` }),
+      method: 'PATCH', 
+      prefer: 'return=minimal',
+      body: JSON.stringify({ 
+        status, 
+        notes: `Payment link sent ${new Date().toISOString().slice(0,10)} by ${admin.email}. Ref: ${reference}` 
+      }),
     });
 
     // Log payment_link record
     await sb('payment_links', {
-      method: 'POST', prefer: 'return=minimal',
-      body: JSON.stringify({ record_type, record_id, payer_email: email, payer_name: name, product_name, amount, currency, paystack_reference: reference, paystack_link: paymentUrl, sent_by: admin.email }),
+      method: 'POST', 
+      prefer: 'return=minimal',
+      body: JSON.stringify({ 
+        record_type, 
+        record_id, 
+        payer_email: email, 
+        payer_name: name, 
+        product_name, 
+        amount, 
+        currency, 
+        paystack_reference: reference, 
+        paystack_link: paymentUrl, 
+        sent_by: admin.email 
+      }),
     });
 
-    return res.status(200).json({ ok: true, paymentUrl, reference });
+    console.log('[Payment Link] Success!', { reference, email });
+    
+    return res.status(200).json({ 
+      ok: true, 
+      paymentUrl, 
+      reference,
+      message: 'Payment link sent successfully'
+    });
+    
   } catch (err) {
-    console.error('[api/send-payment-link]', err.message);
-    return res.status(500).json({ error: err.message });
+    console.error('[api/send-payment-link] Error:', err);
+    return res.status(500).json({ 
+      error: err.message || 'Internal server error',
+      details: process.env.NODE_ENV === 'development' ? err.stack : undefined
+    });
   }
 }
 
