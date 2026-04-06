@@ -517,7 +517,7 @@ function initRefCardLead() {
     if (e.key === 'Escape' && overlay.classList.contains('open')) closeRc();
   });
 
-  // --- Form submit ---
+  // Form submit
   document.getElementById('rc-form').addEventListener('submit', function(e) {
     e.preventDefault();
     var name  = this.querySelector('[name="name"]').value.trim();
@@ -528,19 +528,33 @@ function initRefCardLead() {
       return;
     }
 
-    var params = new URLSearchParams();
-    params.set('form-name',   'ref-card-download');
-    params.set('name',        name);
-    params.set('email',       email);
-    params.set('lead_source', 'reference_card_download');
-
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params.toString()
-    })
-    .then(function()  { closeRc(); triggerDownload(name); showNotification('Download started!', 'success'); })
-    .catch(function() { closeRc(); triggerDownload(name); showNotification('Download started!', 'success'); });
+    // Save to Supabase ONLY (not Netlify)
+    if (window._supabase) {
+      window._supabase.from('reference_card_downloads').insert({
+        name: name,
+        email: email,
+        ip_address: window.userLocation ? window.userLocation.ip : null,
+        country: window.userLocation ? window.userLocation.country_name : null,
+        city: window.userLocation ? window.userLocation.city : null
+      }).then(function(result) {
+        console.log('[RefCard] Saved to CRM:', result);
+        if (result.error) {
+          console.error('[RefCard] Error:', result.error);
+        }
+        closeRc();
+        triggerDownload(name);
+        showNotification('Download started!', 'success');
+      }).catch(function(err) {
+        console.error('[RefCard] CRM save error:', err);
+        closeRc();
+        triggerDownload(name);
+        showNotification('Download started!', 'success');
+      });
+    } else {
+      closeRc();
+      triggerDownload(name);
+      showNotification('Download started!', 'success');
+    }
   });
 
   // --- Generate + download the card ---

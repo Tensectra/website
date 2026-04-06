@@ -1,0 +1,42 @@
+Subject: Your TensectraKit Request - $299 One-Time
+
+Hi {{name}},
+
+Thanks for your interest in TensectraKit - the enterprise .NET 8 scaffold we use to build financial SaaS for banks across Africa.
+
+WHAT YOU GET:
+- 5-layer clean architecture (API -> Domain -> Infrastructure)
+- 14 enterprise patterns built in
+- Multi-tenant with country strategies
+- CQRS + MediatR + Event Sourcing
+- 3 database providers (SQL Server, PostgreSQL, MySQL)
+- Production-ready middleware + monitoring
+- Full documentation + setup guide
+
+PRICE: $299 one-time (lifetime access)
+
+PAYMENT LINK:
+https://tensectra.com/pages/infrastructure#pricing
+
+WHAT HAPPENS AFTER PAYMENT:
+1. Instant email with GitHub repo access
+2. Setup guide + video walkthrough
+3. Lifetime updates (all new modules free)
+4. Priority support via email/Discord
+
+QUESTIONS?
+- Architecture preview: https://tensectra.com/pages/infrastructure#architecture
+- Book 15-min call: https://calendly.com/tensectra-office/15min
+- Email us: hello@tensectra.com
+
+---
+
+Ready to ship? Click below to complete your purchase:
+https://tensectra.com/pages/infrastructure#pricing
+
+--
+Tensectra
+tensectra.com
+Build production-grade SaaS with enterprise patterns
+
+P.S. If you have specific requirements (custom modules, team training, etc.) - just reply to this email.

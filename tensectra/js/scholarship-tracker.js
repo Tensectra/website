@@ -9,8 +9,8 @@ class ScholarshipTracker {
 
   async init() {
     // Wait for Supabase to be available
-    if (typeof supabase !== 'undefined') {
-      this.supabase = supabase;
+    if (typeof window._supabase !== 'undefined' && window._supabase) {
+      this.supabase = window._supabase;
       await this.updateScholarshipCounts();
       // Refresh every 30 seconds
       setInterval(() => this.updateScholarshipCounts(), 30000);

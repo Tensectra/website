@@ -38,6 +38,10 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         Applications <span class="nav-badge" id="nav-apps-count"></span>
       </a>
+      <a href="/admin/leads">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+        Leads
+      </a>
       <a href="/admin/payments">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
         Payments
@@ -78,23 +82,23 @@
       <div class="stat-grid">
         <div class="stat-card cyan">
           <div class="stat-label">Consultancy Enquiries (7d)</div>
-          <div class="stat-value" id="stat-enquiries">—</div>
+          <div class="stat-value" id="stat-enquiries">-</div>
           <div class="stat-sub" id="stat-enquiries-total"></div>
         </div>
         <div class="stat-card blue">
           <div class="stat-label">Cohort Applications</div>
-          <div class="stat-value" id="stat-apps">—</div>
+          <div class="stat-value" id="stat-apps">-</div>
           <div class="stat-sub" id="stat-apps-total"></div>
+        </div>
+        <div class="stat-card purple">
+          <div class="stat-label">Product Leads</div>
+          <div class="stat-value" id="stat-leads">-</div>
+          <div class="stat-sub" id="stat-leads-detail"></div>
         </div>
         <div class="stat-card green">
           <div class="stat-label">Total Revenue (30d)</div>
-          <div class="stat-value" id="stat-revenue">—</div>
+          <div class="stat-value" id="stat-revenue">-</div>
           <div class="stat-sub" id="stat-revenue-currency"></div>
-        </div>
-        <div class="stat-card purple">
-          <div class="stat-label">Subscribers</div>
-          <div class="stat-value" id="stat-subs">�</div>
-          <div class="stat-sub">newsletter list</div>
         </div>
       </div>
 
@@ -164,6 +168,15 @@
     var navAppsCount = document.getElementById('nav-apps-count');
     if (appsTotal > 0) navAppsCount.textContent = appsTotal;
 
+    // Product Leads stats (Kit + RefCard)
+    var [{ count: kitCount }, { count: refcardCount }] = await Promise.all([
+      client.from('kit_purchase_requests').select('*', { count:'exact', head:true }),
+      client.from('reference_card_downloads').select('*', { count:'exact', head:true })
+    ]);
+    var totalLeads = (kitCount || 0) + (refcardCount || 0);
+    document.getElementById('stat-leads').textContent = totalLeads;
+    document.getElementById('stat-leads-detail').textContent = (kitCount || 0) + ' kit / ' + (refcardCount || 0) + ' cards';
+
     // Revenue (last 30d, all succeeded payments)
     var { data: payments } = await client.from('payments')
       .select('amount_cents, currency')
@@ -177,14 +190,9 @@
       document.getElementById('stat-revenue').textContent = '₦0';
       document.getElementById('stat-revenue-currency').textContent = 'No payments yet';
     } else {
-      // Assume NGN for now (most payments), can be enhanced later to show mixed currencies
       document.getElementById('stat-revenue').textContent = '₦' + (totalCents / 100).toLocaleString('en-NG', { minimumFractionDigits: 0 });
       document.getElementById('stat-revenue-currency').textContent = paymentCount + ' payment(s)';
     }
-
-    // Subscribers
-    var { count: subs } = await client.from('newsletter_subscribers').select('*', { count:'exact', head:true }).eq('subscribed', true);
-    document.getElementById('stat-subs').textContent = subs || 0;
 
     // Recent enquiries table
     var { data: enquiries } = await client.from('consultancy_enquiries')

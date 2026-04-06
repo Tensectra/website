@@ -4,11 +4,11 @@
   <script>(function(){var d=document.documentElement,t=localStorage.getItem("tensectra-theme")||"dark";d.setAttribute("data-theme",t);}());</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Newsletter � Tensectra Admin</title>
+  <title>Newsletter - Tensectra Admin</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/admin.css?v=5">
+  <link rel="stylesheet" href="../css/admin.css?v=9">
   <link rel="icon" type="image/png" href="../images/tensectra-logo.png">
 </head>
 <body class="admin-body">
@@ -25,12 +25,13 @@
       <div class="sidebar-section">CRM</div>
       <a href="/admin/consultancy"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>Consultancy</a>
       <a href="/admin/applications"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Applications</a>
+      <a href="/admin/leads"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>Leads</a>
       <a href="/admin/payments"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Payments</a>
       <div class="sidebar-section">Lists</div>
       <a href="/admin/newsletter" class="active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Newsletter</a>
     </nav>
     <div class="sidebar-footer">
-      <span class="sidebar-user-email" id="admin-user-email">Loading�</span>
+      <span class="sidebar-user-email" id="admin-user-email">Loading...</span>
       <button class="btn-logout" id="logout-btn">Sign Out</button>
     </div>
   </aside>
@@ -49,7 +50,7 @@
     <div class="admin-header">
       <div><h1>Newsletter Subscribers</h1><p class="admin-header-sub" id="header-count"></p></div>
       <div class="admin-header-actions">
-        <button class="btn btn-secondary btn-sm" id="export-btn">? Export CSV</button>
+        <button class="btn btn-secondary btn-sm" id="export-btn">Export CSV</button>
       </div>
     </div>
     <div class="admin-content">
@@ -59,7 +60,7 @@
         <button class="filter-btn" data-filter="alumni">Alumni</button>
         <button class="filter-btn" data-filter="pro_members">Pro Members</button>
         <button class="filter-btn" data-filter="waitlist">Waitlist</button>
-        <input class="filter-search" id="search-input" type="text" placeholder="Search email or name�">
+        <input class="filter-search" id="search-input" type="text" placeholder="Search email or name">
       </div>
       <div class="table-card">
         <div class="table-card-header">
@@ -72,7 +73,7 @@
               <th>Email</th><th>Name</th><th>List</th><th>Source</th>
               <th>Status</th><th>Subscribed</th>
             </tr></thead>
-            <tbody id="subs-tbody"><tr><td colspan="6" style="text-align:center;padding:40px" class="muted">Loading�</td></tr></tbody>
+            <tbody id="subs-tbody"><tr><td colspan="6" style="text-align:center;padding:40px" class="muted">Loading...</td></tr></tbody>
           </table>
         </div>
         <div class="pagination" id="pagination"></div>
@@ -151,10 +152,10 @@
         ? '<span class="status status-succeeded">Active</span>'
         : '<span class="status status-lost">Unsubscribed</span>';
       return '<tr>'
-        + '<td class="mono" style="font-size:.8rem">' + (r.email||'�') + '</td>'
-        + '<td>' + (r.name||'�') + '</td>'
-        + '<td class="muted">' + (r.list_type||'�') + '</td>'
-        + '<td class="muted">' + (r.source||'�') + '</td>'
+        + '<td class="mono" style="font-size:.8rem">' + (r.email||'-') + '</td>'
+        + '<td>' + (r.name||'-') + '</td>'
+        + '<td class="muted">' + (r.list_type||'-') + '</td>'
+        + '<td class="muted">' + (r.source||'-') + '</td>'
         + '<td>' + subBadge + '</td>'
         + '<td class="muted">' + fmtDate(r.subscribed_at) + '</td>'
         + '</tr>';
@@ -163,8 +164,8 @@
     var totalPages = Math.ceil(filtered.length / PAGE_SIZE);
     if (totalPages <= 1) { document.getElementById('pagination').innerHTML = ''; return; }
     var pHtml = '<span class="page-info">' + (page+1) + ' / ' + totalPages + '</span>';
-    if (page > 0) pHtml = '<button class="page-btn" onclick="goPage(' + (page-1) + ')">? Prev</button>' + pHtml;
-    if (page < totalPages - 1) pHtml += '<button class="page-btn" onclick="goPage(' + (page+1) + ')">Next ?</button>';
+    if (page > 0) pHtml = '<button class="page-btn" onclick="goPage(' + (page-1) + ')">Prev</button>' + pHtml;
+    if (page < totalPages - 1) pHtml += '<button class="page-btn" onclick="goPage(' + (page+1) + ')">Next</button>';
     document.getElementById('pagination').innerHTML = pHtml;
   }
 

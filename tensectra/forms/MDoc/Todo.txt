@@ -73,3 +73,12 @@ Page	Before	After
 /pages/pro	$15/month	₦7,500/month
 /pages/pro	$120/year	₦60,000/year
 /pages/infrastructure	$299	₦150,000
+
+
+1. Go to: https://supabase.com/dashboard
+2. Select: Your project (ahcfozfntvqbfgbinxwr)
+3. Settings → API
+4. Copy: "anon" "public" key (starts with eyJ...)
+5. Update in TWO files:
+   - .env (line 6)
+   - js/supabase-config.js (line 5)

@@ -1,0 +1,46 @@
+Subject: Your Enterprise Architecture Reference Card + What's Next
+
+Hi {{name}},
+
+Hope the reference card is helpful! It's the same 5-layer architecture we use to build financial SaaS serving banks across Africa.
+
+YOU DOWNLOADED:
+- 5-layer architecture map (API -> Domain)
+- All 14 enterprise patterns at a glance
+- CQRS + Repository quick-reference flow
+- Multi-tenant factory pattern example
+- Full tech stack decision map
+
+WHAT PEOPLE ASK NEXT:
+
+1. "Can I see the actual code?"
+   Yes - TensectraKit ($299) is the full .NET 8 scaffold with all 14 patterns implemented:
+   https://tensectra.com/pages/infrastructure
+
+2. "Do you offer training?"
+   Yes - 6-week live cohorts. Ship a real product with us:
+   https://tensectra.com/pages/cohorts
+
+3. "Can you review our architecture?"
+   Yes - Book a consultancy call (architecture review, system design, code audit):
+   https://tensectra.com/pages/consultancy
+
+HELPFUL RESOURCES:
+- Full architecture breakdown: https://tensectra.com/pages/infrastructure#architecture
+- Pattern explanations: https://tensectra.com/pages/pro
+- Join community: https://tensectra.com/pages/community
+
+QUESTIONS?
+Just reply to this email - we respond within 4 hours.
+
+---
+
+Next step: See the full scaffold in action
+https://tensectra.com/pages/infrastructure
+
+--
+Tensectra
+tensectra.com
+Enterprise patterns for production-grade SaaS
+
+P.S. We'll send you updates when new reference cards drop (no spam, unsubscribe anytime).

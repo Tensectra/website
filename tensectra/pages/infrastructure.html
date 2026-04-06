@@ -779,8 +779,7 @@ TENSECTRA ERP KIT
       </div>
       <div class="modal-body">
         <p style="color: var(--text-muted); margin-bottom: var(--space-lg);">Leave your name and email &mdash; we&rsquo;ll send the payment link and scaffold access within 4 hours.</p>
-        <form id="purchase-form" name="kit-purchase" method="POST" netlify onsubmit="submitPurchaseForm(event)">
-          <input type="hidden" name="form-name" value="kit-purchase">
+        <form id="purchase-form" onsubmit="submitPurchaseForm(event)">
           <input type="hidden" name="country_code"    id="f-country-code">
           <input type="hidden" name="country_name"    id="f-country-name">
           <input type="hidden" name="city"            id="f-city">
@@ -804,6 +803,7 @@ TENSECTRA ERP KIT
 
   <script src="../js/theme-toggle.js"></script>
   <script src="../js/main.js?v=2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../js/config.js"></script>
   <script src="../js/pricing.js"></script>
   <script src="../js/location.js"></script>
@@ -812,27 +812,38 @@ TENSECTRA ERP KIT
       e.preventDefault();
       const name  = document.getElementById('purchase-name').value.trim();
       const email = document.getElementById('purchase-email').value.trim();
-      const params = new URLSearchParams({
-        'form-name':     'kit-purchase',
-        name:            name,
-        email:           email,
-        country_code:    (document.getElementById('f-country-code')  || {}).value || '',
-        country_name:    (document.getElementById('f-country-name')  || {}).value || '',
-        city:            (document.getElementById('f-city')           || {}).value || '',
-        location_source: (document.getElementById('f-loc-source')    || {}).value || ''
-      });
-      fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: params.toString()
-      })
-      .then(function () {
-        closeAllModals();
-        showNotification('Purchase request received! We will email you within 4 hours.', 'success');
-      })
-      .catch(function () {
-        showNotification('Something went wrong. Please email hello@tensectra.com directly.', 'error');
-      });
+      
+      if (!name || !email) {
+        showNotification('Please fill all fields', 'error');
+        return;
+      }
+
+      // Save to Supabase ONLY (not Netlify)
+      if (window._supabase) {
+        window._supabase.from('kit_purchase_requests').insert({
+          name: name,
+          email: email,
+          ip_address: window.userLocation ? window.userLocation.ip : null,
+          country: (document.getElementById('f-country-name') || {}).value || null,
+          city: (document.getElementById('f-city') || {}).value || null
+        }).then(function(result) {
+          console.log('[Kit Purchase] Saved to CRM:', result);
+          if (result.error) {
+            console.error('[Kit Purchase] Error:', result.error);
+            showNotification('Failed to save. Please try again.', 'error');
+          } else {
+            closeAllModals();
+            showNotification('Purchase request received! We will email you within 4 hours.', 'success');
+          }
+        }).catch(function(err) {
+          console.error('[Kit Purchase] CRM save error:', err);
+          showNotification('Something went wrong. Please try again.', 'error');
+        });
+      } else {
+        console.error('[Kit Purchase] Supabase not initialized');
+        showNotification('System error. Please refresh the page.', 'error');
+      }
+    }
     }
 
     /* ── Modal 1: Full Architecture (pill cards) ── */
