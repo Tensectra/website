@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Forms - Tensectra</title>
+  <style>
+    body { font-family: monospace; padding: 20px; background: #0a0a0a; color: #e6e6e6; }
+    .test-section { margin: 20px 0; padding: 20px; border: 1px solid #333; border-radius: 8px; }
+    button { padding: 10px 20px; margin: 10px; background: #00ccff; color: #000; border: none; border-radius: 4px; cursor: pointer; }
+    .result { margin-top: 10px; padding: 10px; background: #1a1a1a; border-radius: 4px; }
+    .success { color: #00ff88; }
+    .error { color: #ff4444; }
+    input { padding: 8px; margin: 5px; border-radius: 4px; border: 1px solid #333; background: #1a1a1a; color: #e6e6e6; }
+  </style>
+</head>
+<body>
+  <h1>Form Testing Page</h1>
+  
+  <div class="test-section">
+    <h2>1. Check Config</h2>
+    <button onclick="checkConfig()">Check Supabase Config</button>
+    <div id="config-result" class="result"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>2. Test Reference Card</h2>
+    <input type="text" id="rc-name" placeholder="Name">
+    <input type="email" id="rc-email" placeholder="Email">
+    <button onclick="testRefCard()">Test Reference Card</button>
+    <div id="rc-result" class="result"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>3. Test Kit Purchase</h2>
+    <input type="text" id="kit-name" placeholder="Name">
+    <input type="email" id="kit-email" placeholder="Email">
+    <button onclick="testKitPurchase()">Test Kit Purchase</button>
+    <div id="kit-result" class="result"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>4. Test Waitlist</h2>
+    <button onclick="testWaitlist()">Check Waitlist Table</button>
+    <div id="waitlist-result" class="result"></div>
+  </div>
+
+  <script src="js/supabase-config.js"></script>
+  <script>
+    function log(elementId, message, isError = false) {
+      const el = document.getElementById(elementId);
+      el.innerHTML += '<div class="' + (isError ? 'error' : 'success') + '">' + message + '</div>';
+    }
+
+    function checkConfig() {
+      const el = document.getElementById('config-result');
+      el.innerHTML = '';
+      log('config-result', 'URL: ' + window.SUPABASE_URL);
+      log('config-result', 'ANON_KEY: ' + (window.SUPABASE_ANON_KEY ? window.SUPABASE_ANON_KEY.substring(0, 20) + '...' : 'MISSING'), !window.SUPABASE_ANON_KEY);
+      log('config-result', 'Config loaded: ' + (window.SUPABASE_URL && window.SUPABASE_ANON_KEY ? 'YES' : 'NO'));
+    }
+
+    async function testRefCard() {
+      const el = document.getElementById('rc-result');
+      el.innerHTML = '';
+      const name = document.getElementById('rc-name').value;
+      const email = document.getElementById('rc-email').value;
+      
+      if (!name || !email) {
+        log('rc-result', 'Please fill name and email', true);
+        return;
+      }
+
+      try {
+        log('rc-result', 'Sending request...');
+        const res = await fetch(window.SUPABASE_URL + '/rest/v1/reference_card_downloads', {
+          method: 'POST',
+          headers: {
+            'apikey': window.SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + window.SUPABASE_ANON_KEY,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email
+            // Don't send timestamp - let database default handle it
+          })
+        });
+
+        if (res.ok) {
+          log('rc-result', 'SUCCESS! Data saved to reference_card_downloads');
+        } else {
+          const text = await res.text();
+          log('rc-result', 'ERROR: ' + res.status + ' - ' + text, true);
+        }
+      } catch (err) {
+        log('rc-result', 'ERROR: ' + err.message, true);
+      }
+    }
+
+    async function testKitPurchase() {
+      const el = document.getElementById('kit-result');
+      el.innerHTML = '';
+      const name = document.getElementById('kit-name').value;
+      const email = document.getElementById('kit-email').value;
+      
+      if (!name || !email) {
+        log('kit-result', 'Please fill name and email', true);
+        return;
+      }
+
+      try {
+        log('kit-result', 'Sending request...');
+        const res = await fetch(window.SUPABASE_URL + '/rest/v1/kit_purchase_requests', {
+          method: 'POST',
+          headers: {
+            'apikey': window.SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + window.SUPABASE_ANON_KEY,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email
+            // Don't send timestamp - let database default handle it
+          })
+        });
+
+        if (res.ok) {
+          log('kit-result', 'SUCCESS! Data saved to kit_purchase_requests');
+        } else {
+          const text = await res.text();
+          log('kit-result', 'ERROR: ' + res.status + ' - ' + text, true);
+        }
+      } catch (err) {
+        log('kit-result', 'ERROR: ' + err.message, true);
+      }
+    }
+
+    async function testWaitlist() {
+      const el = document.getElementById('waitlist-result');
+      el.innerHTML = '';
+      
+      try {
+        log('waitlist-result', 'Checking waitlist_submissions table...');
+        const res = await fetch(window.SUPABASE_URL + '/rest/v1/waitlist_submissions?select=count', {
+          method: 'GET',
+          headers: {
+            'apikey': window.SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + window.SUPABASE_ANON_KEY,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          log('waitlist-result', 'Waitlist table exists! Count: ' + (data[0]?.count || 0));
+        } else {
+          const text = await res.text();
+          log('waitlist-result', 'ERROR: ' + res.status + ' - ' + text, true);
+        }
+      } catch (err) {
+        log('waitlist-result', 'ERROR: ' + err.message, true);
+      }
+    }
+
+    // Auto-check config on load
+    window.addEventListener('load', checkConfig);
+  </script>
+</body>
+</html>

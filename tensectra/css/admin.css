@@ -315,6 +315,140 @@ body.admin-body {
   color: #00CCFF;
 }
 
+/* -- Action dropdown ------------------------------------------------ */
+.action-dropdown { position: relative; display: inline-block; }
+.action-dropdown-toggle {
+  background: transparent;
+  border: 1px solid #1A2D40;
+  color: #6E7D9A;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: .75rem;
+  cursor: pointer;
+  transition: all .15s;
+  font-family: inherit;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.action-dropdown-toggle:hover { border-color: #00CCFF; color: #00CCFF; background: rgba(0,204,255,.05); }
+.action-dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  background: #0D1B2A;
+  border: 1px solid #1B2E42;
+  border-radius: 6px;
+  min-width: 150px;
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(0,0,0,.5);
+  overflow: hidden;
+}
+.action-dropdown-menu.open { display: block; }
+.action-dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 9px 14px;
+  background: none;
+  border: none;
+  color: #C9D1D9;
+  font-size: .8rem;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background .12s;
+  white-space: nowrap;
+}
+.action-dropdown-item:hover { background: rgba(0,204,255,.08); color: #00CCFF; }
+.action-dropdown-item.danger:hover { background: rgba(255,68,68,.08); color: #ff6b6b; }
+.action-dropdown-item + .action-dropdown-item { border-top: 1px solid #1B2E42; }
+
+/* -- Detail / View modal -------------------------------------------- */
+.detail-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.75);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.detail-modal-overlay.open { display: flex; }
+.detail-modal {
+  background: #0A1628;
+  border: 1px solid #1B2E42;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+}
+.detail-modal-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #1B2E42;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background: #0A1628;
+  z-index: 1;
+}
+.detail-modal-header h3 { margin: 0; font-size: 1rem; color: #E6EDF3; }
+.detail-modal-close {
+  background: none;
+  border: none;
+  color: #6E7D9A;
+  font-size: 1.4rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 4px;
+}
+.detail-modal-close:hover { color: #E6EDF3; }
+.detail-modal-body { padding: 24px; }
+.detail-section { margin-bottom: 24px; }
+.detail-section-title {
+  font-size: .7rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: #00CCFF;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.detail-grid.single { grid-template-columns: 1fr; }
+.detail-field { display: flex; flex-direction: column; gap: 3px; }
+.detail-label { font-size: .72rem; color: #6E7D9A; text-transform: uppercase; letter-spacing: .05em; }
+.detail-value { font-size: .875rem; color: #E6EDF3; word-break: break-word; }
+.detail-value.empty { color: #3A4A5C; font-style: italic; }
+.detail-modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid #1B2E42;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+/* -- Export button -------------------------------------------------- */
+.btn-export {
+  background: rgba(0,204,255,.08);
+  border: 1px solid rgba(0,204,255,.25);
+  color: #00CCFF;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: .8rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all .15s;
+}
+.btn-export:hover { background: rgba(0,204,255,.16); }
+
 /* ?? Primary/secondary buttons ?????????????????????????????????? */
 .btn { padding: 8px 18px; border-radius: 6px; font-size: .875rem; font-weight: 600; cursor: pointer; border: none; font-family: inherit; transition: all .15s; display: inline-flex; align-items: center; gap: 6px; }
 .btn-primary   { background: #00CCFF; color: #050A14; }

@@ -517,44 +517,53 @@ function initRefCardLead() {
     if (e.key === 'Escape' && overlay.classList.contains('open')) closeRc();
   });
 
-  // Form submit
-  document.getElementById('rc-form').addEventListener('submit', function(e) {
+  // Form submit - use REST API pattern like consultancy form
+  document.getElementById('rc-form').addEventListener('submit', async function(e) {
     e.preventDefault();
-    var name  = this.querySelector('[name="name"]').value.trim();
-    var email = this.querySelector('[name="email"]').value.trim();
+    var nameInput = this.querySelector('[name="name"]');
+    var emailInput = this.querySelector('[name="email"]');
+    var name  = nameInput.value.trim();
+    var email = emailInput.value.trim();
 
     if (!name || !email) {
       showNotification('Please enter your name and email.', 'error');
       return;
     }
 
-    // Save to Supabase ONLY (not Netlify)
-    if (window._supabase) {
-      window._supabase.from('reference_card_downloads').insert({
+    try {
+      // Save to Supabase using REST API
+      var payload = {
         name: name,
         email: email,
         ip_address: window.userLocation ? window.userLocation.ip : null,
         country: window.userLocation ? window.userLocation.country_name : null,
         city: window.userLocation ? window.userLocation.city : null
-      }).then(function(result) {
-        console.log('[RefCard] Saved to CRM:', result);
-        if (result.error) {
-          console.error('[RefCard] Error:', result.error);
-        }
-        closeRc();
-        triggerDownload(name);
-        showNotification('Download started!', 'success');
-      }).catch(function(err) {
-        console.error('[RefCard] CRM save error:', err);
-        closeRc();
-        triggerDownload(name);
-        showNotification('Download started!', 'success');
+      };
+
+      var res = await fetch(window.SUPABASE_URL + '/rest/v1/reference_card_downloads', {
+        method: 'POST',
+        headers: {
+          'apikey': window.SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + window.SUPABASE_ANON_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(payload)
       });
-    } else {
-      closeRc();
-      triggerDownload(name);
-      showNotification('Download started!', 'success');
+
+      if (!res.ok) {
+        console.error('[RefCard] Error:', res.status);
+      } else {
+        console.log('[RefCard] Saved to CRM');
+      }
+    } catch (err) {
+      console.error('[RefCard] Save error:', err);
     }
+
+    // Always trigger download regardless
+    closeRc();
+    triggerDownload(name);
+    showNotification('Download started!', 'success');
   });
 
   // --- Generate + download the card ---

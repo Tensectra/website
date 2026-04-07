@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/admin.css?v=5">
+  <link rel="stylesheet" href="../css/admin.css?v=10">
   <link rel="icon" type="image/png" href="../images/tensectra-logo.png">
 </head>
 <body class="admin-body">
@@ -48,6 +48,9 @@
   <main class="admin-main">
     <div class="admin-header">
       <div><h1>Consultancy Enquiries</h1><p class="admin-header-sub" id="header-count">Loading...</p></div>
+      <div class="admin-header-actions">
+        <button class="btn-export" id="export-btn">Export CSV</button>
+      </div>
     </div>
     <div class="admin-content">
       <div class="filter-bar">
@@ -67,16 +70,29 @@
         <div style="overflow-x:auto">
           <table class="admin-table">
             <thead><tr>
-              <th>Name</th><th>Company</th><th>Service</th><th>Status</th>
+              <th>Name</th><th>Phone</th><th>Company</th><th>Service</th><th>Status</th>
               <th>Location</th><th>Date</th><th>Actions</th>
             </tr></thead>
-            <tbody id="enquiries-tbody"><tr><td colspan="7" style="text-align:center;padding:40px" class="muted">Loading...</td></tr></tbody>
+            <tbody id="enquiries-tbody"><tr><td colspan="8" style="text-align:center;padding:40px" class="muted">Loading...</td></tr></tbody>
           </table>
         </div>
         <div class="pagination" id="pagination"></div>
       </div>
     </div>
   </main>
+</div>
+
+<div class="detail-modal-overlay" id="detail-modal-overlay">
+  <div class="detail-modal">
+    <div class="detail-modal-header">
+      <h3 id="detail-modal-title">Record Detail</h3>
+      <button class="detail-modal-close" id="detail-modal-close">&times;</button>
+    </div>
+    <div class="detail-modal-body" id="detail-modal-body"></div>
+    <div class="detail-modal-footer">
+      <button class="btn btn-secondary btn-sm" onclick="document.getElementById('detail-modal-overlay').classList.remove('open')">Close</button>
+    </div>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -127,23 +143,29 @@ function renderTable() {
   var start = page * PAGE_SIZE;
   var rows = filtered.slice(start, start + PAGE_SIZE);
   if (!rows.length) {
-    document.getElementById('enquiries-tbody').innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px" class="muted">No records found</td></tr>';
+    document.getElementById('enquiries-tbody').innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px" class="muted">No records found</td></tr>';
     document.getElementById('pagination').innerHTML = '';
     return;
   }
   document.getElementById('enquiries-tbody').innerHTML = rows.map(function (r) {
-    var tier = tierNames[r.tier] || r.tier || '-';
+  var tier = tierNames[r.tier] || r.tier || '-';
     var loc = [r.city, r.country_name].filter(Boolean).join(', ') || '-';
+    var did = 'dd-' + r.id;
     return '<tr><td><strong style="color:#E6EDF3">' + (r.name||'-') + '</strong><br><span class="muted" style="font-size:.75rem">' + (r.email||'') + '</span></td>'
+      + '<td class="muted" style="font-size:.8rem">' + (r.phone||'-') + '</td>'
       + '<td class="muted">' + (r.company||'-') + '</td>'
       + '<td class="muted">' + tier + '</td>'
       + '<td>' + statusBadge(r.status) + '</td>'
       + '<td class="muted" style="font-size:.8rem">' + loc + '</td>'
       + '<td class="muted">' + fmtDate(r.submitted_at) + '</td>'
-      + '<td><div class="action-group">'
-      + '<button class="btn-action" onclick="openConsultancyDetail(' + JSON.stringify(r).replace(/"/g,'&quot;') + ')">View</button>'
-      + '<button class="btn-action btn-pay" onclick="alert(\'Payment link coming soon\')">Pay Link</button>'
-      + '</div></td></tr>';
+      + '<td><div class="action-dropdown" id="' + did + '">'
+      + '<button class="action-dropdown-toggle" onclick="toggleDropdown(\'' + did + '\')">' + '... Actions</button>'
+      + '<div class="action-dropdown-menu">'
+      + '<button class="action-dropdown-item" onclick="closeDropdowns();viewRecord(' + JSON.stringify(r).replace(/"/g,'&quot;') + ',\'consultancy\');">View Details</button>'
+      + '<button class="action-dropdown-item" onclick="closeDropdowns();updateStatus(\'consultancy_enquiries\',\'' + r.id + '\',\'contacted\',loadData);">Mark Contacted</button>'
+      + '<button class="action-dropdown-item" onclick="closeDropdowns();openPaymentModal(' + JSON.stringify(r).replace(/"/g,'&quot;') + ');">Send Pay Link</button>'
+      + '<button class="action-dropdown-item danger" onclick="closeDropdowns();updateStatus(\'consultancy_enquiries\',\'' + r.id + '\',\'lost\',loadData);">Mark Lost</button>'
+      + '</div></div></td></tr>';
   }).join('');
   
   var totalPages = Math.ceil(filtered.length / PAGE_SIZE);
@@ -167,9 +189,89 @@ document.querySelectorAll('.filter-btn').forEach(function (btn) {
 
 document.getElementById('search-input').addEventListener('input', applyFilter);
 
-function openConsultancyDetail(record) {
-  alert('Consultancy Detail:\n\nName: ' + record.name + '\nCompany: ' + record.company + '\nEmail: ' + record.email + '\nService: ' + (tierNames[record.tier]||record.tier) + '\nStatus: ' + record.status);
+function openPaymentModal(r) { alert('Payment link for: ' + r.name); }
+
+function toggleDropdown(id) {
+  closeDropdowns();
+  var menu = document.querySelector('#' + id + ' .action-dropdown-menu');
+  if (menu) menu.classList.toggle('open');
 }
+function closeDropdowns() {
+  document.querySelectorAll('.action-dropdown-menu.open').forEach(function(m){ m.classList.remove('open'); });
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.action-dropdown')) closeDropdowns();
+});
+
+window.viewRecord = function(record, type) {
+  var overlay = document.getElementById('detail-modal-overlay');
+  var title   = document.getElementById('detail-modal-title');
+  var body    = document.getElementById('detail-modal-body');
+  if (!overlay) return;
+  var fields = [];
+  if (type === 'consultancy') {
+    title.textContent = 'Enquiry - ' + (record.name || '');
+    fields = [
+      { section: 'Contact', cols: [
+        { label:'Full Name', val: record.name },
+        { label:'Email', val: record.email },
+        { label:'Phone', val: record.phone },
+        { label:'Company', val: record.company }
+      ]},
+      { section: 'Enquiry', cols: [
+        { label:'Service / Tier', val: tierNames[record.tier] || record.tier },
+        { label:'Status', val: record.status },
+        { label:'Budget', val: record.budget },
+        { label:'Timeline', val: record.timeline }
+      ]},
+      { section: 'Message', single: true, cols: [
+        { label:'Message', val: record.message }
+      ]},
+      { section: 'Location & Tracking', cols: [
+        { label:'City', val: record.city },
+        { label:'Country', val: record.country_name },
+        { label:'Submitted', val: fmtDate(record.submitted_at) },
+        { label:'Notes', val: record.notes }
+      ]}
+    ];
+  }
+  body.innerHTML = fields.map(function(sec) {
+    return '<div class="detail-section">'
+      + '<div class="detail-section-title">' + sec.section + '</div>'
+      + '<div class="detail-grid' + (sec.single ? ' single' : '') + '">'
+      + sec.cols.map(function(f) {
+          var v = (f.val !== null && f.val !== undefined && f.val !== '') ? f.val : null;
+          return '<div class="detail-field">'
+            + '<span class="detail-label">' + f.label + '</span>'
+            + '<span class="detail-value' + (v ? '' : ' empty') + '">' + (v || 'Not provided') + '</span>'
+            + '</div>';
+        }).join('')
+      + '</div></div>';
+  }).join('');
+  overlay.classList.add('open');
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+  var ov = document.getElementById('detail-modal-overlay');
+  document.getElementById('detail-modal-close').addEventListener('click', function(){ ov.classList.remove('open'); });
+  ov.addEventListener('click', function(e){ if (e.target === ov) ov.classList.remove('open'); });
+});
+
+document.getElementById('export-btn').addEventListener('click', function() {
+  if (!filtered.length) { showToast('No data to export', 'info'); return; }
+  var headers = ['name','email','phone','company','tier','status','city','country_name','submitted_at','message'];
+  var csv = [headers.join(',')].concat(filtered.map(function(r) {
+    return headers.map(function(h) {
+      var v = r[h] !== null && r[h] !== undefined ? String(r[h]) : '';
+      return '"' + v.replace(/"/g,'""') + '"';
+    }).join(',');
+  })).join('\n');
+  var a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'consultancy-' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+  showToast('Exported ' + filtered.length + ' rows', 'success');
+});
 </script>
 
 <script>

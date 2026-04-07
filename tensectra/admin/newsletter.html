@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/admin.css?v=9">
+  <link rel="stylesheet" href="../css/admin.css?v=10">
   <link rel="icon" type="image/png" href="../images/tensectra-logo.png">
 </head>
 <body class="admin-body">
@@ -50,7 +50,7 @@
     <div class="admin-header">
       <div><h1>Newsletter Subscribers</h1><p class="admin-header-sub" id="header-count"></p></div>
       <div class="admin-header-actions">
-        <button class="btn btn-secondary btn-sm" id="export-btn">Export CSV</button>
+        <button class="btn-export" id="export-btn">Export CSV</button>
       </div>
     </div>
     <div class="admin-content">
@@ -70,16 +70,29 @@
         <div style="overflow-x:auto">
           <table class="admin-table">
             <thead><tr>
-              <th>Email</th><th>Name</th><th>List</th><th>Source</th>
-              <th>Status</th><th>Subscribed</th>
+              <th>Email</th><th>Name</th><th>Phone</th><th>List</th><th>Source</th>
+              <th>Status</th><th>Subscribed</th><th>Actions</th>
             </tr></thead>
-            <tbody id="subs-tbody"><tr><td colspan="6" style="text-align:center;padding:40px" class="muted">Loading...</td></tr></tbody>
+            <tbody id="subs-tbody"><tr><td colspan="8" style="text-align:center;padding:40px" class="muted">Loading...</td></tr></tbody>
           </table>
         </div>
         <div class="pagination" id="pagination"></div>
       </div>
     </div>
   </main>
+</div>
+
+<div class="detail-modal-overlay" id="detail-modal-overlay">
+  <div class="detail-modal">
+    <div class="detail-modal-header">
+      <h3 id="detail-modal-title">Record Detail</h3>
+      <button class="detail-modal-close" id="detail-modal-close">&times;</button>
+    </div>
+    <div class="detail-modal-body" id="detail-modal-body"></div>
+    <div class="detail-modal-footer">
+      <button class="btn btn-secondary btn-sm" onclick="document.getElementById('detail-modal-overlay').classList.remove('open')">Close</button>
+    </div>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -143,7 +156,7 @@
     var start = page * PAGE_SIZE;
     var rows  = filtered.slice(start, start + PAGE_SIZE);
     if (!rows.length) {
-      document.getElementById('subs-tbody').innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px" class="muted">No subscribers found</td></tr>';
+      document.getElementById('subs-tbody').innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px" class="muted">No subscribers found</td></tr>';
       document.getElementById('pagination').innerHTML = '';
       return;
     }
@@ -151,13 +164,22 @@
       var subBadge = r.subscribed
         ? '<span class="status status-succeeded">Active</span>'
         : '<span class="status status-lost">Unsubscribed</span>';
+      var phone = r._full ? (r._full.phone || r._full.whatsapp || '-') : (r.phone || '-');
+      var did = 'dd-nl-' + (r.id || Math.random().toString(36).slice(2));
+      var rData = JSON.stringify(r).replace(/"/g,'&quot;');
       return '<tr>'
         + '<td class="mono" style="font-size:.8rem">' + (r.email||'-') + '</td>'
         + '<td>' + (r.name||'-') + '</td>'
+        + '<td class="muted" style="font-size:.8rem">' + phone + '</td>'
         + '<td class="muted">' + (r.list_type||'-') + '</td>'
         + '<td class="muted">' + (r.source||'-') + '</td>'
         + '<td>' + subBadge + '</td>'
         + '<td class="muted">' + fmtDate(r.subscribed_at) + '</td>'
+        + '<td><div class="action-dropdown" id="' + did + '">'
+        + '<button class="action-dropdown-toggle" onclick="toggleDropdown(\'' + did + '\')">' + '... Actions</button>'
+        + '<div class="action-dropdown-menu">'
+        + '<button class="action-dropdown-item" onclick="closeDropdowns();viewRecord(' + rData + ',\'subscriber\');">View Details</button>'
+        + '</div></div></td>'
         + '</tr>';
     }).join('');
 
@@ -182,25 +204,92 @@
 
   document.getElementById('search-input').addEventListener('input', applyFilter);
 
-  // CSV export
+  // CSV export (updated to include phone)
   document.getElementById('export-btn').addEventListener('click', function () {
     var rows = filtered;
     if (!rows.length) return showToast('No data to export', 'info');
-    var headers = ['email','name','list_type','source','subscribed','subscribed_at'];
+    var headers = ['email','name','phone','list_type','source','subscribed','subscribed_at'];
     var csv = [headers.join(',')].concat(rows.map(function (r) {
+      var phone = r._full ? (r._full.phone || r._full.whatsapp || '') : (r.phone || '');
+      var row = { email: r.email, name: r.name, phone: phone, list_type: r.list_type, source: r.source, subscribed: r.subscribed, subscribed_at: r.subscribed_at };
       return headers.map(function (h) {
-        var v = r[h] !== null && r[h] !== undefined ? String(r[h]) : '';
+        var v = row[h] !== null && row[h] !== undefined ? String(row[h]) : '';
         return '"' + v.replace(/"/g, '""') + '"';
       }).join(',');
     })).join('\n');
-    var blob = new Blob([csv], { type: 'text/csv' });
-    var url  = URL.createObjectURL(blob);
-    var a    = document.createElement('a');
-    a.href   = url;
-    a.download = 'tensectra-subscribers-' + new Date().toISOString().slice(0,10) + '.csv';
+    var a = document.createElement('a');
+    a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+    a.download = 'subscribers-' + new Date().toISOString().slice(0,10) + '.csv';
     a.click();
-    URL.revokeObjectURL(url);
     showToast('Exported ' + rows.length + ' rows', 'success');
+  });
+
+  // Dropdown helpers
+  window.toggleDropdown = function(id) {
+    closeDropdowns();
+    var menu = document.querySelector('#' + id + ' .action-dropdown-menu');
+    if (menu) menu.classList.toggle('open');
+  };
+  window.closeDropdowns = function() {
+    document.querySelectorAll('.action-dropdown-menu.open').forEach(function(m){ m.classList.remove('open'); });
+  };
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.action-dropdown')) closeDropdowns();
+  });
+
+  // View modal
+  window.viewRecord = function(record, type) {
+    var overlay = document.getElementById('detail-modal-overlay');
+    var title   = document.getElementById('detail-modal-title');
+    var body    = document.getElementById('detail-modal-body');
+    if (!overlay) return;
+    var full = record._full || record;
+    title.textContent = (type === 'subscriber' ? 'Subscriber' : 'Waitlist') + ' - ' + (record.email || '');
+    var fields = [
+      { section: 'Contact', cols: [
+        { label:'Name', val: record.name },
+        { label:'Email', val: record.email },
+        { label:'Phone / WhatsApp', val: full.phone || full.whatsapp },
+        { label:'List Type', val: record.list_type }
+      ]},
+      { section: 'Details', cols: [
+        { label:'Source', val: record.source || full.location_source },
+        { label:'Status', val: record.subscribed ? 'Active' : 'Unsubscribed' },
+        { label:'City', val: full.city },
+        { label:'Country', val: full.country_name }
+      ]},
+      { section: 'Waitlist Info', cols: [
+        { label:'Product', val: full.product },
+        { label:'Skill Level', val: full.skill_level },
+        { label:'When Joining', val: full.when_joining },
+        { label:'Heard From', val: full.heard_from }
+      ]},
+      { section: 'Message', single: true, cols: [
+        { label:'Reason / Note', val: full.reason },
+        { label:'Subscribed', val: fmtDate(record.subscribed_at) }
+      ]}
+    ];
+    body.innerHTML = fields.map(function(sec) {
+      return '<div class="detail-section">'
+        + '<div class="detail-section-title">' + sec.section + '</div>'
+        + '<div class="detail-grid' + (sec.single ? ' single' : '') + '">'
+        + sec.cols.map(function(f) {
+            var v = (f.val !== null && f.val !== undefined && f.val !== '') ? f.val : null;
+            return '<div class="detail-field">'
+              + '<span class="detail-label">' + f.label + '</span>'
+              + '<span class="detail-value' + (v ? '' : ' empty') + '">' + (v || 'Not provided') + '</span>'
+              + '</div>';
+          }).join('')
+        + '</div></div>';
+    }).join('');
+    overlay.classList.add('open');
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var ov = document.getElementById('detail-modal-overlay');
+    var cl = document.getElementById('detail-modal-close');
+    if (cl) cl.addEventListener('click', function(){ ov.classList.remove('open'); });
+    if (ov) ov.addEventListener('click', function(e){ if (e.target === ov) ov.classList.remove('open'); });
   });
 </script>
 

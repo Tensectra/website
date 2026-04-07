@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/admin.css?v=7">
+  <link rel="stylesheet" href="../css/admin.css?v=10">
   <link rel="icon" type="image/png" href="../images/tensectra-logo.png">
 </head>
 <body class="admin-body">
@@ -48,6 +48,9 @@
   <main class="admin-main">
     <div class="admin-header">
       <div><h1>Cohort Applications</h1><p class="admin-header-sub" id="header-count">Loading...</p></div>
+      <div class="admin-header-actions">
+        <button class="btn-export" id="export-btn">Export CSV</button>
+      </div>
     </div>
     <div class="admin-content">
       <div class="filter-bar">
@@ -67,10 +70,10 @@
         <div style="overflow-x:auto">
           <table class="admin-table">
             <thead><tr>
-              <th>Name</th><th>Course</th><th>Experience</th><th>Scholarship</th>
+              <th>Name</th><th>Phone</th><th>Course</th><th>Experience</th><th>Scholarship</th>
               <th>Status</th><th>Location</th><th>Date</th><th>Actions</th>
             </tr></thead>
-            <tbody id="apps-tbody"><tr><td colspan="8" style="text-align:center;padding:40px" class="muted">Loading...</td></tr></tbody>
+            <tbody id="apps-tbody"><tr><td colspan="9" style="text-align:center;padding:40px" class="muted">Loading...</td></tr></tbody>
           </table>
         </div>
         <div class="pagination" id="pagination"></div>
@@ -118,6 +121,19 @@
     <div class="modal-footer">
       <button class="btn-cancel" onclick="closePaymentModal()">Cancel</button>
       <button class="btn-primary" onclick="sendPaymentLink()">Generate & Send Link</button>
+    </div>
+  </div>
+</div>
+
+<div class="detail-modal-overlay" id="detail-modal-overlay">
+  <div class="detail-modal">
+    <div class="detail-modal-header">
+      <h3 id="detail-modal-title">Record Detail</h3>
+      <button class="detail-modal-close" id="detail-modal-close">&times;</button>
+    </div>
+    <div class="detail-modal-body" id="detail-modal-body"></div>
+    <div class="detail-modal-footer">
+      <button class="btn btn-secondary btn-sm" id="detail-modal-close-btn" onclick="document.getElementById('detail-modal-overlay').classList.remove('open')">Close</button>
     </div>
   </div>
 </div>
@@ -180,7 +196,7 @@ function renderTable() {
   var start = page * PAGE_SIZE;
   var rows = filtered.slice(start, start + PAGE_SIZE);
   if (!rows.length) {
-    document.getElementById('apps-tbody').innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px" class="muted">No records found</td></tr>';
+    document.getElementById('apps-tbody').innerHTML = '<tr><td colspan="9" style="text-align:center;padding:40px" class="muted">No records found</td></tr>';
     document.getElementById('pagination').innerHTML = '';
     return;
   }
@@ -193,20 +209,25 @@ function renderTable() {
     var rowData = JSON.stringify(r).replace(/"/g, '&quot;');
     var priceData = JSON.stringify(defaultPrice).replace(/"/g, '&quot;');
     
+    var did = 'dd-' + r.id;
     return '<tr>'
       + '<td><strong style="color:#E6EDF3">' + (r.name||'-') + '</strong><br><span class="muted" style="font-size:.75rem">' + (r.email||'') + '</span></td>'
+      + '<td class="muted" style="font-size:.8rem">' + (r.phone||'-') + '</td>'
       + '<td class="muted">' + (courseShort[r.course]||r.course||'-') + '</td>'
       + '<td class="muted">' + (r.experience||'-') + '</td>'
       + '<td>' + schBadge + '</td>'
       + '<td>' + statusBadge(r.status) + '</td>'
       + '<td class="muted" style="font-size:.8rem">' + loc + '</td>'
       + '<td class="muted">' + fmtDate(r.submitted_at) + '</td>'
-      + '<td><div class="action-group">'
-      + '<button class="btn-action" onclick="viewApplication(' + rowData + ')">View</button>'
-      + '<button class="btn-action btn-approve" onclick="updateStatus(\'cohort_applications\',\'' + r.id + '\',\'accepted\',loadData)" title="Approve"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00FF88" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></button>'
-      + '<button class="btn-action btn-reject" onclick="updateStatus(\'cohort_applications\',\'' + r.id + '\',\'rejected\',loadData)" title="Reject"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF4444" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>'
-      + '<button class="btn-action btn-pay" onclick="openPaymentLinkModal(' + rowData + ',\'cohort\',' + priceData + ')" title="Send Payment Link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></button>'
-      + '</div></td>'
+      + '<td><div class="action-dropdown" id="' + did + '">'
+      + '<button class="action-dropdown-toggle" onclick="toggleDropdown(\'' + did + '\')">' + '... Actions</button>'
+      + '<div class="action-dropdown-menu">'
+      + '<button class="action-dropdown-item" onclick="closeDropdowns();viewRecord(' + rowData + ',\'application\');">View Details</button>'
+      + '<button class="action-dropdown-item" onclick="closeDropdowns();updateStatus(\'cohort_applications\',\'' + r.id + '\',\'accepted\',loadData);">Approve</button>'
+      + '<button class="action-dropdown-item" onclick="closeDropdowns();updateStatus(\'cohort_applications\',\'' + r.id + '\',\'waitlisted\',loadData);">Waitlist</button>'
+      + '<button class="action-dropdown-item" onclick="closeDropdowns();openPaymentLinkModal(' + rowData + ',\'cohort\',' + priceData + ');">Send Pay Link</button>'
+      + '<button class="action-dropdown-item danger" onclick="closeDropdowns();updateStatus(\'cohort_applications\',\'' + r.id + '\',\'rejected\',loadData);">Reject</button>'
+      + '</div></div></td>'
       + '</tr>';
   }).join('');
   
@@ -334,9 +355,95 @@ async function sendPaymentLink() {
   }
 }
 
-function viewApplication(record) {
-  alert('Application Detail:\n\nName: ' + record.name + '\nEmail: ' + record.email + '\nCourse: ' + record.course + '\nExperience: ' + record.experience + '\nScholarship: ' + (record.is_scholarship ? 'Yes' : 'No'));
+// ----------- Dropdown helpers -----------
+function toggleDropdown(id) {
+  closeDropdowns();
+  var menu = document.querySelector('#' + id + ' .action-dropdown-menu');
+  if (menu) menu.classList.toggle('open');
 }
+function closeDropdowns() {
+  document.querySelectorAll('.action-dropdown-menu.open').forEach(function(m){ m.classList.remove('open'); });
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.action-dropdown')) closeDropdowns();
+});
+
+// ----------- Universal View Modal -----------
+window.viewRecord = function(record, type) {
+  var overlay = document.getElementById('detail-modal-overlay');
+  var title   = document.getElementById('detail-modal-title');
+  var body    = document.getElementById('detail-modal-body');
+  if (!overlay) return;
+
+  var fields = [];
+  if (type === 'application') {
+    title.textContent = 'Application - ' + (record.name || '');
+    fields = [
+      { section: 'Applicant', cols: [
+        { label:'Full Name', val: record.name },
+        { label:'Email', val: record.email },
+        { label:'Phone', val: record.phone },
+        { label:'WhatsApp', val: record.whatsapp }
+      ]},
+      { section: 'Application', cols: [
+        { label:'Course', val: record.course },
+        { label:'Experience', val: record.experience },
+        { label:'Scholarship', val: record.is_scholarship ? 'Yes' : 'No' },
+        { label:'Status', val: record.status }
+      ]},
+      { section: 'Location', cols: [
+        { label:'City', val: record.city },
+        { label:'Country', val: record.country_name },
+        { label:'IP Address', val: record.ip_address }
+      ]},
+      { section: 'Notes / Timeline', single: true, cols: [
+        { label:'Submitted', val: fmtDate(record.submitted_at) },
+        { label:'Reviewed At', val: fmtDate(record.reviewed_at) },
+        { label:'Reviewed By', val: record.reviewed_by },
+        { label:'Notes', val: record.notes }
+      ]}
+    ];
+  }
+  body.innerHTML = fields.map(function(sec) {
+    return '<div class="detail-section">'
+      + '<div class="detail-section-title">' + sec.section + '</div>'
+      + '<div class="detail-grid' + (sec.single ? ' single' : '') + '">'
+      + sec.cols.map(function(f) {
+          var v = (f.val !== null && f.val !== undefined && f.val !== '') ? f.val : null;
+          return '<div class="detail-field">'
+            + '<span class="detail-label">' + f.label + '</span>'
+            + '<span class="detail-value' + (v ? '' : ' empty') + '">' + (v || 'Not provided') + '</span>'
+            + '</div>';
+        }).join('')
+      + '</div></div>';
+  }).join('');
+
+  overlay.classList.add('open');
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+  var closeBtn = document.getElementById('detail-modal-close');
+  var overlay  = document.getElementById('detail-modal-overlay');
+  if (closeBtn) closeBtn.addEventListener('click', function(){ overlay.classList.remove('open'); });
+  if (overlay)  overlay.addEventListener('click', function(e){ if (e.target === overlay) overlay.classList.remove('open'); });
+});
+
+// ----------- CSV Export -----------
+document.getElementById('export-btn').addEventListener('click', function() {
+  if (!filtered.length) { showToast('No data to export', 'info'); return; }
+  var headers = ['name','email','phone','course','experience','is_scholarship','status','city','country_name','submitted_at'];
+  var csv = [headers.join(',')].concat(filtered.map(function(r) {
+    return headers.map(function(h) {
+      var v = r[h] !== null && r[h] !== undefined ? String(r[h]) : '';
+      return '"' + v.replace(/"/g,'""') + '"';
+    }).join(',');
+  })).join('\n');
+  var a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'applications-' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+  showToast('Exported ' + filtered.length + ' rows', 'success');
+});
 </script>
 
 <script>

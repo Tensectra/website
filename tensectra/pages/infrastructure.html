@@ -803,12 +803,12 @@ TENSECTRA ERP KIT
 
   <script src="../js/theme-toggle.js"></script>
   <script src="../js/main.js?v=2"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../js/config.js"></script>
+  <script src="../js/supabase-config.js"></script>
   <script src="../js/pricing.js"></script>
   <script src="../js/location.js"></script>
   <script>
-    function submitPurchaseForm(e) {
+    async function submitPurchaseForm(e) {
       e.preventDefault();
       const name  = document.getElementById('purchase-name').value.trim();
       const email = document.getElementById('purchase-email').value.trim();
@@ -818,32 +818,40 @@ TENSECTRA ERP KIT
         return;
       }
 
-      // Save to Supabase ONLY (not Netlify)
-      if (window._supabase) {
-        window._supabase.from('kit_purchase_requests').insert({
+      try {
+        // Save to Supabase using REST API (same pattern as consultancy form)
+        const payload = {
           name: name,
           email: email,
           ip_address: window.userLocation ? window.userLocation.ip : null,
           country: (document.getElementById('f-country-name') || {}).value || null,
           city: (document.getElementById('f-city') || {}).value || null
-        }).then(function(result) {
-          console.log('[Kit Purchase] Saved to CRM:', result);
-          if (result.error) {
-            console.error('[Kit Purchase] Error:', result.error);
-            showNotification('Failed to save. Please try again.', 'error');
-          } else {
-            closeAllModals();
-            showNotification('Purchase request received! We will email you within 4 hours.', 'success');
-          }
-        }).catch(function(err) {
-          console.error('[Kit Purchase] CRM save error:', err);
-          showNotification('Something went wrong. Please try again.', 'error');
+        };
+
+        const res = await fetch(window.SUPABASE_URL + '/rest/v1/kit_purchase_requests', {
+          method: 'POST',
+          headers: {
+            'apikey': window.SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + window.SUPABASE_ANON_KEY,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify(payload)
         });
-      } else {
-        console.error('[Kit Purchase] Supabase not initialized');
-        showNotification('System error. Please refresh the page.', 'error');
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          console.error('[Kit Purchase] Error:', res.status, errorText);
+          showNotification('Failed to save. Please try again.', 'error');
+        } else {
+          console.log('[Kit Purchase] Saved to CRM');
+          closeAllModals();
+          showNotification('Purchase request received! We will email you within 4 hours.', 'success');
+        }
+      } catch (err) {
+        console.error('[Kit Purchase] Error:', err);
+        showNotification('Something went wrong. Please try again.', 'error');
       }
-    }
     }
 
     /* ── Modal 1: Full Architecture (pill cards) ── */

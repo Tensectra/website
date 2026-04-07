@@ -2,6 +2,17 @@
 'use strict';
 
 async function _insert(table, payload) {
+  // Verify API key exists
+  if (!window.SUPABASE_URL || !window.SUPABASE_ANON_KEY) {
+    console.error('[Form Handler] Missing Supabase credentials!', {
+      hasUrl: !!window.SUPABASE_URL,
+      hasKey: !!window.SUPABASE_ANON_KEY
+    });
+    throw new Error('Supabase configuration missing. Please refresh the page.');
+  }
+
+  console.log('[Form Handler] Inserting to table:', table);
+  
   const res = await fetch(window.SUPABASE_URL + '/rest/v1/' + table, {
     method: 'POST',
     headers: {
@@ -12,7 +23,14 @@ async function _insert(table, payload) {
     },
     body: JSON.stringify(payload)
   });
-  if (!res.ok) throw new Error('HTTP ' + res.status);
+  
+  if (!res.ok) {
+    const errorText = await res.text();
+    console.error('[Form Handler] Error:', res.status, errorText);
+    throw new Error('HTTP ' + res.status + ': ' + errorText);
+  }
+  
+  console.log('[Form Handler] Success!');
 }
 
 // Field mappings for form-to-database alignment

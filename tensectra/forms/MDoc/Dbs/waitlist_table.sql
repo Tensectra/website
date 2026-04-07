@@ -4,9 +4,10 @@
 -- Drop existing (if recreating)
 DROP TABLE IF EXISTS waitlist_submissions CASCADE;
 
--- Create table
+-- Create table with ALL form fields
 CREATE TABLE waitlist_submissions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  phone TEXT NOT NULL,
   name TEXT NOT NULL,
   email TEXT NOT NULL,
   city_text TEXT,
@@ -17,12 +18,18 @@ CREATE TABLE waitlist_submissions (
   product TEXT,
   has_built_api TEXT,
   skill_level TEXT,
+  reason TEXT,
+  when_joining TEXT,
+  heard_from TEXT,
+  whatsapp TEXT,
   submitted_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- Create indexes
 CREATE INDEX idx_waitlist_email ON waitlist_submissions(email);
+CREATE INDEX idx_waitlist_phone ON waitlist_submissions(phone);
 CREATE INDEX idx_waitlist_submitted ON waitlist_submissions(submitted_at DESC);
+CREATE INDEX idx_waitlist_product ON waitlist_submissions(product);
 
 -- Enable RLS
 ALTER TABLE waitlist_submissions ENABLE ROW LEVEL SECURITY;

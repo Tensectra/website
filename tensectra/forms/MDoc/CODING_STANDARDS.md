@@ -355,7 +355,139 @@ Select-String -Path "*.js","*.html" -Pattern "[^\x00-\x7F]"
 
 ---
 
-## ?? **DEPLOYMENT CHECKLIST**
+## **DATABASE RULES - HOW WE FIXED THE DB ERRORS**
+
+These rules come from real bugs fixed in production. Follow them to avoid column errors.
+
+---
+
+### **RULE 1: Match payload exactly to table schema**
+
+The REST API returns `PGRST204` if you send a field the table does not have.
+
+**ALWAYS check the table schema before inserting:**
+```sql
+-- Run in Supabase SQL Editor to see all columns
+SELECT column_name, data_type 
+FROM information_schema.columns 
+WHERE table_name = 'your_table_name'
+ORDER BY ordinal_position;
+```
+
+---
+
+### **RULE 2: Never send timestamp fields manually**
+
+If the column has `DEFAULT NOW()`, do NOT include it in your payload.
+The database sets it automatically.
+
+```javascript
+// BAD - table uses downloaded_at DEFAULT NOW(), not submitted_at
+fetch('/rest/v1/reference_card_downloads', {
+  body: JSON.stringify({ name, email, submitted_at: new Date().toISOString() })
+});
+
+// GOOD - let database handle the timestamp
+fetch('/rest/v1/reference_card_downloads', {
+  body: JSON.stringify({ name, email })
+});
+```
+
+---
+
+### **RULE 3: When adding a new form, audit ALL field names first**
+
+Open the HTML form and list every `name=""` attribute.
+Then create the SQL table with matching column names.
+
+```bash
+# Quick audit command - list all form field names
+Select-String -Path "forms\yourform.html" -Pattern 'name="(\w+)"' | ForEach-Object { $_.Matches.Groups[1].Value }
+```
+
+---
+
+### **RULE 4: Use the working consultancy form as the template**
+
+The `forms/consultancy-enquiry.html` form is proven to work. When creating a new form:
+
+1. Copy its script loading order exactly:
+```html
+<script src="../js/theme-toggle.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/location.js"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="../js/form-handler.js"></script>
+<script>
+  initForm('your-form-id', 'your_table_name', 'Your success message.');
+</script>
+```
+
+2. Do NOT add the Supabase CDN. `form-handler.js` uses the REST API directly via `window.SUPABASE_URL` and `window.SUPABASE_ANON_KEY` set in `supabase-config.js`.
+
+3. Do NOT add `method="POST"` or `netlify` attributes to the form tag.
+
+---
+
+### **RULE 5: Recreate tables cleanly when schema changes**
+
+If you get `PGRST204: column not found`, the table schema is out of sync.
+Always use `DROP TABLE IF EXISTS` before recreating:
+
+```sql
+-- CORRECT pattern for SQL files
+DROP TABLE IF EXISTS your_table CASCADE;
+
+CREATE TABLE your_table (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  -- all columns here
+  submitted_at TIMESTAMPTZ DEFAULT NOW()
+);
+```
+
+Do NOT use `ALTER TABLE ADD COLUMN` unless you are sure the table exists with the old schema.
+
+---
+
+### **RULE 6: Grant INSERT to anon role on every public form table**
+
+Without this, anonymous users (not logged in) cannot submit forms:
+
+```sql
+ALTER TABLE your_table ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Anyone can insert" ON your_table
+  FOR INSERT WITH CHECK (true);
+
+GRANT INSERT ON your_table TO anon;
+GRANT SELECT, INSERT ON your_table TO authenticated;
+```
+
+---
+
+### **RULE 7: One SQL file per table, kept in forms/MDoc/Dbs/**
+
+```
+forms/MDoc/Dbs/
+  waitlist_table.sql          -- waitlist_submissions
+  Step4_CRM_Tracking.sql      -- kit_purchase_requests + reference_card_downloads
+  course_notifications.sql    -- course_notifications
+  Step3_AdminSchema.sql       -- admin setup
+```
+
+Each file must be self-contained: DROP + CREATE + POLICIES + GRANTS.
+Run one file at a time in Supabase SQL Editor.
+
+---
+
+### **RULE 8: Test new tables with test-forms.html**
+
+Before testing the real form, use `http://localhost:49350/test-forms.html` to verify:
+1. Config is loaded (SUPABASE_URL and ANON_KEY)
+2. The table accepts an INSERT
+3. No column mismatch errors
+
+This saves 20 back-and-forth debugging cycles.
 
 Before pushing to production:
 
