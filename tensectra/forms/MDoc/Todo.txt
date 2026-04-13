@@ -82,3 +82,32 @@ Page	Before	After
 5. Update in TWO files:
    - .env (line 6)
    - js/supabase-config.js (line 5)
+
+
+One thing you MUST do before email works
+Go to myaccount.google.com → Security → App passwords, create a password for tensectra.office@gmail.com, then put the 16-character code (no spaces) in:
+•	tcfow0ew.env → SMTP_PASSWORD=xxxxxxxxxxxx
+•	Vercel dashboard → Settings → Environment Variables → SMTP_PASSWORD
+That's all. Gmail regular passwords do not work for SMTP — App Password is required.
+
+
+Q2 — Can Gmail send 1000 free emails?
+Provider	Free limit	Best for
+Resend	3,000/month, 100/day	Transactional email — better deliverability, proper SPF/DKIM
+Gmail personal	500/day	Small volume, no domain setup needed
+Gmail Workspace	2,000/day	If you pay for Workspace
+
+
+EMAIL_PROVIDER=resend   # uses RESEND_API_KEY
+EMAIL_PROVIDER=gmail    # uses SMTP_USER + SMTP_PASSWORD
+
+
+
+Fix 2 — Direct URL to self-paced tab
+The self-paced section now has id="self-paced". These URLs all work:
+URL	Result
+http://localhost:49350/pages/courses#self-paced	Activates Self-Paced tab + scrolls to it
+http://localhost:49350/pages/courses#live-cohort	Activates Live Cohort tab
+http://localhost:49350/pages/courses#coming-soon	Activates Coming Soon tab
+http://localhost:49350/pages/courses	Shows All (default)
+How it works:

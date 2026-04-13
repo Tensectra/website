@@ -32,7 +32,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="../css/main.css?v=2">
+  <link rel="stylesheet" href="../css/main.css?v=3">
   <link rel="icon" type="image/png" href="../images/tensectra-logo.png">
 </head>
 <body>
@@ -152,92 +152,169 @@
       </div>
       
       <!-- Self-Paced Ebooks Section -->
-      <div class="grid-4" style="margin-top: var(--space-xl);">
+      <div id="self-paced" style="margin-top: var(--space-xl);"><!-- anchor: pages/courses#self-paced -->
 
-        <!-- Backend Ebook -->
-        <div class="card course-card" data-category="self-paced" style="border-top: 3px solid var(--accent-cyan);">
-          <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md);">
-            <div style="width: 42px; height: 52px; background: linear-gradient(160deg, rgba(0,204,255,0.25), rgba(0,204,255,0.05)); border: 1px solid rgba(0,204,255,0.3); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-            </div>
-            <span style="font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: var(--accent-cyan); text-transform: uppercase;">Ebook</span>
-          </div>
-          <h3 style="font-size: 1rem; margin-bottom: var(--space-xs);">Backend Engineer Playbook</h3>
-          <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: var(--space-md); line-height: 1.6;">Clean Architecture, CQRS, Event Sourcing, multi-tenant patterns — for .NET 8 backends. The full week-by-week reference.</p>
-          <ul style="list-style: none; padding: 0; margin: 0 0 var(--space-md); display: flex; flex-direction: column; gap: 6px;">
-            <li style="color: var(--text-muted); font-size: 0.82rem;"><span style="color: var(--accent-cyan); margin-right: 6px;">✓</span>150+ pages</li>
-            <li style="color: var(--text-muted); font-size: 0.82rem;"><span style="color: var(--accent-cyan); margin-right: 6px;">✓</span>Code examples included</li>
-            <li style="color: var(--text-muted); font-size: 0.82rem;"><span style="color: var(--accent-cyan); margin-right: 6px;">✓</span>Lifetime updates</li>
-          </ul>
-          <div style="margin-top: auto; display: flex; align-items: center; justify-content: space-between; padding-top: var(--space-md); border-top: 1px solid rgba(255,255,255,0.08);">
-            <span style="font-size: 1.5rem; font-weight: 700; color: var(--text-white);">$49</span>
-            <a href="../payment/self-paced?product=backend-playbook" class="btn btn-primary btn-sm">Buy Now</a>
-          </div>
+        <!-- Section header -->
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:32px;">
+          <span style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;color:var(--accent-cyan);text-transform:uppercase;white-space:nowrap">Playbook Library</span>
+          <div style="flex:1;height:1px;background:rgba(255,255,255,0.07)"></div>
+          <span style="font-size:0.7rem;color:var(--text-muted);white-space:nowrap">Instant download &middot; Lifetime updates</span>
         </div>
 
-        <!-- Frontend Ebook -->
-        <div class="card course-card" data-category="self-paced" style="border-top: 3px solid var(--accent-blue);">
-          <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md);">
-            <div style="width: 42px; height: 52px; background: linear-gradient(160deg, rgba(59,91,255,0.25), rgba(59,91,255,0.05)); border: 1px solid rgba(59,91,255,0.3); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        <!-- 3 individual playbooks -->
+        <div class="grid-3" style="align-items:stretch;margin-bottom:24px;">
+
+          <!-- Backend Playbook -->
+          <div class="card course-card" data-category="self-paced" style="padding:0;overflow:hidden;display:flex;flex-direction:column;border-top:3px solid var(--accent-cyan);">
+            <div style="position:relative;overflow:hidden;background:linear-gradient(160deg,#050A14,#0A1628);">
+              <img src="../images/Tsec-backendebook-Cover.PNG"
+                   alt=".NET 8 Backend Engineering Playbook cover"
+                   loading="lazy"
+                   style="width:100%;display:block;max-height:268px;object-fit:cover;object-position:top;">
+              <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 55%,rgba(5,10,20,0.9));pointer-events:none"></div>
+              <div style="position:absolute;bottom:14px;left:14px;">
+                <span style="background:var(--accent-cyan);color:#050A14;font-size:0.6rem;font-weight:700;letter-spacing:0.08em;padding:4px 11px;border-radius:99px;text-transform:uppercase">.NET 8 Backend</span>
+              </div>
+              <div style="position:absolute;top:12px;right:12px;">
+                <span style="background:rgba(0,0,0,0.55);color:var(--accent-cyan);font-size:0.6rem;font-weight:700;border:1px solid rgba(0,204,255,0.3);padding:3px 9px;border-radius:99px">150+ pages</span>
+              </div>
             </div>
-            <span style="font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: var(--accent-blue); text-transform: uppercase;">Ebook</span>
+            <div style="padding:22px;flex:1;display:flex;flex-direction:column;">
+              <h3 style="font-size:0.97rem;line-height:1.35;margin:0 0 4px;color:var(--text-white)">The Developer Other Developers Ask Questions</h3>
+              <p style="font-size:0.77rem;color:var(--text-muted);margin:0 0 14px;font-style:italic">A .NET 8 Backend Engineering Playbook</p>
+              <p style="font-size:0.81rem;color:var(--text-muted);line-height:1.75;margin:0 0 16px;flex:1">Clean Architecture &middot; CQRS with MediatR &middot; Repository Pattern &middot; Multi-Tenancy &middot; Kafka Event-Driven Architecture &middot; JWT Auth + RBAC &middot; Redis Caching &middot; Enterprise Production Patterns</p>
+              <ul style="list-style:none;padding:0;margin:0 0 18px;display:flex;flex-direction:column;gap:6px;">
+                <li style="color:var(--text-muted);font-size:0.79rem;display:flex;align-items:flex-start;gap:8px;"><span style="color:var(--accent-cyan);margin-top:1px">&#10003;</span>AI Prompt Library for .NET 8 included</li>
+                <li style="color:var(--text-muted);font-size:0.79rem;display:flex;align-items:flex-start;gap:8px;"><span style="color:var(--accent-cyan);margin-top:1px">&#10003;</span>Architecture Reference Cards + real code examples</li>
+                <li style="color:var(--text-muted);font-size:0.79rem;display:flex;align-items:flex-start;gap:8px;"><span style="color:var(--accent-cyan);margin-top:1px">&#10003;</span>Lifetime updates &mdash; .NET 9 ships free</li>
+              </ul>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid rgba(255,255,255,0.07);">
+                <span style="font-size:1.45rem;font-weight:700;color:var(--text-white)">$49</span>
+                <a href="https://tensectra.gumroad.com/l/backend-engineering-playbook"
+                   target="_blank" rel="noopener noreferrer"
+                   class="btn btn-primary btn-sm">Get Playbook &#8599;</a>
+              </div>
+            </div>
           </div>
-          <h3 style="font-size: 1rem; margin-bottom: var(--space-xs);">Frontend Engineer Playbook</h3>
-          <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: var(--space-md); line-height: 1.6;">Next.js 14, server components, state architecture, and scalable UI patterns. From junior habits to senior thinking.</p>
-          <ul style="list-style: none; padding: 0; margin: 0 0 var(--space-md); display: flex; flex-direction: column; gap: 6px;">
-            <li style="color: var(--text-muted); font-size: 0.82rem;"><span style="color: var(--accent-blue); margin-right: 6px;">✓</span>130+ pages</li>
-            <li style="color: var(--text-muted); font-size: 0.82rem;"><span style="color: var(--accent-blue); margin-right: 6px;">✓</span>Component patterns</li>
-            <li style="color: var(--text-muted); font-size: 0.82rem;"><span style="color: var(--accent-blue); margin-right: 6px;">✓</span>Lifetime updates</li>
-          </ul>
-          <div style="margin-top: auto; display: flex; align-items: center; justify-content: space-between; padding-top: var(--space-md); border-top: 1px solid rgba(255,255,255,0.08);">
-            <span style="font-size: 1.5rem; font-weight: 700; color: var(--text-white);">$49</span>
-            <a href="../payment/self-paced?product=frontend-playbook" class="btn btn-primary btn-sm">Buy Now</a>
+
+          <!-- Frontend Playbook -->
+          <div class="card course-card" data-category="self-paced" style="padding:0;overflow:hidden;display:flex;flex-direction:column;border-top:3px solid var(--accent-blue);">
+            <div style="position:relative;overflow:hidden;background:linear-gradient(160deg,#050A14,#060A28);">
+              <img src="../images/Tsec-Frontendebook-Cover.PNG"
+                   alt="Next.js 14 Frontend Engineering Playbook cover"
+                   loading="lazy"
+                   style="width:100%;display:block;max-height:268px;object-fit:cover;object-position:top;">
+              <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 55%,rgba(5,10,20,0.9));pointer-events:none"></div>
+              <div style="position:absolute;bottom:14px;left:14px;">
+                <span style="background:var(--accent-blue);color:#fff;font-size:0.6rem;font-weight:700;letter-spacing:0.08em;padding:4px 11px;border-radius:99px;text-transform:uppercase">Next.js 14 Frontend</span>
+              </div>
+              <div style="position:absolute;top:12px;right:12px;">
+                <span style="background:rgba(0,0,0,0.55);color:var(--accent-blue);font-size:0.6rem;font-weight:700;border:1px solid rgba(59,91,255,0.35);padding:3px 9px;border-radius:99px">130+ pages</span>
+              </div>
+            </div>
+            <div style="padding:22px;flex:1;display:flex;flex-direction:column;">
+              <h3 style="font-size:0.97rem;line-height:1.35;margin:0 0 4px;color:var(--text-white)">The Frontend Engineer Who Owns the System</h3>
+              <p style="font-size:0.77rem;color:var(--text-muted);margin:0 0 14px;font-style:italic">A Next.js 14 Playbook</p>
+              <p style="font-size:0.81rem;color:var(--text-muted);line-height:1.75;margin:0 0 16px;flex:1">App Router &middot; Server vs Client Components &middot; Zustand State Architecture &middot; Axios Interceptors &middot; React Hook Form + Zod &middot; Optimistic UI &middot; TypeScript Interfaces &middot; Production Standards</p>
+              <ul style="list-style:none;padding:0;margin:0 0 18px;display:flex;flex-direction:column;gap:6px;">
+                <li style="color:var(--text-muted);font-size:0.79rem;display:flex;align-items:flex-start;gap:8px;"><span style="color:var(--accent-blue);margin-top:1px">&#10003;</span>AI Prompt Library for Next.js 14 included</li>
+                <li style="color:var(--text-muted);font-size:0.79rem;display:flex;align-items:flex-start;gap:8px;"><span style="color:var(--accent-blue);margin-top:1px">&#10003;</span>Full Next.js to .NET 8 integration guide</li>
+                <li style="color:var(--text-muted);font-size:0.79rem;display:flex;align-items:flex-start;gap:8px;"><span style="color:var(--accent-blue);margin-top:1px">&#10003;</span>Lifetime updates &mdash; Next.js 15 ships free</li>
+              </ul>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid rgba(255,255,255,0.07);">
+                <span style="font-size:1.45rem;font-weight:700;color:var(--text-white)">$49</span>
+                <a href="https://tensectra.gumroad.com/l/frontend-engineering-playbook"
+                   target="_blank" rel="noopener noreferrer"
+                   class="btn btn-primary btn-sm" style="background:var(--accent-blue)">Get Playbook &#8599;</a>
+              </div>
+            </div>
           </div>
+
+          <!-- Mobile Playbook -->
+          <div class="card course-card" data-category="self-paced" style="padding:0;overflow:hidden;display:flex;flex-direction:column;border-top:3px solid var(--accent-purple);">
+            <div style="position:relative;overflow:hidden;background:linear-gradient(160deg,#1a0050,#2D0B7A);">
+              <img src="../images/tensectra_mobileebook_cover.PNG"
+                   alt="The App That Ships - React Native and Expo Mobile Engineering Playbook cover"
+                   loading="lazy"
+                   style="width:100%;display:block;max-height:268px;object-fit:cover;object-position:top;">
+              <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 55%,rgba(26,0,80,0.92));pointer-events:none"></div>
+              <div style="position:absolute;bottom:14px;left:14px;">
+                <span style="background:var(--accent-purple);color:#fff;font-size:0.6rem;font-weight:700;letter-spacing:0.08em;padding:4px 11px;border-radius:99px;text-transform:uppercase">Mobile Engineer</span>
+              </div>
+              <div style="position:absolute;top:12px;right:12px;">
+                <span style="background:rgba(0,0,0,0.6);color:var(--accent-purple);font-size:0.6rem;font-weight:700;border:1px solid rgba(123,47,255,0.45);padding:3px 9px;border-radius:99px">120+ pages</span>
+              </div>
+            </div>
+            <div style="padding:22px;flex:1;display:flex;flex-direction:column;">
+              <h3 style="font-size:0.97rem;line-height:1.35;margin:0 0 4px;color:var(--text-white)">The App That Ships.</h3>
+              <p style="font-size:0.77rem;color:var(--text-muted);margin:0 0 14px;font-style:italic">A React Native &amp; Expo Playbook</p>
+              <p style="font-size:0.81rem;color:var(--text-muted);line-height:1.75;margin:0 0 16px;flex:1">Navigation Architecture &middot; Biometric Auth &middot; SecureStore &middot; Push Notifications &middot; Offline Handling &middot; EAS Build to APK &middot; Platform Differences &middot; FlatList Patterns</p>
+              <ul style="list-style:none;padding:0;margin:0 0 18px;display:flex;flex-direction:column;gap:6px;">
+                <li style="color:var(--text-muted);font-size:0.79rem;display:flex;align-items:flex-start;gap:8px;"><span style="color:var(--accent-purple);margin-top:1px">&#10003;</span>AI Prompt Library with Mobile Constraint Header</li>
+                <li style="color:var(--text-muted);font-size:0.79rem;display:flex;align-items:flex-start;gap:8px;"><span style="color:var(--accent-purple);margin-top:1px">&#10003;</span>App store checklist + EAS Build config templates</li>
+                <li style="color:var(--text-muted);font-size:0.79rem;display:flex;align-items:flex-start;gap:8px;"><span style="color:var(--accent-purple);margin-top:1px">&#10003;</span>Lifetime updates &mdash; Expo SDK ships free</li>
+              </ul>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid rgba(255,255,255,0.07);">
+                <span style="font-size:1.45rem;font-weight:700;color:var(--text-white)">$49</span>
+                <a href="https://tensectra.gumroad.com/l/mobile-engineering-playbook"
+                   target="_blank" rel="noopener noreferrer"
+                   class="btn btn-primary btn-sm" style="background:var(--accent-purple)">Get Playbook &#8599;</a>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <!-- Mobile Ebook -->
-        <div class="card course-card" data-category="self-paced" style="border-top: 3px solid var(--accent-purple);">
-          <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md);">
-            <div style="width: 42px; height: 52px; background: linear-gradient(160deg, rgba(123,47,255,0.25), rgba(123,47,255,0.05)); border: 1px solid rgba(123,47,255,0.3); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-purple)" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-            </div>
-            <span style="font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: var(--accent-purple); text-transform: uppercase;">Ebook</span>
-          </div>
-          <h3 style="font-size: 1rem; margin-bottom: var(--space-xs);">Mobile Builder Playbook</h3>
-          <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: var(--space-md); line-height: 1.6;">React Native, Expo, navigation architecture, offline-first patterns, and EAS Build to production. Ship real apps.</p>
-          <ul style="list-style: none; padding: 0; margin: 0 0 var(--space-md); display: flex; flex-direction: column; gap: 6px;">
-            <li style="color: var(--text-muted); font-size: 0.82rem;"><span style="color: var(--accent-purple); margin-right: 6px;">✓</span>120+ pages</li>
-            <li style="color: var(--text-muted); font-size: 0.82rem;"><span style="color: var(--accent-purple); margin-right: 6px;">✓</span>App store checklists</li>
-            <li style="color: var(--text-muted); font-size: 0.82rem;"><span style="color: var(--accent-purple); margin-right: 6px;">✓</span>Lifetime updates</li>
-          </ul>
-          <div style="margin-top: auto; display: flex; align-items: center; justify-content: space-between; padding-top: var(--space-md); border-top: 1px solid rgba(255,255,255,0.08);">
-            <span style="font-size: 1.5rem; font-weight: 700; color: var(--text-white);">$49</span>
-            <a href="../payment/self-paced?product=mobile-playbook" class="btn btn-primary btn-sm">Buy Now</a>
-          </div>
-        </div>
+        <!-- Full Stack Bundle — full-width premium row -->
+        <div class="card" data-category="self-paced"
+             style="padding:0;overflow:hidden;border:1px solid rgba(255,208,0,0.18);border-top:3px solid #FFD000;background:linear-gradient(135deg,rgba(255,208,0,0.05) 0%,transparent 50%);">
+          <div style="display:flex;flex-wrap:wrap;">
 
-        <!-- Full Pack -->
-        <div class="card course-card" data-category="self-paced" style="border-top: 3px solid #FFD000; background: linear-gradient(160deg, rgba(255,208,0,0.06), transparent);">
-          <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md);">
-            <div style="width: 42px; height: 52px; background: linear-gradient(160deg, rgba(255,208,0,0.25), rgba(255,208,0,0.05)); border: 1px solid rgba(255,208,0,0.35); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFD000" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <!-- Cover image panel -->
+            <div style="width:240px;flex-shrink:0;min-height:280px;position:relative;overflow:hidden;background:#0A0800;">
+              <img src="../images/Tensectra-BundleEbook-Cover.PNG"
+                   alt="The Full Stack Engineer's Complete Playbook bundle cover"
+                   loading="lazy"
+                   style="width:100%;height:100%;object-fit:cover;display:block;">
+              <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 50%,rgba(10,8,0,0.6));pointer-events:none"></div>
             </div>
-            <span style="font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: #FFD000; text-transform: uppercase;">Best Value</span>
-          </div>
-          <h3 style="font-size: 1rem; margin-bottom: var(--space-xs);">Full Stack Pack — All 3 Ebooks</h3>
-          <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: var(--space-md); line-height: 1.6;">Backend + Frontend + Mobile. Every playbook. The complete reference library for engineers who want to build across the full stack.</p>
-          <ul style="list-style: none; padding: 0; margin: 0 0 var(--space-md); display: flex; flex-direction: column; gap: 6px;">
-            <li style="color: var(--text-muted); font-size: 0.82rem;"><span style="color: #FFD000; margin-right: 6px;">✓</span>All 3 ebooks (400+ pages)</li>
-            <li style="color: var(--text-muted); font-size: 0.82rem;"><span style="color: #FFD000; margin-right: 6px;">✓</span>Save $27 vs buying separate</li>
-            <li style="color: var(--text-muted); font-size: 0.82rem;"><span style="color: #FFD000; margin-right: 6px;">✓</span>Lifetime updates to all 3</li>
-          </ul>
-          <div style="margin-top: auto; display: flex; align-items: center; justify-content: space-between; padding-top: var(--space-md); border-top: 1px solid rgba(255,208,0,0.15);">
-            <div>
-              <span style="font-size: 1.5rem; font-weight: 700; color: #FFD000;">$120</span>
-              <span style="font-size: 0.8rem; color: var(--text-muted); text-decoration: line-through; margin-left: 6px;">$147</span>
+
+            <!-- Content panel -->
+            <div style="flex:1;min-width:280px;padding:28px 30px;display:flex;flex-direction:column;justify-content:space-between;">
+              <div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
+                  <span style="background:#FFD000;color:#0a0a0a;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;padding:4px 13px;border-radius:99px;text-transform:uppercase">Best Value</span>
+                  <span style="font-size:0.72rem;color:var(--text-muted)">Save $27 vs buying separately</span>
+                </div>
+
+                <h3 style="font-size:1.25rem;line-height:1.3;margin:0 0 6px;color:var(--text-white)">The Full Stack Engineer's Complete Playbook</h3>
+                <p style="font-size:0.83rem;color:var(--text-muted);margin:0 0 18px;font-style:italic">Backend &middot; Frontend &middot; Mobile &mdash; One reference library. Every layer. The complete system.</p>
+
+                <p style="font-size:0.84rem;color:var(--text-muted);line-height:1.8;margin:0 0 20px">The .NET 8 backend returns a JWT token. The Next.js dashboard receives it, stores it in Zustand, and sends it on every Axios request. The React Native app stores the same token in SecureStore and uses it for biometric login. <strong style="color:var(--text-white)">One backend. Two clients. One coherent architecture. 400+ pages of how it all connects.</strong></p>
+
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:7px 20px;margin-bottom:8px;">
+                  <div style="font-size:0.79rem;color:var(--text-muted);display:flex;align-items:flex-start;gap:8px;"><span style="color:#FFD000;flex-shrink:0">&#10003;</span>All 3 playbooks &mdash; 400+ pages total</div>
+                  <div style="font-size:0.79rem;color:var(--text-muted);display:flex;align-items:flex-start;gap:8px;"><span style="color:#FFD000;flex-shrink:0">&#10003;</span>3 AI prompt libraries (backend, frontend, mobile)</div>
+                  <div style="font-size:0.79rem;color:var(--text-muted);display:flex;align-items:flex-start;gap:8px;"><span style="color:#FFD000;flex-shrink:0">&#10003;</span>Architecture Reference Cards for all 3 layers</div>
+                  <div style="font-size:0.79rem;color:var(--text-muted);display:flex;align-items:flex-start;gap:8px;"><span style="color:#FFD000;flex-shrink:0">&#10003;</span>App store checklist + EAS Build templates</div>
+                  <div style="font-size:0.79rem;color:var(--text-muted);display:flex;align-items:flex-start;gap:8px;"><span style="color:#FFD000;flex-shrink:0">&#10003;</span>Mobile Constraint Header prompt included</div>
+                  <div style="font-size:0.79rem;color:var(--text-muted);display:flex;align-items:flex-start;gap:8px;"><span style="color:#FFD000;flex-shrink:0">&#10003;</span>Lifetime updates to all three &mdash; no extra charge</div>
+                </div>
+              </div>
+
+              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding-top:20px;border-top:1px solid rgba(255,208,0,0.12);margin-top:20px;">
+                <div style="display:flex;align-items:baseline;gap:10px;">
+                  <span style="font-size:1.85rem;font-weight:700;color:#FFD000;">$120</span>
+                  <span style="font-size:0.85rem;color:var(--text-muted);text-decoration:line-through;">$147</span>
+                  <span style="font-size:0.75rem;color:#FFD000;font-weight:600;background:rgba(255,208,0,0.1);padding:2px 8px;border-radius:99px;border:1px solid rgba(255,208,0,0.2)">You save $27</span>
+                </div>
+                <a href="https://tensectra.gumroad.com/l/full-stack-engineering-playbook"
+                   target="_blank" rel="noopener noreferrer"
+                   class="btn btn-sm"
+                   style="background:#FFD000;color:#0a0a0a;font-weight:700;font-size:0.88rem;padding:13px 26px;">Get the Complete Library &#8599;</a>
+              </div>
             </div>
-            <a href="../payment/self-paced?product=full-pack" class="btn btn-sm" style="background: #FFD000; color: #0a0a0a; font-weight: 700;">Buy Pack</a>
+
           </div>
         </div>
 
@@ -511,6 +588,48 @@
   <script src="../js/form-handler.js"></script>
   <script>
     initForm('course-notify-form', 'course_notifications', 'Thank you! We will notify you when new courses launch.');
+  </script>
+  <script>
+    // Hash-based tab routing: pages/courses#self-paced  pages/courses#live-cohort  etc.
+    // Lets you share or bookmark a direct link to a filtered tab.
+    (function () {
+      var VALID = ['all', 'live-cohort', 'self-paced', 'coming-soon'];
+
+      function activateFilter(filter) {
+        if (!filter || VALID.indexOf(filter) === -1) return;
+        var btn = document.querySelector('.filter-btn[data-filter="' + filter + '"]');
+        if (btn) btn.click();
+        // Scroll to the section smoothly (not 'all' — no need to scroll for 'all')
+        if (filter !== 'all') {
+          var target = document.getElementById(filter) || document.querySelector('[data-category="' + filter + '"]');
+          if (target) {
+            setTimeout(function () {
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 150);
+          }
+        }
+      }
+
+      // On page load — read the hash
+      document.addEventListener('DOMContentLoaded', function () {
+        var hash = window.location.hash.replace('#', '').trim();
+        activateFilter(hash);
+
+        // On filter click — update the URL hash without reloading
+        document.querySelectorAll('.filter-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var f = this.getAttribute('data-filter');
+            history.replaceState(null, '', f === 'all' ? window.location.pathname : '#' + f);
+          });
+        });
+      });
+
+      // Support browser back/forward
+      window.addEventListener('hashchange', function () {
+        var hash = window.location.hash.replace('#', '').trim();
+        activateFilter(hash || 'all');
+      });
+    })();
   </script>
 </body>
 </html>

@@ -3,12 +3,12 @@
  * Creates Paystack payment link and sends email to client
  */
 
+import { sendMail, validateMailConfig } from './_mailer.js';
+
 const SUPABASE_URL = process.env.SUPABASE_URL;
-const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const SERVICE_KEY  = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const PAYSTACK_KEY = process.env.PAYSTACK_SECRET_KEY;
-const RESEND_KEY = process.env.RESEND_API_KEY;
-const APP_URL = process.env.APP_URL || 'https://www.tensectra.com';
-const FROM = 'Tensectra <hello@tensectra.com>';
+const APP_URL      = process.env.APP_URL || 'https://www.tensectra.com';
 
 async function verifyAdmin(token) {
   const userRes = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
@@ -37,7 +37,7 @@ async function verifyAdmin(token) {
 
 function formatAmount(amount, currency) {
   const num = (amount / 100).toLocaleString('en-NG', { minimumFractionDigits: 0 });
-  const symbols = { NGN: '?', USD: '$', GHS: 'GH?', KES: 'KSh', ZAR: 'R' };
+  const symbols = { NGN: '\u20A6', USD: '$', GHS: 'GH\u20B5', KES: 'KSh', ZAR: 'R' };
   return (symbols[currency] || currency + ' ') + num;
 }
 
@@ -76,7 +76,7 @@ function emailTemplate({ name, product_name, amount, currency, paymentUrl, note,
   <div class="container">
     <div class="card">
       <div class="logo">TENSECTRA</div>
-      <h2>${isCohort ? 'You\'re accepted!' : 'Your invoice is ready'}</h2>
+      <h2>${isCohort ? 'You are accepted!' : 'Your invoice is ready'}</h2>
       <p>Hey ${name.split(' ')[0]},</p>
       <p>${isCohort 
         ? 'Your application has been reviewed and accepted. Complete your payment to confirm your enrolment.'
@@ -89,12 +89,12 @@ function emailTemplate({ name, product_name, amount, currency, paymentUrl, note,
       <a href="${paymentUrl}" class="btn">${isCohort ? 'Complete Enrolment' : 'Pay Invoice'} - ${fmtAmount}</a>
       ${note ? `<div class="note"><p><strong>Note from our team:</strong> ${note}</p></div>` : ''}
       <hr>
-      <p style="font-size: 0.85rem;">If the button doesn't work, copy this link: <span style="color:#555;word-break:break-all">${paymentUrl}</span></p>
+      <p style="font-size: 0.85rem;">If the button does not work, copy this link: <span style="color:#555;word-break:break-all">${paymentUrl}</span></p>
       <hr>
       <p style="font-size: 0.9rem;">Questions? Reply to this email or contact <a href="mailto:hello@tensectra.com">hello@tensectra.com</a></p>
     </div>
     <div class="footer">
-      <p>Tensectra · <a href="https://tensectra.com">tensectra.com</a></p>
+      <p>Tensectra &middot; <a href="https://tensectra.com">tensectra.com</a></p>
     </div>
   </div>
 </body>
@@ -134,9 +134,13 @@ export default async function handler(req, res) {
       });
     }
 
-    if (!PAYSTACK_KEY || !RESEND_KEY || !SERVICE_KEY) {
+    if (!PAYSTACK_KEY || !SERVICE_KEY) {
       console.error('Missing environment variables');
       return res.status(500).json({ error: 'Server configuration error' });
+    }
+
+    try { validateMailConfig(); } catch (err) {
+      return res.status(500).json({ error: err.message });
     }
 
     const reference = `TEN-${Date.now()}-${Math.random().toString(36).substr(2, 5).toUpperCase()}`;
@@ -176,42 +180,13 @@ export default async function handler(req, res) {
     const paymentUrl = paystackData.data.authorization_url;
     console.log('[Payment] Paystack URL created');
 
-    console.log('[Payment] Sending email to:', email);
-    
-    const emailHtml = emailTemplate({ 
-      name, 
-      product_name, 
-      amount, 
-      currency, 
-      paymentUrl, 
-      note, 
-      record_type 
-    });
-    
+    const emailHtml = emailTemplate({ name, product_name, amount, currency, paymentUrl, note, record_type });
     const emailSubject = record_type === 'cohort'
-      ? `You're accepted - complete your enrolment for ${product_name}`
-      : `Invoice ready - ${product_name}`;
-    
-    const emailRes = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { 
-        Authorization: `Bearer ${RESEND_KEY}`, 
-        'Content-Type': 'application/json' 
-      },
-      body: JSON.stringify({
-        from: FROM,
-        to: [email],
-        subject: emailSubject,
-        html: emailHtml
-      })
-    });
-    
-    if (!emailRes.ok) {
-      const emailError = await emailRes.text();
-      console.error('[Payment] Email error:', emailError);
-      return res.status(500).json({ error: 'Failed to send email' });
-    }
-    
+      ? 'You are accepted - complete your enrolment for ' + product_name
+      : 'Invoice ready - ' + product_name;
+
+    console.log('[Payment] Sending email to:', email);
+    await sendMail({ to: email, subject: emailSubject, html: emailHtml });
     console.log('[Payment] Email sent');
 
     const table = record_type === 'consultancy' ? 'consultancy_enquiries' : 'cohort_applications';

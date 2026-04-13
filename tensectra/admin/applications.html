@@ -125,6 +125,50 @@
   </div>
 </div>
 
+<div class="modal" id="send-email-modal">
+  <div class="modal-content" style="max-width:620px;">
+    <div class="modal-header">
+      <h3>Send Email</h3>
+      <button class="modal-close" onclick="closeSendEmailModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Recipient</label>
+        <input type="text" class="form-input" id="sem-name" readonly>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" class="form-input" id="sem-email" readonly>
+      </div>
+      <div class="form-group">
+        <label>Email Type</label>
+        <select class="form-input" id="sem-template" onchange="previewTemplate()">
+          <option value="">-- Select email type --</option>
+          <option value="community-invite">Community Group Invite</option>
+          <option value="send-pay-link">Send Payment Link</option>
+          <option value="acceptance">Cohort Acceptance</option>
+          <option value="rejection">Application Not Successful</option>
+          <option value="follow-up">General Follow-up</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Preview / Edit (HTML added to email body before sending)</label>
+        <textarea class="form-input" id="sem-extra" rows="8"
+          style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;resize:vertical;"
+          placeholder="Optional: add extra HTML here. e.g. a payment link, note, or custom paragraph.&#10;This is appended to the template you selected above."></textarea>
+        <small style="color:#6E7D9A;font-size:0.75rem;margin-top:4px;display:block">
+          Tip: you can paste a payment URL like:
+          &lt;a href="https://paystack.com/..."&gt;Pay Now&lt;/a&gt;
+        </small>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeSendEmailModal()">Cancel</button>
+      <button class="btn-primary" id="sem-send-btn" onclick="sendEmailToApplicant()">Send Email</button>
+    </div>
+  </div>
+</div>
+
 <div class="detail-modal-overlay" id="detail-modal-overlay">
   <div class="detail-modal">
     <div class="detail-modal-header">
@@ -226,6 +270,7 @@ function renderTable() {
       + '<button class="action-dropdown-item" onclick="closeDropdowns();updateStatus(\'cohort_applications\',\'' + r.id + '\',\'accepted\',loadData);">Approve</button>'
       + '<button class="action-dropdown-item" onclick="closeDropdowns();updateStatus(\'cohort_applications\',\'' + r.id + '\',\'waitlisted\',loadData);">Waitlist</button>'
       + '<button class="action-dropdown-item" onclick="closeDropdowns();openPaymentLinkModal(' + rowData + ',\'cohort\',' + priceData + ');">Send Pay Link</button>'
+      + '<button class="action-dropdown-item" onclick="closeDropdowns();openSendEmailModal(' + rowData + ');">Send Email</button>'
       + '<button class="action-dropdown-item danger" onclick="closeDropdowns();updateStatus(\'cohort_applications\',\'' + r.id + '\',\'rejected\',loadData);">Reject</button>'
       + '</div></div></td>'
       + '</tr>';
@@ -427,6 +472,95 @@ document.addEventListener('DOMContentLoaded', function() {
   if (closeBtn) closeBtn.addEventListener('click', function(){ overlay.classList.remove('open'); });
   if (overlay)  overlay.addEventListener('click', function(e){ if (e.target === overlay) overlay.classList.remove('open'); });
 });
+
+// ----------- Send Email Modal -----------
+var currentEmailRecord = null;
+
+window.openSendEmailModal = function(record) {
+  currentEmailRecord = record;
+  var modal = document.getElementById('send-email-modal');
+  if (!modal) { console.error('send-email-modal not found'); return; }
+  document.getElementById('sem-name').value  = record.name  || '';
+  document.getElementById('sem-email').value = record.email || '';
+  document.getElementById('sem-template').value = '';
+  document.getElementById('sem-extra').value    = '';
+  modal.style.display = 'flex';
+};
+
+function closeSendEmailModal() {
+  var modal = document.getElementById('send-email-modal');
+  if (modal) modal.style.display = 'none';
+  currentEmailRecord = null;
+}
+
+function previewTemplate() {
+  var key = document.getElementById('sem-template').value;
+  var hints = {
+    'community-invite': '<!-- No extra HTML needed. Template is complete. -->',
+    'send-pay-link':    '<p>Your payment link: <a href="PASTE_PAYSTACK_URL_HERE">Click to Pay</a></p>\n<p>Amount: NGN 150,000</p>',
+    'acceptance':       '<p>Your cohort starts <strong>1 September 2025</strong>. Payment link follows shortly.</p>',
+    'rejection':        '<!-- No extra HTML needed. Template is complete. -->',
+    'follow-up':        '<p>We noticed you expressed interest in the <strong>Backend cohort</strong>. Do you have any questions?</p>'
+  };
+  if (hints[key]) {
+    var area = document.getElementById('sem-extra');
+    if (!area.value.trim()) area.value = hints[key];
+  }
+}
+
+async function sendEmailToApplicant() {
+  if (!currentEmailRecord) return;
+  var toEmail      = document.getElementById('sem-email').value.trim();
+  var toName       = document.getElementById('sem-name').value.trim();
+  var templateKey  = document.getElementById('sem-template').value;
+  var extraHtml    = document.getElementById('sem-extra').value.trim();
+  var sendBtn      = document.getElementById('sem-send-btn');
+
+  if (!toEmail || !templateKey) {
+    showToast('Please select an email type', 'error');
+    return;
+  }
+
+  var sessionResult = await window._supabase.auth.getSession();
+  if (!sessionResult.data.session) {
+    showToast('Session expired. Please login again.', 'error');
+    return;
+  }
+
+  sendBtn.disabled    = true;
+  sendBtn.textContent = 'Sending...';
+
+  try {
+    var response = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + sessionResult.data.session.access_token
+      },
+      body: JSON.stringify({
+        to_email:     toEmail,
+        to_name:      toName,
+        template_key: templateKey,
+        extra_html:   extraHtml
+      })
+    });
+
+    if (!response.ok) {
+      var err = await response.json();
+      throw new Error(err.error || 'API call failed');
+    }
+
+    showToast('Email sent to ' + toEmail, 'success');
+    closeSendEmailModal();
+
+  } catch (err) {
+    console.error('[send-email]', err);
+    showToast('Failed: ' + err.message, 'error');
+  } finally {
+    sendBtn.disabled    = false;
+    sendBtn.textContent = 'Send Email';
+  }
+}
 
 // ----------- CSV Export -----------
 document.getElementById('export-btn').addEventListener('click', function() {

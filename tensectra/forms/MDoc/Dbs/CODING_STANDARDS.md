@@ -6,7 +6,7 @@ Based on actual bugs fixed during development. Every rule here exists because we
 
 ---
 
-## ?? **CRITICAL: NEVER DO THESE**
+## ?? ** CRITICAL: NEVER DO THESE **
 
 ### **1. Character Encoding**
 

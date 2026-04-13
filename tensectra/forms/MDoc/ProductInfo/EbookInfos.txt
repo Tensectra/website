@@ -1,0 +1,441 @@
+﻿
+******************************************************************************
+********** For Full Stack Bundle 
+******************************************************************************
+
+You can build one layer of the stack.
+
+You cannot always explain how they connect.
+
+This library closes that gap — permanently.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHAT'S INCLUDED
+
+📘 THE DEVELOPER OTHER DEVELOPERS ASK QUESTIONS
+
+.NET 8 Backend Engineering Playbook
+
+150+ pages
+
+Clean Architecture · CQRS with MediatR ·
+
+Repository Pattern · Multi-Tenancy ·
+
+Kafka Event-Driven Architecture ·
+
+JWT Auth + RBAC · Redis Caching ·
+
+Enterprise Production Patterns ·
+
+AI Prompt Library for .NET 8
+
+📗 THE FRONTEND ENGINEER WHO OWNS THE SYSTEM
+
+Next.js 14 Frontend Engineering Playbook
+
+130+ pages
+
+App Router · Server vs Client Components ·
+
+Zustand State Architecture · Axios Interceptors ·
+
+React Hook Form + Zod · Optimistic UI ·
+
+TypeScript Interfaces · Production Standards ·
+
+AI Prompt Library for Next.js 14
+
+📱 THE APP THAT SHIPS.
+
+React Native & Expo Mobile Engineering Playbook
+
+120+ pages
+
+Navigation Architecture · Biometric Auth ·
+
+SecureStore · Push Notifications ·
+
+Offline Handling · EAS Build to APK ·
+
+Platform Differences · FlatList Patterns ·
+
+AI Prompt Library with Mobile Constraint Header
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+THE FULL PICTURE
+
+Most courses teach one layer in isolation.
+
+This library shows you the complete system.
+
+The .NET 8 backend returns a JWT token.
+
+The Next.js dashboard receives it, stores it in
+
+Zustand, and sends it on every Axios request.
+
+The React Native app stores the same token in
+
+SecureStore and uses it for biometric login.
+
+One backend. Two clients. One coherent architecture.
+
+400+ pages of how it actually connects.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHO THIS IS FOR
+
+→ Full stack developers who want depth across
+
+all three layers — not surface tutorials
+
+→ Developers using AI who want the architecture
+
+knowledge to validate output at every layer
+
+of the system — not just the one they know best
+
+→ Engineers who finished one playbook and want
+
+the other two at a significant saving
+
+→ Technical leads who want a shared reference
+
+library for their full stack team
+
+→ Technopreneurs building a product who need to
+
+understand every layer their developer touches
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHAT YOU GET
+
+✓ All 3 playbooks — 400+ pages total
+
+✓ 3 AI prompt libraries — backend, frontend, mobile
+
+✓ Architecture Reference Cards for all three layers
+
+✓ App store submission checklist
+
+✓ EAS Build configuration templates
+
+✓ Mobile Constraint Header prompt
+
+✓ Save $27 vs buying separately ($147 → $120)
+
+✓ Lifetime updates to ALL THREE — when .NET 9,
+
+Next.js 15, or Expo SDK new versions ship,
+
+all three editions update automatically.
+
+No extra charge. Ever.
+
+✓ Instant download — all 3 PDFs delivered immediately
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+"AI writes the code across every layer.
+
+This library teaches you the architecture
+
+that makes it all hold together."
+
+— Tensectra | tensectra.com
+
+
+
+
+
+
+
+
+
+******************************************************************************
+***************** for backend-engineering-playbook
+
+******************************************************************************
+
+Stop copying patterns you don't understand. This is the week-by-week reference for .NET 8 backend engineers who want to build systems that actually scale. Built from production architecture patterns used in enterprise financial SaaS serving banks across West Africa
+
+— not a tutorial project, not a YouTube demo.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHAT'S INSIDE (150+ pages) ✦ Clean Architecture — the layer structure that makes your codebase explainable to any senior engineer on day one ✦ CQRS with MediatR
+
+— separate reads from writes at the code level, with pipeline behaviours that validate before handlers run ✦ Repository Pattern + Unit of Work
+
+— abstract your database access correctly so tests, multiple providers, and future migrations don't break your entire system ✦ Multi-Tenancy
+
+— JWT-based tenant isolation, global query filters, and factory patterns for multi-country deployments ✦ Event-Driven Architecture
+
+— Kafka patterns explained with in-process Coravel so you learn the architecture without infrastructure complexity ✦ JWT Authentication + RBAC
+
+— role-based access control that actually works in enterprise environments ✦ Redis Caching
+
+— cache-aside pattern, invalidation strategies, and when NOT to cache ✦ Production Standards
+
+— Serilog structured logging, health checks, rate limiting, and Railway deployment ✦ Enterprise Patterns
+
+— BOOLEAN enum for Oracle compatibility, multi-database provider switching, request encryption, and Architecture Reference Cards ✦ Prompt Playbook
+
+— week-by-week AI prompts that generate correct .NET 8 code the first time. Level 1 to Level 5 Prompt Maturity Ladder included.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHO THIS IS FOR
+
+→ .NET developers who write code but cannot explain the architecture to a senior engineer
+
+→ Mid-level developers who want to stop being the person who says "it works, I don't know why"
+
+→ Developers using AI to generate code who want the architectural knowledge to validate what it produces NOT for complete beginners. You need to have written code in any language before this will make sense.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHAT YOU GET
+
+✓ 150+ pages of production-grade reference material
+
+✓ Real code examples — not pseudocode
+
+✓ Architecture diagrams and ASCII system maps
+
+✓ AI prompt library — copy, paste, build
+
+✓ Lifetime updates — when .NET 9 ships, so does the updated edition. No extra charge.
+
+✓ Instant PDF download
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+"AI writes the code. You design the architecture. This playbook teaches you the difference." — Tensectra | tensectra.com
+
+
+
+
+
+
+
+
+******************************************************************************
+------------- for frontend-engineering-playbook
+******************************************************************************
+
+You can build the component.
+You can't always explain why the state lives where it lives.
+That gap is what this playbook closes.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHAT'S INSIDE (130+ pages)
+
+✦ Next.js 14 App Router — Server Components vs Client
+  Components done right. The one-sentence rule that
+  fixes the confusion permanently. Why "use client"
+  on everything is the most expensive mistake you
+  can make.
+
+✦ TypeScript Architecture — interfaces for every API
+  response, zero implicit any, tsc --noEmit as your
+  quality gate before every PR.
+
+✦ Zustand State Management — auth store with persist
+  middleware, custom hooks, and why Zustand beats
+  Context API for state that changes frequently.
+  When to use each. How to structure both.
+
+✦ Axios Interceptor Pattern — one place for your
+  auth token, one place for 401 handling. No
+  duplication across 40 API calls.
+
+✦ React Hook Form + Zod — schema-based validation
+  with TypeScript inference. Runtime surprises from
+  unvalidated form data stop here.
+
+✦ Optimistic UI + Rollback — update the UI before
+  the API confirms, roll back gracefully when it
+  fails. The pattern that makes your app feel fast
+  to real users.
+
+✦ Component Architecture — the three-level hierarchy,
+  when to split and when not to, the over-splitting
+  trap that makes codebases harder to read than
+  the original single file.
+
+✦ Server vs Client Boundary — the mental model most
+  Next.js developers carry incorrectly for months.
+  One diagram. One rule. Fixed permanently.
+
+✦ Production Standards — Core Web Vitals, error
+  boundaries, next/image, security headers in
+  next.config.js, and Vercel deployment that does
+  not break on first push.
+
+✦ Real API Integration — connecting to a live backend
+  with JWT auth, tenant headers, and proper error
+  handling end to end. Not mocked. Not demo data.
+
+✦ AI Prompt Library — constraint-based prompts that
+  generate correct Next.js 14 code. Includes the
+  exact constraints that stop AI from generating
+  web patterns you did not ask for.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHO THIS IS FOR
+
+→ React developers who want to understand Next.js
+  App Router properly — not just copy patterns
+  from Stack Overflow
+
+→ Frontend developers who connect to backends but
+  cannot fully explain the JWT auth flow they
+  are implementing
+
+→ Mid-level developers who want to stop building
+  components and start owning systems
+
+→ Developers using v0.dev or Copilot who want the
+  architecture knowledge to validate output before
+  it reaches a code review
+
+NOT for complete beginners. React experience
+required. This is not a "learn React" book.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHAT YOU GET
+
+✓ 130+ pages of production-grade reference
+✓ Real component patterns — not generic examples
+✓ Full integration guide: Next.js ↔ .NET 8 API
+✓ AI prompt library with exact constraints
+✓ Lifetime updates — Next.js 15 edition ships
+  automatically to you. No extra charge.
+✓ Instant PDF download
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+"AI generates the components. You own the system."
+
+— Tensectra | tensectra.com
+
+*************************************
+
+
+
+
+
+******************************************************************************
+------------- For mobile-engineering-playbook description 
+******************************************************************************
+
+Your app works in Expo Go.
+Then you try to ship it.
+This playbook is for what happens next.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHAT'S INSIDE (120+ pages)
+
+✦ Navigation Architecture — React Navigation v6
+  with a RootNavigator that has three states:
+  Onboarding, Auth, App. State-driven navigation
+  that never causes race conditions. No more
+  "navigate before navigator is ready" errors.
+
+✦ Biometric Authentication — Face ID, Touch ID,
+  and Android fingerprint via
+  expo-local-authentication. The pattern that
+  makes your app feel native on the first tap.
+
+✦ SecureStore vs AsyncStorage — why storing JWT
+  tokens in AsyncStorage is a security mistake
+  your next employer will catch. How SecureStore
+  uses the hardware keychain correctly.
+
+✦ Optimistic UI + Haptic Feedback — update the UI
+  instantly, confirm with the API, roll back on
+  error. expo-haptics makes every action physical.
+  Web apps cannot do this. Your app can.
+
+✦ Push Notifications — expo-notifications,
+  permission flow, token registration, foreground
+  and background handlers. The full implementation,
+  not the happy path.
+
+✦ Offline Detection — NetInfo, OfflineBanner
+  component, graceful degradation when the network
+  drops. Your app does not crash. It waits.
+
+✦ EAS Build — eas.json configuration, preview and
+  production profiles, APK generation on Android,
+  Expo Go QR link for iOS without a Mac. The
+  complete path from code to installable app.
+
+✦ Platform Differences — iOS vs Android behaviour
+  for shadows, safe areas, keyboard, permissions,
+  and push notification dialogs. Platform.select()
+  patterns that cover both. Test on both.
+
+✦ FlatList vs ScrollView — why ScrollView breaks
+  on large lists, keyExtractor, and testing on
+  budget Android devices (2GB RAM) that behave
+  nothing like the emulator.
+
+✦ AI Prompt Library — the Mobile Constraint Header
+  that stops AI from generating div and className
+  in React Native context. Every time. One prompt.
+  Fixed permanently.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHO THIS IS FOR
+
+→ React developers moving to React Native who keep
+  writing web code by muscle memory
+
+→ Mobile developers who have never shipped a
+  production APK to a real device and do not
+  know where EAS Build is failing
+
+→ Developers who need biometric auth, push
+  notifications, or offline support and cannot
+  find a clear end-to-end implementation guide
+
+→ Anyone who has spent more than two hours on
+  an EAS Build error they cannot diagnose
+
+NOT for complete beginners. React or JavaScript
+experience required.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHAT YOU GET
+
+✓ 120+ pages of production mobile reference
+✓ Real implementation — not Expo Snack demos
+✓ App store submission checklist
+✓ EAS Build configuration templates
+✓ AI prompt library with Mobile Constraint Header
+✓ Lifetime updates — Expo SDK new editions ship
+  automatically to you. No extra charge.
+✓ Instant PDF download
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+"AI builds the screens. You architect the navigation."
+
+— Tensectra | tensectra.com
+
+--------------------------------------------------
+
+
