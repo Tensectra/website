@@ -18,9 +18,109 @@
  *   SMTP_USER     = tensectra.office@gmail.com
  *   SMTP_PASSWORD = xxxx xxxx xxxx xxxx    (Gmail App Password, not your login password)
  *   Generate at: myaccount.google.com > Security > App passwords
+ *
+ * NOTE: nodemailer is imported dynamically (only when Gmail provider is used)
+ * to prevent Vercel module-load failures when using Resend.
  */
 
-import nodemailer from 'nodemailer';
+// ---------------------------------------------------------------------------
+// Provider detection
+// ---------------------------------------------------------------------------
+function getProvider() {
+  if (process.env.EMAIL_PROVIDER) return process.env.EMAIL_PROVIDER.toLowerCase();
+  if (process.env.RESEND_API_KEY) return 'resend';
+  if (process.env.SMTP_USER && process.env.SMTP_PASSWORD) return 'gmail';
+  return 'resend';
+}
+
+// ---------------------------------------------------------------------------
+// Validate config early so the handler returns JSON, not an HTML crash page
+// ---------------------------------------------------------------------------
+export function validateMailConfig() {
+  const provider = getProvider();
+  if (provider === 'resend') {
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error('EMAIL: RESEND_API_KEY is not set. Add it to Vercel environment variables or switch EMAIL_PROVIDER=gmail');
+    }
+  } else if (provider === 'gmail') {
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
+      throw new Error('EMAIL: SMTP_USER or SMTP_PASSWORD is not set. Add Gmail credentials to Vercel environment variables');
+    }
+  } else {
+    throw new Error('EMAIL: Unknown EMAIL_PROVIDER "' + provider + '". Use "resend" or "gmail"');
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Send via Resend API (https://resend.com -- free 3000 emails/month)
+// ---------------------------------------------------------------------------
+async function sendViaResend({ to, subject, html, replyTo }) {
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer ' + process.env.RESEND_API_KEY,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      from:     'Tensectra <hello@tensectra.com>',
+      to:       Array.isArray(to) ? to : [to],
+      reply_to: replyTo || 'hello@tensectra.com',
+      subject,
+      html
+    })
+  });
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error('Resend error ' + res.status + ': ' + body);
+  }
+  return res.json();
+}
+
+// ---------------------------------------------------------------------------
+// Send via Gmail SMTP -- nodemailer loaded dynamically so a missing package
+// never causes a module-load crash when using Resend as the provider.
+// ---------------------------------------------------------------------------
+async function sendViaGmail({ to, subject, html, replyTo }) {
+  const nodemailer = (await import('nodemailer')).default;
+  const transport = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASSWORD
+    }
+  });
+  return transport.sendMail({
+    from:    '"Tensectra" <' + process.env.SMTP_USER + '>',
+    to:      Array.isArray(to) ? to.join(', ') : to,
+    replyTo: replyTo || 'hello@tensectra.com',
+    subject,
+    html
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Public interface -- same API regardless of provider
+// ---------------------------------------------------------------------------
+
+/**
+ * Send a single email.
+ * @param {{ to: string, subject: string, html: string, replyTo?: string }} opts
+ */
+export async function sendMail(opts) {
+  const provider = getProvider();
+  if (provider === 'resend') return sendViaResend(opts);
+  return sendViaGmail(opts);
+}
+
+/**
+ * Send multiple emails in parallel.
+ * @param {Array<{ to: string, subject: string, html: string, replyTo?: string }>} mails
+ */
+export async function sendMails(mails) {
+  return Promise.all(mails.map(m => sendMail(m)));
+}
 
 // ---------------------------------------------------------------------------
 // Provider detection

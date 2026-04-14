@@ -192,7 +192,7 @@ const TEMPLATES = {
 };
 
 // ---------------------------------------------------------------------------
-// Handler — single export default
+// Handler -- single export default
 // ---------------------------------------------------------------------------
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -202,50 +202,52 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST')   return res.status(405).json({ error: 'Method not allowed' });
 
-  // 1. Auth check
-  const token = (req.headers.authorization || '').replace('Bearer ', '').trim();
-  const admin = await verifyAdmin(token);
-  if (!admin) return res.status(403).json({ error: 'Not authorised as admin' });
-
-  // 2. SMTP check
-  try { validateMailConfig(); } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
-
-  // 3. Validate body
-  const { to_email, to_name, template_key, extra_html = '' } = req.body || {};
-
-  if (!to_email || !template_key) {
-    return res.status(400).json({ error: 'Missing required fields: to_email, template_key' });
-  }
-
-  const tpl = TEMPLATES[template_key];
-  if (!tpl) {
-    return res.status(400).json({
-      error: `Unknown template_key: "${template_key}"`,
-      available: Object.keys(TEMPLATES)
-    });
-  }
-
-  // 4. Build HTML
-  const first   = (to_name || to_email.split('@')[0]).split(' ')[0];
-  let   html    = tpl.build(first);
-
-  // Inject any extra HTML the admin typed into the editor, right before the footer
-  if (extra_html && extra_html.trim()) {
-    html = html.replace(
-      '<div class="foot">',
-      `<div class="body" style="padding-top:0;border-top:1px solid #0D2040">${extra_html}</div><div class="foot">`
-    );
-  }
-
-  // 5. Send
   try {
+
+    // 1. Auth check
+    const token = (req.headers.authorization || '').replace('Bearer ', '').trim();
+    const admin = await verifyAdmin(token);
+    if (!admin) return res.status(403).json({ error: 'Not authorised as admin' });
+
+    // 2. Email config check
+    try { validateMailConfig(); } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
+
+    // 3. Validate body
+    const { to_email, to_name, template_key, extra_html = '' } = req.body || {};
+
+    if (!to_email || !template_key) {
+      return res.status(400).json({ error: 'Missing required fields: to_email, template_key' });
+    }
+
+    const tpl = TEMPLATES[template_key];
+    if (!tpl) {
+      return res.status(400).json({
+        error: 'Unknown template_key: "' + template_key + '"',
+        available: Object.keys(TEMPLATES)
+      });
+    }
+
+    // 4. Build HTML
+    const first = (to_name || to_email.split('@')[0]).split(' ')[0];
+    let   html  = tpl.build(first);
+
+    // Inject any extra HTML the admin typed, right before the footer
+    if (extra_html && extra_html.trim()) {
+      html = html.replace(
+        '<div class="foot">',
+        '<div class="body" style="padding-top:0;border-top:1px solid #0D2040">' + extra_html + '</div><div class="foot">'
+      );
+    }
+
+    // 5. Send
     await sendMail({ to: to_email, subject: tpl.subject, html });
-    console.log(`[send-email] Sent "${template_key}" to ${to_email} by ${admin.email}`);
+    console.log('[send-email] Sent "' + template_key + '" to ' + to_email + ' by ' + admin.email);
     return res.status(200).json({ ok: true, template: template_key, to: to_email });
+
   } catch (err) {
-    console.error('[send-email] Failed:', err.message);
-    return res.status(500).json({ error: err.message });
+    console.error('[send-email] Unhandled error:', err.message);
+    return res.status(500).json({ error: err.message || 'Internal server error' });
   }
 }

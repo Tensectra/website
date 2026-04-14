@@ -234,29 +234,44 @@ function initTabs() {
 // ============================================
 function initCourseFilters() {
   const filterBtns = document.querySelectorAll('.filter-btn');
-  const courseCards = document.querySelectorAll('.course-card');
-  
-  if (filterBtns.length === 0 || courseCards.length === 0) return;
-  
-  filterBtns.forEach(btn => {
+  if (filterBtns.length === 0) return;
+
+  // Section-level elements (wrapper divs with data-section attribute)
+  const sections = document.querySelectorAll('[data-section]');
+
+  filterBtns.forEach(function(btn) {
     btn.addEventListener('click', function() {
-      const filter = this.getAttribute('data-filter');
-      
-      // Update active button
-      filterBtns.forEach(b => b.classList.remove('active'));
+      var filter = this.getAttribute('data-filter');
+
+      // Update active button state
+      filterBtns.forEach(function(b) { b.classList.remove('active'); });
       this.classList.add('active');
-      
-      // Filter cards
-      courseCards.forEach(card => {
-        const category = card.getAttribute('data-category');
-        
-        if (filter === 'all' || category === filter) {
-          card.style.display = 'block';
-          card.classList.add('fade-in');
-        } else {
-          card.style.display = 'none';
-        }
-      });
+
+      if (sections.length > 0) {
+        // Section-level filtering: show/hide entire wrapper divs
+        sections.forEach(function(section) {
+          var type = section.getAttribute('data-section');
+          var show;
+          if (type === 'pro') {
+            // Pro banner only appears on "All"
+            show = filter === 'all';
+          } else {
+            show = filter === 'all' || type === filter;
+          }
+          section.style.display = show ? '' : 'none';
+        });
+      } else {
+        // Fallback: card-level filtering for pages that don't use data-section
+        document.querySelectorAll('.course-card').forEach(function(card) {
+          var category = card.getAttribute('data-category');
+          if (filter === 'all' || category === filter) {
+            card.style.display = 'block';
+            card.classList.add('fade-in');
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
     });
   });
 }
