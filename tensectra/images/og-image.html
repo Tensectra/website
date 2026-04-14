@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<!--
+  TENSECTRA OG IMAGE GENERATOR
+  ?????????????????????????????????????????????????????????
+  Open this file in a browser, then screenshot exactly
+  the body content at 1200 � 630 px and save as og-image.png
+  in this same /images/ folder.
+
+  Tools to auto-convert:
+    - Puppeteer: page.screenshot({ clip: {x:0,y:0,width:1200,height:630} })
+    - Or simply: browser dev tools ? screenshot ? 1200�630 crop
+  ?????????????????????????????????????????????????????????
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    background: #050A14;
+    font-family: -apple-system, 'Inter', 'Segoe UI', Arial, sans-serif;
+    position: relative;
+  }
+
+  /* Grid overlay */
+  .grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,204,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,204,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* Glow blobs */
+  .g1 {
+    position: absolute;
+    width: 640px; height: 640px;
+    background: radial-gradient(circle, rgba(0,204,255,0.14) 0%, transparent 65%);
+    top: -200px; left: -120px; pointer-events: none;
+  }
+  .g2 {
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(123,47,255,0.1) 0%, transparent 65%);
+    bottom: -150px; right: 100px; pointer-events: none;
+  }
+
+  /* Content */
+  .wrap {
+    position: absolute;
+    inset: 0;
+    padding: 72px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Top label */
+  .label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: #00CCFF;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .label::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 2px;
+    background: #00CCFF;
+    border-radius: 2px;
+  }
+
+  /* Brand row */
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    margin-bottom: 24px;
+  }
+  .brand-name {
+    font-size: 82px;
+    font-weight: 800;
+    letter-spacing: 10px;
+    color: #FFFFFF;
+    line-height: 1;
+  }
+
+  /* Tagline */
+  .tagline {
+    font-size: 22px;
+    color: #00CCFF;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  /* Description */
+  .desc {
+    font-size: 18px;
+    color: #6E7D9A;
+    line-height: 1.7;
+    max-width: 680px;
+    margin-bottom: 36px;
+  }
+
+  /* Domain */
+  .domain {
+    font-size: 17px;
+    color: #3A4A5E;
+    letter-spacing: 2px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(0,204,255,0.12);
+    width: 100%;
+  }
+
+  /* Right side decoration */
+  .deco {
+    position: absolute;
+    right: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .pill {
+    background: rgba(0,204,255,0.07);
+    border: 1px solid rgba(0,204,255,0.18);
+    border-radius: 99px;
+    padding: 10px 22px;
+    color: #00CCFF;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    text-align: center;
+  }
+  .pill.purple {
+    background: rgba(123,47,255,0.07);
+    border-color: rgba(123,47,255,0.2);
+    color: #9B6FFF;
+  }
+</style>
+</head>
+<body>
+  <div class="g1"></div>
+  <div class="g2"></div>
+  <div class="grid"></div>
+
+  <div class="wrap">
+    <div class="label">AI-Powered Engineering Education</div>
+
+    <div class="brand">
+      <!-- Correct Tensectra logo shape -->
+      <svg width="54" height="49" viewBox="0 0 930 840" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="og-g" x1="0" y1="0" x2="930" y2="840" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#00CCFF"/>
+            <stop offset="48%"  stop-color="#2255EE"/>
+            <stop offset="100%" stop-color="#7B2FFF"/>
+          </linearGradient>
+        </defs>
+        <polygon points="10,10 920,10 819,150 85,150"     fill="url(#og-g)"/>
+        <polygon points="85,150 245,150 647,820 487,820"  fill="url(#og-g)"/>
+        <polygon points="658,150 819,150 634,480 492,480" fill="url(#og-g)"/>
+        <polygon points="492,480 634,480 828,820 686,820" fill="url(#og-g)"/>
+      </svg>
+        <defs>
+          <linearGradient id="og-g" x1="70" y1="130" x2="980" y2="940" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#00CCFF"/>
+            <stop offset="48%"  stop-color="#2255EE"/>
+            <stop offset="100%" stop-color="#7B2FFF"/>
+          </linearGradient>
+        </defs>
+        <polygon points="70,130 980,130 879,270 145,270" fill="url(#og-g)"/>
+        <polygon points="145,270 305,270 707,940 547,940" fill="url(#og-g)"/>
+        <polygon points="718,270 879,270 694,600 552,600" fill="url(#og-g)"/>
+        <polygon points="552,600 694,600 888,940 746,940" fill="url(#og-g)"/>
+      </svg>
+
+      <span class="brand-name">TENSECTRA</span>
+    </div>
+
+    <div class="tagline">Learn Boldly. Build Fearlessly. Scale Intelligently.</div>
+
+    <div class="desc">
+      Live cohorts, self-paced playbooks, and enterprise architecture for developers<br>
+      who want to build production systems -- not just write code.
+    </div>
+
+    <div class="domain">tensectra.com</div>
+  </div>
+
+  <!-- Right side pills -->
+  <div class="deco">
+    <div class="pill">.NET 8 Backend</div>
+    <div class="pill">Next.js 14 Frontend</div>
+    <div class="pill purple">React Native &amp; Expo</div>
+    <div class="pill">Enterprise Architecture</div>
+    <div class="pill purple">AI-Powered Engineering</div>
+  </div>
+</body>
+</html>
