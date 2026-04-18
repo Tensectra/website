@@ -1,9 +1,10 @@
 {
 "cleanUrls": true,
 "trailingSlash": false,
-"rewrites": [
-  { "source": "/pages/careers", "destination": "/api/careers" }
-],
+  "rewrites": [
+    { "source": "/pages/careers", "destination": "/api/careers" },
+    { "source": "/googleb681312800300708.html", "destination": "/googleb681312800300708.html" }
+  ],
 "headers": [
     {
       "source": "/(.*)",
