@@ -345,7 +345,7 @@
       var curr = job.salary_currency || 'NGN';
       // Use Unicode escapes per coding standards -- no raw special chars in JS strings
       var sym  = curr === 'NGN' ? '\u20A6' : (curr === 'GBP' ? '\u00A3' : '$');
-      var unit = job.salary_unit === 'MONTH' ? '/mo' : (job.salary_unit === 'HOUR' ? '/hr' : '/yr');
+      var unit = job.salary_unit === 'MONTH' ? '/mo' : (job.salary_unit === 'HOUR' ? '/hr' : (job.salary_unit === 'DAY' ? '/day' : '/yr'));
       var min  = sym + Number(job.salary_min).toLocaleString();
       var max  = job.salary_max ? sym + Number(job.salary_max).toLocaleString() : null;
       return max ? min + ' - ' + max + ' ' + unit : min + ' ' + unit;

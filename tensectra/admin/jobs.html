@@ -351,7 +351,7 @@
       </div>
 
       <!-- Salary -->
-      <div class="section-divider">Salary (optional — improves Google Jobs visibility)</div>
+      <div class="section-divider">Salary (optional ï¿½ improves Google Jobs visibility)</div>
       <div class="form-row">
         <div class="form-group">
           <label for="job-salary-min">Min Salary</label>
@@ -376,6 +376,7 @@
           <select id="job-salary-unit">
             <option value="YEAR">Per Year</option>
             <option value="MONTH">Per Month</option>
+            <option value="DAY">Per Day</option>
             <option value="HOUR">Per Hour</option>
           </select>
         </div>
@@ -674,7 +675,7 @@ async function saveJob() {
   var salaryMin = document.getElementById('job-salary-min').value;
   var salaryMax = document.getElementById('job-salary-max').value;
 
-  // snake_case field names — required by API (coding standard rule 7)
+  // snake_case field names ï¿½ required by API (coding standard rule 7)
   var payload = {
     title:             title,
     department:        (document.getElementById('job-department').value || '').trim() || null,

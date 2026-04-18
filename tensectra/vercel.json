@@ -1,7 +1,10 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "headers": [
+"cleanUrls": true,
+"trailingSlash": false,
+"rewrites": [
+  { "source": "/pages/careers", "destination": "/api/careers" }
+],
+"headers": [
     {
       "source": "/(.*)",
       "headers": [
