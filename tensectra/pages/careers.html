@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){var d=document.documentElement,t=localStorage.getItem("tensectra-theme")||"dark";d.setAttribute("data-theme",t);}());</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Careers | Tensectra — Join Our Team</title>
+  <meta name="description" content="Build the future of engineering education. Join Tensectra — a remote-first team building AI-powered courses, enterprise architecture programs, and developer tools.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://tensectra.com/pages/careers">
+  <meta property="og:title" content="Careers | Tensectra — Join Our Team">
+  <meta property="og:description" content="Build the future of engineering education. Explore open roles at Tensectra.">
+  <meta property="og:image" content="https://tensectra.com/images/og-image.png">
+  <meta property="og:url" content="https://tensectra.com/pages/careers">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css?v=3">
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+
+  <style>
+    /* ?? Job card ????????????????????????????????? */
+    .job-card {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .job-card:hover { border-color: rgba(0,204,255,.35); box-shadow: var(--shadow-card); }
+    .job-card.open  { border-color: var(--accent-cyan); }
+
+    .job-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 24px 28px;
+      cursor: pointer;
+    }
+    .job-card-left { flex: 1; min-width: 0; }
+
+    .job-title {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--text-white);
+      margin: 0 0 10px;
+      line-height: 1.35;
+    }
+
+    .job-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .job-pill {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 99px;
+      letter-spacing: 0.04em;
+    }
+    .pill-type   { background: rgba(0,204,255,.12); color: var(--accent-cyan); border: 1px solid rgba(0,204,255,.2); }
+    .pill-model  { background: rgba(123,47,255,.12); color: #9B6FFF; border: 1px solid rgba(123,47,255,.2); }
+    .pill-dept   { background: rgba(255,255,255,.06); color: var(--text-muted); border: 1px solid var(--bg-border); }
+    .pill-closed { background: rgba(255,100,100,.1); color: #ff7070; border: 1px solid rgba(255,100,100,.2); }
+
+    .job-location-text {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .job-card-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .job-toggle-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid var(--bg-border);
+      background: rgba(255,255,255,.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .25s, background .2s;
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+    .job-card.open .job-toggle-icon { transform: rotate(45deg); background: rgba(0,204,255,.1); color: var(--accent-cyan); }
+
+    /* ?? Job body (expanded) ??????????????????? */
+    .job-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s ease;
+    }
+    .job-card.open .job-body { max-height: 2400px; }
+
+    .job-body-inner {
+      padding: 0 28px 28px;
+      border-top: 1px solid var(--bg-border);
+      padding-top: 22px;
+    }
+
+    .job-section { margin-bottom: 22px; }
+    .job-section-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      margin-bottom: 10px;
+    }
+    .job-section p, .job-section li {
+      font-size: 0.87rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin: 0;
+    }
+    .job-section ul { padding-left: 18px; margin: 0; }
+    .job-section ul li { margin-bottom: 4px; }
+
+    .job-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding-top: 18px;
+      border-top: 1px solid var(--bg-border);
+      margin-top: 20px;
+    }
+    .job-salary {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-white);
+    }
+    .job-deadline {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* ?? Filter pills ????????????????????????? */
+    .careers-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+    .cf-btn {
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 99px;
+      border: 1px solid var(--bg-border);
+      background: var(--bg-card);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .cf-btn:hover { border-color: rgba(0,204,255,.3); color: var(--text-primary); }
+    .cf-btn.active { background: rgba(0,204,255,.1); border-color: var(--accent-cyan); color: var(--accent-cyan); }
+
+    /* ?? Empty / Loading state ???????????????? */
+    .careers-empty {
+      text-align: center;
+      padding: 64px 24px;
+      background: var(--bg-card);
+      border: 1px dashed var(--bg-border);
+      border-radius: var(--radius-lg);
+    }
+    .careers-empty h3 { color: var(--text-white); margin-bottom: 12px; }
+    .careers-empty p  { color: var(--text-muted); max-width: 440px; margin: 0 auto 24px; font-size: .9rem; line-height: 1.75; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="../" class="navbar-logo">
+        <img src="../images/logo-mark.svg" alt="Tensectra">
+        <span>TENSECTRA</span>
+      </a>
+      <ul class="navbar-nav">
+        <li><a href="../">Home</a></li>
+        <li><a href="consultancy">Consultancy</a></li>
+        <li><a href="infrastructure">Infrastructure Kit</a></li>
+        <li><a href="cohorts">Cohorts</a></li>
+        <li><a href="courses">Courses</a></li>
+        <li><a href="pro">Pro</a></li>
+        <li><a href="about">About</a></li>
+      </ul>
+      <div class="navbar-cta">
+        <a href="cohorts" class="btn btn-primary btn-sm">Join a Cohort</a>
+        <button class="theme-toggle-btn" aria-label="Toggle theme">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+      <button class="mobile-menu-btn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" style="min-height:50vh;padding-top:120px;">
+    <div class="glow-cyan" style="top:10%;right:15%;"></div>
+    <div class="glow-purple" style="bottom:20%;left:10%;"></div>
+    <div class="container">
+      <div class="hero-content" style="text-align:center;margin:0 auto;">
+        <div style="font-size:.72rem;font-weight:700;letter-spacing:.15em;color:var(--accent-cyan);text-transform:uppercase;margin-bottom:16px;">We're Hiring</div>
+        <h1 style="margin-bottom:16px;">Build With Us.</h1>
+        <p class="hero-subtitle" style="margin:0 auto 28px;">
+          We're a remote-first team building AI-powered engineering education for the next generation of developers.
+          If you care about craft, clarity, and impact — you'll fit right in.
+        </p>
+        <p id="hero-job-count" style="font-size:.85rem;color:var(--text-muted);">Loading open positions...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Perks bar -->
+  <section style="background:var(--bg-card);border-top:1px solid var(--bg-border);border-bottom:1px solid var(--bg-border);padding:18px 0;">
+    <div class="container">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:32px;">
+        <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--text-muted);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Async-first culture
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--text-muted);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          100% remote
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--text-muted);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          High-impact, small team
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--text-muted);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          Free Pro access
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Job Listings -->
+  <section class="section">
+    <div class="container" style="max-width:860px;">
+
+      <!-- Filter -->
+      <div class="careers-filter" id="careers-filter" style="display:none;">
+        <button class="cf-btn active" data-type="all">All Roles</button>
+        <button class="cf-btn" data-type="FULL_TIME">Full-time</button>
+        <button class="cf-btn" data-type="PART_TIME">Part-time</button>
+        <button class="cf-btn" data-type="CONTRACT">Contract</button>
+        <button class="cf-btn" data-type="INTERNSHIP">Internship</button>
+      </div>
+
+      <!-- Jobs list -->
+      <div id="jobs-list">
+        <div class="careers-empty">
+          <p style="color:var(--text-muted);">Loading open positions...</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- General application CTA -->
+  <section class="section" style="background:var(--bg-card);">
+    <div class="container" style="text-align:center;max-width:600px;">
+      <h2 style="margin-bottom:12px;">Don't see your role?</h2>
+      <p style="color:var(--text-muted);margin-bottom:28px;line-height:1.75;">
+        We're always looking for exceptional people. Send a short note about what you do and what excites you about Tensectra — we read every email.
+      </p>
+      <a href="mailto:hello@tensectra.com?subject=General%20Application%20—%20Tensectra" class="btn btn-primary">
+        Send a General Application ?
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <img src="../images/favicon.svg" alt="" class="footer-watermark">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>Products</h4>
+          <ul class="footer-links">
+            <li><a href="courses">Courses</a></li>
+            <li><a href="pro">Pro Membership</a></li>
+            <li><a href="infrastructure">ERP Kit</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul class="footer-links">
+            <li><a href="consultancy">Consultancy</a></li>
+            <li><a href="consultancy">Corporate Training</a></li>
+            <li><a href="consultancy">Retainer</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="about">About</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="careers" class="active" style="color:var(--accent-cyan);">Careers</a></li>
+            <li><a href="../forms/contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul class="footer-links">
+            <li><a href="privacy">Privacy Policy</a></li>
+            <li><a href="terms">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-tagline">Learn Boldly. Build Fearlessly. Scale Intelligently.</p>
+        <p style="color:var(--text-muted);font-size:.85rem;margin-top:var(--space-sm);">© 2026 Tensectra. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/theme-toggle.js"></script>
+  <script src="../js/main.js?v=3"></script>
+  <script src="../js/supabase-config.js"></script>
+
+  <script>
+  (function () {
+    var allJobs = [];
+    var activeType = 'all';
+
+    /* ?? Format helpers ??????????????????????? */
+    function fmtDate(d) {
+      if (!d) return null;
+      return new Date(d).toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+    }
+
+    function fmtSalary(job) {
+      if (!job.salary_min) return null;
+      var curr = job.salary_currency || 'NGN';
+      var sym  = curr === 'NGN' ? '?' : '$';
+      var unit = job.salary_unit === 'MONTH' ? '/mo' : '/yr';
+      var min  = sym + Number(job.salary_min).toLocaleString();
+      var max  = job.salary_max ? sym + Number(job.salary_max).toLocaleString() : null;
+      return max ? min + ' – ' + max + ' ' + unit : min + ' ' + unit;
+    }
+
+    function typeLabel(t) {
+      return { FULL_TIME:'Full-time', PART_TIME:'Part-time', CONTRACT:'Contract', INTERNSHIP:'Internship' }[t] || t;
+    }
+
+    function modelLabel(m) {
+      return { REMOTE:'Remote', ON_SITE:'On-site', HYBRID:'Hybrid' }[m] || m;
+    }
+
+    function textToList(text) {
+      if (!text) return '';
+      var lines = text.split('\n').map(function(l){ return l.trim(); }).filter(Boolean);
+      if (lines.length <= 1) return '<p>' + (text || '') + '</p>';
+      return '<ul>' + lines.map(function(l){ return '<li>' + l.replace(/^[-•*]\s*/,'') + '</li>'; }).join('') + '</ul>';
+    }
+
+    /* ?? JSON-LD injection ???????????????????? */
+    function injectSchema(job) {
+      var schema = {
+        '@context': 'https://schema.org/',
+        '@type': 'JobPosting',
+        'title': job.title,
+        'description': job.description,
+        'datePosted': job.date_posted ? job.date_posted.slice(0,10) : new Date().toISOString().slice(0,10),
+        'hiringOrganization': {
+          '@type': 'Organization',
+          'name': 'Tensectra',
+          'sameAs': 'https://tensectra.com',
+          'logo': 'https://tensectra.com/images/logo-mark.svg'
+        },
+        'employmentType': job.employment_type || 'FULL_TIME',
+        'jobLocation': {
+          '@type': 'Place',
+          'address': {
+            '@type': 'PostalAddress',
+            'addressLocality': job.location_city || 'Remote',
+            'addressCountry': job.location_country || 'NG'
+          }
+        }
+      };
+
+      if (job.work_model === 'REMOTE') schema['jobLocationType'] = 'TELECOMMUTE';
+      if (job.valid_through) schema['validThrough'] = job.valid_through;
+
+      if (job.salary_min) {
+        schema['baseSalary'] = {
+          '@type': 'MonetaryAmount',
+          'currency': job.salary_currency || 'NGN',
+          'value': {
+            '@type': 'QuantitativeValue',
+            'minValue': job.salary_min,
+            'maxValue': job.salary_max || job.salary_min,
+            'unitText': job.salary_unit || 'YEAR'
+          }
+        };
+      }
+
+      var s = document.createElement('script');
+      s.type = 'application/ld+json';
+      s.textContent = JSON.stringify(schema, null, 2);
+      document.head.appendChild(s);
+    }
+
+    /* ?? Render a single job card ????????????? */
+    function renderCard(job) {
+      var cardId = 'job-' + job.id;
+      var salary = fmtSalary(job);
+      var deadline = job.valid_through ? 'Closes ' + fmtDate(job.valid_through) : null;
+      var applyHref = job.apply_url || ('mailto:hello@tensectra.com?subject=' + encodeURIComponent('Application — ' + job.title));
+
+      return '<div class="job-card" id="' + cardId + '">'
+        + '<div class="job-card-header" onclick="toggleJob(\'' + cardId + '\')">'
+        +   '<div class="job-card-left">'
+        +     '<h3 class="job-title">' + job.title + '</h3>'
+        +     '<div class="job-meta">'
+        +       '<span class="job-pill pill-type">' + typeLabel(job.employment_type) + '</span>'
+        +       '<span class="job-pill pill-model">' + modelLabel(job.work_model) + '</span>'
+        +       (job.department ? '<span class="job-pill pill-dept">' + job.department + '</span>' : '')
+        +     '</div>'
+        +     '<div class="job-location-text">?? ' + (job.location_city || 'Remote')
+        +       (job.location_country ? ', ' + job.location_country : '') + '</div>'
+        +   '</div>'
+        +   '<div class="job-card-right">'
+        +     '<div class="job-toggle-icon">+</div>'
+        +   '</div>'
+        + '</div>'
+
+        + '<div class="job-body">'
+        +   '<div class="job-body-inner">'
+        +   (job.short_description ? '<div class="job-section"><p>' + job.short_description + '</p></div>' : '')
+        +   '<div class="job-section"><div class="job-section-title">About the Role</div>' + textToList(job.description) + '</div>'
+        +   (job.responsibilities ? '<div class="job-section"><div class="job-section-title">Responsibilities</div>' + textToList(job.responsibilities) + '</div>' : '')
+        +   (job.requirements     ? '<div class="job-section"><div class="job-section-title">Requirements</div>'    + textToList(job.requirements)     + '</div>' : '')
+        +   (job.benefits         ? '<div class="job-section"><div class="job-section-title">What We Offer</div>'  + textToList(job.benefits)         + '</div>' : '')
+        +   '<div class="job-footer">'
+        +     '<div>'
+        +       (salary   ? '<div class="job-salary">' + salary + '</div>' : '')
+        +       (deadline ? '<div class="job-deadline">' + deadline + '</div>' : '')
+        +     '</div>'
+        +     '<a href="' + applyHref + '" class="btn btn-primary btn-sm" target="_blank" rel="noopener">Apply Now ?</a>'
+        +   '</div>'
+        +   '</div>'
+        + '</div>'
+        + '</div>';
+    }
+
+    /* ?? Render all visible jobs ?????????????? */
+    function renderJobs() {
+      var list = document.getElementById('jobs-list');
+      var visible = activeType === 'all'
+        ? allJobs
+        : allJobs.filter(function(j){ return j.employment_type === activeType; });
+
+      if (!visible.length) {
+        var msg = allJobs.length
+          ? 'No ' + typeLabel(activeType).toLowerCase() + ' positions open right now.'
+          : 'No open positions right now.';
+        list.innerHTML = '<div class="careers-empty">'
+          + '<h3>No open positions</h3>'
+          + '<p>' + msg + ' We hire when we find exceptional people, not on a fixed schedule. Send us a general application below.</p>'
+          + '</div>';
+        return;
+      }
+
+      list.innerHTML = visible.map(renderCard).join('');
+    }
+
+    /* ?? Toggle card open/close ??????????????? */
+    window.toggleJob = function(id) {
+      var card = document.getElementById(id);
+      if (card) card.classList.toggle('open');
+    };
+
+    /* ?? Filter buttons ??????????????????????? */
+    document.querySelectorAll('.cf-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.cf-btn').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        activeType = btn.dataset.type;
+        renderJobs();
+      });
+    });
+
+    /* ?? Load jobs ???????????????????????????? */
+    document.addEventListener('DOMContentLoaded', async function() {
+      var client = window.supabaseClient;
+      if (!client) {
+        document.getElementById('jobs-list').innerHTML = '<div class="careers-empty"><h3>Could not load jobs</h3><p>Please try refreshing the page.</p></div>';
+        return;
+      }
+
+      var { data, error } = await client.from('jobs')
+        .select('*')
+        .eq('is_active', true)
+        .order('date_posted', { ascending: false });
+
+      if (error || !data) {
+        document.getElementById('jobs-list').innerHTML = '<div class="careers-empty"><h3>Could not load jobs</h3><p>Please try refreshing the page.</p></div>';
+        return;
+      }
+
+      allJobs = data;
+
+      // Update hero count
+      var count = allJobs.length;
+      document.getElementById('hero-job-count').textContent =
+        count ? count + ' open position' + (count !== 1 ? 's' : '') : 'No open positions right now — check back soon.';
+
+      // Show filter only if there are jobs
+      if (count) document.getElementById('careers-filter').style.display = 'flex';
+
+      // Inject JSON-LD for every active job (Google Jobs crawls this)
+      allJobs.forEach(injectSchema);
+
+      renderJobs();
+    });
+
+  }());
+  </script>
+</body>
+</html>

@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){var d=document.documentElement,t=localStorage.getItem("tensectra-theme")||"dark";d.setAttribute("data-theme",t);}());</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jobs - Tensectra Admin</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/admin.css?v=10">
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+
+  <style>
+    /* Job form modal overrides */
+    .job-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.65);
+      z-index: 1000;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 16px;
+      overflow-y: auto;
+    }
+    .job-modal-overlay.open { display: flex; }
+
+    .job-modal {
+      background: var(--admin-card-bg, #0D1E35);
+      border: 1px solid var(--admin-border, #1A2F4A);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 680px;
+      padding: 0;
+    }
+
+    .job-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--admin-border, #1A2F4A);
+    }
+    .job-modal-header h3 { margin: 0; font-size: 1rem; color: #fff; }
+    .job-modal-close {
+      background: none;
+      border: none;
+      color: #6E7D9A;
+      font-size: 1.4rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 4px;
+    }
+    .job-modal-close:hover { color: #fff; }
+
+    .job-modal-body { padding: 24px; }
+
+    .job-modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 16px 24px;
+      border-top: 1px solid var(--admin-border, #1A2F4A);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .form-row.full { grid-template-columns: 1fr; }
+    @media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .form-group label {
+      font-size: .78rem;
+      font-weight: 600;
+      color: #6E7D9A;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 6px;
+      color: #E6EDF3;
+      font-size: .88rem;
+      padding: 9px 12px;
+      font-family: inherit;
+      transition: border-color .2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #00CCFF;
+    }
+    .form-group select { cursor: pointer; }
+    .form-group textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+    .form-group .hint {
+      font-size: .72rem;
+      color: #4A5568;
+      line-height: 1.5;
+    }
+
+    .form-check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .form-check input[type=checkbox] { width: 16px; height: 16px; cursor: pointer; accent-color: #00CCFF; }
+    .form-check label { font-size: .88rem; color: #E6EDF3; cursor: pointer; }
+
+    .section-divider {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #00CCFF;
+      border-top: 1px solid rgba(0,204,255,.15);
+      padding-top: 16px;
+      margin: 16px 0 14px;
+    }
+
+    /* Status badge */
+    .status-active   { color: #00CCFF; background: rgba(0,204,255,.1); padding: 2px 8px; border-radius: 99px; font-size: .75rem; font-weight: 600; }
+    .status-inactive { color: #6E7D9A; background: rgba(110,125,154,.1); padding: 2px 8px; border-radius: 99px; font-size: .75rem; font-weight: 600; }
+
+    /* Confirm delete modal */
+    .confirm-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.7);
+      z-index: 1100;
+      align-items: center;
+      justify-content: center;
+    }
+    .confirm-overlay.open { display: flex; }
+    .confirm-box {
+      background: #0D1E35;
+      border: 1px solid #1A2F4A;
+      border-radius: 10px;
+      padding: 28px 28px 20px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+    .confirm-box h4 { margin: 0 0 10px; color: #fff; }
+    .confirm-box p  { color: #6E7D9A; font-size: .88rem; margin: 0 0 20px; line-height: 1.6; }
+    .confirm-box-btns { display: flex; gap: 10px; justify-content: center; }
+  </style>
+</head>
+<body class="admin-body">
+<div class="admin-layout">
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">
+      <img src="../images/logo-mark.svg" alt="Tensectra">
+      <div>
+        <div class="sidebar-logo-text">TENSECTRA</div>
+        <div class="sidebar-badge">ADMIN</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Main</div>
+      <a href="/admin/dashboard">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <div class="sidebar-section">CRM</div>
+      <a href="/admin/consultancy">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        Consultancy
+      </a>
+      <a href="/admin/applications">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Applications
+      </a>
+      <a href="/admin/leads">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>
+        Leads
+      </a>
+      <a href="/admin/payments">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Payments
+      </a>
+      <div class="sidebar-section">Lists</div>
+      <a href="/admin/newsletter">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Newsletter
+      </a>
+      <div class="sidebar-section">Careers</div>
+      <a href="/admin/jobs" class="active">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        Job Postings
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <span class="sidebar-user-email" id="admin-user-email">Loading...</span>
+      <button class="btn-logout" id="logout-btn">Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- Mobile menu toggle -->
+  <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="3" y1="12" x2="21" y2="12"/>
+      <line x1="3" y1="6"  x2="21" y2="6"/>
+      <line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+  <div class="mobile-overlay" id="mobile-overlay"></div>
+
+  <!-- Main -->
+  <main class="admin-main">
+    <div class="admin-header">
+      <div>
+        <h1>Job Postings</h1>
+        <p class="admin-header-sub" id="header-count">Loading...</p>
+      </div>
+      <div class="admin-header-actions">
+        <button class="btn btn-primary btn-sm" id="post-job-btn">+ Post New Job</button>
+      </div>
+    </div>
+
+    <div class="admin-content">
+
+      <!-- Filter bar -->
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="active">Active</button>
+        <button class="filter-btn" data-filter="inactive">Inactive</button>
+        <input class="filter-search" id="search-input" type="text" placeholder="Search job title or department">
+      </div>
+
+      <!-- Table -->
+      <div class="table-card">
+        <div class="table-card-header">
+          <span class="table-card-title">Job Postings</span>
+          <span class="table-card-count" id="table-count"></span>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Department</th>
+                <th>Type</th>
+                <th>Model</th>
+                <th>Closes</th>
+                <th>Status</th>
+                <th>Posted</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="jobs-tbody">
+              <tr><td colspan="8" style="text-align:center;padding:40px;" class="muted">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- ???????????????????????????????????????????????
+     CREATE / EDIT JOB MODAL
+     All onclick functions are defined on window.*
+     in the script block below before any are called.
+???????????????????????????????????????????????? -->
+<div class="job-modal-overlay" id="job-modal-overlay">
+  <div class="job-modal">
+    <div class="job-modal-header">
+      <h3 id="job-modal-title">Post New Job</h3>
+      <button class="job-modal-close" id="job-modal-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="job-modal-body">
+
+      <!-- Hidden edit ID -->
+      <input type="hidden" id="job-edit-id">
+
+      <!-- Row 1: Title + Department -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="job-title">Job Title *</label>
+          <input type="text" id="job-title" placeholder="e.g. Backend Engineer" maxlength="120">
+        </div>
+        <div class="form-group">
+          <label for="job-department">Department</label>
+          <input type="text" id="job-department" placeholder="e.g. Engineering" maxlength="80">
+        </div>
+      </div>
+
+      <!-- Row 2: Type + Work Model -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="job-employment-type">Employment Type *</label>
+          <select id="job-employment-type">
+            <option value="FULL_TIME">Full-time</option>
+            <option value="PART_TIME">Part-time</option>
+            <option value="CONTRACT">Contract</option>
+            <option value="INTERNSHIP">Internship</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="job-work-model">Work Model *</label>
+          <select id="job-work-model">
+            <option value="REMOTE">Remote</option>
+            <option value="HYBRID">Hybrid</option>
+            <option value="ON_SITE">On-site</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Row 3: City + Country + Close date -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="job-city">Location City</label>
+          <input type="text" id="job-city" placeholder="e.g. Lagos" value="Remote" maxlength="80">
+        </div>
+        <div class="form-group">
+          <label for="job-country">Country Code</label>
+          <input type="text" id="job-country" placeholder="e.g. NG" value="NG" maxlength="2">
+          <span class="hint">2-letter ISO code (NG, US, GB...)</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="job-valid-through">Closing Date (Deadline)</label>
+          <input type="date" id="job-valid-through">
+          <span class="hint">Leave blank for open-ended. Remove listing when filled.</span>
+        </div>
+        <div class="form-group">
+          <label for="job-apply-url">Apply URL or Email</label>
+          <input type="text" id="job-apply-url" placeholder="https://... or email@domain.com">
+          <span class="hint">Direct link or email address for applications.</span>
+        </div>
+      </div>
+
+      <!-- Salary -->
+      <div class="section-divider">Salary (optional — improves Google Jobs visibility)</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="job-salary-min">Min Salary</label>
+          <input type="number" id="job-salary-min" placeholder="e.g. 1200000" min="0">
+        </div>
+        <div class="form-group">
+          <label for="job-salary-max">Max Salary</label>
+          <input type="number" id="job-salary-max" placeholder="e.g. 2500000" min="0">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="job-salary-currency">Currency</label>
+          <select id="job-salary-currency">
+            <option value="NGN">NGN (Naira)</option>
+            <option value="USD">USD (Dollar)</option>
+            <option value="GBP">GBP (Pound)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="job-salary-unit">Per</label>
+          <select id="job-salary-unit">
+            <option value="YEAR">Per Year</option>
+            <option value="MONTH">Per Month</option>
+            <option value="HOUR">Per Hour</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="section-divider">Job Content</div>
+
+      <div class="form-row full">
+        <div class="form-group">
+          <label for="job-short-desc">Short Description (shown on card preview)</label>
+          <textarea id="job-short-desc" placeholder="One or two sentences summarising the role..." rows="2"></textarea>
+        </div>
+      </div>
+
+      <div class="form-row full">
+        <div class="form-group">
+          <label for="job-description">Full Description * (required for Google Jobs)</label>
+          <textarea id="job-description" placeholder="Describe the role in detail..." rows="5"></textarea>
+        </div>
+      </div>
+
+      <div class="form-row full">
+        <div class="form-group">
+          <label for="job-responsibilities">Responsibilities</label>
+          <textarea id="job-responsibilities" placeholder="One item per line. Start each with - or just text." rows="4"></textarea>
+          <span class="hint">One item per line. Displayed as a bullet list.</span>
+        </div>
+      </div>
+
+      <div class="form-row full">
+        <div class="form-group">
+          <label for="job-requirements">Requirements</label>
+          <textarea id="job-requirements" placeholder="One requirement per line." rows="4"></textarea>
+          <span class="hint">One item per line. Displayed as a bullet list.</span>
+        </div>
+      </div>
+
+      <div class="form-row full">
+        <div class="form-group">
+          <label for="job-benefits">What We Offer / Benefits</label>
+          <textarea id="job-benefits" placeholder="One benefit per line." rows="3"></textarea>
+        </div>
+      </div>
+
+      <!-- Active toggle -->
+      <div class="section-divider">Visibility</div>
+      <div class="form-check">
+        <input type="checkbox" id="job-is-active" checked>
+        <label for="job-is-active">Published (visible on careers page and indexed by Google)</label>
+      </div>
+      <p style="font-size:.78rem;color:#6E7D9A;margin:0 0 4px;">
+        Uncheck to save as draft. Remove the listing immediately once the role is filled to avoid Google penalties.
+      </p>
+
+    </div>
+    <div class="job-modal-footer">
+      <button class="btn btn-secondary btn-sm" id="job-modal-cancel">Cancel</button>
+      <button class="btn btn-primary btn-sm" id="job-save-btn">Save Job</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM -->
+<div class="confirm-overlay" id="confirm-overlay">
+  <div class="confirm-box">
+    <h4>Remove Job Posting?</h4>
+    <p id="confirm-msg">This will permanently remove the job and its Google Jobs listing.</p>
+    <div class="confirm-box-btns">
+      <button class="btn btn-secondary btn-sm" id="confirm-cancel">Cancel</button>
+      <button class="btn btn-sm" id="confirm-delete" style="background:#d94040;color:#fff;">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/admin-auth.js"></script>
+<script src="../js/admin.js"></script>
+
+<script>
+// ============================================================
+// ALL window.* functions are defined here BEFORE any dynamic
+// HTML is rendered (coding standard: functions before callers)
+// ============================================================
+
+var allJobs      = [];
+var filtered     = [];
+var activeFilter = 'all';
+var deletePendingId = null;
+
+// ?? Format helpers ?????????????????????????????????????????
+function fmtDate(d) {
+  if (!d) return '-';
+  return new Date(d).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+}
+
+function typeLabel(t) {
+  var map = { FULL_TIME:'Full-time', PART_TIME:'Part-time', CONTRACT:'Contract', INTERNSHIP:'Internship' };
+  return map[t] || t || '-';
+}
+
+function modelLabel(m) {
+  var map = { REMOTE:'Remote', ON_SITE:'On-site', HYBRID:'Hybrid' };
+  return map[m] || m || '-';
+}
+
+// ?? Open CREATE modal ???????????????????????????????????????
+window.openCreateModal = function () {
+  var overlay = document.getElementById('job-modal-overlay');
+  if (!overlay) { console.error('job-modal-overlay not found'); return; }
+
+  document.getElementById('job-modal-title').textContent  = 'Post New Job';
+  document.getElementById('job-save-btn').textContent     = 'Post Job';
+  document.getElementById('job-edit-id').value            = '';
+
+  // Clear all fields
+  var fields = ['job-title','job-department','job-city','job-country',
+    'job-valid-through','job-apply-url','job-short-desc','job-description',
+    'job-responsibilities','job-requirements','job-benefits',
+    'job-salary-min','job-salary-max'];
+  fields.forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.value = id === 'job-city' ? 'Remote' : id === 'job-country' ? 'NG' : '';
+  });
+  document.getElementById('job-employment-type').value  = 'FULL_TIME';
+  document.getElementById('job-work-model').value       = 'REMOTE';
+  document.getElementById('job-salary-currency').value  = 'NGN';
+  document.getElementById('job-salary-unit').value      = 'YEAR';
+  document.getElementById('job-is-active').checked      = true;
+
+  overlay.classList.add('open');
+};
+
+// ?? Open EDIT modal ?????????????????????????????????????????
+window.openEditModal = function (jobId) {
+  var job = allJobs.find(function(j){ return j.id === jobId; });
+  if (!job) { console.error('Job not found for id:', jobId); return; }
+
+  var overlay = document.getElementById('job-modal-overlay');
+  if (!overlay) { console.error('job-modal-overlay not found'); return; }
+
+  document.getElementById('job-modal-title').textContent  = 'Edit Job Posting';
+  document.getElementById('job-save-btn').textContent     = 'Save Changes';
+  document.getElementById('job-edit-id').value            = job.id;
+
+  document.getElementById('job-title').value            = job.title || '';
+  document.getElementById('job-department').value       = job.department || '';
+  document.getElementById('job-employment-type').value  = job.employment_type || 'FULL_TIME';
+  document.getElementById('job-work-model').value       = job.work_model || 'REMOTE';
+  document.getElementById('job-city').value             = job.location_city || 'Remote';
+  document.getElementById('job-country').value          = job.location_country || 'NG';
+  document.getElementById('job-valid-through').value    = job.valid_through || '';
+  document.getElementById('job-apply-url').value        = job.apply_url || '';
+  document.getElementById('job-salary-min').value       = job.salary_min || '';
+  document.getElementById('job-salary-max').value       = job.salary_max || '';
+  document.getElementById('job-salary-currency').value  = job.salary_currency || 'NGN';
+  document.getElementById('job-salary-unit').value      = job.salary_unit || 'YEAR';
+  document.getElementById('job-short-desc').value       = job.short_description || '';
+  document.getElementById('job-description').value      = job.description || '';
+  document.getElementById('job-responsibilities').value = job.responsibilities || '';
+  document.getElementById('job-requirements').value     = job.requirements || '';
+  document.getElementById('job-benefits').value         = job.benefits || '';
+  document.getElementById('job-is-active').checked      = !!job.is_active;
+
+  overlay.classList.add('open');
+};
+
+// ?? Close modal ?????????????????????????????????????????????
+window.closeJobModal = function () {
+  var overlay = document.getElementById('job-modal-overlay');
+  if (overlay) overlay.classList.remove('open');
+};
+
+// ?? Toggle active/inactive directly from table ??????????????
+window.toggleActive = function (jobId, currentState) {
+  var client = window._supabase;
+  if (!client) { showToast('Not connected', 'error'); return; }
+
+  client.from('jobs')
+    .update({ is_active: !currentState })
+    .eq('id', jobId)
+    .then(function(result) {
+      if (result.error) {
+        console.error('Toggle error:', result.error);
+        showToast('Failed to update status', 'error');
+        return;
+      }
+      showToast(currentState ? 'Job set to inactive (draft)' : 'Job is now live', 'success');
+      loadData();
+    });
+};
+
+// ?? Confirm delete ??????????????????????????????????????????
+window.confirmDelete = function (jobId, jobTitle) {
+  var overlay = document.getElementById('confirm-overlay');
+  if (!overlay) { console.error('confirm-overlay not found'); return; }
+
+  deletePendingId = jobId;
+  var msg = document.getElementById('confirm-msg');
+  if (msg) msg.textContent = 'Delete "' + jobTitle + '"? This will permanently remove it and its Google Jobs listing.';
+  overlay.classList.add('open');
+};
+
+// ?? Render table rows ???????????????????????????????????????
+function renderTable() {
+  document.getElementById('table-count').textContent = filtered.length + ' postings';
+  var tbody = document.getElementById('jobs-tbody');
+
+  if (!filtered.length) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;" class="muted">No job postings found</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(function(job) {
+    var statusBadge = job.is_active
+      ? '<span class="status-active">Live</span>'
+      : '<span class="status-inactive">Draft</span>';
+
+    var toggleLabel = job.is_active ? 'Set Inactive' : 'Set Live';
+
+    var did = 'dd-job-' + job.id;
+    var safeTitle = (job.title || '').replace(/'/g, "\\'");
+
+    return '<tr>'
+      + '<td style="font-weight:600;color:#E6EDF3;">'   + (job.title || '-')            + '</td>'
+      + '<td class="muted">'                             + (job.department || '-')        + '</td>'
+      + '<td class="muted">'                             + typeLabel(job.employment_type) + '</td>'
+      + '<td class="muted">'                             + modelLabel(job.work_model)     + '</td>'
+      + '<td class="muted">'                             + fmtDate(job.valid_through)     + '</td>'
+      + '<td>'                                           + statusBadge                    + '</td>'
+      + '<td class="muted">'                             + fmtDate(job.date_posted)       + '</td>'
+      + '<td>'
+      +   '<div class="action-dropdown" id="' + did + '">'
+      +     '<button class="action-dropdown-toggle" onclick="toggleDropdown(\'' + did + '\')">... Actions</button>'
+      +     '<div class="action-dropdown-menu">'
+      +       '<button class="action-dropdown-item" onclick="closeDropdowns();openEditModal(\'' + job.id + '\')">Edit</button>'
+      +       '<button class="action-dropdown-item" onclick="closeDropdowns();toggleActive(\'' + job.id + '\',' + !!job.is_active + ')">' + toggleLabel + '</button>'
+      +       '<button class="action-dropdown-item" style="color:#d94040;" onclick="closeDropdowns();confirmDelete(\'' + job.id + '\',\'' + safeTitle + '\')">Delete</button>'
+      +     '</div>'
+      +   '</div>'
+      + '</td>'
+      + '</tr>';
+  }).join('');
+}
+
+// ?? Filter + search ?????????????????????????????????????????
+function applyFilter() {
+  var q = (document.getElementById('search-input').value || '').toLowerCase();
+  filtered = allJobs.filter(function(j) {
+    var matchFilter = activeFilter === 'all'
+      || (activeFilter === 'active'   &&  j.is_active)
+      || (activeFilter === 'inactive' && !j.is_active);
+    var matchSearch = !q
+      || (j.title      || '').toLowerCase().includes(q)
+      || (j.department || '').toLowerCase().includes(q);
+    return matchFilter && matchSearch;
+  });
+  renderTable();
+}
+
+// ?? Load all jobs (admin sees all, including drafts) ????????
+async function loadData() {
+  var client = window._supabase;
+  if (!client) { return; }
+
+  var result = await client.from('jobs')
+    .select('*')
+    .order('date_posted', { ascending: false });
+
+  if (result.error) {
+    console.error('Load jobs error:', result.error);
+    showToast('Failed to load jobs', 'error');
+    return;
+  }
+
+  allJobs = result.data || [];
+
+  var activeCount = allJobs.filter(function(j){ return j.is_active; }).length;
+  document.getElementById('header-count').textContent =
+    activeCount + ' live / ' + allJobs.length + ' total';
+
+  applyFilter();
+}
+
+// ?? Save job (create or update) ?????????????????????????????
+async function saveJob() {
+  var client = window._supabase;
+  if (!client) { showToast('Not connected', 'error'); return; }
+
+  var title = (document.getElementById('job-title').value || '').trim();
+  var desc  = (document.getElementById('job-description').value || '').trim();
+
+  if (!title) { showToast('Job title is required', 'error'); return; }
+  if (!desc)  { showToast('Full description is required', 'error'); return; }
+
+  var salaryMin = document.getElementById('job-salary-min').value;
+  var salaryMax = document.getElementById('job-salary-max').value;
+
+  // snake_case field names — required by API (coding standard rule 7)
+  var payload = {
+    title:             title,
+    department:        (document.getElementById('job-department').value || '').trim() || null,
+    employment_type:   document.getElementById('job-employment-type').value,
+    work_model:        document.getElementById('job-work-model').value,
+    location_city:     (document.getElementById('job-city').value || '').trim() || 'Remote',
+    location_country:  (document.getElementById('job-country').value || '').trim().toUpperCase() || 'NG',
+    valid_through:     document.getElementById('job-valid-through').value || null,
+    apply_url:         (document.getElementById('job-apply-url').value || '').trim() || null,
+    salary_min:        salaryMin ? Number(salaryMin) : null,
+    salary_max:        salaryMax ? Number(salaryMax) : null,
+    salary_currency:   document.getElementById('job-salary-currency').value,
+    salary_unit:       document.getElementById('job-salary-unit').value,
+    short_description: (document.getElementById('job-short-desc').value || '').trim() || null,
+    description:       desc,
+    responsibilities:  (document.getElementById('job-responsibilities').value || '').trim() || null,
+    requirements:      (document.getElementById('job-requirements').value || '').trim() || null,
+    benefits:          (document.getElementById('job-benefits').value || '').trim() || null,
+    is_active:         document.getElementById('job-is-active').checked
+  };
+
+  var btn = document.getElementById('job-save-btn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Saving...'; }
+
+  var editId = document.getElementById('job-edit-id').value;
+  var result;
+
+  if (editId) {
+    result = await client.from('jobs').update(payload).eq('id', editId);
+  } else {
+    result = await client.from('jobs').insert(payload);
+  }
+
+  if (btn) { btn.disabled = false; btn.textContent = editId ? 'Save Changes' : 'Post Job'; }
+
+  if (result.error) {
+    console.error('Save job error:', result.error);
+    showToast('Failed to save: ' + result.error.message, 'error');
+    return;
+  }
+
+  showToast(editId ? 'Job updated' : 'Job posted live', 'success');
+  closeJobModal();
+  loadData();
+}
+
+// ?? Dropdown helpers (reused from other admin pages) ????????
+window.toggleDropdown = function (id) {
+  closeDropdowns();
+  var menu = document.querySelector('#' + id + ' .action-dropdown-menu');
+  if (menu) menu.classList.toggle('open');
+};
+window.closeDropdowns = function () {
+  document.querySelectorAll('.action-dropdown-menu.open').forEach(function(m) {
+    m.classList.remove('open');
+  });
+};
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.action-dropdown')) closeDropdowns();
+});
+
+// ?? Wire up all static buttons on DOMContentLoaded ?????????
+document.addEventListener('adminReady', function() {
+  loadData();
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Filter buttons
+  document.querySelectorAll('.filter-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      applyFilter();
+    });
+  });
+
+  // Search
+  document.getElementById('search-input').addEventListener('input', applyFilter);
+
+  // Post new job button
+  var postBtn = document.getElementById('post-job-btn');
+  if (postBtn) postBtn.addEventListener('click', openCreateModal);
+
+  // Modal close buttons
+  var closeBtn = document.getElementById('job-modal-close');
+  if (closeBtn) closeBtn.addEventListener('click', closeJobModal);
+
+  var cancelBtn = document.getElementById('job-modal-cancel');
+  if (cancelBtn) cancelBtn.addEventListener('click', closeJobModal);
+
+  // Click outside modal to close
+  var overlay = document.getElementById('job-modal-overlay');
+  if (overlay) {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeJobModal();
+    });
+  }
+
+  // Save job button
+  var saveBtn = document.getElementById('job-save-btn');
+  if (saveBtn) saveBtn.addEventListener('click', saveJob);
+
+  // Delete confirm overlay
+  var confirmCancel = document.getElementById('confirm-cancel');
+  if (confirmCancel) {
+    confirmCancel.addEventListener('click', function() {
+      var co = document.getElementById('confirm-overlay');
+      if (co) co.classList.remove('open');
+      deletePendingId = null;
+    });
+  }
+
+  var confirmDelete = document.getElementById('confirm-delete');
+  if (confirmDelete) {
+    confirmDelete.addEventListener('click', async function() {
+      if (!deletePendingId) return;
+      var client = window._supabase;
+      if (!client) { showToast('Not connected', 'error'); return; }
+
+      var result = await client.from('jobs').delete().eq('id', deletePendingId);
+
+      var co = document.getElementById('confirm-overlay');
+      if (co) co.classList.remove('open');
+      deletePendingId = null;
+
+      if (result.error) {
+        console.error('Delete error:', result.error);
+        showToast('Delete failed: ' + result.error.message, 'error');
+        return;
+      }
+
+      showToast('Job removed', 'success');
+      loadData();
+    });
+  }
+});
+</script>
+
+<!-- Mobile menu toggle (required on every admin page) -->
+<script>
+(function() {
+  var sidebar = document.querySelector('.admin-sidebar');
+  var toggle  = document.getElementById('mobile-menu-btn');
+  var overlay = document.getElementById('mobile-overlay');
+
+  function closeMobile() {
+    if (sidebar) sidebar.classList.remove('mobile-open');
+    if (overlay) overlay.classList.remove('active');
+  }
+
+  if (toggle) toggle.addEventListener('click', function() {
+    if (sidebar) sidebar.classList.toggle('mobile-open');
+    if (overlay) overlay.classList.toggle('active');
+  });
+
+  if (overlay) overlay.addEventListener('click', closeMobile);
+
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    link.addEventListener('click', closeMobile);
+  });
+}());
+</script>
+
+</body>
+</html>
