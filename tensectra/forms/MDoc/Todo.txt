@@ -55,7 +55,7 @@ QUESTIONS TO CONFIRM BEFORE I BUILD
 4.	Admin panel URL — should it be /admin (public URL, protected by login) or do you want it on a separate subdomain like admin.tensectra.com? /admin is simpler. -- (public URL, protected by login)
 5.	Discord/WhatsApp links for the cohort CRM email — share those links so I can put them in the email template. -- Use a demo link forthe 2 we will replace it later when we have the actual links. For now you can use https://discord.gg/tensectra and https://wa.me/1234567890
 
-
+  ----------------------
 Your 5 manual steps to go live
 #	Where	Action
 1	Vercel → Settings → Env Vars	Add RESEND_API_KEY, PAYSTACK_SECRET_KEY, SUPABASE_SERVICE_ROLE_KEY, APP_URL=https://www.tensectra.com
@@ -65,7 +65,7 @@ Your 5 manual steps to go live
 5	Paystack → Settings → Webhooks	URL: https://tensectra.com/api/webhook/paystack
 
 
-
+  ----------------------
 What a Nigerian visitor now sees
 Page	Before	After
 /pages/cohorts	$299	₦150,000
@@ -101,7 +101,7 @@ Gmail Workspace	2,000/day	If you pay for Workspace
 EMAIL_PROVIDER=resend   # uses RESEND_API_KEY
 EMAIL_PROVIDER=gmail    # uses SMTP_USER + SMTP_PASSWORD
 
-
+  ----------------------
 
 Fix 2 — Direct URL to self-paced tab
 The self-paced section now has id="self-paced". These URLs all work:
@@ -111,3 +111,11 @@ http://localhost:49350/pages/courses#live-cohort	Activates Live Cohort tab
 http://localhost:49350/pages/courses#coming-soon	Activates Coming Soon tab
 http://localhost:49350/pages/courses	Shows All (default)
 How it works:
+
+
+
+  ----------------------
+What you must do right now in Vercel Dashboard
+1.	Settings → Environment Variables → add SUPABASE_ANON_KEY = the anon key from supabase-config.js
+2.	Deploy the changes (push to GitHub)
+3.	Google Search Console → URL Inspection → paste https://tensectra.com/pages/careers → Request Indexing
