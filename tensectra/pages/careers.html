@@ -4,12 +4,12 @@
   <script>(function(){var d=document.documentElement,t=localStorage.getItem("tensectra-theme")||"dark";d.setAttribute("data-theme",t);}());</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Careers | Tensectra — Join Our Team</title>
-  <meta name="description" content="Build the future of engineering education. Join Tensectra — a remote-first team building AI-powered courses, enterprise architecture programs, and developer tools.">
+  <title>Careers | Tensectra -- Join Our Team</title>
+  <meta name="description" content="Tensectra is a specialist architecture firm that builds production patterns and teaches them in live six-week cohorts. Join the team.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://tensectra.com/pages/careers">
-  <meta property="og:title" content="Careers | Tensectra — Join Our Team">
-  <meta property="og:description" content="Build the future of engineering education. Explore open roles at Tensectra.">
+  <meta property="og:title" content="Careers | Tensectra -- Join Our Team">
+  <meta property="og:description" content="We build the patterns in production. Then we teach them in live six-week cohorts. Join Tensectra.">
   <meta property="og:image" content="https://tensectra.com/images/og-image.png">
   <meta property="og:url" content="https://tensectra.com/pages/careers">
   <meta name="twitter:card" content="summary_large_image">
@@ -20,7 +20,7 @@
   <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
 
   <style>
-    /* ?? Job card ????????????????????????????????? */
+    /* -- Job card -- */
     .job-card {
       background: var(--bg-card);
       border: 1px solid var(--bg-border);
@@ -62,10 +62,9 @@
       border-radius: 99px;
       letter-spacing: 0.04em;
     }
-    .pill-type   { background: rgba(0,204,255,.12); color: var(--accent-cyan); border: 1px solid rgba(0,204,255,.2); }
-    .pill-model  { background: rgba(123,47,255,.12); color: #9B6FFF; border: 1px solid rgba(123,47,255,.2); }
-    .pill-dept   { background: rgba(255,255,255,.06); color: var(--text-muted); border: 1px solid var(--bg-border); }
-    .pill-closed { background: rgba(255,100,100,.1); color: #ff7070; border: 1px solid rgba(255,100,100,.2); }
+    .pill-type  { background: rgba(0,204,255,.12); color: var(--accent-cyan); border: 1px solid rgba(0,204,255,.2); }
+    .pill-model { background: rgba(123,47,255,.12); color: #9B6FFF; border: 1px solid rgba(123,47,255,.2); }
+    .pill-dept  { background: rgba(255,255,255,.06); color: var(--text-muted); border: 1px solid var(--bg-border); }
 
     .job-location-text {
       font-size: 0.78rem;
@@ -95,7 +94,7 @@
     }
     .job-card.open .job-toggle-icon { transform: rotate(45deg); background: rgba(0,204,255,.1); color: var(--accent-cyan); }
 
-    /* ?? Job body (expanded) ??????????????????? */
+    /* -- Job body (expanded) -- */
     .job-body {
       max-height: 0;
       overflow: hidden;
@@ -104,9 +103,8 @@
     .job-card.open .job-body { max-height: 2400px; }
 
     .job-body-inner {
-      padding: 0 28px 28px;
+      padding: 22px 28px 28px;
       border-top: 1px solid var(--bg-border);
-      padding-top: 22px;
     }
 
     .job-section { margin-bottom: 22px; }
@@ -137,17 +135,10 @@
       border-top: 1px solid var(--bg-border);
       margin-top: 20px;
     }
-    .job-salary {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--text-white);
-    }
-    .job-deadline {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
+    .job-salary  { font-size: 0.9rem; font-weight: 600; color: var(--text-white); }
+    .job-deadline { font-size: 0.78rem; color: var(--text-muted); }
 
-    /* ?? Filter pills ????????????????????????? */
+    /* -- Filter pills -- */
     .careers-filter {
       display: flex;
       flex-wrap: wrap;
@@ -165,10 +156,10 @@
       cursor: pointer;
       transition: all .2s;
     }
-    .cf-btn:hover { border-color: rgba(0,204,255,.3); color: var(--text-primary); }
+    .cf-btn:hover  { border-color: rgba(0,204,255,.3); color: var(--text-primary); }
     .cf-btn.active { background: rgba(0,204,255,.1); border-color: var(--accent-cyan); color: var(--accent-cyan); }
 
-    /* ?? Empty / Loading state ???????????????? */
+    /* -- Empty / Loading state -- */
     .careers-empty {
       text-align: center;
       padding: 64px 24px;
@@ -218,8 +209,10 @@
         <div style="font-size:.72rem;font-weight:700;letter-spacing:.15em;color:var(--accent-cyan);text-transform:uppercase;margin-bottom:16px;">We're Hiring</div>
         <h1 style="margin-bottom:16px;">Build With Us.</h1>
         <p class="hero-subtitle" style="margin:0 auto 28px;">
-          We're a remote-first team building AI-powered engineering education for the next generation of developers.
-          If you care about craft, clarity, and impact — you'll fit right in.
+          Tensectra is a specialist architecture firm that uses education as its distribution strategy.
+          We build the patterns in production. Then we teach them in live six-week cohorts.
+          The developers who graduate understand CQRS, Kafka, AI-ready systems, and multi-tenancy --
+          not from theory, but from the scaffold running in production fintech today.
         </p>
         <p id="hero-job-count" style="font-size:.85rem;color:var(--text-muted);">Loading open positions...</p>
       </div>
@@ -278,10 +271,11 @@
     <div class="container" style="text-align:center;max-width:600px;">
       <h2 style="margin-bottom:12px;">Don't see your role?</h2>
       <p style="color:var(--text-muted);margin-bottom:28px;line-height:1.75;">
-        We're always looking for exceptional people. Send a short note about what you do and what excites you about Tensectra — we read every email.
+        We're always looking for exceptional people. Send a short note about what you do
+        and what excites you about Tensectra -- we read every email.
       </p>
-      <a href="mailto:hello@tensectra.com?subject=General%20Application%20—%20Tensectra" class="btn btn-primary">
-        Send a General Application ?
+      <a href="mailto:hello@tensectra.com?subject=General%20Application%20-%20Tensectra" class="btn btn-primary">
+        Send a General Application &rarr;
       </a>
     </div>
   </section>
@@ -326,7 +320,7 @@
       </div>
       <div class="footer-bottom">
         <p class="footer-tagline">Learn Boldly. Build Fearlessly. Scale Intelligently.</p>
-        <p style="color:var(--text-muted);font-size:.85rem;margin-top:var(--space-sm);">© 2026 Tensectra. All rights reserved.</p>
+        <p style="color:var(--text-muted);font-size:.85rem;margin-top:var(--space-sm);">&copy; 2026 Tensectra. All rights reserved.</p>
       </div>
     </div>
   </footer>
@@ -337,10 +331,10 @@
 
   <script>
   (function () {
-    var allJobs = [];
+    var allJobs  = [];
     var activeType = 'all';
 
-    /* ?? Format helpers ??????????????????????? */
+    /* -- Format helpers -- */
     function fmtDate(d) {
       if (!d) return null;
       return new Date(d).toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
@@ -349,29 +343,35 @@
     function fmtSalary(job) {
       if (!job.salary_min) return null;
       var curr = job.salary_currency || 'NGN';
-      var sym  = curr === 'NGN' ? '?' : '$';
-      var unit = job.salary_unit === 'MONTH' ? '/mo' : '/yr';
+      // Use Unicode escapes per coding standards -- no raw special chars in JS strings
+      var sym  = curr === 'NGN' ? '\u20A6' : (curr === 'GBP' ? '\u00A3' : '$');
+      var unit = job.salary_unit === 'MONTH' ? '/mo' : (job.salary_unit === 'HOUR' ? '/hr' : '/yr');
       var min  = sym + Number(job.salary_min).toLocaleString();
       var max  = job.salary_max ? sym + Number(job.salary_max).toLocaleString() : null;
-      return max ? min + ' – ' + max + ' ' + unit : min + ' ' + unit;
+      return max ? min + ' - ' + max + ' ' + unit : min + ' ' + unit;
     }
 
     function typeLabel(t) {
-      return { FULL_TIME:'Full-time', PART_TIME:'Part-time', CONTRACT:'Contract', INTERNSHIP:'Internship' }[t] || t;
+      var map = { FULL_TIME:'Full-time', PART_TIME:'Part-time', CONTRACT:'Contract', INTERNSHIP:'Internship' };
+      return map[t] || t;
     }
 
     function modelLabel(m) {
-      return { REMOTE:'Remote', ON_SITE:'On-site', HYBRID:'Hybrid' }[m] || m;
+      var map = { REMOTE:'Remote', ON_SITE:'On-site', HYBRID:'Hybrid' };
+      return map[m] || m;
     }
 
     function textToList(text) {
       if (!text) return '';
       var lines = text.split('\n').map(function(l){ return l.trim(); }).filter(Boolean);
       if (lines.length <= 1) return '<p>' + (text || '') + '</p>';
-      return '<ul>' + lines.map(function(l){ return '<li>' + l.replace(/^[-•*]\s*/,'') + '</li>'; }).join('') + '</ul>';
+      // Use \u2022 unicode escape for bullet -- no raw special chars in regex
+      return '<ul>' + lines.map(function(l){
+        return '<li>' + l.replace(/^[-\u2022*]\s*/, '') + '</li>';
+      }).join('') + '</ul>';
     }
 
-    /* ?? JSON-LD injection ???????????????????? */
+    /* -- JSON-LD injection (Google Jobs schema) -- */
     function injectSchema(job) {
       var schema = {
         '@context': 'https://schema.org/',
@@ -418,12 +418,13 @@
       document.head.appendChild(s);
     }
 
-    /* ?? Render a single job card ????????????? */
+    /* -- Render a single job card -- */
     function renderCard(job) {
-      var cardId = 'job-' + job.id;
-      var salary = fmtSalary(job);
-      var deadline = job.valid_through ? 'Closes ' + fmtDate(job.valid_through) : null;
-      var applyHref = job.apply_url || ('mailto:hello@tensectra.com?subject=' + encodeURIComponent('Application — ' + job.title));
+      var cardId    = 'job-' + job.id;
+      var salary    = fmtSalary(job);
+      var deadline  = job.valid_through ? 'Closes ' + fmtDate(job.valid_through) : null;
+      // No special chars in apply subject line -- use plain hyphen
+      var applyHref = job.apply_url || ('mailto:hello@tensectra.com?subject=' + encodeURIComponent('Application - ' + job.title));
 
       return '<div class="job-card" id="' + cardId + '">'
         + '<div class="job-card-header" onclick="toggleJob(\'' + cardId + '\')">'
@@ -434,14 +435,13 @@
         +       '<span class="job-pill pill-model">' + modelLabel(job.work_model) + '</span>'
         +       (job.department ? '<span class="job-pill pill-dept">' + job.department + '</span>' : '')
         +     '</div>'
-        +     '<div class="job-location-text">?? ' + (job.location_city || 'Remote')
+        +     '<div class="job-location-text">Location: ' + (job.location_city || 'Remote')
         +       (job.location_country ? ', ' + job.location_country : '') + '</div>'
         +   '</div>'
         +   '<div class="job-card-right">'
         +     '<div class="job-toggle-icon">+</div>'
         +   '</div>'
         + '</div>'
-
         + '<div class="job-body">'
         +   '<div class="job-body-inner">'
         +   (job.short_description ? '<div class="job-section"><p>' + job.short_description + '</p></div>' : '')
@@ -451,17 +451,17 @@
         +   (job.benefits         ? '<div class="job-section"><div class="job-section-title">What We Offer</div>'  + textToList(job.benefits)         + '</div>' : '')
         +   '<div class="job-footer">'
         +     '<div>'
-        +       (salary   ? '<div class="job-salary">' + salary + '</div>' : '')
+        +       (salary   ? '<div class="job-salary">'   + salary   + '</div>' : '')
         +       (deadline ? '<div class="job-deadline">' + deadline + '</div>' : '')
         +     '</div>'
-        +     '<a href="' + applyHref + '" class="btn btn-primary btn-sm" target="_blank" rel="noopener">Apply Now ?</a>'
+        +     '<a href="' + applyHref + '" class="btn btn-primary btn-sm" target="_blank" rel="noopener">Apply Now &rarr;</a>'
         +   '</div>'
         +   '</div>'
         + '</div>'
         + '</div>';
     }
 
-    /* ?? Render all visible jobs ?????????????? */
+    /* -- Render all visible jobs -- */
     function renderJobs() {
       var list = document.getElementById('jobs-list');
       var visible = activeType === 'all'
@@ -482,13 +482,13 @@
       list.innerHTML = visible.map(renderCard).join('');
     }
 
-    /* ?? Toggle card open/close ??????????????? */
+    /* -- Toggle card open/close -- */
     window.toggleJob = function(id) {
       var card = document.getElementById(id);
       if (card) card.classList.toggle('open');
     };
 
-    /* ?? Filter buttons ??????????????????????? */
+    /* -- Filter buttons -- */
     document.querySelectorAll('.cf-btn').forEach(function(btn) {
       btn.addEventListener('click', function() {
         document.querySelectorAll('.cf-btn').forEach(function(b){ b.classList.remove('active'); });
@@ -498,38 +498,48 @@
       });
     });
 
-    /* ?? Load jobs ???????????????????????????? */
-    document.addEventListener('DOMContentLoaded', async function() {
-      var client = window.supabaseClient;
-      if (!client) {
+    /* -- Load jobs via REST API (no Supabase CDN needed on public pages) -- */
+    document.addEventListener('DOMContentLoaded', function() {
+      var url = window.SUPABASE_URL;
+      var key  = window.SUPABASE_ANON_KEY;
+
+      if (!url || !key) {
         document.getElementById('jobs-list').innerHTML = '<div class="careers-empty"><h3>Could not load jobs</h3><p>Please try refreshing the page.</p></div>';
+        document.getElementById('hero-job-count').textContent = '';
         return;
       }
 
-      var { data, error } = await client.from('jobs')
-        .select('*')
-        .eq('is_active', true)
-        .order('date_posted', { ascending: false });
+      fetch(url + '/rest/v1/jobs?is_active=eq.true&order=date_posted.desc&select=*', {
+        headers: {
+          'apikey': key,
+          'Authorization': 'Bearer ' + key,
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(function(res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function(data) {
+        allJobs = data || [];
 
-      if (error || !data) {
+        var count = allJobs.length;
+        document.getElementById('hero-job-count').textContent = count
+          ? count + ' open position' + (count !== 1 ? 's' : '')
+          : 'No open positions right now -- check back soon.';
+
+        if (count) document.getElementById('careers-filter').style.display = 'flex';
+
+        // Inject JSON-LD for every active job -- Google Jobs crawls this
+        allJobs.forEach(injectSchema);
+
+        renderJobs();
+      })
+      .catch(function(err) {
+        console.error('Failed to load jobs:', err);
         document.getElementById('jobs-list').innerHTML = '<div class="careers-empty"><h3>Could not load jobs</h3><p>Please try refreshing the page.</p></div>';
-        return;
-      }
-
-      allJobs = data;
-
-      // Update hero count
-      var count = allJobs.length;
-      document.getElementById('hero-job-count').textContent =
-        count ? count + ' open position' + (count !== 1 ? 's' : '') : 'No open positions right now — check back soon.';
-
-      // Show filter only if there are jobs
-      if (count) document.getElementById('careers-filter').style.display = 'flex';
-
-      // Inject JSON-LD for every active job (Google Jobs crawls this)
-      allJobs.forEach(injectSchema);
-
-      renderJobs();
+        document.getElementById('hero-job-count').textContent = '';
+      });
     });
 
   }());
