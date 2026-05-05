@@ -71,8 +71,9 @@ function initBinaryRain() {
 function initMobileMenu() {
   const menuBtn = document.querySelector('.mobile-menu-btn');
   const navbarNav = document.querySelector('.navbar-nav');
-  
-  if (!menuBtn || !navbarNav) return;
+
+  // layout.js wires this first after injection — skip if already done
+  if (!menuBtn || !navbarNav || menuBtn.getAttribute('data-wired')) return;
   
   menuBtn.addEventListener('click', function() {
     this.classList.toggle('active');

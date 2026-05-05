@@ -130,13 +130,67 @@
     el.outerHTML = html;
   }
 
+  /* ─── Mobile menu — self-contained, no dependency on main.js ─────────── */
+  function wireMenu() {
+    var btn = document.querySelector('.mobile-menu-btn');
+    var nav = document.querySelector('.navbar-nav');
+    if (!btn || !nav) return;
+
+    // Prevent double-wiring (main.js DOMContentLoaded may also call initMobileMenu)
+    if (btn.getAttribute('data-wired')) return;
+
+    // Remove any stale listeners by cloning
+    var fresh = btn.cloneNode(true);
+    btn.parentNode.replaceChild(fresh, btn);
+    fresh.setAttribute('data-wired', '1');
+
+    fresh.addEventListener('click', function () {
+      var isOpen = nav.classList.toggle('active');
+      fresh.classList.toggle('active', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    // Close on nav link tap (single-page feel on mobile)
+    nav.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        nav.classList.remove('active');
+        fresh.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // Close on outside tap
+    document.addEventListener('click', function (e) {
+      if (!fresh.contains(e.target) && !nav.contains(e.target)) {
+        nav.classList.remove('active');
+        fresh.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+
+  /* ─── Theme toggle — self-contained ──────────────────────────────────── */
+  function wireTheme() {
+    var btn = document.querySelector('.theme-toggle-btn');
+    if (!btn) return;
+    var fresh = btn.cloneNode(true);
+    btn.parentNode.replaceChild(fresh, btn);
+    fresh.addEventListener('click', function () {
+      var current = document.documentElement.getAttribute('data-theme');
+      var next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('tensectra-theme', next); } catch (e) {}
+    });
+  }
+
   // Run immediately if DOM is ready, else wait
   function run() {
     inject('site-nav', NAV);
     inject('site-footer', FOOTER);
-    // Re-init theme toggle and mobile menu after injection
+    wireMenu();
+    wireTheme();
+    // Also call main.js helpers if they happen to be loaded already
     if (typeof initThemeToggle === 'function') initThemeToggle();
-    if (typeof initMobileMenu === 'function') initMobileMenu();
   }
 
   if (document.readyState === 'loading') {
