@@ -1,0 +1,1039 @@
+﻿╔══════════════════════════════════════════════════════════════════════════════════════════════════╗
+║   TENSECTRAKIT  —  SELLER OPERATIONS GUIDE                                                       ║
+║   "Gumroad setup · Webhook build & deploy · GitHub access automation · Subscription expiry"      ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+  WHO THIS DOCUMENT IS FOR
+  ─────────────────────────────────────────────────────────────────────────────────────────────────
+  This is the SELLER/OWNER operations guide. It is NOT for buyers.
+  It covers everything you (the product owner) must set up ONCE to run the
+  TensectraKit commercial operation:
+
+    PART 1  — Gumroad account + product listing (complete field-by-field walkthrough)
+    PART 2  — The Webhook API: what it is, where it lives, how to build it 
+    PART 3  — Full webhook source code (.NET 8 minimal API, deployable in 1 hour)
+    PART 4  — Deploy the webhook to Railway (free tier, zero config)
+    PART 5  — Connect Gumroad → Webhook (the ping URL)  
+    PART 6  — GitHub access automation (invite on purchase, revoke on expiry)
+    PART 7  — Updates plan expiry: step-by-step revocation flow
+    PART 8  — Day-to-day seller cheat sheet
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART 1 — GUMROAD ACCOUNT & PRODUCT SETUP  (30 minutes, done once)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  STEP 1 — CREATE YOUR GUMROAD ACCOUNT
+  ──────────────────────────────────────
+  1. Go to: https://gumroad.com
+  2. Click "Start selling" (top right)
+  3. Fill in:
+       Email:     your@email.com
+       Password:  (strong, 16+ chars)
+  4. Verify your email address (check inbox).
+  5. You are now on the Gumroad dashboard.
+
+  STEP 2 — COMPLETE YOUR PROFILE  (required before you can receive payouts)
+  ──────────────────────────────────────────────────────────────────────────
+  Go to: Settings → Profile
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────┐
+  │  FIELD                    WHAT TO ENTER                                                │
+  ├────────────────────────────────────────────────────────────────────────────────────────┤
+  │  Name                     Tensectra  (or your legal name — shown on receipts)          │
+  │  Bio                      "Creator of TensectraKit — production-grade .NET 8           │
+  │                            microservice scaffold for enterprise engineers."            │
+  │  Profile URL              gumroad.com/tensectrakit                                    │
+  │  Profile photo            Your logo or headshot                                       │
+  │  Twitter / X              @tensectrakit  (if you have it)                             │
+  └────────────────────────────────────────────────────────────────────────────────────────┘
+
+  STEP 3 — SET UP PAYOUTS  (required to receive money)
+  ──────────────────────────────────────────────────────
+  Go to: Settings → Payouts
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────┐
+  │  FIELD                    WHAT TO ENTER                                               │
+  ├────────────────────────────────────────────────────────────────────────────────────────┤
+  │  Payout method            Bank account (recommended) OR PayPal                        │
+  │  Bank: Account number     Your bank account number                                    │
+  │  Bank: Routing number     Your bank routing number (US) or IBAN (international)       │
+  │  PayPal email             your-paypal@email.com  (if using PayPal)                    │
+  │  Payout frequency         Weekly (recommended — gets paid every Friday)               │
+  │  Minimum payout           $10                                                         │
+  └────────────────────────────────────────────────────────────────────────────────────────┘
+
+  NOTE: Gumroad charges 10% on each sale (no monthly fee on free plan).
+        On the Gumroad Pro plan ($10/month) the fee drops to ~2.9% + $0.30/sale.
+        At $149/sale: Free plan = ~$13.40 fee. Pro plan = ~$4.61 fee.
+        Switch to Pro plan once you have 5+ sales/month.
+
+  STEP 4 — CREATE PRODUCT: CORE INFRA PACK (SOLO LICENSE)
+  ──────────────────────────────────────────────────────────
+  Go to: Dashboard → Products → New Product → Digital Product
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────┐
+  │  FIELD                    WHAT TO ENTER                                                   │
+  ├────────────────────────────────────────────────────────────────────────────────────────────┤
+  │  Product name             TensectraKit — Core Infra Pack (Solo License)                  │
+  ├────────────────────────────────────────────────────────────────────────────────────────────┤
+  │  Price                    $149                                                            │
+  ├────────────────────────────────────────────────────────────────────────────────────────────┤
+  │  Description              (paste the block below — see DESCRIPTION TEMPLATE)             │
+  ├────────────────────────────────────────────────────────────────────────────────────────────┤
+  │  Cover image              Your product screenshot or architecture diagram                 │
+  ├────────────────────────────────────────────────────────────────────────────────────────────┤
+  │  File attachment          Upload a PDF: "TensectraKit-Welcome.pdf"                        │
+  │                           (a 1-page PDF with your support email + onboarding link)        │
+  │                           The REAL product is the GitHub repo — not a download.           │
+  │                           Gumroad requires at least one file attachment.                   │
+  ├────────────────────────────────────────────────────────────────────────────────────────────┤
+  │  Custom fields            Add field: "Your GitHub Username"  (required, text)             │
+  │                           This is how you know WHO to invite to the private repo.         │
+  ├────────────────────────────────────────────────────────────────────────────────────────────┤
+  │  Purchase confirmation    "Thank you! You will receive a GitHub invitation to             │
+  │  message (Receipt)        tensectra-pro/tensectrakit-core within 10 minutes.             │
+  │                            If not received, email: support@tensectrakit.com"              │
+  ├────────────────────────────────────────────────────────────────────────────────────────────┤
+  │  URL / Slug               tensectrakit-core-solo                                         │
+  │                           → your product URL: gumroad.com/l/tensectrakit-core-solo       │
+  ├────────────────────────────────────────────────────────────────────────────────────────────┤
+  │  Refund policy            30-day refund (builds trust, reduces chargebacks)              │
+  └────────────────────────────────────────────────────────────────────────────────────────────┘
+
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+  PRODUCT DESCRIPTION TEMPLATE  (copy-paste into Gumroad description field)
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+
+  TensectraKit is a production-grade .NET 8 Clean Architecture scaffold for enterprise
+  engineers. Not a tutorial project. Not a sample app. A battle-tested starting point
+  that enforces 47 non-negotiable architectural rules before a line of code ships.
+
+  WHAT IS INCLUDED:
+  ✔  5-layer Clean Architecture (Domain / Application / Infrastructure / Persistence / API)
+  ✔  Multi-database: PostgreSQL, Oracle, SQL Server — switch with one config line
+  ✔  MediatR CQRS + FluentValidation pipeline
+  ✔  Kafka event streaming — 3 saga templates (approval, user sync, customer sync)
+  ✔  Redis distributed cache with typed TTL options
+  ✔  AES-256 request/response encryption at API boundary
+  ✔  gRPC dual entry-point (REST + gRPC into same Application layer)
+  ✔  Multi-country factory pattern (extensible — Nigeria and Ghana included)
+  ✔  Soft-delete, audit trail, approval workflow patterns baked in
+  ✔  Full Docker infrastructure setup (Kafka, Redis, Postgres, Oracle, Seq)
+  ✔  dotnet new template — scaffold any project name in 30 seconds
+  ✔  MDoc documentation: Architecture guide, Hard Rules, Setup guide
+
+  WHO IS THIS FOR:
+  Senior .NET engineers bootstrapping production microservices
+  Backend teams at fintechs, banks, and healthcare companies
+  Engineering leads who need a defensible, auditable architecture from day one
+
+  WHAT YOU GET AFTER PURCHASE:
+  GitHub collaborator access to the private tensectra-pro/tensectrakit-core repo.
+  You clone, install as a dotnet new template, and scaffold your first service in minutes.
+
+  LICENSE: Solo license (1 developer). Team license available separately.
+
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+  Yeah — this part on Gumroad is a bit hidden, so you’re not missing anything obvious.
+  Let me guide you exactly where to find each one 👇
+
+		🔧 1. “Ping URL” (Webhook) — Where it actually is
+
+		👉 It is NOT on the main product page
+
+		Go here:
+		Dashboard → Settings
+		Scroll down → Advanced
+		Look for: “Ping URL”
+
+		👉 Paste:
+
+		https://YOUR-RAILWAY-URL.up.railway.app/webhook/gumroad
+
+		✅ This is global, not per product
+
+		🧾 2. Custom Field (GitHub Username) — This one IS per product
+		Go here:
+		Open your product
+		Scroll down → “Checkout” or “Advanced” section
+		Find: “Custom fields”
+
+		👉 Add:
+
+		Label: Your GitHub Username
+		Type: Text
+		Required: ✅ Yes
+		Placeholder: e.g. johndoe123
+
+		💡 If you don’t see it:
+
+		Click “More options”
+		Or switch to “Classic editor view” (Gumroad UI can hide it)
+		🔐 3. License Key Setting
+		Go to:
+		Product → Content / Settings
+
+		👉 Set:
+
+		License key: OFF
+
+		(You’re right — GitHub access is your license system)
+
+		⚠️ Why you’re not seeing some of these
+
+		Gumroad UI behaves like this:
+
+		Some settings are account-wide (Ping URL)
+		Some are inside collapsed sections
+		Some only show after toggling “More options”
+		✅ Quick Checklist
+		 Ping URL → Settings → Advanced (NOT product)
+		 Custom Field → Product → Checkout/Advanced
+		 License OFF → Product settings
+		 Tags → Product details section
+		⚡ Pro Tip (Important for your setup)
+
+		Since you're using:
+
+		GitHub repo access
+		Webhook automation
+
+		👉 Make sure:
+  STEP 5 — CREATE PRODUCT: CORE INFRA PACK (TEAM LICENSE)
+  ──────────────────────────────────────────────────────────
+  Duplicate the Solo product. Change:
+    - Product name:  TensectraKit — Core Infra Pack (Team License — up to 5 developers)
+    - Price:         $399
+    - Custom field:  "GitHub Usernames for your team (comma-separated, max 5)"
+    - URL/Slug:      tensectrakit-core-team
+    - File attach:   TensectraKit-Welcome-Team.pdf  (see GumroadAssets/TensectraKit-Welcome-Team.html)
+
+
+  STEP 6 — CREATE PRODUCT: UPDATES PLAN
+  ────────────────────────────────────────
+  Go to: Dashboard → Products → New Product → Digital Product
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────┐
+  │  FIELD                    WHAT TO ENTER                                                   │
+  ├────────────────────────────────────────────────────────────────────────────────────────────┤
+  │  Product name             TensectraKit — Updates Plan (1 Year)                            │
+  │  Price                    $99                                                             │
+  │  Description              1 year of template updates, bug fixes, priority email          │
+  │                           support, and 20% discount on new Pro modules.                  │
+  │                           Renew annually to keep access to new versions.                 │
+  │  Custom fields            "Order # from your original Core Pack purchase"                │
+  │  URL/Slug                 tensectrakit-updates-plan                                      │
+  └────────────────────────────────────────────────────────────────────────────────────────────┘
+
+  NOTE: When someone buys the Updates Plan, your webhook (Part 2) records their
+        GitHub username + expiry date (today + 365 days) in the database.
+        When the year ends, the expiry job removes their GitHub collaborator access.
+
+  UPDATES PLAN COVER IMAGE  (1280×720) — Colour identity: Electric EMERALD (#10b981)
+  Paste this prompt into ideogram.ai, Adobe Firefly, or DALL-E 3:
+  ┌──────────────────────────────────────────────────────────────────────────────────────────┐
+  │  Dark cinematic product banner, 16:9 landscape. Deep navy-black background (#0a0e1a)    │
+  │  with a glowing emerald-green (#10b981) electric grid. LEFT SIDE: bold white title —    │
+  │  "TensectraKit" on the first line, "Updates Plan" on the second line in large heavy     │
+  │  font with a neon emerald (#10b981) glow. Below in small uppercase: "1 YEAR ·           │
+  │  TEMPLATE UPDATES · PRIORITY SUPPORT · 20% OFF NEW MODULES". RIGHT SIDE: abstract       │
+  │  circular orbit diagram — a central glowing TK logo mark surrounded by revolving        │
+  │  rings of small electric sparks and version-number labels (v1.1, v1.2, v2.0) orbiting  │
+  │  it like a release cycle. The rings glow emerald-green with deep purple (#6300ff)       │
+  │  accents. A rotating arrow arc at the top of the orbit reinforces "renewal". Bottom     │
+  │  strip text: "ANNUAL RENEWAL · $99/YEAR · LIFETIME ACCESS TO UPDATES".                  │
+  │  Professional, bold, electrifying, no people, no stock photos. --ar 16:9               │
+  └──────────────────────────────────────────────────────────────────────────────────────────┘
+
+  UPDATES PLAN THUMBNAIL  (600×600) — paste this prompt:
+  ┌──────────────────────────────────────────────────────────────────────────────────────────┐
+  │  Dark square product icon, 1:1. Navy-black background (#0a0e1a). CENTER: the bold        │
+  │  letters "TK" inside a rounded square gradient logo (emerald #10b981 → deep purple      │
+  │  #6300ff), glowing. A circular revolving arrow wraps around the logo mark — rendered    │
+  │  in neon emerald — symbolising annual renewal. Below the logo: bold white "Updates       │
+  │  Plan" and smaller "1 Year · Renew · Evolve". At the very bottom: "Tensectra" in        │
+  │  white. Emerald electric glow halos. Clean, minimal, iconic. --ar 1:1                   │
+  └──────────────────────────────────────────────────────────────────────────────────────────┘
+
+  WHERE TO GENERATE (free):
+    Ideogram:      https://ideogram.ai           (best for text inside images)
+    Adobe Firefly: https://firefly.adobe.com     (free 25 credits/month)
+    DALL-E 3:      https://chatgpt.com           (GPT-4o image generation)
+
+  Save files as:
+    Cover:     tensectrakit-updates-cover.png   (1280×720)
+    Thumbnail: tensectrakit-updates-thumb.png   (600×600)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART 2 — THE WEBHOOK API: WHAT IT IS AND WHERE IT LIVES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  THE QUESTION: Where does the webhook code live?
+  ─────────────────────────────────────────────────
+
+  NOT in tensectrakit-core     — that is the product you sell. Do not put ops code there.
+  NOT on GitHub Actions alone  — GitHub Actions cannot receive Gumroad webhooks.
+  NOT on the buyer's machine   — buyers never see seller infrastructure.
+
+  ANSWER: A SEPARATE, LIGHTWEIGHT .NET 8 MINIMAL API — your "License Server"
+  ─────────────────────────────────────────────────────────────────────────────
+
+  You create and deploy a second repository:
+
+    tensectra-pro/tensectrakit-license-server   (PRIVATE repo — never shown to buyers)
+
+  This is a tiny .NET 8 Minimal API with ONE job:
+    - Receive a POST from Gumroad when a sale happens
+    - Parse the buyer's GitHub username from the sale data 
+    - Call the GitHub API to invite that username to the correct private repo
+    - Record the purchase in a SQLite database (for expiry tracking)
+
+  The License Server is deployed to Railway (free, public HTTPS URL in 5 minutes).
+  You give Gumroad that HTTPS URL as the "Ping URL" → Gumroad calls it on every sale.
+
+  ARCHITECTURE OVERVIEW:
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+
+  ┌───────────────┐    ① Sale event    ┌──────────────────────────────┐
+  │   BUYER       │ ─────────────────► │   GUMROAD                    │
+  │  pays $149    │                    │   (payment processor)        │
+  └───────────────┘                    └──────────────────────────────┘
+                                                    │
+                                    ② POST webhook (JSON sale data)
+                                                    │
+                                                    ▼
+                                       ┌────────────────────────────┐
+                                       │  LICENSE SERVER            │
+                                       │  tensectrakit-license-     │
+                                       │  server (Railway HTTPS)    │
+                                       │                            │
+                                       │  POST /webhook/gumroad     │
+                                       └────────────────────────────┘
+                                                    │
+                          ┌─────────────────────────┼─────────────────────────┐
+                          │                         │                         │
+              ③ GitHub API invite      ④ Store in SQLite         ⑤ Send welcome email
+              (add collaborator)       (buyer record +           (via SendGrid/SMTP)
+                          │            expiry date)                           │
+                          ▼                                                   │
+              ┌──────────────────────┐                                        │
+              │  tensectra-pro/      │                                        │
+              │  tensectrakit-core   │◄───────── Buyer clones ────────────────┘
+              │  (private repo)      │           after invite
+              └──────────────────────┘
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART 3 — LICENSE SERVER SOURCE CODE  (.NET 8 Minimal API — complete, production-ready)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  CREATE A NEW REPO: tensectra-pro/tensectrakit-license-server
+  ─────────────────────────────────────────────────────────────
+
+  On your machine:
+      mkdir tensectrakit-license-server
+      cd    tensectrakit-license-server
+      dotnet new web -n TensectraKit.LicenseServer
+      cd TensectraKit.LicenseServer
+      dotnet add package Microsoft.Data.Sqlite
+      dotnet add package Dapper
+
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+  FILE: Program.cs  (replace entire file)
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+
+      using Microsoft.Data.Sqlite;
+      using Dapper;
+      using System.Text.Json;
+      using System.Text.Json.Serialization;
+
+      var builder = WebApplication.CreateBuilder(args);
+      builder.Services.AddHttpClient();
+      var app = builder.Build();
+
+      // ── Database init ──────────────────────────────────────────────────────────
+      var dbPath = builder.Configuration["DbPath"] ?? "licenses.db";
+      using (var db = new SqliteConnection($"Data Source={dbPath}"))
+      {
+          db.Execute(@"
+              CREATE TABLE IF NOT EXISTS Purchases (
+                  Id              INTEGER PRIMARY KEY AUTOINCREMENT,
+                  OrderId         TEXT    NOT NULL,
+                  BuyerEmail      TEXT    NOT NULL,
+                  GitHubUsername  TEXT    NOT NULL,
+                  ProductName     TEXT    NOT NULL,
+                  LicenseTier     TEXT    NOT NULL,
+                  PurchasedAt     TEXT    NOT NULL,
+                  ExpiresAt       TEXT,
+                  AccessRevoked   INTEGER NOT NULL DEFAULT 0,
+                  LicenseKey      TEXT    NOT NULL
+              );
+          ");
+      }
+
+      // ── Gumroad webhook endpoint ────────────────────────────────────────────────
+      app.MapPost("/webhook/gumroad", async (HttpContext ctx,
+          IHttpClientFactory httpFactory,
+          IConfiguration config,
+          ILogger<Program> logger) =>
+      {
+          // Read form data — Gumroad sends application/x-www-form-urlencoded
+          var form         = await ctx.Request.ReadFormAsync();
+          var sellerId     = form["seller_id"].ToString();
+          var orderId      = form["sale_id"].ToString();
+          var buyerEmail   = form["email"].ToString();
+          var productName  = form["product_name"].ToString();
+          var customFields = form["custom_fields[Your GitHub Username]"].ToString().Trim();
+
+          // Validate Gumroad seller ID to reject spoofed requests
+          var expectedSellerId = config["Gumroad:SellerId"];
+          if (sellerId != expectedSellerId)
+          {
+              logger.LogWarning("Rejected webhook — invalid seller_id: {Id}", sellerId);
+              return Results.Unauthorized();
+          }
+
+          if (string.IsNullOrWhiteSpace(customFields))
+          {
+              logger.LogWarning("Order {OrderId} — no GitHub username provided.", orderId);
+              return Results.Ok(new { status = "no_github_username" });
+          }
+
+          // Determine tier from product name
+          var tier = productName.Contains("Team") ? "Team" :
+                     productName.Contains("Updates") ? "Updates" : "Solo";
+
+          // Determine which repos to grant access to
+          var repos = tier switch
+          {
+              "Team"    => new[] { "tensectrakit-core" },
+              "Updates" => new[] { "tensectrakit-core" },
+              _         => new[] { "tensectrakit-core" }
+          };
+
+          // Handle multiple GitHub usernames for team licenses
+          var githubUsernames = customFields
+              .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+          var githubToken = config["GitHub:PersonalAccessToken"];
+          var githubOrg   = config["GitHub:Org"] ?? "tensectra-pro";
+          var httpClient  = httpFactory.CreateClient();
+          httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {githubToken}");
+          httpClient.DefaultRequestHeaders.Add("User-Agent", "TensectraKit-LicenseServer");
+          httpClient.DefaultRequestHeaders.Add("X-GitHub-Api-Version", "2022-11-28");
+
+          foreach (var githubUsername in githubUsernames)
+          {
+              foreach (var repo in repos)
+              {
+                  var inviteUrl = $"https://api.github.com/repos/{githubOrg}/{repo}/collaborators/{githubUsername}";
+                  var payload   = JsonSerializer.Serialize(new { permission = "pull" });
+                  var content   = new StringContent(payload, System.Text.Encoding.UTF8, "application/json");
+                  var response  = await httpClient.PutAsync(inviteUrl, content);
+
+                  logger.LogInformation(
+                      "GitHub invite: {User} → {Org}/{Repo} — HTTP {Status}",
+                      githubUsername, githubOrg, repo, response.StatusCode);
+              }
+
+              // Record purchase in database
+              var expiresAt = tier == "Updates"
+                  ? DateTime.UtcNow.AddDays(365).ToString("O")
+                  : (string?)null;
+
+              var licenseKey = GenerateLicenseKey(buyerEmail, tier, config["LicenseServer:MasterSecret"] ?? "change-me");
+
+              using var db = new SqliteConnection($"Data Source={dbPath}");
+              await db.ExecuteAsync(@"
+                  INSERT INTO Purchases
+                      (OrderId, BuyerEmail, GitHubUsername, ProductName, LicenseTier,
+                       PurchasedAt, ExpiresAt, LicenseKey)
+                  VALUES
+                      (@OrderId, @BuyerEmail, @GitHubUsername, @ProductName, @LicenseTier,
+                       @PurchasedAt, @ExpiresAt, @LicenseKey)",
+                  new {
+                      OrderId        = orderId,
+                      BuyerEmail     = buyerEmail,
+                      GitHubUsername = githubUsername,
+                      ProductName    = productName,
+                      LicenseTier    = tier,
+                      PurchasedAt    = DateTime.UtcNow.ToString("O"),
+                      ExpiresAt      = expiresAt,
+                      LicenseKey     = licenseKey
+                  });
+          }
+
+          return Results.Ok(new { status = "success", invited = githubUsernames.Length });
+      });
+
+      // ── Expiry check endpoint (called by scheduled job or manual trigger) ──────
+      app.MapPost("/admin/revoke-expired", async (
+          IHttpClientFactory httpFactory,
+          IConfiguration config,
+          ILogger<Program> logger) =>
+      {
+          using var db = new SqliteConnection($"Data Source={dbPath}");
+          var expired = (await db.QueryAsync<PurchaseRecord>(@"
+              SELECT * FROM Purchases
+              WHERE ExpiresAt IS NOT NULL
+                AND ExpiresAt < @Now
+                AND AccessRevoked = 0",
+              new { Now = DateTime.UtcNow.ToString("O") })).ToList();
+
+          var githubToken = config["GitHub:PersonalAccessToken"];
+          var githubOrg   = config["GitHub:Org"] ?? "tensectra-pro";
+          var httpClient  = httpFactory.CreateClient();
+          httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {githubToken}");
+          httpClient.DefaultRequestHeaders.Add("User-Agent", "TensectraKit-LicenseServer");
+          httpClient.DefaultRequestHeaders.Add("X-GitHub-Api-Version", "2022-11-28");
+
+          var revoked = 0;
+          foreach (var record in expired)
+          {
+              var removeUrl = $"https://api.github.com/repos/{githubOrg}/tensectrakit-core/collaborators/{record.GitHubUsername}";
+              var response  = await httpClient.DeleteAsync(removeUrl);
+
+              if (response.IsSuccessStatusCode || response.StatusCode == System.Net.HttpStatusCode.NoContent)
+              {
+                  await db.ExecuteAsync(
+                      "UPDATE Purchases SET AccessRevoked = 1 WHERE Id = @Id",
+                      new { record.Id });
+                  revoked++;
+                  logger.LogInformation("Revoked access: {User} (expired {Expiry})",
+                      record.GitHubUsername, record.ExpiresAt);
+              }
+          }
+
+          return Results.Ok(new { checked_count = expired.Count, revoked_count = revoked });
+      });
+
+      // ── Health check ────────────────────────────────────────────────────────────
+      app.MapGet("/health", () => Results.Ok(new { status = "ok", utc = DateTime.UtcNow }));
+
+      app.Run();
+
+      // ── Helpers ─────────────────────────────────────────────────────────────────
+      static string GenerateLicenseKey(string email, string tier, string secret)
+      {
+          var data = System.Text.Encoding.UTF8.GetBytes($"{email}:{tier}:{DateTime.UtcNow.Year}");
+          var key  = System.Text.Encoding.UTF8.GetBytes(secret.PadRight(32)[..32]);
+          using var hmac = new System.Security.Cryptography.HMACSHA256(key);
+          var hash = hmac.ComputeHash(data);
+          return $"TK-{DateTime.UtcNow.Year}-{Convert.ToBase64String(hash)[..32]}";
+      }
+
+      record PurchaseRecord(
+          int     Id,
+          string  OrderId,
+          string  BuyerEmail,
+          string  GitHubUsername,
+          string  ProductName,
+          string  LicenseTier,
+          string  PurchasedAt,
+          string? ExpiresAt,
+          int     AccessRevoked,
+          string  LicenseKey
+      );
+
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+  FILE: appsettings.json  (in TensectraKit.LicenseServer folder)
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+
+      {
+        "DbPath": "licenses.db",
+        "Gumroad": {
+          "SellerId": "YOUR_GUMROAD_SELLER_ID_HERE"
+        },
+        "GitHub": {
+          "PersonalAccessToken": "ghp_YOUR_TOKEN_HERE",
+          "Org": "tensectra-pro"
+        },
+        "LicenseServer": {
+          "MasterSecret": "YOUR_SECRET_SALT_MINIMUM_32_CHARS!!"
+        },
+        "Logging": {
+          "LogLevel": {
+            "Default": "Information"
+          }
+        }
+      }
+
+  ⚠  NEVER commit appsettings.json with real values to GitHub.
+     Use Railway environment variables (Part 4) for all secrets in production.
+
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+  HOW TO GET YOUR GUMROAD SELLER ID
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+  1. Log in to Gumroad
+  2. Go to: Settings → Advanced
+  3. Your Seller ID is shown on that page (a short string like "abcd1234")
+  4. Copy it into appsettings.json → Gumroad:SellerId
+  
+		  🔐 Step-by-Step: Generate GitHub PAT
+		1. Go to GitHub Settings
+		Open: https://github.com/settings/tokens
+		Or:
+		Click your profile picture → Settings
+		Scroll down → Developer settings
+		Click Personal access tokens
+		🆕 2. Choose Token Type (Important)
+
+		👉 Click: “Tokens (classic)” → then
+		👉 “Generate new token (classic)”
+
+		(Fine-grained tokens exist, but classic is easier for repo automation like yours)
+
+		📝 3. Configure the Token
+
+		Fill in:
+
+		Note: TensectraKit Automation
+		Expiration:
+		Recommended: 90 days OR No expiration (if internal use)
+		🔑 4. Select Required Permissions
+
+		For your use case (inviting users to private repo), enable:
+
+		✅ repo (FULL access)
+
+		This covers:
+		Private repo access
+		Inviting collaborators
+		Managing repo
+
+		👉 That’s the main one you need.
+
+		🚀 5. Generate Token
+		Click Generate token
+		Copy it immediately (you won’t see it again)
+		⚙️ 6. Add to Your Config
+		"GitHub": {
+		  "PersonalAccessToken": "ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+		}
+		⚠️ Important Security Tips
+		❌ Never commit this to GitHub
+		✅ Store in:
+		.env
+		Azure Key Vault / Railway env vars
+		🔄 Rotate periodically
+		🧪 7. Quick Test (Optional but Smart)
+
+		Use Postman or curl:
+
+		curl -H "Authorization: token YOUR_PAT" https://api.github.com/user
+
+		👉 If it returns your GitHub profile → ✅ working
+	
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART 4 — CREATE GITHUB PERSONAL ACCESS TOKEN  (required before deploy)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  The License Server calls the GitHub API on your behalf. It needs a PAT (Personal
+  Access Token) with permission to manage collaborators on your private repos.
+
+  STEPS:
+  ───────
+  1. Go to: https://github.com/settings/tokens?type=beta
+     (This is the "Fine-grained tokens" page — more secure than classic tokens)
+
+  2. Click "Generate new token" 
+
+  3. Fill in:
+     ┌──────────────────────────────────────────────────────────────────────────────────┐
+     │  FIELD                    VALUE                                                  │
+     ├──────────────────────────────────────────────────────────────────────────────────┤
+     │  Token name               TensectraKit License Server                           │
+     │  Expiration               Custom → set to 1 year from today                     │
+     │  Resource owner           tensectra-pro  (your GitHub org)                      │
+     │  Repository access        Only select repositories:                             │
+     │                           → tensectrakit-core                                   │
+     │                           → tensectrakit-identity  (add as you build modules)   │
+     │                           → tensectrakit-audit                                  │
+     │  Permissions              Repository permissions:                               │
+     │                             Administration → Read and Write                     │
+     │                             (this allows adding/removing collaborators)         │
+     └──────────────────────────────────────────────────────────────────────────────────┘
+
+  4. Click "Generate token"
+  5. COPY IT NOW — GitHub only shows it once.
+  6. Paste it into Railway environment variable: GitHub__PersonalAccessToken
+
+  ⚠  Set a calendar reminder 2 weeks before expiry to regenerate the token.
+     If the token expires, GitHub invites stop working silently.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART 5 — DEPLOY THE LICENSE SERVER TO RAILWAY  (free, 10 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Railway is the fastest way to deploy a .NET 8 API with a public HTTPS URL.
+  Free tier: $5 credit/month — more than enough for a webhook-only server.
+
+  STEP 1 — PUSH CODE TO GITHUB
+  ──────────────────────────────
+  1. Create a NEW PRIVATE repo on your personal GitHub account (NOT tensectra-pro org):
+       github.com → New repository
+       Name:     tensectrakit-license-server
+       Private:  ✅ (very important — this contains your tokens)
+
+  2. Push your license server code:
+       cd tensectrakit-license-server/TensectraKit.LicenseServer
+       git init
+       git add .
+       git commit -m "Initial license server"
+       git remote add origin https://github.com/YOUR_PERSONAL_USERNAME/tensectrakit-license-server.git
+       git push -u origin main
+
+  STEP 2 — CREATE RAILWAY PROJECT
+  ─────────────────────────────────
+  1. Go to: https://railway.app
+  2. Sign in with GitHub
+  3. Click "New Project" → "Deploy from GitHub repo"
+  4. Select your tensectrakit-license-server repo
+  5. Railway auto-detects .NET and begins deployment
+
+  STEP 3 — SET ENVIRONMENT VARIABLES ON RAILWAY
+  ───────────────────────────────────────────────
+  In Railway dashboard → your project → Variables tab → Add these:
+
+  ┌────────────────────────────────────────────────────────────────────────────────────┐
+  │  VARIABLE NAME                    VALUE                                           │
+  ├────────────────────────────────────────────────────────────────────────────────────┤
+  │  Gumroad__SellerId                your_gumroad_seller_id                         │
+  │  GitHub__PersonalAccessToken      ghp_your_token_here                            │
+  │  GitHub__Org                      tensectra-pro                                  │
+  │  LicenseServer__MasterSecret      your_32_char_master_secret_here!!!             │
+  │  DbPath                           /data/licenses.db                              │
+  └────────────────────────────────────────────────────────────────────────────────────┘
+  
+How to set it up on Railway (one-time)
+Step 1 — Add the Volume:
+Railway Dashboard → your service → Volumes tab
+→ + Add Volume
+→ Mount Path: /data
+
+To add a volume to your service, follow these updated steps:
+Method 1: Using the Project Canvas (Easiest) - 
+	Open your Project Canvas (the main screen showing all your services) 
+
+	Right-click on your specific .NET license app service tile 
+
+	Select "Attach Volume" from the menu that appears 
+
+	A popup will appear asking for the Mount Path. Enter /data or /app/data (use /app/data if your app uses relative paths, as Railway puts your files in /app) 
+
+	Click "Create". Railway will automatically redeploy your service to attach the new storage 
+
+Step 2 — Add these env vars in Railway → Variables tab:  
+		DbPath                        /data/licenses.db
+		GitHub__PersonalAccessToken   ghp_YOUR_ROTATED_TOKEN
+		GitHub__Org                   tensectra
+		Gumroad__SellerId             tensectra.office@gmail.com
+		LicenseServer__MasterSecret   9fK2xP7vQmL8aZ4RjT6uWc3HsE0yBnD5
+		AdminApi__Key                 c8R4zYpL2Qv9Xw7KjT5mNs1A6eH3DgU0
+		ASPNETCORE_ENVIRONMENT        Production
+
+
+  NOTE: Railway uses double underscore __ for nested config sections.
+        GitHub__PersonalAccessToken → maps to GitHub:PersonalAccessToken in appsettings.
+		
+		https://localhost:7287/scalar/v1
+		https://tensectrakit-license-server-production.up.railway.app/scalar/v1
+		
+
+2. Where to find your Railway endpoint URL
+Railway Dashboard
+  → your project
+    → your service
+      → Settings tab
+        → Networking section
+          → "Generate Domain" (if not done yet)
+		  
+		  
+		
+		our live endpoints will then be:
+Purpose	URL
+Gumroad Ping URL	https://tensectrakit-license-server-production.up.railway.app/webhook/gumroad
+Admin revoke	https://tensectrakit-license-server-production.up.railway.app/admin/revoke-expired
+Health check	https://tensectrakit-license-server-production.up.railway.app/health 
+Scalar UI (dev only)	https://tensectrakit-license-server-production.up.railway.app/scalar/v1
+
+
+  STEP 4 — ADD A PERSISTENT VOLUME  (so the SQLite database survives redeploys)
+  ──────────────────────────────────
+  1. In Railway → your project → Storage tab
+  2. Click "Add Volume"
+  3. Mount path: /data
+  4. This ensures licenses.db persists between deployments.
+
+  STEP 5 — GET YOUR PUBLIC URL
+  ──────────────────────────────
+  1. In Railway → your project → Settings tab
+  2. Under "Domains" → click "Generate Domain"
+  3. Railway gives you a URL like: https://tensectrakit-license-server.up.railway.app
+  4. COPY THIS URL — you will paste it into Gumroad next.
+
+  STEP 6 — VERIFY THE DEPLOYMENT
+  ────────────────────────────────
+  In your browser or Postman:
+      GET https://tensectrakit-license-server.up.railway.app/health
+
+  Expected response:
+      { "status": "ok", "utc": "2026-04-08T10:30:00Z" }
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART 6 — CONNECT GUMROAD TO THE LICENSE SERVER  (the "Ping URL")
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Gumroad calls your webhook URL automatically on every sale using their "Ping" feature.
+
+  STEP 1 — SET THE PING URL ON EACH PRODUCT
+  ─────────────────────────────────────────────
+  For EACH product (Solo, Team, Updates Plan):
+
+  1. Gumroad Dashboard → Products → click the product → Edit
+  2. Scroll down to the "Advanced" section
+  3. Find the "Ping URL" field (also called "Webhook URL" or "Subscription notification URL")
+  4. Paste:   https://tensectrakit-license-server.up.railway.app/webhook/gumroad
+  5. Save
+
+  STEP 2 — TEST THE WEBHOOK WITH GUMROAD'S TEST BUTTON
+  ──────────────────────────────────────────────────────
+  1. In the same Advanced section, look for "Send test ping" or "Test webhook"
+  2. Click it
+  3. Go to Railway → your project → Logs tab
+  4. You should see a log entry from your webhook handler
+
+  STEP 3 — DO A REAL £1 TEST PURCHASE  (most reliable test)
+  ────────────────────────────────────────────────────────────
+  1. Temporarily set your Solo product price to $1
+  2. Buy it yourself with a different email + your own GitHub username
+  3. Check Railway logs — you should see the invite log entry
+  4. Check GitHub — you should have a pending invitation to tensectrakit-core
+  5. Reset price to $149
+
+  ┌──────────────────────────────────────────────────────────────────────────────────────────┐
+  │  WHAT GUMROAD SENDS TO YOUR WEBHOOK  (sample POST body — form-urlencoded)               │
+  ├──────────────────────────────────────────────────────────────────────────────────────────┤
+  │  seller_id         =  your_seller_id                                                    │
+  │  product_id        =  abc123                                                            │
+  │  product_name      =  TensectraKit — Core Infra Pack (Solo License)                    │
+  │  sale_id           =  gum_sale_abc123def456                                             │
+  │  email             =  buyer@example.com                                                 │
+  │  price             =  14900   (in cents)                                                │
+  │  custom_fields[Your GitHub Username]  =  buyergithubhandle                             │
+  └──────────────────────────────────────────────────────────────────────────────────────────┘
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART 7 — UPDATES PLAN EXPIRY: STEP-BY-STEP REVOCATION FLOW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  HOW EXPIRY WORKS IN YOUR SYSTEM
+  ─────────────────────────────────
+  When a buyer purchases the Updates Plan ($99/year):
+    - Webhook fires → ExpiresAt = today + 365 days stored in licenses.db
+    - Buyer keeps GitHub collaborator access during this period 
+
+  When ExpiresAt arrives:
+    - A daily scheduled call to POST /admin/revoke-expired - fires 
+    - The License Server finds all records where ExpiresAt < now AND AccessRevoked = 0
+    - It calls GitHub API DELETE to remove the collaborator
+    - It sets AccessRevoked = 1 in the database
+
+  HOW TO TRIGGER THE DAILY EXPIRY CHECK
+  ────────────────────────────────────────
+  You have three options. Use OPTION A for simplicity at launch:
+
+  OPTION A — GitHub Actions Scheduled Workflow  (recommended — free, no extra service)
+
+    Create this file in your tensectrakit-license-server repo:
+    Path: .github/workflows/revoke-expired.yml
+
+        name: Revoke Expired Licenses
+        on:
+          schedule:
+            - cron: '0 2 * * *'   # runs daily at 02:00 UTC
+          workflow_dispatch:       # allows manual trigger from GitHub Actions UI
+
+        jobs:
+          revoke:
+            runs-on: ubuntu-latest
+            steps:
+              - name: Call revoke endpoint
+                run: |
+                  curl -X POST \
+                    -H "Authorization: Bearer ${{ secrets.ADMIN_TOKEN }}" \
+                    https://tensectrakit-license-server.up.railway.app/admin/revoke-expired
+
+    In your GitHub repo → Settings → Secrets → Actions:
+      Add secret: ADMIN_TOKEN = any long random string
+
+    In your License Server Program.cs, protect the endpoint:
+        app.MapPost("/admin/revoke-expired", async (...) =>
+        {
+            var authHeader = ctx.Request.Headers["Authorization"].ToString();
+            var adminToken = config["AdminToken"] ?? "";
+            if (authHeader != $"Bearer {adminToken}")
+                return Results.Unauthorized();
+            // ... rest of revoke logic
+        });
+
+    Add to Railway env vars:
+        AdminToken = same_long_random_string_as_above
+
+  OPTION B — Railway Cron Job  (paid feature on Railway Pro)
+
+    Railway Pro allows scheduled "Cron" services that call HTTP endpoints on a schedule.
+    Set it to call POST /admin/revoke-expired daily at 02:00 UTC.
+
+  OPTION C — Manual (Phase 1, before you have many Updates Plan subscribers)
+
+    While you have fewer than 20 Updates Plan subscribers:
+    - Keep a spreadsheet: GitHub Username | ExpiresAt
+    - Set a monthly calendar reminder to check for expired subscriptions
+    - Manually remove collaborators in GitHub:
+        GitHub → tensectra-pro org → tensectrakit-core repo
+        → Settings → Collaborators → find the username → Remove
+
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+  STEP-BY-STEP: MANUALLY REMOVE A COLLABORATOR ON GITHUB
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+
+  Use this when you need to manually revoke someone's access.
+
+  1. Go to: https://github.com/orgs/tensectra-pro/people
+  2. Find the buyer's GitHub username in the member list
+  3. Click the "..." next to their name → "Remove from organization"
+     OR
+     Go to: https://github.com/tensectra-pro/tensectrakit-core/settings/access
+     Find their username → click "Remove"
+
+  4. GitHub immediately revokes their clone/pull access.
+  5. Their local clone continues to work (existing copy) but they can no longer pull updates.
+
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+  STEP-BY-STEP: WHAT TO DO WHEN UPDATES PLAN EXPIRES
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+
+  Day -14 (2 weeks before expiry):
+    □ The License Server's daily check finds ExpiresAt is within 14 days
+    □ Send a renewal reminder email manually (or automate via SendGrid):
+      Subject: "Your TensectraKit Updates Plan renews in 14 days"
+      Body:    "Click here to renew for another year: [Gumroad link]
+                Your access remains active until [ExpiresAt date].
+                After that date, you will still have your generated code,
+                but will not receive new template updates."
+
+  Day 0 (ExpiresAt date):
+    □ GitHub Actions cron job runs POST /admin/revoke-expired
+    □ License Server removes GitHub collaborator access for expired buyers
+    □ AccessRevoked = 1 is set in the database
+    □ Buyer can no longer git pull from tensectrakit-core
+    □ Their EXISTING generated projects are NOT affected — they own that code
+
+  Day +1 (if buyer renews):
+    □ Buyer purchases Updates Plan again on Gumroad
+    □ Gumroad fires webhook
+    □ License Server sets new ExpiresAt = today + 365 days
+    □ GitHub API re-invites the collaborator
+    □ Buyer accepts invitation (or it auto-accepts if they were previously a member)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART 8 — DAY-TO-DAY SELLER CHEAT SHEET
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  WHEN A SALE HAPPENS (automated — you do nothing):
+    Gumroad → webhook → License Server → GitHub invite sent automatically
+    Buyer receives GitHub email within 2 minutes of purchase
+
+  WHEN A BUYER EMAILS "I didn't get my GitHub invite":
+    1. Log in to Railway → your project → Logs
+    2. Search for their email or order ID
+    3. If webhook fired but GitHub API failed: manually invite them:
+         GitHub → tensectra-pro org → tensectrakit-core → Settings → Collaborators
+         → Invite collaborator → enter their GitHub username
+    4. If webhook never fired: check Gumroad → product → Edit → confirm Ping URL is set
+    5. Reply to buyer with: "Access granted — check your GitHub notifications"
+
+  WHEN A BUYER ASKS FOR A REFUND:
+    1. Process refund on Gumroad: Sales → find the sale → Refund
+    2. Manually remove their GitHub access:
+         GitHub → tensectra-pro/tensectrakit-core → Settings → Collaborators → Remove
+    3. Set AccessRevoked = 1 in licenses.db manually or via sqlite3 CLI
+
+  WHEN YOU RELEASE A NEW TEMPLATE VERSION:
+    1. Commit + push changes to tensectrakit-core main branch
+    2. Update CHANGELOG.md with what changed
+    3. Email your buyers list:
+         Subject: "TensectraKit v1.x.x released — here is what changed"
+         Body: summary of CHANGELOG.md + git pull instructions
+    4. No webhook needed — buyers pull via git at their own pace
+
+  WHEN A BUYER WANTS TO ADD A TEAM MEMBER (after their initial purchase):
+    1. They email: "Can I add another dev?"
+    2. Check their purchase record — if they have Team license, max 5 seats:
+         Check licenses.db: SELECT * FROM Purchases WHERE BuyerEmail = 'their@email.com'
+    3. If seats available: invite new GitHub username via GitHub API or manually
+    4. If over their seat limit: direct them to upgrade to Team or Enterprise license
+
+  VIEWING YOUR PURCHASES DATABASE:
+    On Railway: open the service terminal (Railway dashboard → project → Connect → Shell)
+        sqlite3 /data/licenses.db
+        .headers on
+        .mode column
+        SELECT BuyerEmail, GitHubUsername, LicenseTier, PurchasedAt, ExpiresAt, AccessRevoked
+        FROM Purchases
+        ORDER BY PurchasedAt DESC;
+
+  TRIGGERING A MANUAL EXPIRY CHECK:
+    POST https://tensectrakit-license-server.up.railway.app/admin/revoke-expired
+    Header: Authorization: Bearer YOUR_ADMIN_TOKEN
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+COMPLETE SETUP CHECKLIST  (do these in order — one time ever)  Todo
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  GITHUB SETUP:
+  [ ] 1.  Create GitHub org: tensectra-pro
+  [ ] 2.  Create private repo: tensectra-pro/tensectrakit-core
+          Push the TensectraKit scaffold source to main branch
+  [ ] 3.  Create GitHub Fine-grained PAT with Administration R/W on tensectrakit-core
+          Expiry: 1 year. Copy the token.
+
+  LICENSE SERVER:
+  [ ] 4.  Create the .NET 8 minimal API using the code in Part 3
+  [ ] 5.  Create private repo: YOUR_USERNAME/tensectrakit-license-server
+          Push the license server code (appsettings.json with placeholders only)
+  [ ] 6.  Deploy to Railway (Part 5)
+  [ ] 7.  Set all Railway environment variables (Part 5 Step 3)
+  [ ] 8.  Add a persistent /data volume on Railway (Part 5 Step 4)
+  [ ] 9.  Verify: GET /health returns { "status": "ok" }
+
+  GUMROAD SETUP:
+  [ ] 10. Create Gumroad account + complete profile
+  [ ] 11. Set up bank payout details
+  [ ] 12. Create product: Core Infra Pack Solo ($149) with GitHub Username custom field
+  [ ] 13. Create product: Core Infra Pack Team ($399) with GitHub Usernames custom field
+  [ ] 14. Create product: Updates Plan ($99) with Order # custom field
+  [ ] 15. Set Ping URL on each product → your Railway URL /webhook/gumroad
+  [ ] 16. Get your Gumroad Seller ID → paste into Railway env var Gumroad__SellerId
+
+  TEST END-TO-END:
+  [ ] 17. Set Solo product price to $1 temporarily
+  [ ] 18. Buy it yourself with a test email + your own GitHub username
+  [ ] 19. Confirm: Railway logs show webhook received
+  [ ] 20. Confirm: GitHub shows pending invitation to tensectrakit-core
+  [ ] 21. Reset product price to $149
+
+  EXPIRY AUTOMATION:
+  [ ] 22. Add .github/workflows/revoke-expired.yml to license server repo (Part 7 Option A)
+  [ ] 23. Add ADMIN_TOKEN to GitHub repo secrets
+  [ ] 24. Add AdminToken to Railway environment variables
+  [ ] 25. Trigger the workflow manually once to verify it calls the endpoint successfully
+
+  GO LIVE:
+  [ ] 26. Post your landing page / announcement
+  [ ] 27. Your first real buyer purchases → webhook fires → they get GitHub invite
+          You receive payment minus Gumroad fee on next Friday payout.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+END OF SELLER OPERATIONS GUIDE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

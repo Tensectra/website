@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){var d=document.documentElement,t=localStorage.getItem("tensectra-theme")||"dark";d.setAttribute("data-theme",t);}());</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Affiliate &amp; Partner Program | Tensectra</title>
+  <meta name="description" content="Refer developers to TensectraKit and earn commission on every sale. Apply to become a Tensectra affiliate or partner.">
+  <meta name="author" content="Tensectra">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://tensectra.com/forms/affiliate-inquiry">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css?v=6">
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+  <meta name="config:supabase-url" content="https://ahcfozfntvqbfgbinxwr.supabase.co">
+  <meta name="config:supabase-anon-key" content="sb_publishable_9t2QGBpQl4yd4H73dkSdlg_9QVNarpS">
+  <meta name="config:ga-measurement-id" content="G-Y75Q7F95P4">
+
+  <style>
+    /* Page-specific styles */
+    .aff-hero {
+      padding: 140px 0 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .aff-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(0,204,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .aff-hero h1 { margin-bottom: var(--space-md); }
+    .aff-hero p  { color: var(--text-muted); font-size: 1.1rem; max-width: 640px; margin: 0 auto var(--space-lg); }
+
+    .aff-stats {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-xl);
+      flex-wrap: wrap;
+      margin-top: var(--space-lg);
+    }
+    .aff-stat { text-align: center; }
+    .aff-stat-val {
+      display: block;
+      font-size: 2rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--accent-cyan);
+    }
+    .aff-stat-lbl {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .aff-tiers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: var(--space-lg);
+      margin: var(--space-2xl) 0;
+    }
+    .aff-tier {
+      padding: var(--space-xl);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255,255,255,0.07);
+      background: var(--bg-card);
+      position: relative;
+      overflow: hidden;
+    }
+    .aff-tier--featured {
+      border-color: rgba(0,204,255,0.3);
+      box-shadow: 0 0 30px rgba(0,204,255,0.08);
+    }
+    .aff-tier--featured::before {
+      content: 'MOST POPULAR';
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--accent-cyan);
+      background: rgba(0,204,255,0.1);
+      border: 1px solid rgba(0,204,255,0.25);
+      padding: 3px 8px;
+      border-radius: 20px;
+    }
+    .aff-tier-icon {
+      font-size: 2rem;
+      margin-bottom: var(--space-md);
+      display: block;
+    }
+    .aff-tier h3 {
+      font-size: 1.05rem;
+      margin-bottom: var(--space-sm);
+      color: var(--text-white);
+    }
+    .aff-tier p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: var(--space-md);
+      line-height: 1.6;
+    }
+    .aff-tier-rate {
+      font-size: 1.6rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--accent-cyan);
+      margin-bottom: 4px;
+    }
+    .aff-tier-rate-lbl {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: var(--space-lg);
+    }
+    .aff-tier-perks {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 var(--space-lg);
+    }
+    .aff-tier-perks li {
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      margin-bottom: 6px;
+    }
+    .aff-tier-perks li::before {
+      content: '✓';
+      color: var(--accent-cyan);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .aff-how {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-lg);
+      margin: var(--space-2xl) 0;
+    }
+    .aff-step {
+      text-align: center;
+      padding: var(--space-lg);
+    }
+    .aff-step-num {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(0,204,255,0.1);
+      border: 1px solid rgba(0,204,255,0.3);
+      color: var(--accent-cyan);
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-md);
+    }
+    .aff-step h4 {
+      color: var(--text-white);
+      margin-bottom: var(--space-sm);
+      font-size: 0.95rem;
+    }
+    .aff-step p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Form */
+    .aff-form-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .aff-form-header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+    .aff-form-header h2 { margin-bottom: var(--space-sm); }
+    .aff-form-header p  { color: var(--text-muted); }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+    }
+    @media (max-width: 600px) {
+      .form-grid-2 { grid-template-columns: 1fr; }
+      .aff-stats { gap: var(--space-lg); }
+      .aff-tiers { grid-template-columns: 1fr; }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: var(--space-md);
+    }
+    .form-group label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      color: var(--text-white);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      padding: 10px 14px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: rgba(0,204,255,0.4);
+      box-shadow: 0 0 0 3px rgba(0,204,255,0.1);
+    }
+    .form-group select option { background: var(--bg-deep); color: var(--text-white); }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .form-submit-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-top: var(--space-lg);
+    }
+    .form-submit-row p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 0;
+    }
+
+    .aff-success-msg {
+      display: none;
+      text-align: center;
+      padding: var(--space-2xl);
+      background: rgba(0,204,255,0.05);
+      border: 1px solid rgba(0,204,255,0.2);
+      border-radius: var(--radius-lg);
+    }
+    .aff-success-msg.visible { display: block; }
+    .aff-success-icon {
+      font-size: 3rem;
+      margin-bottom: var(--space-md);
+      display: block;
+    }
+    .aff-success-msg h3 { color: var(--accent-cyan); margin-bottom: var(--space-sm); }
+    .aff-success-msg p  { color: var(--text-muted); }
+
+    /* Type selector cards */
+    .aff-type-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+    .aff-type-card {
+      border: 2px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .aff-type-card input[type=radio] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .aff-type-card:has(input:checked),
+    .aff-type-card.selected {
+      border-color: rgba(0,204,255,0.5);
+      background: rgba(0,204,255,0.06);
+    }
+    .aff-type-card-icon { font-size: 1.4rem; display: block; margin-bottom: 6px; }
+    .aff-type-card strong { display: block; font-size: 0.9rem; color: var(--text-white); margin-bottom: 3px; }
+    .aff-type-card span { font-size: 0.78rem; color: var(--text-muted); }
+    @media (max-width: 480px) { .aff-type-cards { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <div id="site-nav"></div>
+
+  <!-- Hero -->
+  <section class="aff-hero">
+    <div class="container">
+      <span class="ladder-badge" style="display:inline-block;margin-bottom:var(--space-md);">GROW WITH TENSECTRA</span>
+      <h1>Refer Developers.<br><span class="text-cyan">Earn on Every Sale.</span></h1>
+      <p>TensectraKit is bought by engineers who trust other engineers. If you use the kit in production &mdash; or teach developers &mdash; your referral carries real weight. Join the program and earn commission every time someone you refer makes a purchase.</p>
+      <a href="#apply" class="btn btn-primary btn-lg">Apply Now &darr;</a>
+
+      <div class="aff-stats">
+        <div class="aff-stat">
+          <span class="aff-stat-val">30%</span>
+          <span class="aff-stat-lbl">Commission per sale</span>
+        </div>
+        <div class="aff-stat">
+          <span class="aff-stat-val">$45+</span>
+          <span class="aff-stat-lbl">Avg. per referral</span>
+        </div>
+        <div class="aff-stat">
+          <span class="aff-stat-val">90 days</span>
+          <span class="aff-stat-lbl">Cookie window</span>
+        </div>
+        <div class="aff-stat">
+          <span class="aff-stat-val">Instant</span>
+          <span class="aff-stat-lbl">Gumroad payout</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tiers -->
+  <section class="section" style="background:var(--bg-card);">
+    <div class="container">
+      <div class="section-header">
+        <h2>Two Ways to Earn</h2>
+        <p>Whether you are an individual creator or an organisation, there is a program built for you.</p>
+      </div>
+      <div class="aff-tiers">
+
+        <div class="aff-tier aff-tier--featured">
+          <span class="aff-tier-icon">&#128279;</span>
+          <h3>Affiliate Program</h3>
+          <p>For individual developers, YouTube creators, newsletter authors, and bootcamp instructors. Share your link. Earn every time someone buys.</p>
+          <div class="aff-tier-rate">30%</div>
+          <div class="aff-tier-rate-lbl">commission on every sale through your link</div>
+          <ul class="aff-tier-perks">
+            <li>Works on Solo ($149), Team ($399), and Updates Plan ($99)</li>
+            <li>90-day tracking cookie &mdash; get paid even if they buy later</li>
+            <li>Real-time dashboard via Gumroad Affiliates</li>
+            <li>Instant payout to your Gumroad account</li>
+            <li>Free kit access to review and promote honestly</li>
+          </ul>
+          <a href="#apply" class="btn btn-primary btn-sm">Apply as Affiliate &darr;</a>
+        </div>
+
+        <div class="aff-tier">
+          <span class="aff-tier-icon">&#127968;</span>
+          <h3>Partner Program</h3>
+          <p>For bootcamps, tech communities, training departments, and corporate organisations. Deeper discounts, co-branded cohorts, and dedicated support.</p>
+          <div class="aff-tier-rate">Custom</div>
+          <div class="aff-tier-rate-lbl">bulk pricing + revenue share negotiated directly</div>
+          <ul class="aff-tier-perks">
+            <li>Discounted team licenses for your students or staff</li>
+            <li>Co-branded cohort delivery option</li>
+            <li>Dedicated onboarding session for your team</li>
+            <li>Priority support channel via Discord</li>
+            <li>Joint content and marketing collaboration</li>
+          </ul>
+          <a href="#apply" class="btn btn-outline btn-sm">Apply as Partner &darr;</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>How It Works</h2>
+        <p>From application to your first commission &mdash; four straightforward steps.</p>
+      </div>
+      <div class="aff-how">
+        <div class="aff-step">
+          <div class="aff-step-num">01</div>
+          <h4>Submit your application</h4>
+          <p>Fill in the form below. Tell us who your audience is and how you plan to promote TensectraKit. Takes 3 minutes.</p>
+        </div>
+        <div class="aff-step">
+          <div class="aff-step-num">02</div>
+          <h4>Get approved</h4>
+          <p>We review every application manually &mdash; usually within 48 hours. We approve creators whose audience overlaps with developers who build real systems.</p>
+        </div>
+        <div class="aff-step">
+          <div class="aff-step-num">03</div>
+          <h4>Get your link</h4>
+          <p>You receive your unique Gumroad affiliate link. Share it in your videos, newsletters, GitHub repos, Discord communities, or blog posts.</p>
+        </div>
+        <div class="aff-step">
+          <div class="aff-step-num">04</div>
+          <h4>Earn commissions</h4>
+          <p>Every time someone buys through your link, Gumroad credits your account automatically. No manual invoicing. No waiting 60 days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products you earn on -->
+  <section class="section" style="background:var(--bg-card);">
+    <div class="container">
+      <div class="section-header">
+        <h2>Products You Earn On</h2>
+        <p>Every TensectraKit purchase is eligible. The more licenses in the sale, the more you earn.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card" style="text-align:center;border-top:3px solid var(--accent-cyan);">
+          <img src="../images/Kit/tensectrakit-thumb.png.png" alt="Solo License" style="width:80px;margin:0 auto var(--space-md);display:block;border-radius:8px;" loading="lazy">
+          <h4>Solo License</h4>
+          <div style="font-size:1.4rem;font-weight:700;font-family:var(--font-mono);color:var(--accent-cyan);">$149</div>
+          <p style="color:var(--text-muted);font-size:0.85rem;margin:var(--space-sm) 0;">You earn <strong style="color:var(--accent-cyan);">~$45</strong> per sale</p>
+          <span style="font-size:0.75rem;color:var(--text-muted);">1 developer license</span>
+        </div>
+        <div class="card" style="text-align:center;border-top:3px solid var(--accent-blue);">
+          <img src="../images/Kit/tensectrakit-team-thumb.png.png" alt="Team License" style="width:80px;margin:0 auto var(--space-md);display:block;border-radius:8px;" loading="lazy">
+          <h4>Team License</h4>
+          <div style="font-size:1.4rem;font-weight:700;font-family:var(--font-mono);color:var(--accent-blue);">$399</div>
+          <p style="color:var(--text-muted);font-size:0.85rem;margin:var(--space-sm) 0;">You earn <strong style="color:var(--accent-blue);">~$120</strong> per sale</p>
+          <span style="font-size:0.75rem;color:var(--text-muted);">Up to 5 developers</span>
+        </div>
+        <div class="card" style="text-align:center;border-top:3px solid var(--accent-purple);">
+          <img src="../images/Kit/tensectrakit-updates-thumb.png.png" alt="Updates Plan" style="width:80px;margin:0 auto var(--space-md);display:block;border-radius:8px;" loading="lazy">
+          <h4>Updates Plan (1 Year)</h4>
+          <div style="font-size:1.4rem;font-weight:700;font-family:var(--font-mono);color:var(--accent-purple);">$99</div>
+          <p style="color:var(--text-muted);font-size:0.85rem;margin:var(--space-sm) 0;">You earn <strong style="color:var(--accent-purple);">~$30</strong> per sale</p>
+          <span style="font-size:0.75rem;color:var(--text-muted);">Annual updates + Discord</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Application form -->
+  <section class="section" id="apply">
+    <div class="container">
+      <div class="aff-form-wrap">
+        <div class="aff-form-header">
+          <span class="ladder-badge" style="display:inline-block;margin-bottom:var(--space-md);">APPLY NOW</span>
+          <h2>Join the Program</h2>
+          <p>Applications are reviewed within 48 hours. We accept creators whose audience builds real software.</p>
+        </div>
+
+        <!-- Success message (shown on submit) -->
+        <div class="aff-success-msg" id="aff-success">
+          <span class="aff-success-icon">&#9989;</span>
+          <h3>Application Received!</h3>
+          <p>We&rsquo;ll review your application and get back to you within 48 hours via email. While you wait, feel free to explore the kit you&rsquo;ll be promoting.</p>
+          <a href="../pages/infrastructure" class="btn btn-primary" style="margin-top:var(--space-lg);">Explore the Kit &rarr;</a>
+        </div>
+
+        <!-- Form -->
+        <form id="aff-form" netlify name="affiliate-inquiry" method="POST" novalidate>
+          <input type="hidden" name="form-name" value="affiliate-inquiry">
+
+          <!-- Application type -->
+          <div class="form-group">
+            <label>I am applying as *</label>
+            <div class="aff-type-cards" id="aff-type-cards">
+              <label class="aff-type-card" id="type-affiliate">
+                <input type="radio" name="application_type" value="affiliate" required>
+                <span class="aff-type-card-icon">&#128279;</span>
+                <strong>Affiliate</strong>
+                <span>Individual creator, developer, educator</span>
+              </label>
+              <label class="aff-type-card" id="type-partner">
+                <input type="radio" name="application_type" value="partner">
+                <span class="aff-type-card-icon">&#127968;</span>
+                <strong>Partner</strong>
+                <span>Bootcamp, community, organisation</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Name + email -->
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="aff-name">Full Name *</label>
+              <input type="text" id="aff-name" name="name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label for="aff-email">Email Address *</label>
+              <input type="email" id="aff-email" name="email" placeholder="you@example.com" required>
+            </div>
+          </div>
+
+          <!-- Channel + reach -->
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="aff-channel">Primary Platform / Channel *</label>
+              <select id="aff-channel" name="primary_channel" required>
+                <option value="" disabled selected>Select your main platform</option>
+                <option value="youtube">YouTube</option>
+                <option value="newsletter">Email Newsletter</option>
+                <option value="twitter_x">Twitter / X</option>
+                <option value="linkedin">LinkedIn</option>
+                <option value="blog">Blog / Website</option>
+                <option value="discord_community">Discord Community</option>
+                <option value="github">GitHub</option>
+                <option value="bootcamp">Bootcamp / Training Program</option>
+                <option value="corporate">Corporate Training Department</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="aff-audience">Approximate Audience Size *</label>
+              <select id="aff-audience" name="audience_size" required>
+                <option value="" disabled selected>Select a range</option>
+                <option value="under_1k">Under 1,000</option>
+                <option value="1k_5k">1,000 &ndash; 5,000</option>
+                <option value="5k_20k">5,000 &ndash; 20,000</option>
+                <option value="20k_100k">20,000 &ndash; 100,000</option>
+                <option value="over_100k">Over 100,000</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Channel URL -->
+          <div class="form-group">
+            <label for="aff-url">Channel / Profile URL *</label>
+            <input type="url" id="aff-url" name="channel_url" placeholder="https://youtube.com/@yourchannel" required>
+            <span class="form-note">Link to your YouTube channel, newsletter, website, GitHub profile, or LinkedIn.</span>
+          </div>
+
+          <!-- Tech focus -->
+          <div class="form-group">
+            <label for="aff-tech">Your Tech Focus *</label>
+            <select id="aff-tech" name="tech_focus" required>
+              <option value="" disabled selected>What do you primarily cover?</option>
+              <option value="dotnet_backend">.NET / Backend Development</option>
+              <option value="enterprise_arch">Enterprise Architecture / System Design</option>
+              <option value="fullstack">Full Stack Development</option>
+              <option value="software_eng">Software Engineering (General)</option>
+              <option value="devops">DevOps / Cloud</option>
+              <option value="ai_dev">AI-Powered Development</option>
+              <option value="mobile">Mobile Development</option>
+              <option value="other">Other / Mixed</option>
+            </select>
+          </div>
+
+          <!-- Promotion plan -->
+          <div class="form-group">
+            <label for="aff-plan">How do you plan to promote TensectraKit? *</label>
+            <textarea id="aff-plan" name="promotion_plan" placeholder="E.g. I run a .NET YouTube channel with 12k subscribers. I plan to do a dedicated review video and include the link in all my backend architecture content..." required></textarea>
+            <span class="form-note">Be specific. We approve applicants whose promotion plan fits the product honestly.</span>
+          </div>
+
+          <!-- Have you used the kit? -->
+          <div class="form-group">
+            <label for="aff-used">Have you used TensectraKit?</label>
+            <select id="aff-used" name="kit_experience">
+              <option value="" disabled selected>Select one</option>
+              <option value="yes_production">Yes &mdash; using it in production</option>
+              <option value="yes_learning">Yes &mdash; using it to learn</option>
+              <option value="not_yet">Not yet, but planning to</option>
+              <option value="no">No, I have not tried it</option>
+            </select>
+          </div>
+
+          <!-- Anything else -->
+          <div class="form-group">
+            <label for="aff-notes">Anything else you&rsquo;d like us to know?</label>
+            <textarea id="aff-notes" name="additional_notes" placeholder="Past collaborations, portfolio links, special requests for partners..." style="min-height:80px;"></textarea>
+          </div>
+
+          <div class="form-submit-row">
+            <button type="submit" class="btn btn-primary btn-lg" id="aff-submit-btn" style="min-width:240px;">
+              Submit Application &rarr;
+            </button>
+            <p>We review every application within 48 hours. You&rsquo;ll hear back via email.</p>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" style="background:var(--bg-card);">
+    <div class="container" style="max-width:740px;">
+      <div class="section-header">
+        <h2>Common Questions</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+
+        <div class="card">
+          <h4 style="color:var(--accent-cyan);margin-bottom:var(--space-sm);">Do I need to be a customer to apply?</h4>
+          <p style="color:var(--text-muted);margin:0;">No, but we heavily favour applicants who have used the kit or have a clear audience of developers who build production systems. If you have not bought it yet, we provide free access after approval so you can promote it honestly.</p>
+        </div>
+
+        <div class="card">
+          <h4 style="color:var(--accent-cyan);margin-bottom:var(--space-sm);">How are commissions paid?</h4>
+          <p style="color:var(--text-muted);margin:0;">Via Gumroad&rsquo;s built-in affiliate system. When someone buys through your link, the commission is credited to your Gumroad balance automatically. You can withdraw to your bank account or PayPal from your Gumroad dashboard.</p>
+        </div>
+
+        <div class="card">
+          <h4 style="color:var(--accent-cyan);margin-bottom:var(--space-sm);">What is the 90-day cookie window?</h4>
+          <p style="color:var(--text-muted);margin:0;">If someone clicks your link today but buys 60 days from now, you still get the commission. Gumroad tracks the referral for 90 days from the first click.</p>
+        </div>
+
+        <div class="card">
+          <h4 style="color:var(--accent-cyan);margin-bottom:var(--space-sm);">Can I promote on multiple platforms?</h4>
+          <p style="color:var(--text-muted);margin:0;">Absolutely. Your affiliate link works everywhere. Many of our top affiliates share across YouTube, a newsletter, Twitter, and their GitHub README simultaneously.</p>
+        </div>
+
+        <div class="card">
+          <h4 style="color:var(--accent-cyan);margin-bottom:var(--space-sm);">How is the Partner Program different from the Affiliate Program?</h4>
+          <p style="color:var(--text-muted);margin:0;">Affiliates use a link and earn commission on individual sales. Partners (bootcamps, companies, communities) get bulk/discounted licensing, co-branded cohort options, and a negotiated revenue share. Partners are onboarded with a call rather than just a link.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div id="site-footer"></div>
+
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/analytics.js"></script>
+  <script src="../js/theme-toggle.js"></script>
+  <script src="../js/layout.js"></script>
+  <script src="../js/main.js?v=3"></script>
+  <script>
+    (function () {
+      // Type card radio visual toggle
+      var typeCards = document.querySelectorAll('.aff-type-card');
+      typeCards.forEach(function (card) {
+        card.addEventListener('click', function () {
+          typeCards.forEach(function (c) { c.classList.remove('selected'); });
+          card.classList.add('selected');
+        });
+      });
+
+      // Form submission
+      var form = document.getElementById('aff-form');
+      var success = document.getElementById('aff-success');
+      var submitBtn = document.getElementById('aff-submit-btn');
+
+      if (form) {
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          // Basic validation
+          var type = form.querySelector('input[name="application_type"]:checked');
+          if (!type) {
+            alert('Please select whether you are applying as an Affiliate or Partner.');
+            return;
+          }
+
+          submitBtn.textContent = 'Submitting\u2026';
+          submitBtn.disabled = true;
+
+          var data = new FormData(form);
+
+          fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(data).toString()
+          })
+          .then(function () {
+            form.style.display = 'none';
+            success.classList.add('visible');
+            window.scrollTo({ top: success.offsetTop - 100, behavior: 'smooth' });
+          })
+          .catch(function () {
+            // Fallback: show success anyway (Netlify may still capture the form)
+            form.style.display = 'none';
+            success.classList.add('visible');
+          });
+        });
+      }
+    }());
+  </script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <script>(function(){var d=document.documentElement,t=localStorage.getItem("tensectra-theme")||"dark";d.setAttribute("data-theme",t);}());</script>
@@ -50,62 +50,70 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="../css/main.css?v=2">
+  <link rel="stylesheet" href="../css/main.css?v=6">
   <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
 </head>
 <body>
   <!-- Navigation -->
-  <nav class="navbar">
-    <div class="container navbar-container">
-      <a href="../" class="navbar-logo">
-        <img src="../images/logo-mark.svg" alt="Tensectra">
-        <span>TENSECTRA</span>
-      </a>
-      
-      <ul class="navbar-nav">
-        <li><a href="../">Home</a></li>
-        <li><a href="consultancy">Consultancy</a></li>
-        <li><a href="infrastructure" class="active">Infrastructure Kit</a></li>
-        <li><a href="cohorts">Cohorts</a></li>
-        <li><a href="courses">Courses</a></li>
-        <li><a href="pro">Pro</a></li>
-        <li><a href="about">About</a></li>
-      </ul>
-      
-      <div class="navbar-cta">
-        <a href="#pricing" class="btn btn-primary btn-sm">Get the Scaffold</a>
-        <button class="theme-toggle-btn" aria-label="Toggle theme"><svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button>
-      </div>
-      
-      <button class="mobile-menu-btn" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </nav>
+  <div id="site-nav"></div>
 
   <!-- Hero Section -->
   <section class="hero" style="min-height: 70vh; padding-top: 120px;">
     <div class="binary-rain"></div>
     <div class="glow-cyan" style="top: 20%; right: 15%;"></div>
     <div class="glow-purple" style="bottom: 10%; left: 10%;"></div>
-    
-    <div class="container">
-      <div class="hero-content" style="text-align: center; margin: 0 auto;">
-        <h1>Enterprise .NET 8 Infrastructure — <span class="text-cyan">Ready to Ship.</span></h1>
-        <p class="hero-subtitle" style="margin: var(--space-md) auto 0; max-width: 700px;">
-          The scaffold we use to build financial SaaS for banks across Africa. Multi-tenant. Event-driven. Production-ready. Install the core. Add modules. Ship.
-        </p>
-        <div class="hero-cta" style="justify-content: center;">
-          <a href="#pricing" class="btn btn-primary btn-lg">Get the Scaffold &rarr;</a>
-          <button onclick="openDiagramModal()" class="btn btn-secondary btn-lg arch-peek-btn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-            Preview Architecture
-          </button>
-        </div>
-      </div>    
 
+    <div class="container">
+      <div class="hero-grid" style="gap: var(--space-xl); align-items: center;">
+
+        <!-- Left: Product Image -->
+        <div style="display: flex; justify-content: center; align-items: center;">
+          <img
+            src="../images/Kit/tensectrakit-cover.png.png"
+            alt="TensectraKit &mdash; Enterprise .NET 8 Scaffold"
+            style="width: 100%; max-width: 480px; border-radius: var(--radius-lg); box-shadow: 0 0 60px rgba(0,204,255,0.2), 0 20px 60px rgba(0,0,0,0.5); display: block;"
+            loading="eager"
+          >
+        </div>
+
+        <!-- Right: Copy + CTAs -->
+        <div class="hero-content">
+          <h1>
+            <span class="line-1">The ERP Infrastructure Kit</span>
+          </h1>
+          <p class="hero-subtitle" style="margin-top: var(--space-sm);">
+            The .NET 8 scaffold running in production fintech today. 5 layers. 14 patterns. Kafka, Redis, CQRS, multi-tenancy. Install it. Name it. Ship it.
+          </p>
+          <div class="hero-cta" style="flex-wrap: wrap; gap: var(--space-sm);">
+            <a href="https://tensectra.gumroad.com/l/tensectrakit-core-solo"
+               class="btn btn-primary btn-lg"
+               target="_blank" rel="noopener"
+               data-track="buy_solo_hero">
+              Solo &mdash; 1 Developer &mdash; $149 &rarr;
+            </a>
+            <a href="https://tensectra.gumroad.com/l/tensectrakit-core-team"
+               class="btn btn-secondary btn-lg"
+               target="_blank" rel="noopener"
+               data-track="buy_team_hero">
+              Team &mdash; 5 Developers &mdash; $399 &rarr;
+            </a>
+          </div>
+          <p class="hero-stats" style="margin-top: var(--space-md);">
+            Production-proven in banking systems across Africa &mdash; <span>instant access via Gumroad</span>.
+          </p>
+          <div style="display: flex; gap: var(--space-sm); margin-top: var(--space-md); flex-wrap: wrap;">
+            <button onclick="openDiagramModal()" class="btn btn-outline btn-sm arch-peek-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              Preview Architecture
+            </button>
+            <button onclick="openArchModal()" class="btn btn-outline btn-sm arch-peek-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+              Full Architecture Breakdown
+            </button>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 
@@ -116,18 +124,18 @@
         <div class="arch-peek-left">
           <span class="arch-peek-badge">WHAT’S INSIDE THE SCAFFOLD</span>
           <h3 class="arch-peek-title">5 layers. 14 enterprise patterns. Production-proven.</h3>
-          <p class="arch-peek-sub">Every pattern a tech lead would spend 3–6 months building — already done, already tested in live banking systems.</p>
+          <p class="arch-peek-sub">Every pattern a tech lead would spend 3&ndash;6 months building &mdash; already done, already tested in live banking systems.</p>
         </div>
         <div class="arch-peek-right">
           <div class="arch-peek-layers">
             <span class="arch-peek-layer" style="--lc: var(--accent-cyan);">Presentation</span>
-            <span class="arch-peek-arrow">↓</span>
+            <span class="arch-peek-arrow">&darr;</span>
             <span class="arch-peek-layer" style="--lc: var(--accent-blue);">Application</span>
-            <span class="arch-peek-arrow">↓</span>
+            <span class="arch-peek-arrow">&darr;</span>
             <span class="arch-peek-layer" style="--lc: var(--accent-purple);">Infrastructure</span>
-            <span class="arch-peek-arrow">↓</span>
+            <span class="arch-peek-arrow">&darr;</span>
             <span class="arch-peek-layer" style="--lc: rgba(255,255,255,0.35);">Domain</span>
-            <span class="arch-peek-arrow">↓</span>
+            <span class="arch-peek-arrow">&darr;</span>
             <span class="arch-peek-layer" style="--lc: rgba(110,125,154,0.7);">Persistence</span>
           </div>
           <button onclick="openArchModal()" class="btn btn-primary arch-peek-btn" style="margin-top: var(--space-md); width: 100%;">
@@ -364,212 +372,222 @@ TENSECTRA ERP KIT
     <div class="container">
 
       <div class="kit-pricing-header">
-        <span class="ladder-badge">STARTER KIT &mdash; AVAILABLE NOW</span>
-        <h2>The Scaffold Is Ready.<br><span class="text-cyan">Start Building Today.</span></h2>
-        <p>One payment. Permanent access. The scaffold eliminates months of setup &mdash; and it ships with the documentation, prompt playbook, and community access that make it useful long after day one.</p>
+        <span class="ladder-badge">LIVE ON GUMROAD &mdash; INSTANT ACCESS</span>
+        <h2>Pick Your License.<br><span class="text-cyan">Start Building Today.</span></h2>
+        <p>One payment. Permanent access. The scaffold eliminates months of setup &mdash; and ships with the documentation, prompt playbook, and community access that keep it valuable long after day one.</p>
       </div>
 
-      <!-- Featured Starter Card -->
-      <div class="kit-starter-card">
-        <div class="kit-starter-left">
-          <div class="kit-live-badge">
-            <span class="kit-live-dot"></span>
-            <span>Live &amp; Available</span>
-          </div>
-          <div class="kit-tier-label">STARTER KIT</div>
-          <div class="kit-price-row">
-            <span class="kit-price-amount" data-price="kit">$299</span>
-            <div class="kit-price-meta">
-              <span>One-time</span>
-              <span>payment</span>
-            </div>
-          </div>
-          <p class="kit-tagline">The scaffold ships your first system today. The documentation, prompt playbook, and community keep it current as .NET and your codebase evolve.</p>
-          <button class="btn btn-primary kit-cta-btn" data-modal="purchase-modal">
-            Get the Scaffold &rarr;
-          </button>
-          <p class="kit-cta-note">Email us to purchase &mdash; we respond within 4 hours.</p>
-        </div>
-        <div class="kit-starter-right">
-          <div class="kit-features-label">WHAT&rsquo;S INCLUDED</div>
-          <ul class="kit-features-list">
-            <li>
-              <span class="kit-check">&#10003;</span>
-              <div><strong>.NET 8 Clean Architecture (5 layers)</strong><span>Domain &rarr; Application &rarr; Infrastructure &rarr; API &rarr; Persistence, fully wired</span></div>
-            </li>
-            <li>
-              <span class="kit-check">&#10003;</span>
-              <div><strong>Multi-Database Provider</strong><span>SQL Server, Oracle, or PostgreSQL &mdash; switch with one config value, no code changes</span></div>
-            </li>
-            <li>
-              <span class="kit-check">&#10003;</span>
-              <div><strong>Kafka Sagas (3 patterns pre-wired)</strong><span>Approval Saga, User Sync, Customer Sync &mdash; idempotent with Kafka offset retry</span></div>
-            </li>
-            <li>
-              <span class="kit-check">&#10003;</span>
-              <div><strong>AES Encryption at Boundary</strong><span>Request decrypt + response encrypt middleware &mdash; zero configuration needed</span></div>
-            </li>
-            <li>
-              <span class="kit-check">&#10003;</span>
-              <div><strong>dotnet new NuGet Template</strong><span>Visual Studio 2022 wizard &mdash; from zero to running named service in under 10 minutes</span></div>
-            </li>
-            <li>
-              <span class="kit-check">&#10003;</span>
-              <div><strong>Full Architecture Documentation</strong><span>Every pattern explained, end-to-end scenario walkthrough, and setup guide</span></div>
-            </li>
-            <li>
-              <span class="kit-check">&#10003;</span>
-              <div><strong>AI Prompt Playbook (50+ prompts)</strong><span>Copilot &amp; Cursor prompts that generate code matching the scaffold&rsquo;s exact patterns</span></div>
-            </li>
-            <li>
-              <span class="kit-check">&#10003;</span>
-              <div><strong>TensectraKit Community Channel</strong><span>Ask questions, share patterns, and get help from engineers using the same scaffold in production</span></div>
-            </li>
-            <li>
-              <span class="kit-check">&#10003;</span>
-              <div><strong>LTS Version Updates</strong><span>Kit updated for each .NET Long-Term Support release &mdash; you get the updated version at no extra cost</span></div>
-            </li>
+      <!-- THREE SKU CARDS -->
+      <div class="infra-sku-grid">
+
+        <!-- Solo License -->
+        <div class="infra-sku-card">
+          <div class="infra-sku-badge">SOLO LICENSE</div>
+          <img src="../images/Kit/tensectrakit-thumb.png.png" alt="TensectraKit Solo" class="infra-sku-img" loading="lazy">
+          <div class="infra-sku-price">$149</div>
+          <div class="infra-sku-sub">1 developer &mdash; one-time payment</div>
+          <ul class="infra-sku-features">
+            <li><span class="kit-check">&#10003;</span>.NET 8 Clean Architecture (5 layers)</li>
+            <li><span class="kit-check">&#10003;</span>Multi-DB: SQL Server, Oracle, PostgreSQL</li>
+            <li><span class="kit-check">&#10003;</span>Kafka Sagas &mdash; 3 patterns pre-wired</li>
+            <li><span class="kit-check">&#10003;</span>AES Encryption at boundary</li>
+            <li><span class="kit-check">&#10003;</span><code>dotnet new</code> NuGet template</li>
+            <li><span class="kit-check">&#10003;</span>Full architecture documentation</li>
+            <li><span class="kit-check">&#10003;</span>AI Prompt Playbook (50+ prompts)</li>
+            <li><span class="kit-check">&#10003;</span>Community channel access</li>
+            <li><span class="kit-check">&#10003;</span>LTS version updates</li>
           </ul>
+          <a href="https://tensectra.gumroad.com/l/tensectrakit-core-solo"
+             class="btn btn-primary kit-sku-btn"
+             target="_blank" rel="noopener"
+             data-track="buy_solo_pricing">
+            Buy Solo &mdash; $149 &rarr;
+          </a>
         </div>
-      </div>
 
-      <!-- Roadmap tiers -->
-      <div class="kit-roadmap">
-        <div class="kit-roadmap-label">COMING NEXT</div>
-        <div class="kit-roadmap-grid">
-          <div class="kit-roadmap-tier">
-            <div class="kit-roadmap-tier-head">
-              <span class="kit-roadmap-tier-name">Pro Kit</span>
-              <span class="kit-roadmap-price">$899</span>
-            </div>
-            <p>Modules library, advanced multi-tenancy, monitoring dashboards, team onboarding guide, and 6 months of priority support.</p>
-            <span class="kit-roadmap-badge">In Development</span>
-          </div>
-          <div class="kit-roadmap-tier">
-            <div class="kit-roadmap-tier-head">
-              <span class="kit-roadmap-tier-name">Enterprise</span>
-              <span class="kit-roadmap-price">Custom</span>
-            </div>
-            <p>White-label rights, custom module development, team workshops, architecture consultancy, and a dedicated support channel.</p>
-            <a href="../forms/contact" class="kit-roadmap-badge kit-roadmap-link">Talk to Us &rarr;</a>
-          </div>
+        <!-- Team License — Featured -->
+        <div class="infra-sku-card infra-sku-card--featured">
+          <div class="infra-sku-badge infra-sku-badge--featured">TEAM LICENSE &mdash; BEST VALUE</div>
+          <img src="../images/Kit/tensectrakit-team-thumb.png.png" alt="TensectraKit Team" class="infra-sku-img" loading="lazy">
+          <div class="infra-sku-price">$399</div>
+          <div class="infra-sku-sub">Up to 5 developers &mdash; one-time payment</div>
+          <ul class="infra-sku-features">
+            <li><span class="kit-check">&#10003;</span>Everything in Solo</li>
+            <li><span class="kit-check">&#10003;</span>5-developer team license</li>
+            <li><span class="kit-check">&#10003;</span>Team onboarding guide</li>
+            <li><span class="kit-check">&#10003;</span>Priority community support</li>
+            <li><span class="kit-check">&#10003;</span>LTS version updates for all 5 seats</li>
+          </ul>
+          <a href="https://tensectra.gumroad.com/l/tensectrakit-core-team"
+             class="btn btn-primary kit-sku-btn"
+             target="_blank" rel="noopener"
+             data-track="buy_team_pricing">
+            Buy Team &mdash; $399 &rarr;
+          </a>
         </div>
-      </div>
 
-      <!-- Voice AI — AI-Ready callout -->
-      <div style="margin-top: var(--space-xl); padding: var(--space-xl); background: linear-gradient(135deg, rgba(0,204,255,0.05) 0%, rgba(123,47,255,0.08) 100%); border: 1px solid rgba(0,204,255,0.15); border-radius: var(--radius-lg);">
-        <div class="grid-2" style="align-items: center; gap: var(--space-xl);">
-          <div>
-            <span class="ladder-badge" style="display: inline-block; margin-bottom: var(--space-md);">COMING IN V2 &mdash; TENSECTRAKIT.AIGATEWAY</span>
-            <h3 style="margin-bottom: var(--space-md);">This scaffold is AI-ready on day one.</h3>
-            <p style="color: var(--text-muted); margin-bottom: var(--space-md);">
-              <strong style="color: var(--text-white);">TensectraKit.AiGateway</strong> is in development as a separate companion template. One microservice added on top of what you already own &mdash; and your system handles voice-controlled transactions.
-            </p>
-            <p style="color: var(--accent-cyan); font-style: italic; margin-bottom: var(--space-md);">
-              &ldquo;Post invoice, John Doe, Service A, quantity 3, price 500.&rdquo; &mdash; Validated. Audited. Kafka-published. Done.
-            </p>
-            <a href="about#roadmap" class="btn btn-outline btn-sm">See the Full Roadmap &rarr;</a>
-          </div>
-          <div>
-            <div class="kit-features-label" style="margin-bottom: var(--space-md);">WHY YOUR SCAFFOLD IS ALREADY SHAPED FOR THIS</div>
-            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-xs);">
-              <li style="color: var(--text-primary); font-size: 0.9rem; display: flex; gap: var(--space-sm);"><span style="color: var(--accent-cyan); flex-shrink: 0;">&#10003;</span>CQRS commands map 1:1 to AI function calls &mdash; no code changes</li>
-              <li style="color: var(--text-primary); font-size: 0.9rem; display: flex; gap: var(--space-sm);"><span style="color: var(--accent-cyan); flex-shrink: 0;">&#10003;</span>Redis already running &mdash; stores AI conversation state between turns</li>
-              <li style="color: var(--text-primary); font-size: 0.9rem; display: flex; gap: var(--space-sm);"><span style="color: var(--accent-cyan); flex-shrink: 0;">&#10003;</span>Kafka publishes AI-initiated events identically to UI-initiated ones</li>
-              <li style="color: var(--text-primary); font-size: 0.9rem; display: flex; gap: var(--space-sm);"><span style="color: var(--accent-cyan); flex-shrink: 0;">&#10003;</span>FluentValidation catches bad AI-parsed parameters before the database</li>
-              <li style="color: var(--text-primary); font-size: 0.9rem; display: flex; gap: var(--space-sm);"><span style="color: var(--accent-cyan); flex-shrink: 0;">&#10003;</span>Serilog + Seq traces every AI transaction automatically</li>
-            </ul>
-          </div>
+        <!-- Updates Plan -->
+        <div class="infra-sku-card">
+          <div class="infra-sku-badge">UPDATES PLAN</div>
+          <img src="../images/Kit/tensectrakit-updates-thumb.png.png" alt="TensectraKit Updates Plan" class="infra-sku-img" loading="lazy">
+          <div class="infra-sku-price"
+          <div class="infra-sku-sub">Already own the kit? Stay current.</div>
+          <ul class="infra-sku-features">
+            <li><span class="kit-check">&#10003;</span>Every kit update for 12 months</li>
+            <li><span class="kit-check">&#10003;</span>New patterns as they are released</li>
+            <li><span class="kit-check">&#10003;</span>LTS migrations included</li>
+            <li><span class="kit-check">&#10003;</span>Community channel access</li>
+            <li><span class="kit-check">&#10003;</span>AI Prompt Playbook updates</li>
+          </ul>
+          <a href="https://tensectra.gumroad.com/l/tensectrakit-updates-plan"
+             class="btn btn-secondary kit-sku-btn"
+             target="_blank" rel="noopener"
+             data-track="buy_updates_pricing">
+            Get Updates Plan &mdash; $99 &rarr;
+          </a>
         </div>
+
+      </div><!-- /infra-sku-grid -->
+
+      <!-- Enterprise CTA strip -->
+      <div style="margin-top: var(--space-xl); padding: var(--space-lg) var(--space-xl); background: rgba(255,255,255,0.03); border: 1px solid var(--bg-border); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: space-between; gap: var(--space-lg); flex-wrap: wrap;">
+        <div>
+          <strong style="color: var(--text-white); font-size: 1.05rem;">Need white-label rights or custom module development?</strong>
+          <p style="color: var(--text-muted); margin: var(--space-xs) 0 0; font-size: 0.95rem;">Enterprise licensing, team workshops, architecture consultancy, and a dedicated support channel.</p>
+        </div>
+        <a href="../forms/contact" class="btn btn-outline" style="white-space: nowrap;">Talk to Us &rarr;</a>
       </div>
 
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <img src="../images/tensectra-logo.png" alt="" class="footer-watermark">
-    
+  <!-- After Purchase Journey -->
+  <section class="section" style="background: linear-gradient(135deg, rgba(0,204,255,0.04) 0%, rgba(123,47,255,0.06) 100%); border-top: 1px solid var(--bg-border);">
     <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h4>Products</h4>
-          <ul class="footer-links">
-            <li><a href="courses">Courses</a></li>
-            <li><a href="pro">Pro Membership</a></li>
-            <li><a href="infrastructure">ERP Kit</a></li>
-          </ul>
+      <div style="text-align: center; max-width: 640px; margin: 0 auto var(--space-2xl);">
+        <span class="ladder-badge">WHAT HAPPENS AFTER YOU BUY</span>
+        <h2 style="margin-top: var(--space-md);">Zero to running service<br><span class="text-cyan">in under 10 minutes.</span></h2>
+      </div>
+      <div class="after-purchase">
+        <div class="after-purchase-step">
+          <div class="after-purchase-num">1</div>
+          <div class="after-purchase-body">
+            <strong>Gumroad confirmation</strong>
+            <p>Instant access. You receive the download link and license key at your email the moment payment clears.</p>
+          </div>
         </div>
-        
-        <div class="footer-col">
-          <h4>Services</h4>
-          <ul class="footer-links">
-            <li><a href="consultancy">Consultancy</a></li>
-            <li><a href="consultancy">Corporate Training</a></li>
-            <li><a href="consultancy">Retainer</a></li>
-          </ul>
+        <div class="after-purchase-arrow">&darr;</div>
+        <div class="after-purchase-step">
+          <div class="after-purchase-num">2</div>
+          <div class="after-purchase-body">
+            <strong>GitHub invitation</strong>
+            <p>Reply with your GitHub username and we add you to the private repository within 4 hours.</p>
+          </div>
         </div>
-        
-        <div class="footer-col">
-          <h4>Company</h4>
-          <ul class="footer-links">
-            <li><a href="about">About</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="../forms/contact">Contact</a></li>
-          </ul>
+        <div class="after-purchase-arrow">&darr;</div>
+        <div class="after-purchase-step">
+          <div class="after-purchase-num">3</div>
+          <div class="after-purchase-body">
+            <strong>Clone and install the template</strong>
+            <p>Run <code>dotnet new install TensectraKit</code> once &mdash; then it lives in your Visual Studio 2022 wizard forever.</p>
+          </div>
         </div>
-        
-        <div class="footer-col">
-          <h4>Legal</h4>
-          <ul class="footer-links">
-            <li><a href="privacy">Privacy Policy</a></li>
-            <li><a href="terms">Terms of Service</a></li>
-          </ul>
-          
-          <div class="footer-social">
-            <a href="https://www.linkedin.com/company/tensectra/" target="_blank" rel="noopener" aria-label="LinkedIn">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                <rect x="2" y="9" width="4" height="12"></rect>
-                <circle cx="4" cy="4" r="2"></circle>
-              </svg>
-            </a>
-            <a href="#" aria-label="YouTube">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
-                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
-              </svg>
-            </a>
-            <a href="#" aria-label="GitHub">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
-              </svg>
-            </a>
+        <div class="after-purchase-arrow">&darr;</div>
+        <div class="after-purchase-step">
+          <div class="after-purchase-num">4</div>
+          <div class="after-purchase-body">
+            <strong>Name it. Ship it.</strong>
+            <p>Run <code>dotnet new tensectrakit -n YourServiceName</code>. A fully named, fully wired service is live in your IDE. Start building immediately.</p>
           </div>
         </div>
       </div>
-      
-      <div class="footer-bottom">
-        <p class="footer-tagline">Learn Boldly. Build Fearlessly. Scale Intelligently.</p>
-        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: var(--space-sm);">
-          © 2026 Tensectra. All rights reserved.
-        </p>
+    </div>
+  </section>
+
+  <!-- Community Section -->
+  <section class="community-section">
+    <div class="container">
+      <div style="text-align: center; max-width: 680px; margin: 0 auto var(--space-xl);">
+        <span class="ladder-badge">JOIN THE COMMUNITY</span>
+        <h2 style="margin-top: var(--space-md);">You are not building alone.</h2>
+        <p style="color: var(--text-muted); font-size: 1.05rem; margin-top: var(--space-sm);">Every kit purchase includes access to the TensectraKit community. Ask questions, share patterns, and learn from engineers using the same scaffold in production.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-lg); margin-bottom: var(--space-xl);">
+        <div class="card" style="text-align: center; padding: var(--space-xl);">
+          <div style="font-size: 2rem; margin-bottom: var(--space-sm);">&#128172;</div>
+          <strong style="color: var(--text-white); display: block; margin-bottom: var(--space-xs);">Pattern discussions</strong>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">Real conversations about CQRS, Sagas, multi-tenancy, and scaling patterns &mdash; not theory.</p>
+        </div>
+        <div class="card" style="text-align: center; padding: var(--space-xl);">
+          <div style="font-size: 2rem; margin-bottom: var(--space-sm);">&#128736;</div>
+          <strong style="color: var(--text-white); display: block; margin-bottom: var(--space-xs);">Help &amp; debugging</strong>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">Stuck on an integration? Post it. Engineers who have shipped the same scaffold will respond.</p>
+        </div>
+        <div class="card" style="text-align: center; padding: var(--space-xl);">
+          <div style="font-size: 2rem; margin-bottom: var(--space-sm);">&#128640;</div>
+          <strong style="color: var(--text-white); display: block; margin-bottom: var(--space-xs);">Early access</strong>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">New patterns and modules land in the community first &mdash; before the public release.</p>
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <a href="https://discord.gg/tensectra" class="btn btn-discord" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+          Join the Community on Discord &rarr;
+        </a>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: var(--space-sm);">Included with every kit purchase. No extra cost.</p>
       </div>
     </div>
-  </footer>
+  </section>
 
-
-  <!-- Architecture Preview Modal -->
-  <div id="arch-modal" class="arch-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="arch-modal-title">
-    <div class="arch-modal">
-      <div class="arch-modal-header">
-        <div>
-          <span class="ladder-badge">ARCHITECTURE PREVIEW</span>
-          <h3 class="arch-modal-title" id="arch-modal-title">TensectraKit — System Architecture</h3>
-          <p class="arch-modal-meta">.NET 8 &middot; Clean Architecture &middot; Multi-DB &middot; Kafka &middot; gRPC &middot; Redis &middot; AES Encryption</p>
+  <!-- AI-Ready Callout -->
+  <section class="section" style="background: linear-gradient(135deg, rgba(0,204,255,0.04) 0%, rgba(123,47,255,0.07) 100%); border-top: 1px solid rgba(0,204,255,0.12); border-bottom: 1px solid rgba(123,47,255,0.12);">
+    <div class="container">
+      <div style="max-width: 860px; margin: 0 auto; text-align: center;">
+        <span class="ladder-badge" style="background: rgba(123,47,255,0.15); border-color: rgba(123,47,255,0.3); color: var(--accent-purple);">PROMPT PLAYBOOK &mdash; INCLUDED WITH EVERY KIT</span>
+        <h2 style="margin: var(--space-md) 0;">AI handles the heavy lifting.<br><span class="text-cyan">You own the architecture.</span></h2>
+        <p style="color: var(--text-muted); font-size: 1.1rem; font-style: italic; max-width: 680px; margin: 0 auto var(--space-xl);">&ldquo;AI writes the code. You design the architecture. This scaffold teaches you the difference &mdash; and makes you dangerous with both.&rdquo;</p>
+        <div class="grid-3" style="text-align: left; gap: var(--space-lg);">
+          <div class="card" style="display: flex; gap: var(--space-md); align-items: flex-start;">
+            <div style="width: 40px; height: 40px; background: rgba(0,204,255,0.1); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+            </div>
+            <div><strong style="color: var(--text-white); display: block; margin-bottom: 4px;">Prompt Playbook Included</strong><p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">50+ battle-tested prompts for Copilot &amp; Cursor &mdash; generate handlers, validators, sagas, and tests that match the scaffold&rsquo;s exact patterns.</p></div>
+          </div>
+          <div class="card" style="display: flex; gap: var(--space-md); align-items: flex-start;">
+            <div style="width: 40px; height: 40px; background: rgba(123,47,255,0.1); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-purple)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </div>
+            <div><strong style="color: var(--text-white); display: block; margin-bottom: 4px;">Architecture-First Mindset</strong><p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">AI fills in the implementation. You make every pattern decision. The scaffold is the frame &mdash; you are the architect who decides what goes inside it.</p></div>
+          </div>
+          <div class="card" style="display: flex; gap: var(--space-md); align-items: flex-start;">
+            <div style="width: 40px; height: 40px; background: rgba(59,91,255,0.1); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+            </div>
+            <div><strong style="color: var(--text-white); display: block; margin-bottom: 4px;">10&times; Velocity</strong><p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">The scaffold eliminates setup. AI eliminates boilerplate. You spend 100% of your time on real engineering decisions that matter to the business.</p></div>
+          </div>
         </div>
-        <button class="arch-modal-close" onclick="closeArchModal()" aria-label="Close">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- REMOVED old kit-starter-card placeholder below — replaced above -->
+  <div style="display:none"><!-- old kit-starter-card
+        <!-- end hidden --></div>
+
+        <!-- Footer -->
+        <div id="site-footer"></div>
+
+        <!-- Architecture Preview Modal -->
+        <div id="arch-modal" class="arch-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="arch-modal-title">
+          <div class="arch-modal">
+            <div class="arch-modal-header">
+              <div>
+                <span class="ladder-badge">ARCHITECTURE PREVIEW</span>
+                <h3 class="arch-modal-title" id="arch-modal-title">TensectraKit &mdash; System Architecture</h3>
+                <p class="arch-modal-meta">.NET 8 &middot; Clean Architecture &middot; Multi-DB &middot; Kafka &middot; gRPC &middot; Redis &middot; AES Encryption</p>
+              </div>
+              <button class="arch-modal-close" onclick="closeArchModal()" aria-label="Close">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
       </div>
 
@@ -729,7 +747,7 @@ TENSECTRA ERP KIT
             <span class="arch-pattern-badge">Soft Delete</span>
             <span class="arch-pattern-badge">Audit Trail</span>
             <span class="arch-pattern-badge">Encryption at Boundary</span>
-            <span class="arch-pattern-badge">Background + 3× Retry</span>
+            <span class="arch-pattern-badge">Background + 3&times; Retry</span>
             <span class="arch-pattern-badge">Multi-DB Provider</span>
             <span class="arch-pattern-badge">Dual Entry (REST + gRPC)</span>
             <span class="arch-pattern-badge">DB Seeding</span>
@@ -738,8 +756,9 @@ TENSECTRA ERP KIT
       </div>
 
       <div class="arch-modal-footer">
-        <p class="arch-modal-footer-text">Production-proven in financial SaaS serving banks across Africa. Every pattern above is ready to run from day one — not a tutorial scaffold.</p>
-        <a href="#pricing" onclick="closeArchModal()" class="btn btn-primary">Get the Scaffold &mdash; $299 &rarr;</a>
+        <p class="arch-modal-footer-text">Production-proven in financial SaaS serving banks across Africa. Every pattern above is ready to run from day one &mdash; not a tutorial scaffold.</p>
+        <a href="https://tensectra.gumroad.com/l/tensectrakit-core-solo" onclick="closeArchModal()" class="btn btn-primary" target="_blank" rel="noopener" data-track="buy_solo_archmodal">Solo &mdash; $149 &rarr;</a>
+        <a href="https://tensectra.gumroad.com/l/tensectrakit-core-team" onclick="closeArchModal()" class="btn btn-secondary" target="_blank" rel="noopener" data-track="buy_team_archmodal" style="margin-left: var(--space-sm);">Team &mdash; $399 &rarr;</a>
       </div>
     </div>
   </div>
@@ -761,99 +780,21 @@ TENSECTRA ERP KIT
         <pre id="arch-diagram-pre" class="arch-diagram-pre"></pre>
       </div>
       <div class="arch-modal-footer">
-        <p class="arch-modal-footer-text">This is the exact architecture structure inside TensectraKit — production-proven in financial SaaS serving banks across Africa.</p>
-        <a href="#pricing" onclick="closeDiagramModal()" class="btn btn-primary">Get the Scaffold &mdash; $299 &rarr;</a>
+        <p class="arch-modal-footer-text">This is the exact architecture inside TensectraKit &mdash; production-proven in financial SaaS serving banks across Africa.</p>
+        <a href="https://tensectra.gumroad.com/l/tensectrakit-core-solo" onclick="closeDiagramModal()" class="btn btn-primary" target="_blank" rel="noopener" data-track="buy_solo_diagmodal">Solo &mdash; $149 &rarr;</a>
+        <a href="https://tensectra.gumroad.com/l/tensectrakit-core-team" onclick="closeDiagramModal()" class="btn btn-secondary" target="_blank" rel="noopener" data-track="buy_team_diagmodal" style="margin-left: var(--space-sm);">Team &mdash; $399 &rarr;</a>
       </div>
     </div>
   </div>
 
-  <!-- Purchase Intent Modal -->
-  <div id="purchase-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="purchase-modal-title">
-    <div class="modal" style="max-width: 480px;">
-      <div class="modal-header">
-        <div>
-          <span class="ladder-badge">STARTER KIT &mdash; $299 ONE-TIME</span>
-          <h3 id="purchase-modal-title" style="margin-top: var(--space-xs);">Get the Scaffold</h3>
-        </div>
-        <button class="modal-close" aria-label="Close">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p style="color: var(--text-muted); margin-bottom: var(--space-lg);">Leave your name and email &mdash; we&rsquo;ll send the payment link and scaffold access within 4 hours.</p>
-        <form id="purchase-form" onsubmit="submitPurchaseForm(event)">
-          <input type="hidden" name="country_code"    id="f-country-code">
-          <input type="hidden" name="country_name"    id="f-country-name">
-          <input type="hidden" name="city"            id="f-city">
-          <input type="hidden" name="location_source" id="f-loc-source" value="auto_detected">
-          <div style="margin-bottom: var(--space-md);">
-            <label for="purchase-name" style="display: block; color: var(--text-primary); font-weight: 500; font-size: 0.9rem; margin-bottom: var(--space-xs);">Your Name</label>
-            <input id="purchase-name" name="name" type="text" required placeholder="e.g. Segun Adeyemi"
-              style="width: 100%; box-sizing: border-box; background: var(--bg-primary); border: 1px solid var(--bg-border); border-radius: var(--radius-md); padding: 0.75rem var(--space-md); color: var(--text-white); font-size: 1rem; outline: none;">
-          </div>
-          <div style="margin-bottom: var(--space-lg);">
-            <label for="purchase-email" style="display: block; color: var(--text-primary); font-weight: 500; font-size: 0.9rem; margin-bottom: var(--space-xs);">Your Email</label>
-            <input id="purchase-email" name="email" type="email" required placeholder="you@company.com"
-              style="width: 100%; box-sizing: border-box; background: var(--bg-primary); border: 1px solid var(--bg-border); border-radius: var(--radius-md); padding: 0.75rem var(--space-md); color: var(--text-white); font-size: 1rem; outline: none;">
-          </div>
-          <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1rem; padding: 0.85rem;">Send Purchase Request &rarr;</button>
-          <p style="color: var(--text-muted); font-size: 0.82rem; text-align: center; margin-top: var(--space-sm);">We respond within 4 hours. No spam &mdash; ever.</p>
-        </form>
-      </div>
-    </div>
-  </div>
+  <!-- purchase-modal removed: purchases now go directly to Gumroad -->
 
   <script src="../js/theme-toggle.js"></script>
-  <script src="../js/main.js?v=2"></script>
+  <script src="../js/main.js?v=3"></script>
   <script src="../js/config.js"></script>
   <script src="../js/supabase-config.js"></script>
-  <script src="../js/pricing.js"></script>
-  <script src="../js/location.js"></script>
+  <script src="../js/analytics.js"></script>
   <script>
-    async function submitPurchaseForm(e) {
-      e.preventDefault();
-      const name  = document.getElementById('purchase-name').value.trim();
-      const email = document.getElementById('purchase-email').value.trim();
-      
-      if (!name || !email) {
-        showNotification('Please fill all fields', 'error');
-        return;
-      }
-
-      try {
-        // Save to Supabase using REST API (same pattern as consultancy form)
-        const payload = {
-          name: name,
-          email: email,
-          ip_address: window.userLocation ? window.userLocation.ip : null,
-          country: (document.getElementById('f-country-name') || {}).value || null,
-          city: (document.getElementById('f-city') || {}).value || null
-        };
-
-        const res = await fetch(window.SUPABASE_URL + '/rest/v1/kit_purchase_requests', {
-          method: 'POST',
-          headers: {
-            'apikey': window.SUPABASE_ANON_KEY,
-            'Authorization': 'Bearer ' + window.SUPABASE_ANON_KEY,
-            'Content-Type': 'application/json',
-            'Prefer': 'return=minimal'
-          },
-          body: JSON.stringify(payload)
-        });
-
-        if (!res.ok) {
-          const errorText = await res.text();
-          console.error('[Kit Purchase] Error:', res.status, errorText);
-          showNotification('Failed to save. Please try again.', 'error');
-        } else {
-          console.log('[Kit Purchase] Saved to CRM');
-          closeAllModals();
-          showNotification('Purchase request received! We will email you within 4 hours.', 'success');
-        }
-      } catch (err) {
-        console.error('[Kit Purchase] Error:', err);
-        showNotification('Something went wrong. Please try again.', 'error');
-      }
-    }
-
     /* ── Modal 1: Full Architecture (pill cards) ── */
     function openArchModal() {
       document.getElementById('arch-modal').classList.add('open');
@@ -1167,5 +1108,6 @@ PART 1 \u2014 HIGH-LEVEL ARCHITECTURE DIAGRAM  (TEXTUAL, BOXES & ARROWS)
       }
     });
   </script>
+  <script src="../js/layout.js"></script>
 </body>
 </html>

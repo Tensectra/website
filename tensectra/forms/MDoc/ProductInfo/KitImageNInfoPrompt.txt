@@ -1,0 +1,80 @@
+﻿ TensectraKit — Updates Plan (1 Year)
+tensectra.gumroad.com/l/tensectrakit-updates-plan
+0	$0	$99	Published	
+
+
+TensectraKit — Core Infra Pack (Team License — up to 5 developers)
+tensectra.gumroad.com/l/tensectrakit-core-team
+0	$0	$399+	Published	
+
+
+TensectraKit — Core Infra Pack (Solo License)
+tensectra.gumroad.com/l/tensectrakit-core-solo
+0	$0	$149+	Published
+
+ 
+ 
+ ─────────────────────────────────────────────────────────────────────────────────────────────
+  PROMPT 1 — COVER IMAGE (1280×720, landscape)  paste this EXACTLY
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+
+  Paste into any AI image generator:
+
+  ┌──────────────────────────────────────────────────────────────────────────────────────────┐
+  │  Dark cinematic tech product banner, 16:9 landscape. Deep navy-black background          │
+  │  (#0a0e1a) with a subtle glowing cyan-blue electric grid pattern. Large bold white       │
+  │  text "TensectraKit" centered, slightly left-aligned, with an electric neon cyan         │
+  │  (#00d4ff) glow effect. Below it in smaller text: "Production-Grade .NET 8 Scaffold".   │
+  │  Abstract architectural layers visualised as glowing stacked horizontal planes —         │
+  │  representing Domain, Application, Infrastructure, Persistence, API — floating in        │
+  │  the right third of the image with cyan and deep purple (#6300ff) gradients.             │
+  │  Small floating code snippets in the background, barely visible. Lightning bolt          │
+  │  or electric spark accent near the title. Clean, professional, modern SaaS aesthetic.   │
+  │  No people. No stock-photo feel. Inspired by Tailwind UI and Vercel product pages.       │
+  │  High contrast. Bold. Electric. --ar 16:9                                                │
+  └──────────────────────────────────────────────────────────────────────────────────────────┘
+
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+  PROMPT 2 — THUMBNAIL / SQUARE VERSION (600×600)  paste this EXACTLY
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+
+  ┌──────────────────────────────────────────────────────────────────────────────────────────┐
+  │  Dark square product icon, 1:1 format. Deep navy-black background (#0a0e1a). Centered    │
+  │  rounded square logo mark with bold white letters "TK" on a gradient background          │
+  │  (cyan #00d4ff top-left to deep purple #6300ff bottom-right), glowing. Below the         │
+  │  logo, bold white text "TensectraKit" and smaller text "Core Infra Pack". Subtle         │
+  │  electric grid lines in the background. Neon cyan glow accents around the logo.          │
+  │  Clean, minimal, iconic. Professional developer tool aesthetic. No people.               │
+  │  High contrast, dark theme. --ar 1:1                                                     │
+  └──────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+   ─────────────────────────────────────────────────────────────────────────────────────────────
+  PROMPT 2 — COVER IMAGE (1280×720, landscape)  paste this EXACTLY
+  ─────────────────────────────────────────────────────────────────────────────────────────────
+
+
+     TEAM COVER IMAGE  (1280×720) — paste this prompt into ideogram.ai, DALL-E, or Adobe Firefly:
+  ┌──────────────────────────────────────────────────────────────────────────────────────────┐
+  │  Dark cinematic tech product banner, 16:9 landscape. Deep navy-black background          │
+  │  (#0a0e1a) with a glowing electric grid. Bold white text "TensectraKit" centered,        │
+  │  with a neon GREEN (#00ffa3) glow effect — distinct from the solo cyan version.          │
+  │  Below it: "Core Infra Pack — Team License". Right third: 5 glowing user avatar          │
+  │  icons arranged in a horizontal row, connected by faint electric lines, rendered in      │
+  │  green-to-purple gradient. Floating stacked architecture layers behind the avatars.       │
+  │  Clean professional SaaS dark aesthetic. No people. No stock photos. --ar 16:9           │
+  └──────────────────────────────────────────────────────────────────────────────────────────┘
+
+  TEAM THUMBNAIL  (600×600) — paste this prompt:
+  ┌──────────────────────────────────────────────────────────────────────────────────────────┐
+  │  Dark square product icon, 1:1. Navy-black background (#0a0e1a). Centered rounded         │
+  │  square logo mark "TK" on a gradient (neon green #00ffa3 → deep purple #6300ff),         │
+  │  glowing. Below: bold white "TensectraKit" and smaller "Team · 5 Seats". Five small       │
+  │  glowing dots in a row below the text representing the 5 seats. Subtle green neon        │
+  │  glow accents. Clean, minimal, iconic. Dark developer tool aesthetic. --ar 1:1            │
+  └──────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+
+
+

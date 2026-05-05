@@ -1,0 +1,493 @@
+TENSECTRA — PROPOSED SITE REDESIGN & CONVERSION STRATEGY
+=========================================================
+Created: 2026
+Based on:
+  - Live study of railway.com (homepage, pricing, enterprise pages)
+  - Full audit of the existing tensectra.com codebase (index.html, infrastructure.html,
+    courses.html, cohorts, pro, consultancy pages)
+  - KitImageNInfoPrompt.txt, EbookInfos.txt, BuyerOnboarding.txt, SellerOperationsGuide.txt
+  - Developer/lead engineer feedback: "I don't understand the value proposition.
+    After the first heading, the next thing I see is pricing. That is not a good approach."
+  - The brand position statement provided:
+    "We turn developers who can code into engineers who can architect."
+
+THIS FILE SUPERSEDES the Railway UX notes in railway-ux-study.txt as the
+primary recommendation document for Tensectra's site.
+
+------------------------------------------------------------------------
+PART 1 — BRUTAL HONEST AUDIT OF THE CURRENT SITE
+------------------------------------------------------------------------
+
+What the current homepage does wrong:
+
+  1. NO CLEAR IDENTITY IN THE HERO
+     The current hero headline is not memorable or distinct.
+     There is no single sentence that answers "what IS Tensectra?"
+     A developer who lands cold cannot tell if this is a course platform,
+     a consulting firm, a SaaS product, or a template seller.
+     It is actually all four. That needs one sentence to resolve it.
+
+  2. PRICING APPEARS BEFORE TRUST IS ESTABLISHED
+     The "Available Now — $299" badge is visible on the Infrastructure Kit
+     card in the path cards section — which is among the FIRST things a
+     visitor sees after the hero. The developer's feedback is accurate.
+     Price before value is a conversion killer, especially at $299.
+
+  3. THE KIT IS BURIED AS A CARD AMONG THREE EQUAL OPTIONS
+     The TensectraKit is the highest-signal, most tangible product
+     Tensectra has — production code, GitHub access, documented patterns,
+     Gumroad purchase flow, two SKUs (solo + team). It should headline
+     the infrastructure page AND get a dedicated preview moment on the
+     homepage. Currently it sits as one of three equal cards.
+
+  4. THE INFRASTRUCTURE PAGE DOES NOT SHOW THE KIT IMAGES
+     You have real product images:
+       images/Kit/tensectrakit-cover.png.png       (solo cover, dark navy, cyan glow)
+       images/Kit/tensectrakit-team-cover.png.png  (team cover, green glow, 5 avatars)
+       images/Kit/tensectrakit-thumb.png.png
+       images/Kit/tensectrakit-team-thumb.png.png
+     None of these appear on the infrastructure page. A product page with
+     no product image is a fatal trust gap. Gumroad pages show images.
+     Your site should too.
+
+  5. NO SOLO vs TEAM SKU SPLIT ON THE INFRASTRUCTURE PAGE
+     There are two Gumroad products:
+       gumroad.com/l/tensectrakit-core-solo   (1 developer license)
+       gumroad.com/l/tensectrakit-core-team   (5 developer licenses)
+     The current page shows one "Get the Scaffold" CTA with a modal that
+     says "Email us to purchase." That is a friction wall, not a purchase
+     flow. Visitors should see both options and click directly to Gumroad.
+
+  6. "EMAIL US TO PURCHASE — WE RESPOND WITHIN 4 HOURS" IS A CONVERSION KILLER
+     In 2026, no one waits 4 hours to buy a developer tool. Gumroad is
+     already set up. The buy button should go directly to Gumroad.
+     No modal. No email. No waiting.
+
+  7. THE COHORT IS NOT CONNECTED TO THE KIT AS A NARRATIVE
+     The current site presents:
+       - Kit (buy the code)
+       - Cohorts (learn in 6 weeks)
+       - Ebooks (self-paced)
+       - Pro (membership)
+     as four separate products. The actual story is a single flywheel:
+       Buy the Kit → understand the patterns → join a cohort → become an architect
+     That flywheel is invisible on the current site.
+
+  8. NO DISCORD COMMUNITY MENTION ANYWHERE ON THE SITE
+     The BuyerOnboarding guide confirms there is a TensectraKit community
+     channel. The ebooks confirm community access. The homepage and
+     infrastructure page have zero mention of the Discord community.
+     Community is one of the strongest conversion signals for developer tools.
+
+  9. NO AFFILIATE / PARTNER PROGRAM MENTION
+     This is a ready flywheel. Developers who buy the kit and use it in
+     production are the best salespeople. There is no "Refer a developer"
+     or "Partner with us" entry point anywhere on the site.
+
+  10. THE "COMING NEXT" ROADMAP SECTION UNDERMINES THE CURRENT PRODUCT
+      Showing "Pro Kit — $899 — In Development" and "Enterprise — Coming Soon"
+      directly below the current $299 product tells the visitor "wait for the
+      better version." Remove it or replace it with social proof.
+
+------------------------------------------------------------------------
+PART 2 — THE CORE BRAND STATEMENT (USE THIS EVERYWHERE)
+------------------------------------------------------------------------
+
+PRIMARY HEADLINE (hero, ebook covers, company profile):
+  "We turn developers who can code into engineers who can architect."
+
+SUPPORTING SUB-HEADLINE (one line below the hero):
+  "Production patterns from live fintech. Taught in 6-week cohorts.
+   Packaged in a scaffold you can ship today."
+
+CATEGORY LABEL (for SEO meta, OG tags, nav tooltip):
+  "Architecture education + production infrastructure for .NET engineers."
+
+THE PRINCIPLE (site-wide footer/watermark line):
+  "AI writes the code. You design the architecture."
+
+These four lines must appear consistently across:
+  - index.html hero
+  - pages/infrastructure.html hero
+  - All ebook cover pages
+  - OG/Twitter meta descriptions
+  - LinkedIn and social profiles
+
+------------------------------------------------------------------------
+PART 3 — PROPOSED HOMEPAGE SECTION ORDER
+------------------------------------------------------------------------
+
+CURRENT ORDER (broken):                PROPOSED ORDER (fixed):
+  1. Hero (vague)                        1. Hero — THE sentence + outcome CTA
+  2. Path cards (pricing visible)        2. Kit Preview — show the product image
+  3. Why Tensectra (bullet points)       3. What makes us different (1 paragraph)
+  4. AI Ladder                           4. The Flywheel — Kit -> Cohort -> Architect
+  5. Course Catalogue                    5. Course Catalogue (cohort FIRST)
+  6. Pro Teaser                          6. Community + Discord signal
+  7. Consultancy Teaser                  7. Social proof / who uses this
+  8. Footer                             8. Partners & Affiliate teaser
+                                         9. Pro Teaser
+                                        10. Consultancy (for teams)
+                                        11. Footer
+
+DETAIL ON EACH PROPOSED SECTION:
+
+  SECTION 1 — HERO
+  ─────────────────
+  Headline:   "We turn developers who can code into engineers who can architect."
+  Sub:        "Production patterns from live fintech. Taught in live cohorts.
+               Packaged in a scaffold you can deploy today."
+  CTA row:    [Get the TensectraKit ->]    [View Cohorts ->]
+  No price visible here. No badge.
+  Background: existing binary rain / glow effect is good — keep it.
+
+  SECTION 2 — KIT PREVIEW (the "show the product" moment)
+  ─────────────────────────────────────────────────────────
+  Headline:   "The ERP Infrastructure Kit"
+  Sub:        "The .NET 8 scaffold running in production fintech today.
+               Install it. Understand it. Ship it."
+  Layout:     Left = tensectrakit-cover.png.png (large, dark, no border)
+              Right = short bullet list of what is inside (5 items max)
+  Below:      Side-by-side SKU cards:
+                [Solo — 1 developer  $199] [Team — 5 developers  $499]
+                Each with a "Buy on Gumroad" button linking directly to:
+                  gumroad.com/l/tensectrakit-core-solo
+                  gumroad.com/l/tensectrakit-core-team
+  Signal:     "Production-proven in banking systems across Africa."
+  Link:       "Full details -> pages/infrastructure"
+
+  NOTE: Do NOT show the full feature list here. Show just enough to
+  create desire, then let the infrastructure page close the sale.
+
+  SECTION 3 — WHAT MAKES US DIFFERENT (1 honest paragraph + 3 signals)
+  ───────────────────────────────────────────────────────────────────────
+  Replace the current bullet list with a short narrative paragraph:
+    "Most architecture courses teach patterns from books. Tensectra teaches
+     the patterns running in production fintech today — CQRS, Kafka, multi-tenancy,
+     AI-ready systems — not from theory, but from a scaffold serving banks
+     across Nigeria and Ghana right now."
+  Then 3 proof signals in a row:
+    [Production fintech — not tutorials] [Live cohorts — not pre-recorded] [Real deploy — not certificates]
+
+  SECTION 4 — THE FLYWHEEL
+  ─────────────────────────
+  Title: "One system. Three ways in."
+  Show three connected steps horizontally (or vertical on mobile):
+    STEP 1: Get the Kit      → "The scaffold. Deploy today."
+    STEP 2: Join a Cohort    → "6 weeks. Ship a real product."
+    STEP 3: Architect        → "You now design systems, not just code them."
+  Small connector arrows between steps.
+  This replaces the "path cards" layout and removes the $299 badge
+  from being the first thing they see.
+
+  SECTION 5 — COURSES / COHORT
+  ──────────────────────────────
+  Keep the existing three course cards (Backend, Frontend, Mobile).
+  Change the section header to:
+    "Education is our distribution. Cohorts are how we deliver it."
+  Move cohort cards BEFORE the self-paced ebook cards.
+  Add "Next cohort starts: [date]" urgency line to cohort cards.
+
+  SECTION 6 — COMMUNITY
+  ───────────────────────
+  NEW SECTION — does not exist yet.
+  Headline: "Join the TensectraKit Community"
+  Sub: "Engineers who use the same scaffold in production. Ask questions.
+        Share patterns. Get answers from people who have shipped it."
+  Show Discord logo/link.
+  Show a stat if available: "X+ engineers in the community" or just
+    "Active Discord — patterns, reviews, and production Q&A"
+  CTA: [Join on Discord ->]
+
+  SECTION 7 — SOCIAL PROOF
+  ─────────────────────────
+  If real testimonials exist: show 2-3 with name, role, and company.
+  If not yet available: use outcome statements:
+    "Graduates of Tensectra cohorts have shipped production .NET 8 backends
+     with CQRS, Kafka, and multi-tenancy before their cohort ends."
+  Do NOT skip this section. It is the most important trust signal
+  before a visitor decides to spend $199/$499.
+
+  SECTION 8 — PARTNERS & AFFILIATE
+  ──────────────────────────────────
+  NEW SECTION — does not exist yet.
+  Headline: "Refer a developer. Earn on every sale."
+  Sub: "If you use TensectraKit in production, you are our best salesperson.
+        Join the affiliate program and earn a commission on every developer
+        you refer who buys the kit."
+  CTA: [Apply to the Partner Program ->] (links to a form or email)
+  Also: "Are you a bootcamp, tech community, or training platform?
+         Partner with Tensectra to offer your developers production-grade
+         infrastructure access."
+  CTA: [Talk to us about partnership ->]
+
+  SECTION 9 — PRO TEASER
+  ───────────────────────
+  Keep largely as-is. Move it after community, not before.
+  Remove the $15/mo price from the teaser — just say "one membership"
+  and let the Pro page reveal the price after the visitor is interested.
+
+  SECTION 10 — CONSULTANCY (FOR TEAMS)
+  ──────────────────────────────────────
+  Keep as the last content section before footer. Corporate/team buyers
+  scroll further than individual developers. This is correct placement.
+
+------------------------------------------------------------------------
+PART 4 — INFRASTRUCTURE PAGE REDESIGN
+------------------------------------------------------------------------
+
+CURRENT PROBLEMS:
+  - No product image shown
+  - One "Email us to purchase" CTA (friction wall)
+  - No solo vs team distinction until deep scroll
+  - $299 price shown without enough prior value build
+  - Roadmap section undermines the current product
+
+PROPOSED INFRASTRUCTURE PAGE SECTION ORDER:
+
+  HERO:
+    Headline: "The ERP Infrastructure Kit"
+    Sub: "Production-grade .NET 8 scaffold. 5 layers. 14 patterns.
+          Kafka, Redis, CQRS, multi-tenancy — running in fintech today.
+          Install it. Name it. Ship it."
+    Show: tensectrakit-cover.png.png (large, left-aligned or centered)
+    CTA row: [Solo — 1 Developer $199 - Buy on Gumroad] [Team — 5 Developers $499 - Buy on Gumroad]
+    Both buttons link DIRECTLY to Gumroad. No modal. No email.
+
+  WHAT IS INSIDE (feature list):
+    Keep the existing detailed feature list — it is good.
+    Add the kit images as visual accents alongside the feature list.
+
+  HOW IT WORKS (3 steps):
+    Keep the existing 3 steps (install template, configure wizard, ship).
+    These are good and specific.
+
+  ARCHITECTURE (built for scale):
+    Keep the existing metrics (10,000+ concurrent, sub-100ms, 99.9% uptime).
+    These are strong.
+
+  SOLO vs TEAM — SIDE BY SIDE PRICING CARDS:
+    Replace the current single "Starter" card with two clear cards:
+
+    ┌─────────────────────────────────┐  ┌──────────────────────────────────┐
+    │  TENSECTRAKIT-CORE-SOLO         │  │  TENSECTRAKIT-CORE-TEAM          │
+    │  1 Developer License            │  │  5 Developer Licenses            │
+    │  $199                           │  │  $499                            │
+    │  - Full scaffold + docs         │  │  - Everything in Solo x5         │
+    │  - GitHub repo access           │  │  - Team GitHub org access        │
+    │  - AI Prompt Playbook           │  │  - Team onboarding walkthrough   │
+    │  - Discord community            │  │  - Discord community (all 5)     │
+    │  - LTS version updates          │  │  - LTS version updates           │
+    │  [Buy Solo on Gumroad ->]       │  │  [Buy Team on Gumroad ->]        │
+    │  gumroad.com/l/tensectrakit-    │  │  gumroad.com/l/tensectrakit-     │
+    │  core-solo                      │  │  core-team                       │
+    └─────────────────────────────────┘  └──────────────────────────────────┘
+
+    Show tensectrakit-thumb.png.png under Solo card.
+    Show tensectrakit-team-thumb.png.png under Team card.
+
+  WHAT HAPPENS AFTER YOU BUY:
+    Short 3-step buyer journey (pulled from BuyerOnboarding.txt):
+      1. Gumroad confirms. GitHub invitation arrives within minutes.
+      2. Accept the invitation. Clone the repo.
+      3. Run: dotnet new tensectrakit -n YourServiceName
+         Visual Studio wizard opens. You are running in under 15 minutes.
+
+  COMMUNITY:
+    "Every buyer joins the TensectraKit Discord — ask questions, review
+     patterns, and build alongside engineers using the same scaffold in
+     production."
+
+  REMOVE:
+    - "COMING NEXT" roadmap section with Pro Kit $899 and Enterprise
+    - "Email us to purchase — we respond within 4 hours" line
+    - The purchase modal entirely
+
+  CONNECT TO COHORTS:
+    Bottom section: "Want to understand every line of the kit?"
+    "Join a 6-week live cohort. You will build a production system using
+     this exact scaffold — with a lead architect guiding every session."
+    CTA: [View Cohorts ->]
+
+------------------------------------------------------------------------
+PART 5 — NAVIGATION REDESIGN
+------------------------------------------------------------------------
+
+CURRENT NAV:
+  Home | Consultancy | Infrastructure Kit | Cohorts | Courses | Pro | About
+
+PROBLEMS:
+  - "Infrastructure Kit" is a product name, not a visitor question
+  - "Consultancy" is first — implies the site is primarily a services firm
+  - No clear hierarchy of what to do first
+
+PROPOSED NAV:
+  Home | The Kit | Cohorts | Courses | For Teams | About | [Get the Kit ->]
+
+  Notes:
+  - "The Kit" replaces "Infrastructure Kit" — shorter, more product-brand
+  - "For Teams" replaces "Consultancy" — framing from the buyer's perspective
+  - "Courses" stays — covers ebooks + self-paced
+  - "Pro" can move under "Courses" as a sub-item or stay visible
+  - Primary CTA button in nav: "Get the Kit" links to infrastructure page
+  - This CTA replaces "Book a Call" as the primary action — the Kit is the
+    highest-volume, most accessible entry point
+
+------------------------------------------------------------------------
+PART 6 — EBOOK / COURSES PAGE
+------------------------------------------------------------------------
+
+  The ebook covers are strong and consistent. No redesign needed there.
+  What needs fixing:
+
+  1. SELF-PACED COURSES: Add "Buy on Gumroad" links for each ebook.
+     Currently they are only on the courses page. Each ebook card should
+     have a direct purchase button.
+
+  2. BUNDLE CARD: The bundle cover (Tensectra-BundleEbook-Cover.PNG) should
+     be featured prominently with a clear "Best value" label.
+
+  3. ADD EBOOK SECTION TO HOMEPAGE:
+     Between the flywheel and community sections, add a compact row:
+     "Not ready for a cohort? Start here:"
+     Show the 3 ebook thumbnails + bundle as small cards with Gumroad links.
+     This captures visitors who are interested but not ready for a $199+ commitment.
+
+------------------------------------------------------------------------
+PART 7 — AFFILIATE & PARTNER PROGRAM SETUP (new page or section)
+------------------------------------------------------------------------
+
+  Add a new page: pages/partners.html  (or forms/affiliate-inquiry)
+
+  Content for partners page:
+    HEADLINE: "Grow with Tensectra. Earn on every referral."
+
+    AFFILIATE PROGRAM:
+      - Who it is for: developers who use TensectraKit in production,
+        bootcamp instructors, tech YouTubers, newsletter authors
+      - What you earn: commission % on every sale via your referral link
+        (Gumroad supports affiliate/referral URLs natively)
+      - How to join: fill out the form below with GitHub username,
+        how you plan to promote, and your community size
+      CTA: [Apply to become an affiliate ->]
+
+    PARTNER PROGRAM:
+      - Who it is for: bootcamps, tech communities, corporate training
+        departments, developer advocates at companies
+      - What partners get: discounted team licenses, co-branded cohorts,
+        dedicated onboarding support
+      - What Tensectra gets: distribution into established dev communities
+      CTA: [Talk to us about partnership ->]
+
+  Note: Gumroad has a built-in Affiliates feature under the product settings.
+  When a partner signs up, Gumroad generates a unique referral URL.
+  No custom tracking code needed.
+
+------------------------------------------------------------------------
+PART 8 — COPY REWRITES (EXACT STRINGS TO CHANGE)
+------------------------------------------------------------------------
+
+  INDEX.HTML — HERO SECTION:
+    CURRENT:  (whatever the current vague headline is)
+    CHANGE TO: "We turn developers who can code into engineers who can architect."
+    SUB:      "Production patterns from live fintech. Taught in live cohorts.
+               Packaged in a scaffold you ship today."
+
+  INFRASTRUCTURE PAGE — HERO:
+    CURRENT:  "Enterprise .NET 8 Infrastructure - Ready to Ship."
+    CHANGE TO: "The ERP Infrastructure Kit"
+    SUB (keep): "The scaffold we use to build financial SaaS for banks across Africa."
+    ADD BELOW: Primary SKU buttons (see Part 4 above)
+
+  INFRASTRUCTURE PAGE — CTA BUTTON:
+    CURRENT:  "Get the Scaffold" -> opens modal -> "Email us to purchase"
+    CHANGE TO: Two direct Gumroad links (no modal, no email)
+
+  PATH CARDS — INFRASTRUCTURE CARD:
+    CURRENT:  Badge reads "Available Now — $299"
+    CHANGE TO: Remove the badge entirely OR replace with
+               "Production-proven in banking systems"
+    (Price belongs on the infrastructure page, not the homepage card)
+
+  INFRASTRUCTURE PAGE — ROADMAP SECTION:
+    CURRENT:  "COMING NEXT: Pro Kit $899 — In Development"
+    CHANGE TO: Remove entirely. Replace with a community/Discord CTA.
+
+------------------------------------------------------------------------
+PART 9 — WHAT TO PRIORITISE (ORDERED BY IMPACT)
+------------------------------------------------------------------------
+
+  IMMEDIATE (do first — highest conversion impact):
+  ─────────────────────────────────────────────────
+  [ ] 1.  Replace homepage hero headline with the brand statement
+  [ ] 2.  Add Solo + Team Gumroad buy buttons to infrastructure page
+          (remove the email-to-purchase modal)
+  [ ] 3.  Add tensectrakit-cover.png.png image to infrastructure page hero
+  [ ] 4.  Add tensectrakit-team-cover.png.png to team SKU card
+  [ ] 5.  Remove the $299 badge from the homepage path card
+  [ ] 6.  Remove the "COMING NEXT" roadmap section from infrastructure page
+
+  SHORT TERM (next sprint):
+  ──────────────────────────
+  [ ] 7.  Add Discord community section to homepage
+  [ ] 8.  Add the "one system, three ways in" flywheel section to homepage
+  [ ] 9.  Add a Kit Preview section to homepage (image + 5 bullets + 2 CTAs)
+  [ ] 10. Add "What happens after you buy" section to infrastructure page
+  [ ] 11. Add a Gumroad buy button to each ebook card on the courses page
+
+  MEDIUM TERM:
+  ──────────────
+  [ ] 12. Create pages/partners.html (affiliate + partner program)
+  [ ] 13. Reorder homepage sections per the proposed order in Part 3
+  [ ] 14. Redesign nav per Part 5
+  [ ] 15. Add ebook compact row to homepage ("Not ready for a cohort? Start here")
+
+------------------------------------------------------------------------
+PART 10 — BRUTALLY HONEST SUMMARY
+------------------------------------------------------------------------
+
+  THE REAL PROBLEM:
+  Tensectra has a strong product, a clear architecture firm identity,
+  real production credentials (fintech, banks across Africa), and genuine
+  IP (the Kit, the cohorts, the ebooks). None of that is the problem.
+
+  The problem is that the website presents all of this as a menu of
+  equal-weight options and lets the visitor decide what Tensectra is.
+  They cannot decide, so they leave.
+
+  THE FIX IS NOT REDESIGN — IT IS NARRATIVE:
+  The site needs one story told in one direction:
+    1. This is who we are: architects who build in production.
+    2. This is what we made: a scaffold from that production work.
+    3. This is how you get it: buy it, or learn it in a cohort.
+    4. This is what you become: an engineer who designs systems.
+
+  Everything else (ebooks, Pro, consultancy) is downstream of that story.
+  Once a visitor understands the story, they find their entry point.
+  Right now they encounter the menu before they understand the restaurant.
+
+  THE KIT IS THE FRONT DOOR:
+  Railway's front door is "deploy anything without the complexity."
+  Tensectra's front door should be the Kit:
+    "The .NET 8 scaffold from production fintech. Running right now
+     in banking systems across Africa. It is yours for $199."
+  That is a specific, credible, immediate value statement.
+  That is what should greet every visitor after the hero.
+
+  EDUCATION IS DISTRIBUTION — ACT LIKE IT:
+  The cohorts should be positioned as "want to understand exactly what
+  is in the Kit and why every decision was made?" — not as a separate
+  product. They are the Kit with a teacher. Make that connection explicit.
+
+------------------------------------------------------------------------
+SOURCE REFERENCES
+------------------------------------------------------------------------
+  railway-ux-study.txt                              — Railway competitive analysis
+  forms/MDoc/ProductInfo/KitImageNInfoPrompt.txt    — Kit cover image prompts
+  forms/MDoc/ProductInfo/EbookInfos.txt             — Ebook descriptions
+  forms/MDoc/ProductInfo/BuyerOnboarding.txt        — Post-purchase flow
+  forms/MDoc/ProductInfo/SellerOperationsGuide.txt  — Gumroad product slugs
+  images/Kit/                                       — Kit cover and thumb images
+  images/Ebooks/                                    — Ebook cover and thumb images
+  index.html                                        — Current homepage
+  pages/infrastructure.html                         — Current infrastructure/kit page
