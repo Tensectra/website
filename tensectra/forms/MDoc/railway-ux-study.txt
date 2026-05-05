@@ -1,0 +1,176 @@
+RAILWAY.COM - SITE FLOW & UX STUDY
+===================================
+Date: 2026
+Purpose: Understand Railway's information architecture and conversion flow
+         to inform Tensectra's own value proposition and customer journey.
+Trigger: Developer/lead engineer feedback that Tensectra's value prop is
+         unclear and pricing appears too early on the page.
+
+------------------------------------------------------------------------
+1. RAILWAY NAVIGATION STRUCTURE
+------------------------------------------------------------------------
+
+Top nav order:  Product | Developers | Enterprise | Company | Pricing
+
+This order is deliberate:
+  - Product   = what it is and what it does (the "what")
+  - Developers = who it is for and how it works for them (the "who")
+  - Enterprise = bigger teams, compliance, SLAs (the "scale")
+  - Company   = trust signals, story, team (the "why us")
+  - Pricing   = cost LAST, only after the visitor already understands value
+
+KEY INSIGHT: Pricing is the last nav item. The user knows the product,
+understands the audience fit, has seen enterprise credibility, has read
+the company story --- THEN they see pricing. This sequence builds
+perceived value before introducing cost.
+
+------------------------------------------------------------------------
+2. RAILWAY HOMEPAGE FLOW (Product Page)
+------------------------------------------------------------------------
+
+Section order on the homepage:
+
+  a) Hero: "Ship software peacefully" + "The all-in-one intelligent cloud provider"
+     - One bold emotional headline (benefit, not feature)
+     - One supporting sub-headline (category label)
+     - CTA: Deploy -> Demo Deploy
+
+  b) Core Feature Pillars (each with an "Alternative to ..." label):
+     1. Build and Deploy   - "Deploy anything without the complexity"
+     2. Network and connect - "Instant networking. Zero setup."
+     3. Scale and grow      - "Grow big without the growing pains"
+     4. Monitor and observe - "Logs, metrics, and alerts in one place."
+     5. Evolve and collaborate - "a development workflow that actually flows"
+
+  c) Social proof BEFORE pricing:
+     - "Trusted by the best in business"
+     - Named quotes with titles (Tech Lead at Bilt, CTO at G2X, etc.)
+     - "Join 2M+ developers building with Railway"
+     - Tweet-style testimonials from real developers
+
+  d) No pricing on the homepage at all.
+
+KEY INSIGHT: The homepage never shows pricing. It shows the dream state
+("ship peacefully"), proves it works (5 named feature pillars), and
+validates it with social proof from real engineers and company CTOs.
+Price comes only when the visitor actively navigates to Pricing.
+
+------------------------------------------------------------------------
+3. RAILWAY PRICING PAGE STRUCTURE
+------------------------------------------------------------------------
+
+  - Headline: "Pay only for what your app uses, by the second"
+  - Sub: "Say goodbye to overprovisioning and optimizing box sizes."
+
+  Tiers:
+    Free    $0/mo       - Try it, no card required
+    Hobby   $5 min      - Side projects
+    Pro     $20 min     - Production teams
+    Enterprise Custom   - Scale + compliance
+
+  Usage-based pricing message: "only charged for extra resource usage"
+  This removes the fear of overpaying.
+
+KEY INSIGHT: Pricing is framed as SAVINGS ("pay only for what you use")
+not as a barrier. The free tier is prominent and no credit card is
+required -- this lowers the commitment threshold dramatically. Pricing
+feels like a reward, not a gate.
+
+------------------------------------------------------------------------
+4. RAILWAY ENTERPRISE PAGE
+------------------------------------------------------------------------
+
+  Headline: "Loved by developers at 31% of the F500"
+  Sub: "Enterprise-grade reliability and compliance, developer-grade experience"
+
+  Trust metrics shown:
+    - 5,000,000+ Public Railway services
+    - 10,000,000+ Monthly deployments
+    - 1+ Trillion Edge network requests
+    - 99.99% SLA
+    - 50ms p95 Global Network RTT
+
+  Social proof: Named CTOs and VPs with specific ROI statements:
+    - "Our bill is reduced by at least 75% and with the devex, it is
+       easily 10x faster."
+    - "Services that took 1 week to configure elsewhere take 1 day
+       to spin up in Railway."
+
+KEY INSIGHT: Enterprise page leads with proof of adoption at scale,
+not feature checklists. Engineers trust numbers and peer stories
+more than marketing language.
+
+------------------------------------------------------------------------
+5. WHAT TENSECTRA CAN LEARN FROM THIS
+------------------------------------------------------------------------
+
+PROBLEM IDENTIFIED (from developer feedback):
+  "I don't understand what the value proposition is."
+  "Immediately after the first heading, the next thing I see is pricing."
+
+ROOT CAUSE ANALYSIS:
+  Tensectra is surfacing pricing before the visitor understands the
+  product, the audience fit, or the outcomes they will get. This is
+  the opposite of Railway's proven flow.
+
+RECOMMENDED TENSECTRA SITE FLOW (inspired by Railway):
+
+  NAV ORDER:
+    Product | Courses | For Developers | For Teams | About | Pricing
+
+  HOMEPAGE SECTIONS (proposed order):
+    1. Hero       - Bold outcome headline + 1 sentence category label + CTA
+    2. What is it - 3-4 core value pillars (what Tensectra actually does)
+    3. Who is it for - Developer audience fit + career outcomes
+    4. Social proof - Testimonials, graduate outcomes, or community size
+    5. Call to action - "Start for free" or "Browse courses"
+    NO pricing section on homepage.
+
+  PRICING PAGE (separate, navigated to by choice):
+    - Frame pricing as value, not cost ("Invest once, deploy faster forever")
+    - Show free or low-cost entry point first
+    - Add comparison: "vs. trial-and-error learning"
+    - Include outcome metrics next to price ("graduates get X% faster
+      at shipping production code")
+
+  COPYWRITING FIXES:
+    - Replace product-first language with outcome-first language
+      BAD:  "Tensectra offers playbooks and live cohorts"
+      GOOD: "Ship production-grade code in weeks, not months"
+    - Add a one-liner category label below the hero
+      EXAMPLE: "The learning platform built for developers who build real things"
+    - Use social proof as a trust bridge before pricing is shown
+
+------------------------------------------------------------------------
+6. SUMMARY TABLE: RAILWAY VS TENSECTRA (CURRENT STATE)
+------------------------------------------------------------------------
+
+| Element              | Railway (Good)              | Tensectra (Issue)         |
+|----------------------|-----------------------------|---------------------------|
+| Hero headline        | Emotional outcome            | Product description        |
+| Pricing placement    | Last nav item, own page      | On homepage near top       |
+| Social proof timing  | Before any pricing mention   | Sparse or after pricing   |
+| Free entry point     | Free tier, no card           | Not clearly signposted    |
+| Nav structure        | Product -> Dev -> Ent -> Price | Needs restructuring     |
+| Value prop clarity   | "Ship software peacefully"   | Unclear per feedback      |
+
+------------------------------------------------------------------------
+7. IMMEDIATE NEXT STEPS FOR TENSECTRA
+------------------------------------------------------------------------
+
+  [ ] Rewrite homepage hero headline to lead with an outcome, not a feature
+  [ ] Remove or relocate the pricing section from homepage
+  [ ] Add a "Who it's for" section before pricing is ever shown
+  [ ] Create a dedicated Pricing page (if not already separate)
+  [ ] Add 2-3 named testimonials or outcome quotes above the fold
+  [ ] Reorder nav: product/courses first, pricing last
+  [ ] Add a no-commitment entry point (free trial, free playbook, free lesson)
+
+------------------------------------------------------------------------
+SOURCE
+------------------------------------------------------------------------
+  Studied from: https://railway.com (homepage)
+                https://railway.com/pricing
+                https://railway.com/enterprise
+  Studied via: curl/Invoke-WebRequest HTML scrape (live pages)
+  Session context: Developer feedback on Tensectra value prop clarity

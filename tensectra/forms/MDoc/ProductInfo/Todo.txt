@@ -119,3 +119,25 @@ What you must do right now in Vercel Dashboard
 1.	Settings → Environment Variables → add SUPABASE_ANON_KEY = the anon key from supabase-config.js
 2.	Deploy the changes (push to GitHub)
 3.	Google Search Console → URL Inspection → paste https://tensectra.com/pages/careers → Request Indexing
+
+Step 2 — Verify in Google Search Console
+1.	Go to search.google.com/search-console
+2.	Click Verify on the HTML file method
+3.	You'll see: "Ownership verified"
+---
+Step 3 — Submit your sitemap (do this immediately after verification)
+1.	In Search Console → left sidebar → Sitemaps
+2.	Enter: sitemap.xml
+3.	Click Submit
+Google starts crawling within 24–48 hours.
+---
+Step 4 — Request indexing for the careers page
+1.	Search Console → URL Inspection (top search bar)
+2.	Paste: https://tensectra.com/pages/careers
+3.	Click Request Indexing
+4.	Repeat for: https://tensectra.com/ and any other key pages
+---
+Step 5 — Also submit to Bing (5 minutes, doubles your reach)
+1.	Go to bing.com/webmasters
+2.	Import from Google Search Console (one click — it copies everything)
+3.	Done
